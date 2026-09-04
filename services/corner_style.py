@@ -8,13 +8,15 @@ shape of cards, buttons, badges, and icon tiles across every page:
     squared     Hard 90 degree corners, flat rectangles.
     octagonal   Octagonal bevels via CSS clip-path.
 
-The chosen style is persisted to /opt/webzfs/.config/webzfs/corner_style.conf
+The chosen style is persisted to the project config directory: .config/webzfs/corner_style.conf
 so it applies to every user of the WebZFS instance, the same pattern used
 by the theme service.
 """
 import json
 import logging
 from pathlib import Path
+
+from config.settings import BASE_DIR
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +33,7 @@ CORNER_STYLE_DESCRIPTIONS = {
     "octagonal": "45 度切角的八边形斜面。",
 }
 
-CONFIG_DIR = Path("/opt/webzfs/.config/webzfs")
+CONFIG_DIR = BASE_DIR / ".config" / "webzfs"
 CONFIG_FILE = CONFIG_DIR / "corner_style.conf"
 
 

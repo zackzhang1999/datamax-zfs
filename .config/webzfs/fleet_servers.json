@@ -1,0 +1,28 @@
+{
+  "servers": [
+    {
+      "id": "a0211671-ca06-43fb-9dd2-888a6add1fa6",
+      "name": "test",
+      "ip": "192.168.88.30",
+      "port": 22,
+      "username": "root",
+      "password": null,
+      "ssh_key_path": "/root/webzfs/.ssh/webzfs_connections/16af5472-9354-468c-b696-7c1dbf784ee4",
+      "ssh_connection_id": "16af5472-9354-468c-b696-7c1dbf784ee4",
+      "auth_type": "key",
+      "added_at": "2026-09-04T11:10:38.419573",
+      "last_checked": "2026-09-04T11:11:38.676998",
+      "status": "online",
+      "pools": [
+        {
+          "name": "amax",
+          "used": "4.03G",
+          "free": "282G",
+          "total": "286G",
+          "capacity": "1%",
+          "health": "ONLINE"
+        }
+      ]
+    }
+  ]
+}

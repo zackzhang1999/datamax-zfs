@@ -2,7 +2,7 @@
 Theme Service
 Manages WebZFS theme selection, persistence, and discovery.
 Themes are CSS files stored in static/css/themes/ that override CSS custom properties.
-Configuration is persisted to /opt/webzfs/.config/webzfs/theme.conf
+Configuration is persisted to the project config directory: .config/webzfs/theme.conf
 """
 import json
 import logging
@@ -15,7 +15,7 @@ from config.settings import BASE_DIR
 logger = logging.getLogger(__name__)
 
 DEFAULT_THEME = "doubao"
-CONFIG_DIR = Path("/opt/webzfs/.config/webzfs")
+CONFIG_DIR = BASE_DIR / ".config" / "webzfs"
 CONFIG_FILE = CONFIG_DIR / "theme.conf"
 THEMES_DIR = BASE_DIR / "static" / "css" / "themes"
 

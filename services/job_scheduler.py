@@ -339,7 +339,7 @@ class TaskScheduler:
             f"WorkingDirectory={_app_directory()}\n"
             # HOME must point at the application directory so
             # FileStorageService and SSHConnectionService resolve
-            # ~/.config/webzfs and ~/.ssh under /opt/webzfs, matching
+            # ~/.config/webzfs and ~/.ssh under the application directory, matching
             # how the web application runs.
             f"Environment=HOME={_app_directory()}\n"
             f"Environment=PYTHONPATH={_app_directory()}\n"

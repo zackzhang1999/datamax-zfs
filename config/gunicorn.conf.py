@@ -7,7 +7,7 @@ project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, project_dir)
 
 # Load values from the project's .env file so that BIND_IP, PORT, BIND,
-# SOCKET_UMASK, and WORKERS edits in /opt/webzfs/.env are honored on
+# SOCKET_UMASK, and WORKERS edits in the project's .env are honored on
 # service restart. The application itself uses pydantic-settings to read
 # .env, but gunicorn binds its socket before the app starts, so we must
 # read the file here as well. python-dotenv is already a dependency.
@@ -30,8 +30,8 @@ worker_class = "uvicorn.workers.UvicornWorker"
 
 # Port 26619: Z(26th letter) F(6th letter) S(19th letter) = ZFS
 #
-# Bind configuration is read from /opt/webzfs/.env (or the process
-# environment). To change the listen address, edit /opt/webzfs/.env and
+# Bind configuration is read from the project's .env (or the process
+# environment). To change the listen address, edit the project's .env and
 # restart the service.
 #
 # TCP binding (default):

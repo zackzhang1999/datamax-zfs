@@ -1,0 +1,28 @@
+{
+  "connections": [
+    {
+      "id": "16af5472-9354-468c-b696-7c1dbf784ee4",
+      "name": "test",
+      "host": "192.168.88.30",
+      "port": 22,
+      "username": "root",
+      "private_key_path": "/root/webzfs/.ssh/webzfs_connections/16af5472-9354-468c-b696-7c1dbf784ee4",
+      "public_key_path": "/root/webzfs/.ssh/webzfs_connections/16af5472-9354-468c-b696-7c1dbf784ee4.pub",
+      "fingerprint": "SHA256:242fquuBTJ/AYFStvxa0DMYlvG+VgPeRXNyaF3rA8MM",
+      "host_key_fingerprints": [
+        "SHA256:nMLIM0CSuAhzksUlgV6uyUPgNhMmZAWLP/tzpU6BbNE",
+        "SHA256:0fQEQjIhsv+nKB8TBVMZ5DfoiukO++DOI53osm64+xg",
+        "SHA256:OCzI8siA+prvzaDX6ubtJz4sOuOwiBBr7C0PO32Mwz0"
+      ],
+      "created_at": "2026-09-04T11:09:09.069415",
+      "last_used": "2026-09-04T11:13:18.327675",
+      "last_tested": "2026-09-04T11:09:29.242233",
+      "status": "active",
+      "used_by": [
+        "fleet",
+        "replication"
+      ],
+      "notes": ""
+    }
+  ]
+}

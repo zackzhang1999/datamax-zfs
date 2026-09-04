@@ -114,7 +114,7 @@ async def apply_theme(request: Request, theme: str = Form(...)):
         )
     else:
         return RedirectResponse(
-            url="/utils/settings?error=保存主题失败。请检查 /opt/webzfs/.config/webzfs/ 的文件权限",
+            url="/utils/settings?error=保存主题失败。请检查项目配置目录 .config/webzfs/ 的文件权限",
             status_code=303,
         )
 
@@ -137,7 +137,7 @@ async def apply_corner_style(request: Request, corner_style: str = Form(...)):
         )
     else:
         return RedirectResponse(
-            url="/utils/settings?error=保存边角样式失败。请检查 /opt/webzfs/.config/webzfs/ 的文件权限",
+            url="/utils/settings?error=保存边角样式失败。请检查项目配置目录 .config/webzfs/ 的文件权限",
             status_code=303,
         )
 

@@ -1,0 +1,221 @@
+{
+  "reports": [
+    {
+      "started_at": "2026-09-03T16:44:59.821527",
+      "completed_at": "2026-09-03T16:45:00.248578",
+      "status": "completed",
+      "progress": "Analysis complete",
+      "options": {
+        "check_disk_health": true,
+        "check_smart_tests": true,
+        "check_scrubs": true,
+        "aggressive_hours": true
+      },
+      "pools": [
+        {
+          "name": "amax",
+          "size": "444G",
+          "alloc": "1008K",
+          "free": "444G",
+          "health": "ONLINE",
+          "creation_date": "2026-09-03 16:43:59",
+          "vdevs": [
+            {
+              "type": "raidz1-0",
+              "state": "ONLINE",
+              "disks": [
+                {
+                  "name": "sda",
+                  "device_path": null,
+                  "state": "ONLINE",
+                  "read_errors": 0,
+                  "write_errors": 0,
+                  "checksum_errors": 0
+                },
+                {
+                  "name": "sdb",
+                  "device_path": null,
+                  "state": "ONLINE",
+                  "read_errors": 0,
+                  "write_errors": 0,
+                  "checksum_errors": 0
+                },
+                {
+                  "name": "sdc",
+                  "device_path": null,
+                  "state": "ONLINE",
+                  "read_errors": 0,
+                  "write_errors": 0,
+                  "checksum_errors": 0
+                }
+              ]
+            },
+            {
+              "type": "cache",
+              "state": "",
+              "disks": [
+                {
+                  "name": "sdd",
+                  "device_path": null,
+                  "state": "ONLINE",
+                  "read_errors": 0,
+                  "write_errors": 0,
+                  "checksum_errors": 0
+                }
+              ]
+            }
+          ],
+          "errors": {
+            "read": 0,
+            "write": 0,
+            "checksum": 0
+          },
+          "status_output": "  pool: amax\n state: ONLINE\nconfig:\n\n\tNAME        STATE     READ WRITE CKSUM\n\tamax        ONLINE       0     0     0\n\t  raidz1-0  ONLINE       0     0     0\n\t    sda     ONLINE       0     0     0\n\t    sdb     ONLINE       0     0     0\n\t    sdc     ONLINE       0     0     0\n\tcache\n\t  sdd       ONLINE       0     0     0\n\nerrors: No known data errors\n"
+        }
+      ],
+      "disks": [
+        {
+          "path": "/dev/sda",
+          "name": "sda",
+          "model": "Unknown",
+          "serial": "PHWL645400MB160MGN",
+          "overall_status": "healthy",
+          "flags": [],
+          "power_on_hours": null,
+          "power_on_hours_source": "none",
+          "smart_test_hours": null,
+          "reallocated_sectors": null,
+          "uncorrectable_errors": null,
+          "reported_uncorrectable": null,
+          "failed_smart_test": false,
+          "over_temperature": false,
+          "temperature_info": {
+            "current": 0,
+            "over_temp": false,
+            "over_temp_count": null
+          },
+          "raw_output": "smartctl 7.2 2020-12-30 r5155 [x86_64-linux-6.8.0-48-generic] (local build)\nCopyright (C) 2002-20, Bruce Allen, Christian Franke, www.smartmontools.org\n\nUser Capacity:        160,041,885,696 bytes [160 GB]\nLogical block size:   512 bytes\nPhysical block size:  4096 bytes\nLB provisioning type: not reported [LBPME=1, LBPRZ=1]\nRotation Rate:        Solid State Device\nForm Factor:          2.5 inches\nLogical Unit id:      0x55cd2e414d5276b9\nSerial number:        PHWL645400MB160MGN\nDevice type:          disk\nLocal Time is:        Thu Sep  3 16:44:59 2026 CST\nSMART support is:     Unavailable - device lacks SMART capability.\nRead Cache is:        Enabled\nWriteback Cache is:   Enabled\n\n=== START OF READ SMART DATA SECTION ===\nCurrent Drive Temperature:     0 C\nDrive Trip Temperature:        0 C\n\nError Counter logging not supported\n\n\n[GLTSD (Global Logging Target Save Disable) set. Enable Save with '-S on']\nDevice does not support Self Test logging\nDevice does not support Background scan results logging\n"
+        },
+        {
+          "path": "/dev/sdb",
+          "name": "sdb",
+          "model": "Unknown",
+          "serial": "PHWL645400A5160MGN",
+          "overall_status": "healthy",
+          "flags": [],
+          "power_on_hours": null,
+          "power_on_hours_source": "none",
+          "smart_test_hours": null,
+          "reallocated_sectors": null,
+          "uncorrectable_errors": null,
+          "reported_uncorrectable": null,
+          "failed_smart_test": false,
+          "over_temperature": false,
+          "temperature_info": {
+            "current": 0,
+            "over_temp": false,
+            "over_temp_count": null
+          },
+          "raw_output": "smartctl 7.2 2020-12-30 r5155 [x86_64-linux-6.8.0-48-generic] (local build)\nCopyright (C) 2002-20, Bruce Allen, Christian Franke, www.smartmontools.org\n\nUser Capacity:        160,041,885,696 bytes [160 GB]\nLogical block size:   512 bytes\nPhysical block size:  4096 bytes\nLB provisioning type: not reported [LBPME=1, LBPRZ=1]\nRotation Rate:        Solid State Device\nForm Factor:          2.5 inches\nLogical Unit id:      0x55cd2e414d527662\nSerial number:        PHWL645400A5160MGN\nDevice type:          disk\nLocal Time is:        Thu Sep  3 16:44:59 2026 CST\nSMART support is:     Unavailable - device lacks SMART capability.\nRead Cache is:        Enabled\nWriteback Cache is:   Enabled\n\n=== START OF READ SMART DATA SECTION ===\nCurrent Drive Temperature:     0 C\nDrive Trip Temperature:        0 C\n\nError Counter logging not supported\n\n\n[GLTSD (Global Logging Target Save Disable) set. Enable Save with '-S on']\nDevice does not support Self Test logging\nDevice does not support Background scan results logging\n"
+        },
+        {
+          "path": "/dev/sdc",
+          "name": "sdc",
+          "model": "Unknown",
+          "serial": "PHWL643500BQ160MGN",
+          "overall_status": "healthy",
+          "flags": [],
+          "power_on_hours": null,
+          "power_on_hours_source": "none",
+          "smart_test_hours": null,
+          "reallocated_sectors": null,
+          "uncorrectable_errors": null,
+          "reported_uncorrectable": null,
+          "failed_smart_test": false,
+          "over_temperature": false,
+          "temperature_info": {
+            "current": 0,
+            "over_temp": false,
+            "over_temp_count": null
+          },
+          "raw_output": "smartctl 7.2 2020-12-30 r5155 [x86_64-linux-6.8.0-48-generic] (local build)\nCopyright (C) 2002-20, Bruce Allen, Christian Franke, www.smartmontools.org\n\nUser Capacity:        160,041,885,696 bytes [160 GB]\nLogical block size:   512 bytes\nPhysical block size:  4096 bytes\nLB provisioning type: not reported [LBPME=1, LBPRZ=1]\nRotation Rate:        Solid State Device\nForm Factor:          2.5 inches\nLogical Unit id:      0x55cd2e414d4fe96f\nSerial number:        PHWL643500BQ160MGN\nDevice type:          disk\nLocal Time is:        Thu Sep  3 16:45:00 2026 CST\nSMART support is:     Unavailable - device lacks SMART capability.\nRead Cache is:        Enabled\nWriteback Cache is:   Enabled\n\n=== START OF READ SMART DATA SECTION ===\nCurrent Drive Temperature:     0 C\nDrive Trip Temperature:        0 C\n\nError Counter logging not supported\n\n\n[GLTSD (Global Logging Target Save Disable) set. Enable Save with '-S on']\nDevice does not support Self Test logging\nDevice does not support Background scan results logging\n"
+        },
+        {
+          "path": "/dev/sdd",
+          "name": "sdd",
+          "model": "Unknown",
+          "serial": "PHWL645400JC160MGN",
+          "overall_status": "healthy",
+          "flags": [],
+          "power_on_hours": null,
+          "power_on_hours_source": "none",
+          "smart_test_hours": null,
+          "reallocated_sectors": null,
+          "uncorrectable_errors": null,
+          "reported_uncorrectable": null,
+          "failed_smart_test": false,
+          "over_temperature": false,
+          "temperature_info": {
+            "current": 0,
+            "over_temp": false,
+            "over_temp_count": null
+          },
+          "raw_output": "smartctl 7.2 2020-12-30 r5155 [x86_64-linux-6.8.0-48-generic] (local build)\nCopyright (C) 2002-20, Bruce Allen, Christian Franke, www.smartmontools.org\n\nUser Capacity:        160,041,885,696 bytes [160 GB]\nLogical block size:   512 bytes\nPhysical block size:  4096 bytes\nLB provisioning type: not reported [LBPME=1, LBPRZ=1]\nRotation Rate:        Solid State Device\nForm Factor:          2.5 inches\nLogical Unit id:      0x55cd2e414d5276a0\nSerial number:        PHWL645400JC160MGN\nDevice type:          disk\nLocal Time is:        Thu Sep  3 16:45:00 2026 CST\nSMART support is:     Unavailable - device lacks SMART capability.\nRead Cache is:        Enabled\nWriteback Cache is:   Enabled\n\n=== START OF READ SMART DATA SECTION ===\nCurrent Drive Temperature:     0 C\nDrive Trip Temperature:        0 C\n\nError Counter logging not supported\n\n\n[GLTSD (Global Logging Target Save Disable) set. Enable Save with '-S on']\nDevice does not support Self Test logging\nDevice does not support Background scan results logging\n"
+        }
+      ],
+      "smart_test_status": {
+        "smartd_running": true,
+        "smartd_config_exists": true,
+        "disks": [
+          {
+            "path": "/dev/sda",
+            "tests_configured": true,
+            "last_test_within_30_days": false,
+            "last_test_hours": null,
+            "current_hours": null
+          },
+          {
+            "path": "/dev/sdb",
+            "tests_configured": true,
+            "last_test_within_30_days": false,
+            "last_test_hours": null,
+            "current_hours": null
+          },
+          {
+            "path": "/dev/sdc",
+            "tests_configured": true,
+            "last_test_within_30_days": false,
+            "last_test_hours": null,
+            "current_hours": null
+          },
+          {
+            "path": "/dev/sdd",
+            "tests_configured": true,
+            "last_test_within_30_days": false,
+            "last_test_hours": null,
+            "current_hours": null
+          }
+        ]
+      },
+      "scrub_status": {
+        "pools": [
+          {
+            "name": "amax",
+            "last_scrub": null,
+            "scrub_within_30_days": false,
+            "scrub_in_progress": false
+          }
+        ],
+        "scrub_cron_configured": false
+      },
+      "summary": {
+        "total_disks": 4,
+        "healthy_disks": 4,
+        "warning_disks": 0,
+        "critical_disks": 0,
+        "total_pools": 1
+      },
+      "id": "20260903-164459"
+    }
+  ]
+}
