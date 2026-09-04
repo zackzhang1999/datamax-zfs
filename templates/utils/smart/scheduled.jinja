@@ -4,16 +4,16 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils/smart" class="hover:text-blue-400">SMART Monitoring</a> 
+        <a href="/utils/smart" class="hover:text-blue-400">SMART 监控</a> 
         <span class="mx-2">/</span> 
-        <span class="text-text-primary">Scheduled Tests</span>
+        <span class="text-text-primary">计划测试</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">Scheduled SMART Tests</h1>
+        <h1 class="text-3xl font-bold text-text-primary">SMART 计划测试</h1>
         <a href="/utils/smart" class="btn-secondary hover:bg-bg-elevated-2 text-text-primary px-4 py-2 rounded inline-block">
-            ← Back to Disks
+            ← 返回磁盘列表
         </a>
     </div>
 
@@ -26,50 +26,50 @@
     
     {% if request.query_params.get('error') %}
     <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded mb-4">
-        <strong>Error:</strong> {{ request.query_params.get('error') }}
+        <strong>错误：</strong> {{ request.query_params.get('error') }}
     </div>
     {% endif %}
 
     {% if error %}
     <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded mb-4">
-        <strong>Error:</strong> {{ error }}
+        <strong>错误：</strong> {{ error }}
     </div>
     {% endif %}
 
     <!-- Create New Schedule Form -->
     <div class="bg-bg-elevated rounded-lg p-6 mb-6">
-        <h2 class="text-xl font-bold text-text-primary mb-4">Create Scheduled Test</h2>
+        <h2 class="text-xl font-bold text-text-primary mb-4">创建计划测试</h2>
         <form method="post" action="/utils/smart/scheduled/create" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-text-secondary text-sm font-semibold mb-2">Disk</label>
+                    <label class="block text-text-secondary text-sm font-semibold mb-2">磁盘</label>
                     <select name="disk" required class="w-full bg-bg-elevated-2 text-text-primary rounded px-3 py-2 border border-gray-600 focus:border-blue-500 focus:outline-none">
-                        <option value="">Select a disk...</option>
+                        <option value="">请选择磁盘……</option>
                         {% for disk in disks %}
                         <option value="{{ disk.path }}">{{ disk.path }} - {{ disk.model }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div>
-                    <label class="block text-text-secondary text-sm font-semibold mb-2">Test Type</label>
+                    <label class="block text-text-secondary text-sm font-semibold mb-2">测试类型</label>
                     <select name="test_type" required class="w-full bg-bg-elevated-2 text-text-primary rounded px-3 py-2 border border-gray-600 focus:border-blue-500 focus:outline-none">
-                        <option value="short">Short Test</option>
-                        <option value="long">Long Test</option>
+                        <option value="short">短测试</option>
+                        <option value="long">长测试</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-text-secondary text-sm font-semibold mb-2">Schedule (Cron Format)</label>
+                    <label class="block text-text-secondary text-sm font-semibold mb-2">计划（Cron 格式）</label>
                     <input type="text" name="schedule" required placeholder="0 2 * * *" 
                            class="w-full bg-bg-elevated-2 text-text-primary rounded px-3 py-2 border border-gray-600 focus:border-blue-500 focus:outline-none">
-                    <p class="text-text-tertiary text-xs mt-1">Example: "0 2 * * *" = Daily at 2am</p>
+                    <p class="text-text-tertiary text-xs mt-1">示例："0 2 * * *" = 每天凌晨 2 点</p>
                 </div>
             </div>
             <div class="flex items-center">
                 <input type="checkbox" name="enabled" id="enabled" value="true" checked class="mr-2">
-                <label for="enabled" class="text-text-secondary text-sm">Enabled</label>
+                <label for="enabled" class="text-text-secondary text-sm">启用</label>
             </div>
             <button type="submit" class="bg-green-600 hover:bg-green-700 text-text-primary px-6 py-2 rounded font-semibold">
-                ➕ Create Schedule
+                ➕ 创建计划
             </button>
         </form>
     </div>
@@ -78,18 +78,18 @@
     {% if scheduled_tests and scheduled_tests|length > 0 %}
     <div class="bg-bg-elevated rounded-lg overflow-hidden shadow-lg">
         <div class="p-6 border-b border-gray-700">
-            <h2 class="text-xl font-bold text-text-primary">Active Schedules</h2>
+            <h2 class="text-xl font-bold text-text-primary">现有计划</h2>
         </div>
         <div class="overflow-x-auto">
             <table class="min-w-full">
                 <thead class="bg-bg-elevated-2 text-text-secondary">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Disk</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Test Type</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Schedule</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Created</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">磁盘</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">测试类型</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">计划</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">状态</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">创建时间</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">操作</th>
                     </tr>
                 </thead>
                 <tbody class="bg-bg-elevated divide-y divide-border-subtle">
@@ -105,11 +105,11 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             {% if schedule.enabled %}
                             <span class="badge badge-success">
-                                Enabled
+                                已启用
                             </span>
                             {% else %}
                             <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-bg-elevated-2 text-text-tertiary">
-                                Disabled
+                                已禁用
                             </span>
                             {% endif %}
                         </td>
@@ -119,14 +119,14 @@
                                 <form method="post" action="/utils/smart/scheduled/{{ schedule.id }}/toggle" class="inline">
                                     <button type="submit" 
                                             class="text-yellow-400 hover:text-yellow-300" 
-                                            title="Toggle Enabled/Disabled">
+                                            title="切换启用/禁用">
                                         {% if schedule.enabled %}⏸️{% else %}▶️{% endif %}
                                     </button>
                                 </form>
                                 <form method="post" action="/utils/smart/scheduled/{{ schedule.id }}/delete" class="inline" id="form-delete-schedule-{{ schedule.id }}">
                                     <button type="button" 
                                             class="text-red-400 hover:text-red-300" 
-                                            title="Delete Schedule"
+                                            title="删除计划"
                                             onclick="showConfirm('modal-delete-schedule-{{ schedule.id }}')">
                                         🗑️
                                     </button>
@@ -142,7 +142,7 @@
 
     <!-- Schedule Count -->
     <div class="mt-4 text-text-tertiary text-sm">
-        <p>Total Schedules: {{ scheduled_tests|length }}</p>
+        <p>计划总数：{{ scheduled_tests|length }}</p>
     </div>
     {% else %}
     <!-- No Schedules Found -->
@@ -152,8 +152,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
         </div>
-        <h3 class="text-lg font-medium text-text-primary mb-2">No Scheduled Tests</h3>
-        <p class="text-text-tertiary">Create a schedule above to automatically run SMART tests on your disks.</p>
+        <h3 class="text-lg font-medium text-text-primary mb-2">暂无计划测试</h3>
+        <p class="text-text-tertiary">在上方创建计划，即可自动对磁盘运行 SMART 测试。</p>
     </div>
     {% endif %}
 
@@ -161,21 +161,21 @@
     <div class="mt-6 bg-info-900/30 border-2 border-info-500/50 text-info-400 px-4 py-3 rounded">
         <strong><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg> Cron Schedule Format:</strong>
+                    </svg> Cron 计划格式：</strong>
         <div class="mt-2 text-sm">
-            <p class="mb-2">Format: <code class="bg-blue-950 px-2 py-1 rounded">minute hour day month weekday</code></p>
+            <p class="mb-2">格式：<code class="bg-blue-950 px-2 py-1 rounded">分钟 小时 日期 月份 星期</code></p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-3">
                 <div>
-                    <code class="bg-blue-950 px-2 py-1 rounded">0 2 * * *</code> - Daily at 2:00 AM
+                    <code class="bg-blue-950 px-2 py-1 rounded">0 2 * * *</code> - 每天凌晨 2:00
                 </div>
                 <div>
-                    <code class="bg-blue-950 px-2 py-1 rounded">0 3 * * 0</code> - Weekly on Sunday at 3:00 AM
+                    <code class="bg-blue-950 px-2 py-1 rounded">0 3 * * 0</code> - 每周日凌晨 3:00
                 </div>
                 <div>
-                    <code class="bg-blue-950 px-2 py-1 rounded">0 1 1 * *</code> - Monthly on 1st at 1:00 AM
+                    <code class="bg-blue-950 px-2 py-1 rounded">0 1 1 * *</code> - 每月 1 日凌晨 1:00
                 </div>
                 <div>
-                    <code class="bg-blue-950 px-2 py-1 rounded">0 */6 * * *</code> - Every 6 hours
+                    <code class="bg-blue-950 px-2 py-1 rounded">0 */6 * * *</code> - 每 6 小时
                 </div>
             </div>
         </div>
@@ -185,11 +185,11 @@
     <div class="mt-4 bg-yellow-900 border border-yellow-700 text-yellow-200 px-4 py-3 rounded">
         <strong><svg class="w-5 h-5 inline text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                    </svg> Note:</strong>
+                    </svg> 注意：</strong>
         <p class="mt-1 text-sm">
-            This interface provides basic scheduling functionality. For production use, consider configuring smartd.conf 
-            directly or using system cron jobs. Scheduled tests created here are stored in memory and will be lost on 
-            application restart unless persisted to a database.
+            此界面仅提供基本的计划功能。用于生产环境时，建议直接配置 smartd.conf
+            或使用系统 cron 任务。此处创建的计划测试保存在内存中，除非持久化到数据库，
+            否则应用重启后会丢失。
         </p>
     </div>
 </div>
@@ -198,9 +198,9 @@
 {% if scheduled_tests and scheduled_tests|length > 0 %}
     {% for schedule in scheduled_tests %}
     {% set id = 'modal-delete-schedule-' + schedule.id|string %}
-    {% set title = 'Delete Schedule' %}
-    {% set message = 'Delete this scheduled test?' %}
-    {% set confirm_text = 'Delete' %}
+    {% set title = '删除计划' %}
+    {% set message = '要删除此计划测试吗？' %}
+    {% set confirm_text = '删除' %}
     {% set confirm_class = 'danger' %}
     {% set confirm_action = 'document.getElementById("form-delete-schedule-' + schedule.id|string + '").submit()' %}
     {% include 'partials/confirm.jinja' %}

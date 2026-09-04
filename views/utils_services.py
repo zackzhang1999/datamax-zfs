@@ -21,7 +21,7 @@ async def services_index(request: Request):
         request,
         name="utils/services/index.jinja",
         context={
-            "page_title": "System Services",
+            "page_title": "系统服务",
         },
     )
 
@@ -54,7 +54,7 @@ async def services_content_partial(request: Request):
         return HTMLResponse(
             content=f"""
             <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded" role="alert">
-                <strong>Error:</strong> {e}
+                <strong>错误：</strong> {e}
             </div>
             """,
             status_code=200,
@@ -72,7 +72,7 @@ async def service_detail(request: Request, service_name: str):
             context={
                 "service_name": service_name,
                 "detail": detail,
-                "page_title": f"Service: {service_name}",
+                "page_title": f"服务：{service_name}",
             },
         )
     except Exception as e:

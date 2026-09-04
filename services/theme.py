@@ -14,7 +14,7 @@ from config.settings import BASE_DIR
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_THEME = "carbon-blue"
+DEFAULT_THEME = "doubao"
 CONFIG_DIR = Path("/opt/webzfs/.config/webzfs")
 CONFIG_FILE = CONFIG_DIR / "theme.conf"
 THEMES_DIR = BASE_DIR / "static" / "css" / "themes"
@@ -22,43 +22,46 @@ THEMES_DIR = BASE_DIR / "static" / "css" / "themes"
 # Theme registry: maps theme ID to display metadata
 # Organized by family for the dropdown grouping
 THEME_FAMILIES = {
-    "Deep Ocean": {
-        "deep-ocean": "Deep Ocean",
+    "Doubao": {
+        "doubao": "Doubao",
     },
-    "Carbon": {
-        "carbon-apricot": "Carbon Apricot",
-        "carbon-blue": "Carbon Blue",
-        "carbon-cyan": "Carbon Cyan",
-        "carbon-emerald": "Carbon Emerald",
-        "carbon-indigo": "Carbon Indigo",
-        "carbon-raspberry": "Carbon Raspberry",
+    "深海": {
+        "deep-ocean": "深海",
     },
-    "Graphite": {
-        "graphite-apricot": "Graphite Apricot",
-        "graphite-cyan": "Graphite Cyan",
-        "graphite-emerald": "Graphite Emerald",
-        "graphite-indigo": "Graphite Indigo",
-        "graphite-navy": "Graphite Navy",
-        "graphite-ocean": "Graphite Ocean",
-        "graphite-raspberry": "Graphite Raspberry",
+    "碳素": {
+        "carbon-apricot": "碳素杏色",
+        "carbon-blue": "碳素蓝",
+        "carbon-cyan": "碳素青",
+        "carbon-emerald": "碳素翠绿",
+        "carbon-indigo": "碳素靛蓝",
+        "carbon-raspberry": "碳素树莓",
     },
-    "Medtech": {
-        "medtech-apricot": "Medtech Apricot",
-        "medtech-cyan": "Medtech Cyan",
-        "medtech-emerald": "Medtech Emerald",
-        "medtech-navy": "Medtech Navy",
-        "medtech-raspberry": "Medtech Raspberry",
+    "石墨": {
+        "graphite-apricot": "石墨杏色",
+        "graphite-cyan": "石墨青",
+        "graphite-emerald": "石墨翠绿",
+        "graphite-indigo": "石墨靛蓝",
+        "graphite-navy": "石墨海军蓝",
+        "graphite-ocean": "石墨海洋",
+        "graphite-raspberry": "石墨树莓",
     },
-    "Mono": {
-        "mono-obsidian": "Mono Obsidian",
-        "mono-paper": "Mono Paper",
+    "医疗科技": {
+        "medtech-apricot": "医疗科技杏色",
+        "medtech-cyan": "医疗科技青",
+        "medtech-emerald": "医疗科技翠绿",
+        "medtech-navy": "医疗科技海军蓝",
+        "medtech-raspberry": "医疗科技树莓",
     },
-    "Operator": {
-        "operator-apricot": "Operator Apricot",
-        "operator-blue": "Operator Blue",
-        "operator-cyan": "Operator Cyan",
-        "operator-emerald": "Operator Emerald",
-        "operator-raspberry": "Operator Raspberry",
+    "单色": {
+        "mono-obsidian": "单色黑曜石",
+        "mono-paper": "单色纸白",
+    },
+    "运维": {
+        "operator-apricot": "运维杏色",
+        "operator-blue": "运维蓝",
+        "operator-cyan": "运维青",
+        "operator-emerald": "运维翠绿",
+        "operator-raspberry": "运维树莓",
     },
 }
 

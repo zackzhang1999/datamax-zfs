@@ -2,7 +2,7 @@
 
 {% set active_page = 'text' %}
 
-{% block caption %}Text Editor{% endblock %}
+{% block caption %}文本编辑器{% endblock %}
 
 {% block inner %}
     <!-- Info Box -->
@@ -12,7 +12,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <div class="text-sm text-text-secondary">
-                <strong class="text-info-400">Text Editor:</strong> Load and edit text files directly from the web interface with syntax highlighting support.
+                <strong class="text-info-400">文本编辑器：</strong>直接在 Web 界面中加载并编辑文本文件，支持语法高亮。
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
                     <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
-                    File Path
+                    文件路径
                 </span>
             </label>
             <input 
@@ -36,7 +36,7 @@
                 placeholder="/path/to/file.txt"
                 required
             >
-            <p class="text-xs text-text-tertiary mt-1">Enter the full path to the file you want to edit</p>
+            <p class="text-xs text-text-tertiary mt-1">输入要编辑的文件的完整路径</p>
         </div>
         
         <button 
@@ -48,7 +48,7 @@
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
             </svg>
-            Load File
+            加载文件
         </button>
     </form>
 
@@ -58,7 +58,7 @@
             <svg class="w-5 h-5 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
             </svg>
-            Common Configuration Files
+            常用配置文件
         </h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <button 
@@ -71,7 +71,7 @@
                 </svg>
                 <div>
                     <div class="text-sm font-medium text-text-primary">/etc/fstab</div>
-                    <div class="text-xs text-text-tertiary">Filesystem mounts</div>
+                    <div class="text-xs text-text-tertiary">文件系统挂载</div>
                 </div>
             </button>
             <button 
@@ -84,7 +84,7 @@
                 </svg>
                 <div>
                     <div class="text-sm font-medium text-text-primary">/etc/hosts</div>
-                    <div class="text-xs text-text-tertiary">Host resolution</div>
+                    <div class="text-xs text-text-tertiary">主机名解析</div>
                 </div>
             </button>
             <button 
@@ -97,7 +97,7 @@
                 </svg>
                 <div>
                     <div class="text-sm font-medium text-text-primary">/etc/ssh/sshd_config</div>
-                    <div class="text-xs text-text-tertiary">SSH daemon config</div>
+                    <div class="text-xs text-text-tertiary">SSH 守护进程配置</div>
                 </div>
             </button>
             <button 
@@ -110,7 +110,7 @@
                 </svg>
                 <div>
                     <div class="text-sm font-medium text-text-primary">/etc/resolv.conf</div>
-                    <div class="text-xs text-text-tertiary">DNS resolution</div>
+                    <div class="text-xs text-text-tertiary">DNS 解析</div>
                 </div>
             </button>
         </div>

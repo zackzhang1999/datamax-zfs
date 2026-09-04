@@ -67,7 +67,7 @@ async def replication_index(request: Request):
                 "syncoid_status": syncoid_status,
                 "active_executions": active_executions,
                 "system": system,
-                "page_title": "ZFS Replication"
+                "page_title": "ZFS 复制"
             }
         )
     except Exception as e:
@@ -80,7 +80,7 @@ async def replication_index(request: Request):
                 "active_executions": [],
                 "system": platform.system(),
                 "error": str(e),
-                "page_title": "ZFS Replication"
+                "page_title": "ZFS 复制"
             }
         )
 
@@ -98,8 +98,8 @@ async def native_jobs_redirect(request: Request, rest_of_path: str):
     return RedirectResponse(
         url=(
             "/zfs/replication/syncoid?message="
-            "Native replication job scheduling was replaced by "
-            "scheduled Syncoid jobs"
+            "原生复制任务计划已由 "
+            "计划 Syncoid 任务取代"
         ),
         status_code=303,
     )
@@ -129,7 +129,7 @@ async def send_receive_form(request: Request):
                 "compression_methods": [c.value for c in CompressionMethod],
                 "zfs_send_man_url": zfs_send_man_url,
                 "zfs_receive_man_url": zfs_receive_man_url,
-                "page_title": "ZFS Send/Receive"
+                "page_title": "ZFS 发送/接收"
             }
         )
     except Exception as e:
@@ -143,7 +143,7 @@ async def send_receive_form(request: Request):
                 "zfs_send_man_url": None,
                 "zfs_receive_man_url": None,
                 "error": str(e),
-                "page_title": "ZFS Send/Receive"
+                "page_title": "ZFS 发送/接收"
             }
         )
 
@@ -190,7 +190,7 @@ async def send_receive_execute(
         
         rep_type = ReplicationType(replication_type)
         comp_method = CompressionMethod(compression)
-        job_name = f"Manual: {source} → {target}"
+        job_name = f"手动：{source} → {target}"
         
         # Run replication in a background thread so user gets immediate feedback
         thread = threading.Thread(
@@ -213,7 +213,7 @@ async def send_receive_execute(
         
         # Redirect to history page where the active execution will be visible
         return RedirectResponse(
-            url=f"/zfs/replication/history?message=Replication started: {source} → {target}",
+            url=f"/zfs/replication/history?message=复制已启动：{source} → {target}",
             status_code=303
         )
     except Exception as e:
@@ -227,7 +227,7 @@ async def send_receive_execute(
                 "snapshots": snapshots,
                 "compression_methods": [c.value for c in CompressionMethod],
                 "error": str(e),
-                "page_title": "ZFS Send/Receive"
+                "page_title": "ZFS 发送/接收"
             }
         )
 
@@ -252,7 +252,7 @@ async def estimate_size(
             name="zfs/replication/estimate_result.jinja",
             context={
                 "estimate": estimate,
-                "page_title": "Transfer Size Estimate"
+                "page_title": "传输大小估算"
             }
         )
     except Exception as e:
@@ -287,7 +287,7 @@ async def syncoid_index(request: Request):
                 "ssh_connections": ssh_connections,
                 "scheduled_jobs": scheduled_jobs,
                 "system": system,
-                "page_title": "Syncoid Replication"
+                "page_title": "Syncoid 复制"
             }
         )
     except Exception as e:
@@ -300,7 +300,7 @@ async def syncoid_index(request: Request):
                 "scheduled_jobs": [],
                 "system": platform.system(),
                 "error": str(e),
-                "page_title": "Syncoid Replication"
+                "page_title": "Syncoid 复制"
             }
         )
 
@@ -316,7 +316,7 @@ async def test_remote_connection(data: Dict = Body(...)):
         if not ssh_connection_id:
             return JSONResponse({
                 "success": False,
-                "error": "SSH connection is required"
+                "error": "需要 SSH 连接"
             })
         
         # Get the SSH connection
@@ -324,7 +324,7 @@ async def test_remote_connection(data: Dict = Body(...)):
         if not connection:
             return JSONResponse({
                 "success": False,
-                "error": "SSH connection not found"
+                "error": "未找到 SSH 连接"
             })
         
         # Get list of datasets from remote using key-based authentication
@@ -356,7 +356,7 @@ async def test_remote_connection(data: Dict = Body(...)):
                 return JSONResponse({
                     "success": True,
                     "datasets": datasets,
-                    "message": f"Connected to {connection['name']} successfully",
+                    "message": f"已成功连接到 {connection['name']}",
                     "connection": {
                         "id": connection['id'],
                         "name": connection['name'],
@@ -366,20 +366,20 @@ async def test_remote_connection(data: Dict = Body(...)):
                     }
                 })
             else:
-                error_msg = process.stderr if process.stderr else "Connection failed"
+                error_msg = process.stderr if process.stderr else "连接失败"
                 return JSONResponse({
                     "success": False,
-                    "error": f"Failed to connect: {error_msg}"
+                    "error": f"连接失败：{error_msg}"
                 })
         except subprocess.TimeoutExpired:
             return JSONResponse({
                 "success": False,
-                "error": "Connection timeout (30 seconds)"
+                "error": "连接超时（30 秒）"
             })
         except Exception as e:
             return JSONResponse({
                 "success": False,
-                "error": f"Failed to test connection: {str(e)}"
+                "error": f"测试连接失败：{str(e)}"
             })
             
     except Exception as e:
@@ -424,7 +424,7 @@ async def check_large_blocks(data: Dict = Body(...)):
         if not dataset:
             return JSONResponse({
                 "success": False,
-                "error": "Dataset name is required"
+                "error": "必须提供数据集名称"
             })
 
         # Snapshots inherit block size from their dataset
@@ -436,7 +436,7 @@ async def check_large_blocks(data: Dict = Body(...)):
             if not connection:
                 return JSONResponse({
                     "success": False,
-                    "error": "SSH connection not found"
+                    "error": "未找到 SSH 连接"
                 })
             # Validate the name locally before it is sent to a shell
             dataset_service.validate_dataset_name(dataset)
@@ -459,7 +459,7 @@ async def check_large_blocks(data: Dict = Body(...)):
             if process.returncode != 0:
                 return JSONResponse({
                     "success": False,
-                    "error": process.stderr or "Failed to read block size"
+                    "error": process.stderr or "读取块大小失败"
                 })
             block_size_bytes = 0
             for line in process.stdout.strip().split('\n'):
@@ -500,7 +500,7 @@ async def replication_history(request: Request, limit: int = 50, offset: int = 0
                 "active_executions": active_executions,
                 "limit": limit,
                 "offset": offset,
-                "page_title": "Replication History"
+                "page_title": "复制历史"
             }
         )
     except Exception as e:
@@ -511,7 +511,7 @@ async def replication_history(request: Request, limit: int = 50, offset: int = 0
                 "history": [],
                 "active_executions": [],
                 "error": str(e),
-                "page_title": "Replication History"
+                "page_title": "复制历史"
             }
         )
 
@@ -527,7 +527,7 @@ async def execution_detail(request: Request, execution_id: int):
                 request,
                 name="partials/error.jinja",
                 context={
-                    "error": f"Execution {execution_id} not found",
+                    "error": f"未找到执行记录 {execution_id}",
                     "back_url": "/zfs/replication/history"
                 }
             )
@@ -537,7 +537,7 @@ async def execution_detail(request: Request, execution_id: int):
             name="zfs/replication/execution_detail.jinja",
             context={
                 "execution": execution,
-                "page_title": f"Execution #{execution_id}"
+                "page_title": f"执行记录 #{execution_id}"
             }
         )
     except Exception as e:
@@ -562,19 +562,19 @@ async def mark_execution_failed(request: Request, execution_id: int):
         success = replication_service.storage.mark_execution_failed(
             execution_id=execution_id,
             error_message=(
-                "Manually marked as failed by user. The background "
-                "replication process was likely no longer running."
+                "用户已手动将此执行标记为失败。后台"
+                "复制进程很可能已不再运行。"
             )
         )
 
         if success:
             return RedirectResponse(
-                url=f"/zfs/replication/history/{execution_id}?message=Execution marked as failed",
+                url=f"/zfs/replication/history/{execution_id}?message=执行已标记为失败",
                 status_code=303
             )
         else:
             return RedirectResponse(
-                url=f"/zfs/replication/history/{execution_id}?error=Could not mark execution as failed (not in running state)",
+                url=f"/zfs/replication/history/{execution_id}?error=无法将执行标记为失败（当前不在运行状态）",
                 status_code=303
             )
     except Exception as e:
@@ -601,7 +601,7 @@ async def delete_execution(request: Request, execution_id: int):
             )
         else:
             return RedirectResponse(
-                url=f"/zfs/replication/history?error=Could not delete execution (it may still be running)",
+                url=f"/zfs/replication/history?error=无法删除执行记录（它可能仍在运行）",
                 status_code=303
             )
     except Exception as e:
@@ -624,7 +624,7 @@ async def execution_error_log(request: Request, execution_id: int):
     execution = replication_service.get_execution_detail(execution_id)
     if not execution:
         return Response(
-            content="Execution not found",
+            content="未找到执行记录",
             status_code=404,
             media_type="text/plain"
         )
@@ -633,12 +633,12 @@ async def execution_error_log(request: Request, execution_id: int):
     kernel_version = platform.release()
     os_version = platform.version()
     machine_arch = platform.machine()
-    zfs_version = get_zfs_version() or "Unknown"
+    zfs_version = get_zfs_version() or "未知"
     python_version = platform.python_version()
     generated_at = dt.now().isoformat()
 
     lines = [
-        "# ZFS Replication Error Log",
+        "# ZFS 复制错误日志",
         "",
         f"**Generated**: {generated_at}",
         f"**Execution ID**: {execution.get('id', 'N/A')}",
@@ -649,12 +649,12 @@ async def execution_error_log(request: Request, execution_id: int):
         "",
         f"| Field | Value |",
         f"|-------|-------|",
-        f"| OS | {os_type} |",
-        f"| Kernel | {kernel_version} |",
-        f"| OS Version | {os_version} |",
-        f"| Architecture | {machine_arch} |",
-        f"| ZFS Version | {zfs_version} |",
-        f"| Python Version | {python_version} |",
+        f"| 操作系统 | {os_type} |",
+        f"| 内核 | {kernel_version} |",
+        f"| 系统版本 | {os_version} |",
+        f"| 架构 | {machine_arch} |",
+        f"| ZFS 版本 | {zfs_version} |",
+        f"| Python 版本 | {python_version} |",
         "",
         "---",
         "",
@@ -662,15 +662,15 @@ async def execution_error_log(request: Request, execution_id: int):
         "",
         f"| Field | Value |",
         f"|-------|-------|",
-        f"| Job Name | {execution.get('job_name', 'N/A')} |",
-        f"| Source Dataset | `{execution.get('source_dataset', 'N/A')}` |",
-        f"| Target Dataset | `{execution.get('target_dataset', 'N/A')}` |",
-        f"| Replication Type | {execution.get('replication_type', 'N/A')} |",
-        f"| Snapshot | `{execution.get('snapshot_name', 'N/A')}` |",
-        f"| Status | {execution.get('status', 'N/A')} |",
-        f"| Started At | {execution.get('started_at', 'N/A')} |",
-        f"| Completed At | {execution.get('completed_at', 'N/A')} |",
-        f"| Duration (seconds) | {execution.get('duration_seconds', 'N/A')} |",
+        f"| 任务名称 | {execution.get('job_name', 'N/A')} |",
+        f"| 源数据集 | `{execution.get('source_dataset', 'N/A')}` |",
+        f"| 目标数据集 | `{execution.get('target_dataset', 'N/A')}` |",
+        f"| 复制类型 | {execution.get('replication_type', 'N/A')} |",
+        f"| 快照 | `{execution.get('snapshot_name', 'N/A')}` |",
+        f"| 状态 | {execution.get('status', 'N/A')} |",
+        f"| 开始时间 | {execution.get('started_at', 'N/A')} |",
+        f"| 完成时间 | {execution.get('completed_at', 'N/A')} |",
+        f"| 持续时间（秒） | {execution.get('duration_seconds', 'N/A')} |",
     ]
 
     command = execution.get('command')
@@ -692,7 +692,7 @@ async def execution_error_log(request: Request, execution_id: int):
             "",
             "---",
             "",
-            "## Error Message",
+            "## 错误信息",
             "",
             "```",
             error_message,
@@ -716,9 +716,9 @@ async def execution_error_log(request: Request, execution_id: int):
         "",
         "---",
         "",
-        "## Additional Notes",
+        "## 附加说明",
         "",
-        "*Add any additional context or steps to reproduce the issue here.*",
+        "*如有其他相关背景或问题复现步骤，请在此补充。*",
         "",
     ])
 
@@ -749,7 +749,7 @@ async def execution_progress(execution_id: int):
         if not detail:
             return JSONResponse({
                 "success": False,
-                "error": "Execution not found"
+                "error": "未找到执行记录"
             }, status_code=404)
 
         progress_updates = detail.get('progress_updates') or []
@@ -800,7 +800,7 @@ async def notification_settings(request: Request):
                 "smtp_port": email_service.smtp_port,
                 "smtp_from_address": email_service.smtp_from_address,
                 "recipients": email_service.notification_recipients,
-                "page_title": "Notification Settings"
+                "page_title": "通知设置"
             }
         )
     except Exception as e:
@@ -810,7 +810,7 @@ async def notification_settings(request: Request):
             context={
                 "is_configured": False,
                 "error": str(e),
-                "page_title": "Notification Settings"
+                "page_title": "通知设置"
             }
         )
 
@@ -823,9 +823,9 @@ async def test_notifications(request: Request):
         result = email_service.test_configuration()
         
         if result['status'] == 'sent':
-            message = "Test email sent successfully!"
+            message = "测试邮件发送成功！"
         else:
-            message = f"Failed to send test email: {result['message']}"
+            message = f"发送测试邮件失败：{result['message']}"
         
         return RedirectResponse(
             url=f"/zfs/replication/notifications/settings?message={message}",
@@ -865,12 +865,12 @@ def _validate_job_dataset(dataset_name: str, field_label: str) -> Optional[str]:
     name".
     """
     if not dataset_name:
-        return f"{field_label} cannot be empty."
+        return f"{field_label} 不能为空。"
     if dataset_name.startswith('/'):
         return (
-            f"{field_label} '{dataset_name}' looks like a mountpoint path. "
-            "Enter the ZFS dataset name instead, for example 'zdata' or "
-            "'zdata/backups', without a leading slash."
+            f"{field_label} '{dataset_name}' 看起来像挂载点路径。"
+            "请输入 ZFS 数据集名称，例如 'zdata' 或 "
+            "'zdata/backups'，且不要以斜杠开头。"
         )
     try:
         ZFSDatasetService.validate_dataset_name(dataset_name)
@@ -901,7 +901,7 @@ def _parse_job_form_error(request: Request, error: str, job=None):
             "schedule_presets": get_schedule_presets(),
             "local_datasets": _list_local_dataset_names(),
             "error": error,
-            "page_title": "Scheduled Syncoid Job"
+            "page_title": "计划 Syncoid 任务"
         }
     )
 
@@ -917,7 +917,7 @@ async def syncoid_job_create_form(request: Request):
             "ssh_connections": ssh_service.list_connections(),
             "schedule_presets": get_schedule_presets(),
             "local_datasets": _list_local_dataset_names(),
-            "page_title": "Create Scheduled Syncoid Job"
+            "page_title": "创建计划 Syncoid 任务"
         }
     )
 
@@ -928,7 +928,7 @@ async def syncoid_job_edit_form(request: Request, job_id: int):
     job = storage_service.get_syncoid_job(job_id)
     if not job:
         return RedirectResponse(
-            url="/zfs/replication/syncoid?error=Scheduled job not found",
+            url="/zfs/replication/syncoid?error=未找到计划任务",
             status_code=303
         )
     return templates.TemplateResponse(
@@ -939,7 +939,7 @@ async def syncoid_job_edit_form(request: Request, job_id: int):
             "ssh_connections": ssh_service.list_connections(),
             "schedule_presets": get_schedule_presets(),
             "local_datasets": _list_local_dataset_names(),
-            "page_title": f"Edit Scheduled Syncoid Job: {job['name']}"
+            "page_title": f"编辑计划 Syncoid 任务：{job['name']}"
         }
     )
 
@@ -1022,7 +1022,7 @@ async def syncoid_job_save(
         if replication_type in ("push", "pull") and not ssh_connection_id:
             return _parse_job_form_error(
                 request,
-                "A SSH connection is required for push and pull jobs.",
+                "A 需要 SSH 连接 for push and pull jobs.",
                 form_job,
             )
         if replication_type == "local":
@@ -1033,7 +1033,7 @@ async def syncoid_job_save(
             connection = ssh_service.get_connection(ssh_connection_id)
             if not connection:
                 return _parse_job_form_error(
-                    request, "Selected SSH connection was not found.", form_job
+                    request, "未找到所选 SSH 连接。", form_job
                 )
 
         if job_id:
@@ -1060,7 +1060,7 @@ async def syncoid_job_save(
             )
             if not updated:
                 return _parse_job_form_error(
-                    request, "Scheduled job not found.", form_job
+                    request, "未找到计划任务.", form_job
                 )
             action = "updated"
         else:
@@ -1170,7 +1170,7 @@ async def syncoid_job_run_now(request: Request, job_id: int):
         job = storage_service.get_syncoid_job(job_id)
         if not job:
             return RedirectResponse(
-                url="/zfs/replication/syncoid?error=Scheduled job not found",
+                url="/zfs/replication/syncoid?error=未找到计划任务",
                 status_code=303
             )
 
@@ -1185,7 +1185,7 @@ async def syncoid_job_run_now(request: Request, job_id: int):
         return RedirectResponse(
             url=(
                 "/zfs/replication/history?message="
-                f"Job '{job['name']}' started; progress appears here"
+                f"任务“{job['name']}”已启动；进度将显示在此处"
             ),
             status_code=303
         )

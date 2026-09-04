@@ -6,20 +6,20 @@
 <div class="container mx-auto px-4 py-8 max-w-4xl">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils" class="hover:text-primary-400">Utilities</a>
+        <a href="/utils" class="hover:text-primary-400">实用工具</a>
         <span class="mx-2">/</span>
-        <a href="/utils/scheduling" class="hover:text-primary-400">Scheduling</a>
+        <a href="/utils/scheduling" class="hover:text-primary-400">计划任务</a>
         <span class="mx-2">/</span>
-        <span class="text-text-primary">{% if task %}Edit Task{% else %}New Task{% endif %}</span>
+        <span class="text-text-primary">{% if task %}编辑任务{% else %}新建任务{% endif %}</span>
     </nav>
 
     <!-- Page Header -->
     <div class="mb-6">
         <h1 class="text-3xl font-bold text-text-primary mb-2">
-            {% if task %}Edit Scheduled Task{% else %}Create Scheduled Task{% endif %}
+            {% if task %}编辑计划任务{% else %}创建计划任务{% endif %}
         </h1>
         <p class="text-text-secondary text-sm">
-            The schedule is registered with the operating system scheduler as soon as it is saved
+            保存后，计划会立即注册到操作系统调度器中
         </p>
     </div>
 
@@ -35,23 +35,23 @@
                 <!-- record cannot change after it exists) -->
                 {% if not task %}
                 <div class="mb-6">
-                    <label class="form-label" for="task_type_selector">Task Type</label>
+                    <label class="form-label" for="task_type_selector">任务类型</label>
                     <select id="task_type_selector" class="form-select">
-                        <option value="scrub" {% if task_type == 'scrub' %}selected{% endif %}>Pool Scrub</option>
-                        <option value="smart" {% if task_type == 'smart' %}selected{% endif %}>SMART Self-Test</option>
-                        <option value="health" {% if task_type == 'health' %}selected{% endif %}>Health Check</option>
+                        <option value="scrub" {% if task_type == 'scrub' %}selected{% endif %}>存储池数据清洗</option>
+                        <option value="smart" {% if task_type == 'smart' %}selected{% endif %}>SMART 自检</option>
+                        <option value="health" {% if task_type == 'health' %}selected{% endif %}>健康检查</option>
                     </select>
                     <p class="text-text-tertiary text-xs mt-1">
-                        Replication jobs are created on the
-                        <a href="/zfs/replication/syncoid/jobs/create/form" class="text-primary-400 hover:text-primary-300">Syncoid page</a>
-                        because they need connection and transport options.
+                        数据复制任务请在
+                        <a href="/zfs/replication/syncoid/jobs/create/form" class="text-primary-400 hover:text-primary-300">Syncoid 页面</a>
+                        创建，因为它们需要连接和传输选项。
                     </p>
                 </div>
                 {% else %}
                 <div class="mb-6">
                     <p class="text-text-secondary text-sm">
-                        Task type: <span class="text-text-primary font-medium">
-                        {% if task_type == 'scrub' %}Pool Scrub{% elif task_type == 'smart' %}SMART Self-Test{% else %}Health Check{% endif %}
+                        任务类型：<span class="text-text-primary font-medium">
+                        {% if task_type == 'scrub' %}存储池数据清洗{% elif task_type == 'smart' %}SMART 自检{% else %}健康检查{% endif %}
                         </span>
                     </p>
                 </div>
@@ -59,9 +59,9 @@
 
                 <!-- Scrub fields -->
                 <div id="fields-scrub" class="mb-6 {% if task_type != 'scrub' %}hidden{% endif %}">
-                    <label class="form-label" for="pool">ZFS Pool</label>
+                    <label class="form-label" for="pool">ZFS 存储池</label>
                     <select name="pool" id="pool" class="form-select">
-                        <option value="">Select a pool...</option>
+                        <option value="">请选择存储池……</option>
                         {% for pool in pools %}
                         <option value="{{ pool }}" {% if task and task.pool == pool %}selected{% endif %}>{{ pool }}</option>
                         {% endfor %}
@@ -71,19 +71,19 @@
                 <!-- SMART fields -->
                 <div id="fields-smart" class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4 {% if task_type != 'smart' %}hidden{% endif %}">
                     <div>
-                        <label class="form-label" for="disk">Disk</label>
+                        <label class="form-label" for="disk">磁盘</label>
                         <select name="disk" id="disk" class="form-select">
-                            <option value="">Select a disk...</option>
+                            <option value="">请选择磁盘……</option>
                             {% for disk in disks %}
                             <option value="{{ disk }}" {% if task and task.disk == disk %}selected{% endif %}>{{ disk }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div>
-                        <label class="form-label" for="test_type">Test Type</label>
+                        <label class="form-label" for="test_type">测试类型</label>
                         <select name="test_type" id="test_type" class="form-select">
-                            <option value="short" {% if task and task.test_type == 'short' %}selected{% endif %}>Short (a few minutes)</option>
-                            <option value="long" {% if task and task.test_type == 'long' %}selected{% endif %}>Long (hours)</option>
+                            <option value="short" {% if task and task.test_type == 'short' %}selected{% endif %}>短测试（几分钟）</option>
+                            <option value="long" {% if task and task.test_type == 'long' %}selected{% endif %}>长测试（数小时）</option>
                         </select>
                     </div>
                 </div>
@@ -91,69 +91,69 @@
                 <!-- Health check fields -->
                 <div id="fields-health" class="mb-6 {% if task_type != 'health' %}hidden{% endif %}">
                     <div class="mb-4">
-                        <label class="form-label" for="name">Schedule Name</label>
+                        <label class="form-label" for="name">计划名称</label>
                         <input type="text" name="name" id="name" class="form-input"
                                value="{{ task.name if task and task.name else '' }}"
-                               placeholder="e.g., Weekly full health report">
+                               placeholder="例如：每周完整健康报告">
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <label class="flex items-center">
                             <input type="checkbox" name="check_disk_health" value="true" class="form-checkbox"
                                    {% if not task or task.check_disk_health %}checked{% endif %}>
-                            <span class="ml-3 text-text-secondary">Check disk health</span>
+                            <span class="ml-3 text-text-secondary">检查磁盘健康状况</span>
                         </label>
                         <label class="flex items-center">
                             <input type="checkbox" name="check_smart_tests" value="true" class="form-checkbox"
                                    {% if not task or task.check_smart_tests %}checked{% endif %}>
-                            <span class="ml-3 text-text-secondary">Check SMART test coverage</span>
+                            <span class="ml-3 text-text-secondary">检查 SMART 测试覆盖情况</span>
                         </label>
                         <label class="flex items-center">
                             <input type="checkbox" name="check_scrubs" value="true" class="form-checkbox"
                                    {% if not task or task.check_scrubs %}checked{% endif %}>
-                            <span class="ml-3 text-text-secondary">Check scrub status</span>
+                            <span class="ml-3 text-text-secondary">检查数据清洗状态</span>
                         </label>
                         <label class="flex items-center">
                             <input type="checkbox" name="aggressive_hours" value="true" class="form-checkbox"
                                    {% if task and task.aggressive_hours %}checked{% endif %}>
-                            <span class="ml-3 text-text-secondary">Aggressive power-on hour thresholds</span>
+                            <span class="ml-3 text-text-secondary">使用更严格的通电时长阈值</span>
                         </label>
                     </div>
                 </div>
 
                 <!-- Schedule -->
                 <div class="mb-6">
-                    <h3 class="font-semibold text-lg mb-4 text-text-primary">Schedule</h3>
+                    <h3 class="font-semibold text-lg mb-4 text-text-primary">计划</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="form-label" for="schedule_preset">Preset</label>
+                            <label class="form-label" for="schedule_preset">预设</label>
                             <select id="schedule_preset" class="form-select">
-                                <option value="">Custom</option>
+                                <option value="">自定义</option>
                                 {% for preset in schedule_presets %}
                                 <option value="{{ preset.expression }}" {% if task and task.schedule == preset.expression %}selected{% endif %}>{{ preset.label }}</option>
                                 {% endfor %}
                             </select>
                         </div>
                         <div>
-                            <label class="form-label" for="schedule">Cron Expression</label>
+                            <label class="form-label" for="schedule">Cron 表达式</label>
                             <input type="text" name="schedule" id="schedule" required class="form-input"
                                    value="{{ task.schedule if task else '0 2 * * 0' }}" placeholder="0 2 * * 0">
-                            <p id="schedule-status" class="text-text-tertiary text-xs mt-1">minute hour day month weekday (local time)</p>
+                            <p id="schedule-status" class="text-text-tertiary text-xs mt-1">分钟 小时 日期 月份 星期（本地时间）</p>
                         </div>
                     </div>
                     <div id="next-runs" class="hidden mt-3 bg-bg-elevated-3 border border-border-default rounded-lg px-4 py-3 text-sm text-text-secondary"></div>
                     <label class="flex items-center mt-4">
                         <input type="checkbox" name="enabled" value="true" class="form-checkbox"
                                {% if not task or task.enabled %}checked{% endif %}>
-                        <span class="ml-3 text-text-secondary">Enabled (task runs on schedule)</span>
+                        <span class="ml-3 text-text-secondary">启用（任务将按计划运行）</span>
                     </label>
                 </div>
 
                 <!-- Actions -->
                 <div class="flex items-center justify-between pt-4 border-t border-border-subtle">
                     <button type="submit" class="btn-primary">
-                        {% if task %}Save Changes{% else %}Create Task{% endif %}
+                        {% if task %}保存更改{% else %}创建任务{% endif %}
                     </button>
-                    <a href="/utils/scheduling" class="btn-secondary">Cancel</a>
+                    <a href="/utils/scheduling" class="btn-secondary">取消</a>
                 </div>
             </form>
         </div>
@@ -205,18 +205,18 @@
             });
             const data = await response.json();
             if (data.valid) {
-                scheduleStatus.textContent = 'Valid schedule';
+                scheduleStatus.textContent = '计划表达式有效';
                 scheduleStatus.className = 'text-success-400 text-xs mt-1';
                 nextRunsBox.classList.remove('hidden');
-                nextRunsBox.innerHTML = '<strong class="text-text-primary">Next runs:</strong> '
+                nextRunsBox.innerHTML = '<strong class="text-text-primary">下次运行：</strong> '
                     + data.next_runs.join(', ');
             } else {
-                scheduleStatus.textContent = data.error || 'Invalid schedule';
+                scheduleStatus.textContent = data.error || '计划表达式无效';
                 scheduleStatus.className = 'text-danger-400 text-xs mt-1';
                 nextRunsBox.classList.add('hidden');
             }
         } catch (err) {
-            scheduleStatus.textContent = 'Could not validate schedule';
+            scheduleStatus.textContent = '无法校验计划表达式';
             scheduleStatus.className = 'text-warning-400 text-xs mt-1';
         }
     }

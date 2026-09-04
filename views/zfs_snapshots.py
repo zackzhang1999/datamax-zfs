@@ -30,7 +30,7 @@ async def snapshots_index(
         name="zfs/snapshots/index.jinja",
         context={
             "selected_dataset": dataset,
-            "page_title": "ZFS Snapshots"
+            "page_title": "ZFS 快照"
         }
     )
 
@@ -102,7 +102,7 @@ async def create_snapshot_form(
                 "dataset": dataset,
                 "datasets": datasets,
                 "default_snapshot_name": default_snapshot_name,
-                "page_title": "Create Snapshot"
+                "page_title": "创建快照"
             }
         )
     except Exception as e:
@@ -112,8 +112,8 @@ async def create_snapshot_form(
             context={
                 "dataset": dataset,
                 "datasets": [],
-                "error": f"Failed to load datasets: {str(e)}",
-                "page_title": "Create Snapshot"
+                "error": f"加载数据集失败：{str(e)}",
+                "page_title": "创建快照"
             }
         )
 
@@ -181,7 +181,7 @@ async def create_snapshot(
         audit_logger.log_snapshot_create(user=current_user, snapshot_name=full_name, recursive=recursive)
         
         return RedirectResponse(
-            url=f"/zfs/snapshots?dataset={dataset_name}&message=Snapshot {full_name} created successfully",
+            url=f"/zfs/snapshots?dataset={dataset_name}&message=快照 {full_name} 创建成功",
             status_code=303
         )
     except Exception as e:
@@ -198,7 +198,7 @@ async def create_snapshot(
                 "snapshot_name": snapshot_name,
                 "recursive": recursive,
                 "error": str(e),
-                "page_title": "Create Snapshot"
+                "page_title": "创建快照"
             }
         )
 
@@ -276,7 +276,7 @@ async def snapshot_detail(
             "snapshot_path": snapshot_path,
             "snap_name": snap_name,
             "dataset_name": dataset_name,
-            "page_title": f"Snapshot: {snapshot_path}"
+            "page_title": f"快照：{snapshot_path}"
         }
     )
 
@@ -320,7 +320,7 @@ async def snapshot_detail_data(
         )
     except Exception as e:
         return HTMLResponse(
-            content=f'<div class="card"><div class="p-6"><div class="text-danger-400 font-semibold">Error loading snapshot data</div><p class="text-text-secondary mt-2">{str(e)}</p></div></div>',
+            content=f'<div class="card"><div class="p-6"><div class="text-danger-400 font-semibold">加载快照数据时出错</div><p class="text-text-secondary mt-2">{str(e)}</p></div></div>',
             status_code=200
         )
 
@@ -336,7 +336,7 @@ async def destroy_snapshot_confirm(
         name="zfs/snapshots/destroy_confirm.jinja",
         context={
             "snapshot_name": snapshot_path,
-            "page_title": f"Destroy Snapshot: {snapshot_path}"
+            "page_title": f"销毁快照：{snapshot_path}"
         }
     )
 
@@ -358,15 +358,15 @@ async def destroy_snapshot(
                 name="zfs/snapshots/destroy_confirm.jinja",
                 context={
                     "snapshot_name": snapshot_path,
-                    "error": "Snapshot name confirmation does not match. Please type the exact snapshot name.",
-                    "page_title": f"Destroy Snapshot: {snapshot_path}"
+                    "error": "快照名称确认不匹配。请输入完全一致的快照名称。",
+                    "page_title": f"销毁快照：{snapshot_path}"
                 }
             )
         
         snapshot_service.destroy_snapshot(snapshot_path, defer=defer)
         audit_logger.log_snapshot_destroy(user=current_user, snapshot_name=snapshot_path)
         return RedirectResponse(
-            url="/zfs/snapshots?message=Snapshot destroyed successfully",
+            url="/zfs/snapshots?message=快照销毁成功",
             status_code=303
         )
     except Exception as e:
@@ -377,7 +377,7 @@ async def destroy_snapshot(
             context={
                 "snapshot_name": snapshot_path,
                 "error": str(e),
-                "page_title": f"Destroy Snapshot: {snapshot_path}"
+                "page_title": f"销毁快照：{snapshot_path}"
             }
         )
 
@@ -393,7 +393,7 @@ async def rollback_snapshot_confirm(
         name="zfs/snapshots/rollback_confirm.jinja",
         context={
             "snapshot_name": snapshot_path,
-            "page_title": f"Rollback to Snapshot: {snapshot_path}"
+            "page_title": f"回滚到快照：{snapshot_path}"
         }
     )
 
@@ -415,8 +415,8 @@ async def rollback_snapshot(
                 name="zfs/snapshots/rollback_confirm.jinja",
                 context={
                     "snapshot_name": snapshot_path,
-                    "error": "Snapshot name confirmation does not match. Please type the exact snapshot name.",
-                    "page_title": f"Rollback to Snapshot: {snapshot_path}"
+                    "error": "快照名称确认不匹配。请输入完全一致的快照名称。",
+                    "page_title": f"回滚到快照：{snapshot_path}"
                 }
             )
         
@@ -424,7 +424,7 @@ async def rollback_snapshot(
         audit_logger.log_snapshot_rollback(user=current_user, snapshot_name=snapshot_path, force=force)
         
         return RedirectResponse(
-            url=f"/zfs/snapshots?message=Rollback to {snapshot_path} successful",
+            url=f"/zfs/snapshots?message=已回滚到 {snapshot_path}",
             status_code=303
         )
     except Exception as e:
@@ -435,7 +435,7 @@ async def rollback_snapshot(
             context={
                 "snapshot_name": snapshot_path,
                 "error": str(e),
-                "page_title": f"Rollback to Snapshot: {snapshot_path}"
+                "page_title": f"回滚到快照：{snapshot_path}"
             }
         )
 
@@ -451,7 +451,7 @@ async def clone_snapshot_form(
         name="zfs/snapshots/clone.jinja",
         context={
             "snapshot_name": snapshot_path,
-            "page_title": f"Clone Snapshot: {snapshot_path}"
+            "page_title": f"克隆快照：{snapshot_path}"
         }
     )
 
@@ -469,7 +469,7 @@ async def clone_snapshot(
         audit_logger.log_snapshot_clone(user=current_user, snapshot_name=snapshot_path, target_dataset=target_dataset)
         
         return RedirectResponse(
-            url=f"/zfs/datasets/{target_dataset}?message=Clone created successfully",
+            url=f"/zfs/datasets/{target_dataset}?message=克隆创建成功",
             status_code=303
         )
     except Exception as e:
@@ -481,7 +481,7 @@ async def clone_snapshot(
                 "snapshot_name": snapshot_path,
                 "target_dataset": target_dataset,
                 "error": str(e),
-                "page_title": f"Clone Snapshot: {snapshot_path}"
+                "page_title": f"克隆快照：{snapshot_path}"
             }
         )
 
@@ -501,7 +501,7 @@ async def rename_snapshot_form(
         context={
             "snapshot_name": snapshot_path,
             "current_name": snap_name,
-            "page_title": f"Rename Snapshot: {snapshot_path}"
+            "page_title": f"重命名快照：{snapshot_path}"
         }
     )
 
@@ -535,7 +535,7 @@ async def rename_snapshot(
                 "current_name": snap_name,
                 "new_name": new_name,
                 "error": str(e),
-                "page_title": f"Rename Snapshot: {snapshot_path}"
+                "page_title": f"重命名快照：{snapshot_path}"
             }
         )
 
@@ -556,7 +556,7 @@ async def diff_snapshots_form(
             context={
                 "snapshot1": snapshot1,
                 "snapshots": snapshots,
-                "page_title": "Compare Snapshots"
+                "page_title": "比较快照"
             }
         )
     except Exception as e:
@@ -566,8 +566,8 @@ async def diff_snapshots_form(
             context={
                 "snapshot1": snapshot1,
                 "snapshots": [],
-                "error": f"Failed to load snapshots: {str(e)}",
-                "page_title": "Compare Snapshots"
+                "error": f"加载快照失败：{str(e)}",
+                "page_title": "比较快照"
             }
         )
 
@@ -620,7 +620,7 @@ End of Report
         )
     except Exception as e:
         return PlainTextResponse(
-            content=f"Error generating download: {str(e)}",
+            content=f"生成下载内容时出错：{str(e)}",
             status_code=500
         )
 
@@ -646,8 +646,8 @@ async def diff_snapshots(
                 "snapshot1": "",
                 "snapshot2": snapshot2,
                 "snapshots": snapshots,
-                "error": "Please select the first snapshot to compare",
-                "page_title": "Compare Snapshots"
+                "error": "请选择要对比的第一个快照",
+                "page_title": "比较快照"
             }
         )
 
@@ -669,8 +669,8 @@ async def diff_snapshots(
                         "snapshot1": snapshot1,
                         "snapshot2": snapshot2,
                         "snapshots": snapshots,
-                        "error": f"Cannot compare snapshots from different datasets: '{dataset1}' vs '{dataset2}'. Both snapshots must be from the same dataset.",
-                        "page_title": "Compare Snapshots"
+                        "error": f"无法对比来自不同数据集的快照：“{dataset1}”与“{dataset2}”。两个快照必须来自同一数据集。",
+                        "page_title": "比较快照"
                     }
                 )
         except:
@@ -684,7 +684,7 @@ async def diff_snapshots(
             "snapshot1": snapshot1,
             "snapshot2": snapshot2 if snapshot2 else "current state",
             "snapshot2_raw": snapshot2,
-            "page_title": "Snapshot Diff"
+            "page_title": "快照差异"
         }
     )
 
@@ -738,7 +738,7 @@ async def diff_snapshots_htmx(
         )
     except Exception as e:
         return HTMLResponse(
-            content=f'<div class="card"><div class="p-6"><div class="text-danger-400 font-semibold">Error computing diff</div><p class="text-text-secondary mt-2">{str(e)}</p></div></div>',
+            content=f'<div class="card"><div class="p-6"><div class="text-danger-400 font-semibold">计算差异时出错</div><p class="text-text-secondary mt-2">{str(e)}</p></div></div>',
             status_code=200
         )
 
@@ -753,7 +753,7 @@ async def hold_snapshot(
     try:
         snapshot_service.hold_snapshot(snapshot_path, tag)
         return RedirectResponse(
-            url=f"/zfs/snapshots/{snapshot_path}/detail?message=Hold placed successfully",
+            url=f"/zfs/snapshots/{snapshot_path}/detail?message=保留标记设置成功",
             status_code=303
         )
     except Exception as e:
@@ -773,7 +773,7 @@ async def release_snapshot(
     try:
         snapshot_service.release_snapshot(snapshot_path, tag)
         return RedirectResponse(
-            url=f"/zfs/snapshots/{snapshot_path}/detail?message=Hold released successfully",
+            url=f"/zfs/snapshots/{snapshot_path}/detail?message=保留标记已释放",
             status_code=303
         )
     except Exception as e:
@@ -799,8 +799,8 @@ async def sanoid_index(request: Request):
                     "status": status,
                     "datasets": {},
                     "templates": {},
-                    "error": "Sanoid is not installed on this system",
-                    "page_title": "Sanoid Scheduling"
+                    "error": "此系统未安装 Sanoid",
+                    "page_title": "Sanoid 计划"
                 }
             )
         
@@ -818,7 +818,7 @@ async def sanoid_index(request: Request):
                 "datasets": config.get('datasets', {}),
                 "templates": config.get('templates', {}),
                 "error": redirect_error,
-                "page_title": "Sanoid Scheduling"
+                "page_title": "Sanoid 计划"
             }
         )
     except Exception as e:
@@ -830,7 +830,7 @@ async def sanoid_index(request: Request):
                 "datasets": {},
                 "templates": {},
                 "error": str(e),
-                "page_title": "Sanoid Scheduling"
+                "page_title": "Sanoid 计划"
             }
         )
 
@@ -849,13 +849,13 @@ async def run_sanoid(
         )
         
         if result['success']:
-            message = "Sanoid executed successfully"
+            message = "Sanoid 执行成功"
             if take_snapshots:
                 message += " - Snapshots taken"
             if prune_snapshots:
                 message += " - Snapshots pruned"
         else:
-            message = f"Sanoid execution failed: {result['stderr']}"
+            message = f"Sanoid 执行失败：{result['stderr']}"
         
         return RedirectResponse(
             url=f"/zfs/snapshots/sanoid?message={message}",
@@ -875,9 +875,9 @@ async def validate_sanoid_config(request: Request):
         validation = sanoid_service.validate_config()
         
         if validation['valid']:
-            message = f"Configuration is valid - {validation['dataset_count']} datasets, {validation['template_count']} templates"
+            message = f"配置有效 - {validation['dataset_count']} 个数据集，{validation['template_count']} 个模板"
         else:
-            message = f"Configuration has errors: {', '.join(validation['errors'])}"
+            message = f"配置存在错误：{', '.join(validation['errors'])}"
         
         return RedirectResponse(
             url=f"/zfs/snapshots/sanoid?message={message}",
@@ -925,7 +925,7 @@ async def add_sanoid_dataset_form(request: Request):
             context={
                 "datasets": datasets,
                 "templates": sanoid_templates,
-                "page_title": "Add Dataset to Sanoid"
+                "page_title": "将数据集添加到 Sanoid"
             }
         )
     except Exception as e:
@@ -936,7 +936,7 @@ async def add_sanoid_dataset_form(request: Request):
                 "datasets": [],
                 "templates": {},
                 "error": str(e),
-                "page_title": "Add Dataset to Sanoid"
+                "page_title": "将数据集添加到 Sanoid"
             }
         )
 
@@ -954,12 +954,12 @@ async def add_sanoid_dataset(
     # error message instead of a raw HTTP 422 response.
     if not dataset_name:
         return RedirectResponse(
-            url="/zfs/snapshots/sanoid?error=No dataset selected. Choose a dataset to add.",
+            url="/zfs/snapshots/sanoid?error=未选择数据集。请选择要添加的数据集。",
             status_code=303
         )
     if not template:
         return RedirectResponse(
-            url="/zfs/snapshots/sanoid?error=A snapshot policy template must be created before adding datasets.",
+            url="/zfs/snapshots/sanoid?error=添加数据集之前，必须先创建快照策略模板。",
             status_code=303
         )
     try:
@@ -986,7 +986,7 @@ async def create_sanoid_template_form(request: Request):
         request,
         name="zfs/snapshots/sanoid_template_create.jinja",
         context={
-            "page_title": "Create Snapshot Policy Template"
+            "page_title": "创建快照策略模板"
         }
     )
 
@@ -1020,7 +1020,7 @@ async def create_sanoid_template(
         sanoid_service.create_template(template_name, settings)
         
         return RedirectResponse(
-            url=f"/zfs/snapshots/sanoid?message=Template '{template_name}' created successfully",
+            url=f"/zfs/snapshots/sanoid?message=模板“{template_name}”创建成功",
             status_code=303
         )
     except Exception as e:
@@ -1041,7 +1041,7 @@ async def edit_sanoid_template_form(request: Request, template_name: str):
         template_data = sanoid_templates.get(template_name)
         if not template_data:
             return RedirectResponse(
-                url=f"/zfs/snapshots/sanoid?error=Template {template_name} not found",
+                url=f"/zfs/snapshots/sanoid?error=未找到模板 {template_name}",
                 status_code=303
             )
         
@@ -1095,7 +1095,7 @@ async def edit_sanoid_template(
         
         display_name = template_name.replace('template_', '')
         return RedirectResponse(
-            url=f"/zfs/snapshots/sanoid?message=Template '{display_name}' updated successfully",
+            url=f"/zfs/snapshots/sanoid?message=模板“{display_name}”更新成功",
             status_code=303
         )
     except Exception as e:
@@ -1117,7 +1117,7 @@ async def edit_sanoid_dataset_form(request: Request, dataset_name: str):
         dataset_data = datasets.get(dataset_name)
         if not dataset_data:
             return RedirectResponse(
-                url=f"/zfs/snapshots/sanoid?error=Dataset {dataset_name} not found",
+                url=f"/zfs/snapshots/sanoid?error=未找到数据集 {dataset_name}",
                 status_code=303
             )
         
@@ -1155,7 +1155,7 @@ async def edit_sanoid_dataset(
         sanoid_service.update_dataset(dataset_name, settings)
         
         return RedirectResponse(
-            url=f"/zfs/snapshots/sanoid?message=Dataset '{dataset_name}' updated successfully",
+            url=f"/zfs/snapshots/sanoid?message=数据集“{dataset_name}”更新成功",
             status_code=303
         )
     except Exception as e:
@@ -1172,7 +1172,7 @@ async def delete_sanoid_template(request: Request, template_name: str):
         sanoid_service.delete_template(template_name)
         display_name = template_name.replace('template_', '')
         return RedirectResponse(
-            url=f"/zfs/snapshots/sanoid?message=Policy '{display_name}' deleted successfully",
+            url=f"/zfs/snapshots/sanoid?message=策略“{display_name}”删除成功",
             status_code=303
         )
     except Exception as e:

@@ -4,21 +4,21 @@
 <div class="container mx-auto px-4 py-8 max-w-4xl">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm text-text-secondary mb-4 flex items-center gap-2">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
-        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">Snapshots</a>
+        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">快照</a>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
-        <span class="text-text-primary">Clone</span>
+        <span class="text-text-primary">克隆</span>
     </nav>
 
     <!-- Page Header -->
     <div class="mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">Clone Snapshot</h1>
-        <p class="text-text-secondary mt-2">Create a new writable dataset from a snapshot</p>
+        <h1 class="text-3xl font-bold text-text-primary">克隆快照</h1>
+        <p class="text-text-secondary mt-2">从快照创建一个新的可写数据集</p>
     </div>
 
     <!-- Error Message -->
@@ -29,7 +29,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <div class="text-sm">
-                <strong class="text-danger-400">Error:</strong>
+                <strong class="text-danger-400">错误：</strong>
                 <span class="text-text-secondary">{{ error }}</span>
             </div>
         </div>
@@ -43,17 +43,17 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <div class="text-sm">
-                <strong class="text-info-400">About Cloning:</strong>
-                <span class="text-text-secondary">Cloning creates a new writable dataset that initially shares all data with the snapshot. 
-                This is much faster than copying data and uses minimal space initially. As the clone diverges from the snapshot, 
-                it will consume additional space.</span>
+                <strong class="text-info-400">关于克隆：</strong>
+                <span class="text-text-secondary">克隆会创建一个新的可写数据集，初始时与快照共享全部数据。
+                这比复制数据快得多，且初始时几乎不占用空间。随着克隆与快照逐渐产生差异，
+                它将占用额外的空间。</span>
             </div>
         </div>
     </div>
 
     <!-- Source Snapshot Info -->
     <div class="card mb-6">
-        <h3 class="text-sm font-semibold text-text-secondary mb-2">Source Snapshot:</h3>
+        <h3 class="text-sm font-semibold text-text-secondary mb-2">源快照：</h3>
         <code class="px-3 py-2 bg-bg-elevated-2 border border-success-900 text-success-400 rounded-md inline-block">{{ snapshot_name }}</code>
     </div>
 
@@ -63,7 +63,7 @@
             <!-- Target Dataset Name -->
             <div class="mb-6">
                 <label for="target_dataset" class="form-label">
-                    Target Dataset Name <span class="text-danger-400">*</span>
+                    目标数据集名称 <span class="text-danger-400">*</span>
                 </label>
                 <input 
                     type="text" 
@@ -71,12 +71,12 @@
                     name="target_dataset" 
                     value="{{ target_dataset or '' }}"
                     required
-                    placeholder="e.g., tank/clones/restored-data or tank/test-environment"
+                    placeholder="例如：tank/clones/restored-data 或 tank/test-environment"
                     pattern="[a-zA-Z0-9_/\-]+"
                     class="form-input"
                 >
                 <p class="text-text-tertiary text-xs mt-1">
-                    The full path for the new cloned dataset. Use alphanumeric characters, hyphens, underscores, and forward slashes only.
+                    新克隆数据集的完整路径。只能使用字母数字、连字符、下划线和正斜杠。
                 </p>
             </div>
 
@@ -86,22 +86,22 @@
                     <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
-                    Clone Use Cases
+                    克隆使用场景
                 </h3>
                 <div class="space-y-3 text-xs">
                     <div>
-                        <strong class="text-success-400">Data Recovery:</strong>
-                        <p class="text-text-secondary">Clone a snapshot to recover deleted or corrupted files without affecting the original dataset.</p>
+                        <strong class="text-success-400">数据恢复：</strong>
+                        <p class="text-text-secondary">克隆快照以恢复已删除或损坏的文件，同时不影响原始数据集。</p>
                         <code class="text-info-400 text-xs bg-bg-elevated-2 px-2 py-1 rounded inline-block mt-1">tank/backup/recovered-2025-11-16</code>
                     </div>
                     <div>
-                        <strong class="text-success-400">Testing/Development:</strong>
-                        <p class="text-text-secondary">Create a test environment with production data without risking the original.</p>
+                        <strong class="text-success-400">测试/开发：</strong>
+                        <p class="text-text-secondary">使用生产数据创建测试环境，而不危及原始数据。</p>
                         <code class="text-info-400 text-xs bg-bg-elevated-2 px-2 py-1 rounded inline-block mt-1">tank/test/dev-environment</code>
                     </div>
                     <div>
-                        <strong class="text-success-400">Point-in-Time Access:</strong>
-                        <p class="text-text-secondary">Make a writable copy of data as it existed at a specific time.</p>
+                        <strong class="text-success-400">时间点访问：</strong>
+                        <p class="text-text-secondary">创建数据在特定时间点状态的可写副本。</p>
                         <code class="text-info-400 text-xs bg-bg-elevated-2 px-2 py-1 rounded inline-block mt-1">tank/archive/project-v1.0</code>
                     </div>
                 </div>
@@ -113,38 +113,38 @@
                     <svg class="w-4 h-4 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                     </svg>
-                    Clone Characteristics
+                    克隆特性
                 </h3>
                 <ul class="text-xs text-text-secondary space-y-2">
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 text-success-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
-                        <span><strong>Instant Creation:</strong> Clones are created almost instantly, regardless of dataset size</span>
+                        <span><strong>即时创建：</strong>无论数据集大小，克隆几乎即刻完成创建</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 text-success-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
-                        <span><strong>Space Efficient:</strong> Initially uses almost no additional space (only metadata)</span>
+                        <span><strong>空间高效：</strong>初始时几乎不占用额外空间（仅元数据）</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 text-success-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
-                        <span><strong>Fully Writable:</strong> The clone is a normal dataset that can be modified freely</span>
+                        <span><strong>完全可写：</strong>克隆是一个可自由修改的普通数据集</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 text-success-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
-                        <span><strong>Independent:</strong> Once promoted, the clone becomes independent of the snapshot</span>
+                        <span><strong>独立性：</strong>提升（promote）之后，克隆将不再依赖于该快照</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 text-warning-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                         </svg>
-                        <span><strong>Dependency:</strong> The source snapshot cannot be deleted while clones exist (unless clone is promoted)</span>
+                        <span><strong>依赖关系：</strong>克隆存在期间无法删除源快照（除非克隆被提升）</span>
                     </li>
                 </ul>
             </div>
@@ -155,32 +155,32 @@
                     <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
                     </svg>
-                    Naming Guidelines
+                    命名指南
                 </h3>
                 <ul class="text-xs text-text-secondary space-y-1">
                     <li class="flex items-start gap-2">
                         <svg class="w-3 h-3 text-text-tertiary flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
-                        <span>Choose a descriptive name that indicates the clone's purpose</span>
+                        <span>选择能表明克隆用途的描述性名称</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <svg class="w-3 h-3 text-text-tertiary flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
-                        <span>Consider using a dedicated clones directory (e.g., pool/clones/...)</span>
+                        <span>考虑使用专门的克隆目录（例如 pool/clones/...）</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <svg class="w-3 h-3 text-text-tertiary flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
-                        <span>Include dates or version numbers if relevant</span>
+                        <span>如有需要，可在名称中包含日期或版本号</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <svg class="w-3 h-3 text-text-tertiary flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
-                        <span>Avoid names that might conflict with existing datasets</span>
+                        <span>避免使用可能与现有数据集冲突的名称</span>
                     </li>
                 </ul>
             </div>
@@ -194,7 +194,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                     </svg>
-                    Create Clone
+                    创建克隆
                 </button>
                 <a 
                     href="/zfs/snapshots/{{ snapshot_name }}/detail" 
@@ -203,7 +203,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
-                    Cancel
+                    取消
                 </a>
             </div>
         </form>
@@ -215,38 +215,38 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
             </svg>
-            After Creating the Clone
+            创建克隆之后
         </h3>
         <ul class="text-xs text-text-secondary space-y-2">
             <li class="flex items-start gap-2">
                 <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
-                <span>The clone will appear as a regular dataset in your dataset list</span>
+                <span>克隆将作为普通数据集出现在你的数据集列表中</span>
             </li>
             <li class="flex items-start gap-2">
                 <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
-                <span>You can mount it, modify it, and manage it like any other dataset</span>
+                <span>你可以像管理其他数据集一样挂载、修改和管理它</span>
             </li>
             <li class="flex items-start gap-2">
                 <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
-                <span>To make the clone fully independent, use the "Promote" action on the cloned dataset</span>
+                <span>要使克隆完全独立，请对克隆的数据集执行“提升（Promote）”操作</span>
             </li>
             <li class="flex items-start gap-2">
                 <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
-                <span>Promoting swaps the dependency, allowing you to delete the original snapshot if needed</span>
+                <span>提升会交换依赖关系，使你可以在需要时删除原始快照</span>
             </li>
             <li class="flex items-start gap-2">
                 <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
-                <span>Monitor space usage as the clone diverges from the snapshot</span>
+                <span>随着克隆与快照产生差异，请注意监控空间占用</span>
             </li>
         </ul>
     </div>

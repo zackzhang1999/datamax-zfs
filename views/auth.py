@@ -45,7 +45,7 @@ def login_page(request: Request):
             request,
             name="login.jinja",
             context={
-                "error": f"Too many login attempts. Please try again in {retry_after} seconds.",
+                "error": f"登录尝试次数过多，请在 {retry_after} 秒后重试。",
                 "rate_limited": True,
                 "retry_after": retry_after,
             },
@@ -70,7 +70,7 @@ def login(
             request,
             name="login.jinja",
             context={
-                "error": f"Too many login attempts. Please try again in {retry_after} seconds.",
+                "error": f"登录尝试次数过多，请在 {retry_after} 秒后重试。",
                 "rate_limited": True,
                 "retry_after": retry_after,
             },
@@ -99,7 +99,7 @@ def login(
     # Build error message
     if remaining == 0:
         retry_after = login_rate_limiter.get_retry_after_seconds(client_ip)
-        error_msg = f"Too many login attempts. Please try again in {retry_after} seconds."
+        error_msg = f"登录尝试次数过多，请在 {retry_after} 秒后重试。"
         
         # Log rate limit triggered
         audit_logger.log_auth_rate_limited(ip_address=client_ip, retry_after=retry_after)
@@ -115,7 +115,7 @@ def login(
             status_code=429,
         )
     else:
-        error_msg = f"Invalid credentials. {remaining} attempt{'s' if remaining != 1 else ''} remaining."
+        error_msg = f"用户名或密码错误，还可尝试 {remaining} 次。"
     
     return templates.TemplateResponse(
         request, name="login.jinja", context={"error": error_msg, "remaining_attempts": remaining}

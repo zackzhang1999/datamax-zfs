@@ -1,0 +1,173 @@
+/* Doubao Design Library Theme
+ * Applied after the main stylesheet and before corner-style overrides.
+ * The design is light, cool-toned, technical and calm: white surfaces,
+ * brand blue #0065fd, border-led separation, and a shared 19.2px radius.
+ */
+
+:root,
+html.dark {
+  /* Background layers */
+  --bg-base: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-elevated-2: #f9f9fa;
+  --bg-elevated-3: #eff1f4;
+
+  /* Text */
+  --text-primary: #0e1115;
+  --text-secondary: #333942;
+  --text-tertiary: #7f8d9f;
+  --text-inverse: #ffffff;
+
+  /* Borders */
+  --border-subtle: #e7eaef;
+  --border-default: #d5dae2;
+  --border-strong: #b6c0ce;
+
+  /* Primary brand blue */
+  --primary-50: #e5f0ff;
+  --primary-400: #2f7df6;
+  --primary-500: #0065fd;
+  --primary-600: #0057da;
+  --primary-700: #0043ad;
+  --primary-900: #002e7d;
+
+  /* Success */
+  --success-400: #15803d;
+  --success-500: #16a34a;
+  --success-600: #15803d;
+  --success-900: #14532d;
+
+  /* Warning */
+  --warning-400: #b45309;
+  --warning-500: #d97706;
+  --warning-600: #b45309;
+  --warning-900: #78350f;
+
+  /* Danger */
+  --danger-400: #dc2626;
+  --danger-500: #ef4444;
+  --danger-600: #b91c1c;
+  --danger-900: #7f1d1d;
+
+  /* Info */
+  --info-400: #0e7490;
+  --info-500: #0891b2;
+  --info-600: #0e7490;
+  --info-900: #164e63;
+
+  /* Purple */
+  --purple-400: #6d28d9;
+  --purple-500: #7c3aed;
+  --purple-600: #6d28d9;
+  --purple-900: #4c1d95;
+
+  /* Compact dashboard rhythm */
+  --space-page: 1.5rem;
+  --space-section: 1.25rem;
+  --space-card: 1.25rem;
+  --space-element: 0.75rem;
+  --space-compact: 0.5rem;
+
+  --radius: 1.2rem;
+}
+
+/* Doubao typography */
+body {
+  font-family: "Stack Sans Text", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Shared radius and border-led surfaces (no drop shadows) */
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-danger,
+.btn-warning,
+.btn-info,
+.btn-ghost,
+a.btn,
+a.btn-primary,
+a.btn-secondary,
+a.btn-success,
+a.btn-danger,
+a.btn-warning,
+a.btn-info,
+a.btn-ghost,
+.card,
+.table-container,
+.card-nested,
+.alert,
+.alert-success,
+.alert-warning,
+.alert-danger,
+.alert-info,
+.form-input,
+.form-select,
+.form-textarea {
+  border-radius: var(--radius);
+}
+
+.btn-primary,
+.btn-success,
+.btn-danger,
+.btn-warning,
+.btn-info,
+.card {
+  box-shadow: none;
+}
+
+.btn-primary:hover,
+.btn-success:hover,
+.btn-danger:hover,
+.btn-warning:hover,
+.btn-info:hover {
+  box-shadow: none;
+}
+
+/* Solid status badges: white text on a saturated semantic fill keeps
+   health/state labels legible on the light Doubao background. */
+.badge-success,
+.badge-warning,
+.badge-danger,
+.badge-info,
+.badge-primary {
+  color: #ffffff;
+  border-color: currentColor;
+}
+
+.badge-success {
+  background-color: var(--success-600);
+  border-color: var(--success-600);
+}
+
+.badge-warning {
+  background-color: var(--warning-500);
+  border-color: var(--warning-500);
+}
+
+.badge-danger {
+  background-color: var(--danger-600);
+  border-color: var(--danger-600);
+}
+
+.badge-info {
+  background-color: var(--info-600);
+  border-color: var(--info-600);
+}
+
+.badge-primary {
+  background-color: var(--primary-600);
+  border-color: var(--primary-600);
+}
+
+.badge-secondary {
+  background-color: var(--bg-elevated-3);
+  color: var(--text-secondary);
+  border-color: var(--border-default);
+}
+
+/* Softer focus rings that match the Doubao ring token */
+*:focus-visible {
+  --tw-ring-color: #557fff;
+}

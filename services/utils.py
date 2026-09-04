@@ -201,7 +201,7 @@ def run_command(args: list[str] | str, *, check: bool = True, text: bool = True)
             stderr=subprocess.STDOUT,
         )
     except Exception as exc:
-        msg = f"Command {args} failed with error:\n{exc}"
+        msg = f"命令 {args} 执行失败：\n{exc}"
         if hasattr(exc, "stdout"):
             msg += "\n{exc.stdout}"
         raise ProcessError(msg)

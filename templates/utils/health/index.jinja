@@ -4,21 +4,21 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils" class="hover:text-primary-400">Utilities</a>
+        <a href="/utils" class="hover:text-primary-400">实用工具</a>
         <span class="mx-2">/</span>
-        <span class="text-text-primary">Health Analysis</span>
+        <span class="text-text-primary">健康分析</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">Health Analysis</h1>
+        <h1 class="text-3xl font-bold text-text-primary">健康分析</h1>
         <div class="flex items-center gap-2">
             <a href="/utils/scheduling/health/new"
                class="btn-secondary px-4 py-2 inline-flex items-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                 </svg>
-                Schedule
+                计划任务
             </a>
             <button type="button"
                     onclick="showConfirm('confirm-new-analysis')"
@@ -26,7 +26,7 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
-                Run New Health Check
+                运行新的健康检查
             </button>
         </div>
     </div>
@@ -40,7 +40,7 @@
 
     {% if request.query_params.get('error') %}
     <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded mb-4">
-        <strong>Error:</strong> {{ request.query_params.get('error') }}
+        <strong>错误：</strong> {{ request.query_params.get('error') }}
     </div>
     {% endif %}
 
@@ -54,8 +54,8 @@
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            <p class="text-text-secondary text-lg">Loading health reports...</p>
-            <p class="text-text-tertiary text-sm mt-1">Retrieving previous analysis results.</p>
+            <p class="text-text-secondary text-lg">正在加载健康报告……</p>
+            <p class="text-text-tertiary text-sm mt-1">正在获取以往的分析结果。</p>
         </div>
     </div>
 
@@ -66,12 +66,12 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            About Health Analysis:
+            关于健康分析：
         </strong>
         <p class="mt-1 text-sm">
-            Health Analysis performs a comprehensive check of your ZFS pools, disk health via SMART data,
-            self-test scheduling, and scrub status. Results are saved for historical comparison.
-            Disk age is estimated from power-on hours and may not reflect exact calendar age.
+            健康分析会对您的 ZFS 存储池、磁盘健康状况（通过 SMART 数据）、
+            自检测试计划和数据清洗状态进行全面检查。检查结果会被保存，用于历史对比。
+            磁盘使用时间根据通电时间估算，可能与实际日历时间不完全一致。
         </p>
     </div>
 </div>
@@ -109,42 +109,42 @@
                     </svg>
                 </div>
 
-                <h3 class="text-xl font-semibold text-text-primary text-center mb-2">Run Health Analysis</h3>
+                <h3 class="text-xl font-semibold text-text-primary text-center mb-2">运行健康分析</h3>
 
                 {% if disk_count > 0 %}
                 <div class="bg-warning-900/30 border border-warning-500/30 rounded-lg p-3 mb-4 text-sm text-warning-400">
                     <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                     </svg>
-                    {{ disk_count }} disk(s) detected. Depending on the number of disks, a full health check may take several minutes.
+                    检测到 {{ disk_count }} 块磁盘。根据磁盘数量，完整的健康检查可能需要几分钟时间。
                 </div>
                 {% endif %}
 
                 <form method="post" action="/utils/health/run" id="health-form">
                     <div class="space-y-4 mb-6">
-                        <h4 class="text-sm font-semibold text-text-secondary uppercase tracking-wider">Select Checks</h4>
+                        <h4 class="text-sm font-semibold text-text-secondary uppercase tracking-wider">选择检查项</h4>
 
                         <label class="flex items-start gap-3 cursor-pointer">
                             <input type="checkbox" name="check_disk_health" class="form-checkbox mt-0.5" checked>
                             <div>
-                                <span class="text-text-primary text-sm font-medium">Check Disk Health</span>
-                                <p class="text-text-tertiary text-xs mt-0.5">Power-on hours, reallocated sectors, uncorrectable errors, temperature, failed tests</p>
+                                <span class="text-text-primary text-sm font-medium">检查磁盘健康状况</span>
+                                <p class="text-text-tertiary text-xs mt-0.5">通电时间、重映射扇区、不可纠正的错误、温度、失败的测试</p>
                             </div>
                         </label>
 
                         <label class="flex items-start gap-3 cursor-pointer">
                             <input type="checkbox" name="check_smart_tests" class="form-checkbox mt-0.5" checked>
                             <div>
-                                <span class="text-text-primary text-sm font-medium">Verify SMART Tests</span>
-                                <p class="text-text-tertiary text-xs mt-0.5">Check that smartctl tests are enabled and have run in the last 30 days</p>
+                                <span class="text-text-primary text-sm font-medium">验证 SMART 测试</span>
+                                <p class="text-text-tertiary text-xs mt-0.5">检查 smartctl 测试是否已启用且在过去 30 天内运行过</p>
                             </div>
                         </label>
 
                         <label class="flex items-start gap-3 cursor-pointer">
                             <input type="checkbox" name="check_scrubs" class="form-checkbox mt-0.5" checked>
                             <div>
-                                <span class="text-text-primary text-sm font-medium">Verify Scrubs</span>
-                                <p class="text-text-tertiary text-xs mt-0.5">Check that ZFS scrubs are scheduled and have run in the last 30 days</p>
+                                <span class="text-text-primary text-sm font-medium">验证数据清洗</span>
+                                <p class="text-text-tertiary text-xs mt-0.5">检查 ZFS 数据清洗是否已计划且在过去 30 天内执行过</p>
                             </div>
                         </label>
 
@@ -153,13 +153,13 @@
                         <label class="flex items-start gap-3 cursor-pointer">
                             <input type="checkbox" name="aggressive_hours" class="form-checkbox mt-0.5">
                             <div>
-                                <span class="text-text-primary text-sm font-medium">Aggressively Determine Hours</span>
+                                <span class="text-text-primary text-sm font-medium">强制获取通电时间</span>
                                 <div class="bg-danger-900/20 border border-danger-500/30 rounded-lg p-2 mt-1">
                                     <p class="text-danger-400 text-xs">
-                                        <strong>Warning:</strong> Some drives report power-on hours in non-standard ways, and some do not report them at all.
-                                        Enabling this option will start and immediately cancel a short SMART test on drives that do not report hours.
-                                        This creates a <strong>permanent entry</strong> in the SMART self-test log.
-                                        It is not recommended to do this regularly.
+                                        <strong>警告：</strong>部分硬盘以非标准方式报告通电时间，有些则完全不报告。
+                                        启用此选项后，会对不报告通电时间的硬盘启动并立即取消一次简短的 SMART 测试。
+                                        这会在 SMART 自检测试日志中留下<strong>永久记录</strong>。
+                                        不建议经常执行此操作。
                                     </p>
                                 </div>
                             </div>
@@ -168,14 +168,14 @@
 
                     <div class="flex space-x-3">
                         <button type="button" class="btn-secondary flex-1" x-on:click="open = false">
-                            Cancel
+                            取消
                         </button>
                         <button type="submit" class="btn-primary flex-1 inline-flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
-                            Run Analysis
+                            运行分析
                         </button>
                     </div>
                 </form>

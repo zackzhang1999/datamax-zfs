@@ -4,7 +4,7 @@
 <div class="space-y-6">
     <!-- Breadcrumb -->
     <nav class="flex items-center text-sm text-text-secondary">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
@@ -12,14 +12,14 @@
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
-        <span class="text-text-primary font-medium">History</span>
+        <span class="text-text-primary font-medium">历史记录</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h1 class="text-3xl font-bold text-text-primary">Pool History: {{ pool_name }}</h1>
-            <p class="text-text-secondary mt-1">Command history and operations log</p>
+            <h1 class="text-3xl font-bold text-text-primary">存储池历史记录：{{ pool_name }}</h1>
+            <p class="text-text-secondary mt-1">命令历史与操作日志</p>
         </div>
         <div class="flex gap-2">
             <a href="/zfs/pools/{{ pool_name }}/history/download" 
@@ -28,13 +28,13 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                 </svg>
-                Download
+                下载
             </a>
             <a href="/zfs/pools/{{ pool_name }}" class="btn-secondary inline-flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                 </svg>
-                Back to Pool
+                返回存储池
             </a>
         </div>
     </div>
@@ -48,7 +48,7 @@
                     <svg class="w-4 h-4 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                     </svg>
-                    Showing <span class="font-semibold text-text-primary">{{ history|length }}</span> history entries
+                    共 <span class="font-semibold text-text-primary">{{ history|length }}</span> 条历史记录
                 </p>
             </div>
         </div>
@@ -64,8 +64,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
             </svg>
         </div>
-        <h3 class="text-xl font-semibold text-text-primary mb-2">No History Found</h3>
-        <p class="text-text-secondary">No history entries found for this pool.</p>
+        <h3 class="text-xl font-semibold text-text-primary mb-2">未找到历史记录</h3>
+        <p class="text-text-secondary">此存储池没有历史记录条目。</p>
     </div>
     {% endif %}
 
@@ -75,7 +75,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
-            Back to Pool Details
+            返回存储池详细信息
         </a>
     </div>
 </div>

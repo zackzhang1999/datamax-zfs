@@ -2,7 +2,7 @@
 
 {% if scrub_status.error %}
 <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded mb-4">
-    <strong>Error:</strong> {{ scrub_status.error }}
+    <strong>错误：</strong> {{ scrub_status.error }}
 </div>
 {% endif %}
 
@@ -17,25 +17,25 @@
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
     <div class="card">
         <div class="card-body py-4">
-            <p class="text-text-tertiary text-xs uppercase tracking-wider">Pools</p>
+            <p class="text-text-tertiary text-xs uppercase tracking-wider">存储池</p>
             <p class="text-2xl font-bold text-text-primary mt-1">{{ pools|length }}</p>
         </div>
     </div>
     <div class="card">
         <div class="card-body py-4">
-            <p class="text-text-tertiary text-xs uppercase tracking-wider">Scrubbing Now</p>
+            <p class="text-text-tertiary text-xs uppercase tracking-wider">正在清洗</p>
             <p class="text-2xl font-bold text-info-400 mt-1">{{ running_count }}</p>
         </div>
     </div>
     <div class="card">
         <div class="card-body py-4">
-            <p class="text-text-tertiary text-xs uppercase tracking-wider">Within 30 Days</p>
+            <p class="text-text-tertiary text-xs uppercase tracking-wider">30 天内已清洗</p>
             <p class="text-2xl font-bold text-success-400 mt-1">{{ recent_count }}</p>
         </div>
     </div>
     <div class="card">
         <div class="card-body py-4">
-            <p class="text-text-tertiary text-xs uppercase tracking-wider">Never Scrubbed</p>
+            <p class="text-text-tertiary text-xs uppercase tracking-wider">从未清洗</p>
             <p class="text-2xl font-bold {% if never_count > 0 %}text-warning-400{% else %}text-text-primary{% endif %} mt-1">{{ never_count }}</p>
         </div>
     </div>
@@ -45,12 +45,12 @@
 <div class="card">
     <div class="card-body">
         <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold text-text-primary">Pool Scrub Status</h2>
+            <h2 class="text-lg font-semibold text-text-primary">存储池数据清洗状态</h2>
             <button hx-get="/utils/scrub/content-partial"
                     hx-target="#scrub-status-container"
                     hx-swap="innerHTML"
                     class="text-text-tertiary hover:text-primary-400 transition-colors"
-                    title="Refresh scrub status">
+                    title="刷新数据清洗状态">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                 </svg>
@@ -61,13 +61,13 @@
             <table class="min-w-full text-sm">
                 <thead>
                     <tr class="border-b border-border-subtle text-text-tertiary text-xs uppercase tracking-wider">
-                        <th class="py-2 pr-4 text-left font-medium">Pool</th>
-                        <th class="py-2 px-4 text-left font-medium">Status</th>
-                        <th class="py-2 px-4 text-left font-medium">Last Scrub</th>
-                        <th class="py-2 px-4 text-left font-medium">Within 30 Days</th>
-                        <th class="py-2 px-4 text-left font-medium">Schedule</th>
-                        <th class="py-2 px-4 text-left font-medium">Details</th>
-                        <th class="py-2 pl-4 text-right font-medium">Actions</th>
+                        <th class="py-2 pr-4 text-left font-medium">存储池</th>
+                        <th class="py-2 px-4 text-left font-medium">状态</th>
+                        <th class="py-2 px-4 text-left font-medium">上次清洗</th>
+                        <th class="py-2 px-4 text-left font-medium">30 天内</th>
+                        <th class="py-2 px-4 text-left font-medium">计划</th>
+                        <th class="py-2 px-4 text-left font-medium">详细信息</th>
+                        <th class="py-2 pl-4 text-right font-medium">操作</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-border-subtle">
@@ -84,15 +84,15 @@
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
-                                In Progress
+                                进行中
                                 {% if pool.scrub_progress is not none %}
                                 <span class="text-text-secondary">({{ pool.scrub_progress }}%)</span>
                                 {% endif %}
                             </span>
                             {% elif pool.last_scrub %}
-                            <span class="text-text-primary">Completed</span>
+                            <span class="text-text-primary">已完成</span>
                             {% else %}
-                            <span class="text-text-tertiary">No scrub recorded</span>
+                            <span class="text-text-tertiary">无清洗记录</span>
                             {% endif %}
                         </td>
                         <td class="py-2.5 px-4 text-text-secondary">
@@ -106,13 +106,13 @@
                         </td>
                         <td class="py-2.5 px-4">
                             {% if pool.scrub_in_progress %}
-                            <span class="px-2 py-0.5 rounded text-xs font-medium bg-info-500/20 text-info-400">Running</span>
+                            <span class="px-2 py-0.5 rounded text-xs font-medium bg-info-500/20 text-info-400">运行中</span>
                             {% elif pool.scrub_within_30_days %}
-                            <span class="px-2 py-0.5 rounded text-xs font-medium bg-success-500/20 text-success-400">Yes</span>
+                            <span class="px-2 py-0.5 rounded text-xs font-medium bg-success-500/20 text-success-400">是</span>
                             {% elif pool.last_scrub %}
-                            <span class="px-2 py-0.5 rounded text-xs font-medium bg-danger-500/20 text-danger-400">No</span>
+                            <span class="px-2 py-0.5 rounded text-xs font-medium bg-danger-500/20 text-danger-400">否</span>
                             {% else %}
-                            <span class="px-2 py-0.5 rounded text-xs font-medium bg-bg-elevated-3 text-text-tertiary">Never</span>
+                            <span class="px-2 py-0.5 rounded text-xs font-medium bg-bg-elevated-3 text-text-tertiary">从未</span>
                             {% endif %}
                         </td>
                         <td class="py-2.5 px-4 text-xs">
@@ -126,14 +126,14 @@
                                 {% endif %}
                                 <a href="/utils/scheduling/scrub/{{ entry.id }}/edit"
                                    class="text-primary-400 hover:text-primary-300"
-                                   title="{{ entry.schedule }}{% if entry.next_run_preview %} (next: {{ entry.next_run_preview }}){% endif %}">
+                                   title="{{ entry.schedule }}{% if entry.next_run_preview %}（下次：{{ entry.next_run_preview }}）{% endif %}">
                                     {{ entry.schedule_human|default(entry.schedule) }}
                                 </a>
                             </div>
                             {% endfor %}
                             {% else %}
                             <a href="/utils/scheduling/scrub/new" class="text-text-tertiary hover:text-primary-400">
-                                Not scheduled
+                                未配置计划
                             </a>
                             {% endif %}
                         </td>
@@ -145,7 +145,7 @@
                             <form method="post" action="/utils/scrub/{{ pool.name }}/start" class="inline">
                                 <button type="submit"
                                         class="text-success-400 hover:text-success-300"
-                                        title="Start scrub now on {{ pool.name }}">
+                                        title="立即对 {{ pool.name }} 执行数据清洗">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -153,7 +153,7 @@
                                 </button>
                             </form>
                             {% else %}
-                            <a href="/zfs/pools/{{ pool.name }}" class="text-info-400 hover:text-info-300" title="View scrub progress">
+                            <a href="/zfs/pools/{{ pool.name }}" class="text-info-400 hover:text-info-300" title="查看数据清洗进度">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
@@ -172,16 +172,16 @@
             <svg class="w-4 h-4 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            Automated scrub schedule detected --
-            <a href="/utils/scheduling" class="text-primary-400 hover:text-primary-300">manage scrub schedules</a>
+            已检测到自动数据清洗计划 --
+            <a href="/utils/scheduling" class="text-primary-400 hover:text-primary-300">管理数据清洗计划</a>
         </div>
         {% else %}
         <div class="mt-3 flex items-center gap-2 text-xs text-text-secondary">
             <svg class="w-4 h-4 text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
             </svg>
-            No automated scrub schedule detected --
-            <a href="/utils/scheduling/scrub/new" class="text-primary-400 hover:text-primary-300">configure scrub schedules</a>
+            未检测到自动数据清洗计划 --
+            <a href="/utils/scheduling/scrub/new" class="text-primary-400 hover:text-primary-300">配置数据清洗计划</a>
         </div>
         {% endif %}
     </div>
@@ -193,8 +193,8 @@
         <svg class="w-12 h-12 text-text-tertiary mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
         </svg>
-        <p class="text-text-secondary">No pools found for scrub status</p>
-        <p class="text-text-tertiary text-sm mt-1">Import or create a pool to see scrub information here.</p>
+        <p class="text-text-secondary">未找到可显示清洗状态的存储池</p>
+        <p class="text-text-tertiary text-sm mt-1">导入或创建存储池后，即可在此查看数据清洗信息。</p>
     </div>
 </div>
 {% endif %}

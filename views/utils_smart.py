@@ -28,7 +28,7 @@ async def smart_index(request: Request):
         request,
         name="utils/smart/index.jinja",
         context={
-            "page_title": "SMART Disk Monitoring"
+            "page_title": "SMART 磁盘监控"
         }
     )
 
@@ -49,7 +49,7 @@ async def smart_content_partial(request: Request):
         return HTMLResponse(
             content=f"""
             <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded" role="alert">
-                <strong>Error:</strong> {e}
+                <strong>错误：</strong> {e}
             </div>
             """,
             status_code=200,
@@ -73,7 +73,7 @@ async def disk_attributes(request: Request, disk_path: str):
                 "disk_path": disk_path,
                 "attributes": attributes,
                 "disk_info": disk_info,
-                "page_title": f"SMART Attributes: {disk_path}"
+                "page_title": f"SMART 属性：{disk_path}"
             }
         )
     except Exception as e:
@@ -102,7 +102,7 @@ async def disk_health(request: Request, disk_path: str):
             context={
                 "disk_path": disk_path,
                 "health": health,
-                "page_title": f"Health Status: {disk_path}"
+                "page_title": f"健康状态：{disk_path}"
             }
         )
     except Exception as e:
@@ -131,7 +131,7 @@ async def disk_temperature(request: Request, disk_path: str):
             context={
                 "disk_path": disk_path,
                 "temperature": temperature,
-                "page_title": f"Temperature: {disk_path}"
+                "page_title": f"温度：{disk_path}"
             }
         )
     except Exception as e:
@@ -160,7 +160,7 @@ async def disk_tests(request: Request, disk_path: str):
             context={
                 "disk_path": disk_path,
                 "test_status": test_status,
-                "page_title": f"SMART Tests: {disk_path}"
+                "page_title": f"SMART 测试：{disk_path}"
             }
         )
     except Exception as e:
@@ -183,7 +183,7 @@ async def start_short_test(request: Request, disk_path: str):
         
         result = smart_service.start_short_test(disk_path)
         return RedirectResponse(
-            url=f"/utils/smart/disk/{disk_path.lstrip('/')}/tests?message=Short test started successfully",
+            url=f"/utils/smart/disk/{disk_path.lstrip('/')}/tests?message=短期测试已成功启动",
             status_code=303
         )
     except Exception as e:
@@ -202,7 +202,7 @@ async def start_long_test(request: Request, disk_path: str):
         
         result = smart_service.start_long_test(disk_path)
         return RedirectResponse(
-            url=f"/utils/smart/disk/{disk_path.lstrip('/')}/tests?message=Long test started successfully",
+            url=f"/utils/smart/disk/{disk_path.lstrip('/')}/tests?message=长期测试已成功启动",
             status_code=303
         )
     except Exception as e:
@@ -221,7 +221,7 @@ async def abort_test(request: Request, disk_path: str):
         
         smart_service.abort_test(disk_path)
         return RedirectResponse(
-            url=f"/utils/smart/disk/{disk_path.lstrip('/')}/tests?message=Test aborted successfully",
+            url=f"/utils/smart/disk/{disk_path.lstrip('/')}/tests?message=测试已成功中止",
             status_code=303
         )
     except Exception as e:
@@ -246,7 +246,7 @@ async def disk_errors(request: Request, disk_path: str):
             context={
                 "disk_path": disk_path,
                 "errors": errors,
-                "page_title": f"Error Log: {disk_path}"
+                "page_title": f"错误日志：{disk_path}"
             }
         )
     except Exception as e:
@@ -269,7 +269,7 @@ async def enable_smart(request: Request, disk_path: str):
         
         smart_service.enable_smart(disk_path)
         return RedirectResponse(
-            url=f"/utils/smart/disk/{disk_path.lstrip('/')}?message=SMART enabled successfully",
+            url=f"/utils/smart/disk/{disk_path.lstrip('/')}?message=SMART 已成功启用",
             status_code=303
         )
     except Exception as e:
@@ -288,7 +288,7 @@ async def disable_smart(request: Request, disk_path: str):
         
         smart_service.disable_smart(disk_path)
         return RedirectResponse(
-            url=f"/utils/smart/disk/{disk_path.lstrip('/')}?message=SMART disabled successfully",
+            url=f"/utils/smart/disk/{disk_path.lstrip('/')}?message=SMART 已成功禁用",
             status_code=303
         )
     except Exception as e:
@@ -308,8 +308,8 @@ async def download_smart_data(request: Request, disk_path: str):
         smart_data = smart_service.get_smart_data(disk_path)
         
         # Format the data for download
-        output = f"SMART Data Report for {disk_path}\n"
-        output += f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
+        output = f"SMART 数据报告：{disk_path}\n"
+        output += f"生成时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
         output += "=" * 80 + "\n\n"
         output += smart_data.get('raw_output', '')
         
@@ -353,7 +353,7 @@ async def disk_detail(request: Request, disk_path: str):
             context={
                 "disk_path": disk_path,
                 "smart_data": smart_data,
-                "page_title": f"SMART Data: {disk_path}"
+                "page_title": f"SMART 数据：{disk_path}"
             }
         )
     except Exception as e:
@@ -380,13 +380,13 @@ async def download_all_smart_data(request: Request):
         
         with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
             # Add README
-            readme_content = f"""SMART Data Archive
-Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+            readme_content = f"""SMART 数据存档
+生成时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 
-This archive contains SMART data for all disks on the system.
-Each file contains the complete smartctl output for one disk.
+此存档包含系统上所有磁盘的 SMART 数据。
+每个文件包含一块磁盘的完整 smartctl 输出。
 
-Files included:
+包含的文件：
 """
             for disk in disks:
                 disk_name = disk['path'].split('/')[-1]
@@ -400,16 +400,16 @@ Files included:
                     smart_data = smart_service.get_smart_data(disk['path'])
                     disk_name = disk['path'].split('/')[-1]
                     
-                    content = f"SMART Data Report for {disk['path']}\n"
-                    content += f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
+                    content = f"SMART 数据报告：{disk['path']}\n"
+                    content += f"生成时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
                     content += "=" * 80 + "\n\n"
-                    content += smart_data.get('raw_output', 'No data available')
+                    content += smart_data.get('raw_output', '无可用数据')
                     
                     zip_file.writestr(f'smart_{disk_name}.txt', content)
                 except Exception as e:
                     # Add error file if disk fails
                     disk_name = disk['path'].split('/')[-1]
-                    zip_file.writestr(f'smart_{disk_name}_ERROR.txt', f"Error retrieving data: {str(e)}")
+                    zip_file.writestr(f'smart_{disk_name}_ERROR.txt', f"获取数据时出错：{str(e)}")
         
         # Prepare ZIP for download
         zip_buffer.seek(0)
@@ -447,14 +447,14 @@ async def start_all_short_tests(request: Request):
                     errors.append(f"{disk['path']}: {str(e)}")
         
         if errors:
-            error_msg = f"Started {success_count} test(s). Errors: " + "; ".join(errors[:3])
+            error_msg = f"已启动 {success_count} 个测试。错误：" + "; ".join(errors[:3])
             return RedirectResponse(
                 url=f"/utils/smart?error={error_msg}",
                 status_code=303
             )
         else:
             return RedirectResponse(
-                url=f"/utils/smart?message=Successfully started short tests on {success_count} disk(s)",
+                url=f"/utils/smart?message=已在 {success_count} 块磁盘上成功启动短期测试",
                 status_code=303
             )
     except Exception as e:
@@ -481,14 +481,14 @@ async def start_all_long_tests(request: Request):
                     errors.append(f"{disk['path']}: {str(e)}")
         
         if errors:
-            error_msg = f"Started {success_count} test(s). Errors: " + "; ".join(errors[:3])
+            error_msg = f"已启动 {success_count} 个测试。错误：" + "; ".join(errors[:3])
             return RedirectResponse(
                 url=f"/utils/smart?error={error_msg}",
                 status_code=303
             )
         else:
             return RedirectResponse(
-                url=f"/utils/smart?message=Successfully started long tests on {success_count} disk(s)",
+                url=f"/utils/smart?message=已在 {success_count} 块磁盘上成功启动长期测试",
                 status_code=303
             )
     except Exception as e:
@@ -514,7 +514,7 @@ async def smartd_index(request: Request):
             context={
                 "status": status,
                 "config": config,
-                "page_title": "Smartd Configuration"
+                "page_title": "Smartd 配置"
             }
         )
     except Exception as e:
@@ -525,7 +525,7 @@ async def smartd_index(request: Request):
                 "status": {"error": str(e)},
                 "config": "",
                 "error": str(e),
-                "page_title": "Smartd Configuration"
+                "page_title": "Smartd 配置"
             }
         )
 
@@ -539,7 +539,7 @@ async def update_smartd_config(
     try:
         smart_service.update_smartd_config(config)
         return RedirectResponse(
-            url="/utils/smart/smartd?message=Configuration updated successfully",
+            url="/utils/smart/smartd?message=配置已成功更新",
             status_code=303
         )
     except Exception as e:
@@ -555,7 +555,7 @@ async def restart_smartd(request: Request):
     try:
         smart_service.restart_smartd()
         return RedirectResponse(
-            url="/utils/smart/smartd?message=Smartd restarted successfully",
+            url="/utils/smart/smartd?message=smartd 已成功重启",
             status_code=303
         )
     except Exception as e:
@@ -597,16 +597,16 @@ async def create_scheduled_test(
         schedule_id = smart_service.create_scheduled_test(
             disk, test_type, schedule, enabled
         )
-        disk_text = "all disks" if disk == ALL_DISKS else disk
+        disk_text = "所有磁盘" if disk == ALL_DISKS else disk
         task_scheduler.register_task(
             task_type="smart",
             task_id=schedule_id,
             schedule=schedule,
-            description=f"{test_type} test on {disk_text}",
+            description=f"{disk_text} 的 {test_type} 测试",
             enabled=enabled,
         )
         return RedirectResponse(
-            url="/utils/scheduling?message=Scheduled test created successfully",
+            url="/utils/scheduling?message=计划测试创建成功",
             status_code=303
         )
     except Exception as e:
@@ -623,7 +623,7 @@ async def delete_scheduled_test(request: Request, schedule_id: str):
         task_scheduler.unregister_task("smart", schedule_id)
         smart_service.delete_scheduled_test(schedule_id)
         return RedirectResponse(
-            url="/utils/scheduling?message=Scheduled test deleted successfully",
+            url="/utils/scheduling?message=计划测试删除成功",
             status_code=303
         )
     except Exception as e:
@@ -648,19 +648,19 @@ async def toggle_scheduled_test(request: Request, schedule_id: str):
             )
             toggled_disk = test.get('disk', 'unknown')
             if toggled_disk == ALL_DISKS:
-                toggled_disk = 'all disks'
+                toggled_disk = '所有磁盘'
             task_scheduler.register_task(
                 task_type="smart",
                 task_id=schedule_id,
                 schedule=test.get('schedule', ''),
                 description=(
-                    f"{test.get('test_type', 'short')} test on {toggled_disk}"
+                    f"{toggled_disk} 的 {test.get('test_type', 'short')} 测试"
                 ),
                 enabled=new_state,
             )
         
         return RedirectResponse(
-            url="/utils/scheduling?message=Scheduled test updated successfully",
+            url="/utils/scheduling?message=计划测试更新成功",
             status_code=303
         )
     except Exception as e:

@@ -535,7 +535,7 @@
   
   /* Container Utilities */
   .container-page {
-    @apply max-w-7xl mx-auto px-page;
+    @apply w-full mx-auto px-page;
   }
   
   /* Transition Utilities */

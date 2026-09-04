@@ -106,9 +106,8 @@ class PoolUsageService:
 
         if not mountpoints:
             result['notes'].append(
-                "No active mountpoints were found for this pool. The pool may "
-                "still be held busy by a process using a raw dataset, a "
-                "snapshot, or a device. Check the system logs for details."
+                "未找到此存储池的活动挂载点。存储池仍可能被使用原始数据集、"
+                "快照或设备的进程占用。详情请查看系统日志。"
             )
             return result
 
@@ -267,9 +266,8 @@ class PoolUsageService:
                     result['open_files'].append(record)
 
         result['notes'].append(
-            "On FreeBSD, advisory lock details are reported by fstat alongside "
-            "each open file. Review the open files below and stop the listed "
-            "processes before exporting."
+            "在 FreeBSD 上，fstat 会随每个打开的文件一同报告咨询锁的详细"
+            "信息。请查看下方打开的文件列表，并在导出前停止列出的进程。"
         )
 
     def _run_tool(
@@ -291,18 +289,17 @@ class PoolUsageService:
             return completed.stdout or ''
         except subprocess.TimeoutExpired:
             result['notes'].append(
-                f"The {tool_name} command timed out while scanning. Results "
-                "may be incomplete."
+                f"{tool_name} 命令扫描时超时，结果可能不完整。"
             )
             return None
         except FileNotFoundError:
             result['notes'].append(
-                f"The {tool_name} command is not installed. Install it to get "
-                "a complete report of what is holding the pool busy."
+                f"未安装 {tool_name} 命令。安装后才能获得占用存储池的进程"
+                "的完整报告。"
             )
             return None
         except Exception as exc:
             result['notes'].append(
-                f"Could not run {tool_name}: {exc}"
+                f"无法运行 {tool_name}：{exc}"
             )
             return None

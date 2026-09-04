@@ -75,14 +75,14 @@ class CronService:
             ValueError: If name contains invalid characters
         """
         if not name:
-            raise ValueError("Job name cannot be empty")
+            raise ValueError("任务名称不能为空")
         if len(name) > 64:
-            raise ValueError("Job name too long (max 64 characters)")
+            raise ValueError("任务名称过长（最多 64 个字符）")
         if not JOB_NAME_PATTERN.match(name):
-            raise ValueError("Job name contains invalid characters. Only alphanumeric, underscore, hyphen, and space allowed")
+            raise ValueError("任务名称包含无效字符。仅允许字母数字、下划线、连字符和空格")
     
     @staticmethod
-    def _validate_dataset_name(dataset: str, field_name: str = "Dataset") -> None:
+    def _validate_dataset_name(dataset: str, field_name: str = "数据集") -> None:
         """
         Validate ZFS dataset name.
         
@@ -94,17 +94,17 @@ class CronService:
             ValueError: If dataset name is invalid
         """
         if not dataset:
-            raise ValueError(f"{field_name} name cannot be empty")
+            raise ValueError(f"{field_name}名称不能为空")
         if len(dataset) > 256:
-            raise ValueError(f"{field_name} name too long (max 256 characters)")
+            raise ValueError(f"{field_name}名称过长（最多 256 个字符）")
         if not DATASET_NAME_PATTERN.match(dataset):
-            raise ValueError(f"{field_name} contains invalid characters")
+            raise ValueError(f"{field_name}包含无效字符")
         # Check for shell metacharacters that could be dangerous
         if SHELL_DANGEROUS_PATTERN.search(dataset):
-            raise ValueError(f"{field_name} contains forbidden shell characters")
+            raise ValueError(f"{field_name}包含禁止使用的 shell 字符")
     
     @staticmethod
-    def _validate_hostname(hostname: str, field_name: str = "Host") -> None:
+    def _validate_hostname(hostname: str, field_name: str = "主机") -> None:
         """
         Validate hostname.
         
@@ -118,12 +118,12 @@ class CronService:
         if not hostname:
             return  # Hostname is optional
         if len(hostname) > 253:
-            raise ValueError(f"{field_name} name too long (max 253 characters)")
+            raise ValueError(f"{field_name}名称过长（最多 253 个字符）")
         if not HOSTNAME_PATTERN.match(hostname):
-            raise ValueError(f"{field_name} contains invalid characters. Only alphanumeric, dot, and hyphen allowed")
+            raise ValueError(f"{field_name}包含无效字符。仅允许字母数字、点和连字符")
     
     @staticmethod
-    def _validate_bandwidth(bwlimit: str, field_name: str = "Bandwidth limit") -> None:
+    def _validate_bandwidth(bwlimit: str, field_name: str = "带宽限制") -> None:
         """
         Validate bandwidth limit format.
         
@@ -137,7 +137,7 @@ class CronService:
         if not bwlimit:
             return  # Bandwidth limit is optional
         if not BANDWIDTH_PATTERN.match(bwlimit):
-            raise ValueError(f"{field_name} must be a number optionally followed by K, M, or G (e.g., '10M')")
+            raise ValueError(f"{field_name}必须是一个数字，可选地后跟 K、M 或 G（例如 '10M'）")
     
     @staticmethod
     def _validate_compression(compress: str) -> None:
@@ -153,7 +153,7 @@ class CronService:
         if not compress:
             return  # Compression is optional
         if compress.lower() not in VALID_COMPRESSION:
-            raise ValueError(f"Invalid compression algorithm. Must be one of: {', '.join(sorted(VALID_COMPRESSION))}")
+            raise ValueError(f"无效的压缩算法。必须是以下之一：{', '.join(sorted(VALID_COMPRESSION))}")
     
     def _validate_cron_schedule_strict(self, schedule: str) -> Dict[str, Any]:
         """
@@ -169,11 +169,11 @@ class CronService:
         schedule = self._sanitize_input(schedule)
         
         if not schedule:
-            return {'valid': False, 'error': 'Cron schedule cannot be empty'}
+            return {'valid': False, 'error': 'Cron 计划表达式不能为空'}
         
         # Check for any dangerous characters
         if SHELL_DANGEROUS_PATTERN.search(schedule):
-            return {'valid': False, 'error': 'Cron schedule contains forbidden characters'}
+            return {'valid': False, 'error': 'Cron 计划表达式包含禁止使用的字符'}
         
         # Split into fields
         parts = schedule.split()
@@ -181,10 +181,17 @@ class CronService:
         if len(parts) != 5:
             return {
                 'valid': False,
-                'error': 'Cron schedule must have exactly 5 fields: minute hour day month weekday'
+                'error': 'Cron 计划表达式必须恰好包含 5 个字段：分钟 小时 日期 月份 星期'
             }
         
         field_names = ['minute', 'hour', 'day', 'month', 'weekday']
+        field_labels = {
+            'minute': '分钟',
+            'hour': '小时',
+            'day': '日期',
+            'month': '月份',
+            'weekday': '星期',
+        }
         field_ranges = {
             'minute': (0, 59),
             'hour': (0, 23),
@@ -200,7 +207,7 @@ class CronService:
                 min_val, max_val = field_ranges[field_name]
                 return {
                     'valid': False,
-                    'error': f'Invalid {field_name} value "{field_value}". Expected: *, {min_val}-{max_val}, ranges (e.g., 1-5), steps (e.g., */5), or lists (e.g., 1,3,5)'
+                    'error': f'{field_labels[field_name]}字段的值 "{field_value}" 无效。期望格式：*、{min_val}-{max_val}、范围（例如 1-5）、步长（例如 */5）或列表（例如 1,3,5）'
                 }
         
         return {
@@ -240,7 +247,7 @@ class CronService:
             return jobs
             
         except Exception as e:
-            raise Exception(f"Failed to list cron jobs: {str(e)}")
+            raise Exception(f"列出 cron 任务失败：{str(e)}")
     
     def add_syncoid_job(
         self,
@@ -293,22 +300,22 @@ class CronService:
         # Validate cron schedule strictly
         schedule_validation = self._validate_cron_schedule_strict(schedule)
         if not schedule_validation['valid']:
-            raise ValueError(f"Invalid cron schedule: {schedule_validation['error']}")
+            raise ValueError(f"无效的 cron 计划表达式：{schedule_validation['error']}")
         
         # Validate dataset names
-        self._validate_dataset_name(source, "Source dataset")
-        self._validate_dataset_name(target, "Target dataset")
+        self._validate_dataset_name(source, "源数据集")
+        self._validate_dataset_name(target, "目标数据集")
         
         # Validate hostnames
-        self._validate_hostname(source_host, "Source host")
-        self._validate_hostname(target_host, "Target host")
+        self._validate_hostname(source_host, "源主机")
+        self._validate_hostname(target_host, "目标主机")
         
         # Validate compression
         self._validate_compression(compress)
         
         # Validate bandwidth limits
-        self._validate_bandwidth(source_bwlimit, "Source bandwidth limit")
-        self._validate_bandwidth(target_bwlimit, "Target bandwidth limit")
+        self._validate_bandwidth(source_bwlimit, "源带宽限制")
+        self._validate_bandwidth(target_bwlimit, "目标带宽限制")
         
         try:
             # Build syncoid command
@@ -367,7 +374,7 @@ class CronService:
         except ValueError:
             raise  # Re-raise validation errors
         except Exception as e:
-            raise Exception(f"Failed to add cron job: {str(e)}")
+            raise Exception(f"添加 cron 任务失败：{str(e)}")
     
     def remove_syncoid_job(self, job_name: str) -> None:
         """
@@ -413,7 +420,7 @@ class CronService:
         except ValueError:
             raise  # Re-raise validation errors
         except Exception as e:
-            raise Exception(f"Failed to remove cron job: {str(e)}")
+            raise Exception(f"移除 cron 任务失败：{str(e)}")
     
     def update_syncoid_job(
         self,
@@ -474,15 +481,15 @@ class CronService:
             Dictionary of preset names to cron schedules
         """
         return {
-            'Every hour': '0 * * * *',
-            'Every 6 hours': '0 */6 * * *',
-            'Daily at midnight': '0 0 * * *',
-            'Daily at 2 AM': '0 2 * * *',
-            'Daily at 3 AM': '0 3 * * *',
-            'Weekly on Sunday at 2 AM': '0 2 * * 0',
-            'Monthly on 1st at 2 AM': '0 2 1 * *',
-            'Every 15 minutes': '*/15 * * * *',
-            'Every 30 minutes': '*/30 * * * *',
+            '每小时': '0 * * * *',
+            '每 6 小时': '0 */6 * * *',
+            '每天午夜': '0 0 * * *',
+            '每天凌晨 2 点': '0 2 * * *',
+            '每天凌晨 3 点': '0 3 * * *',
+            '每周日凌晨 2 点': '0 2 * * 0',
+            '每月 1 日凌晨 2 点': '0 2 1 * *',
+            '每 15 分钟': '*/15 * * * *',
+            '每 30 分钟': '*/30 * * * *',
         }
     
     def _parse_cron_line(self, line: str) -> Optional[Dict[str, Any]]:
@@ -515,7 +522,7 @@ class CronService:
                 source = cmd_parts[-2]
                 target = cmd_parts[-1]
             else:
-                source = target = 'Unknown'
+                source = target = '未知'
             
             return {
                 'schedule': schedule,
@@ -575,17 +582,17 @@ class CronService:
         
         # Simple descriptions for common patterns
         if schedule == '0 * * * *':
-            return 'Every hour'
+            return '每小时'
         elif schedule == '0 0 * * *':
-            return 'Daily at midnight'
+            return '每天午夜'
         elif schedule == '0 2 * * *':
-            return 'Daily at 2:00 AM'
+            return '每天凌晨 2:00'
         elif schedule == '0 2 * * 0':
-            return 'Weekly on Sunday at 2:00 AM'
+            return '每周日凌晨 2:00'
         elif schedule == '0 2 1 * *':
-            return 'Monthly on the 1st at 2:00 AM'
+            return '每月 1 日凌晨 2:00'
         elif schedule.startswith('*/'):
             interval = schedule.split()[0][2:]
-            return f'Every {interval} minutes'
+            return f'每 {interval} 分钟'
         else:
-            return f'At {hour}:{minute} on day {day} of month {month}, weekday {weekday}'
+            return f'{month} 月 {day} 日 {hour}:{minute}，星期 {weekday}'

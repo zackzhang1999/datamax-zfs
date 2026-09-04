@@ -8,28 +8,28 @@
     <nav class="text-sm mb-4">
         <ol class="list-none p-0 inline-flex">
             <li class="flex items-center">
-                <a href="/" class="text-primary-400 hover:text-primary-300">Home</a>
+                <a href="/" class="text-primary-400 hover:text-primary-300">首页</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li class="flex items-center">
-                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300">Observability</a>
+                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300">运行观测</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li>
-                <span class="text-text-secondary">Per-VDEV Statistics</span>
+                <span class="text-text-secondary">逐 VDEV 统计</span>
             </li>
         </ol>
     </nav>
 
-    <h1 class="text-3xl font-bold mb-6">Per-VDEV Statistics</h1>
+    <h1 class="text-3xl font-bold mb-6">逐 VDEV 统计</h1>
 
     {% if error %}
     <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded mb-4">
-        <strong>Error:</strong> {{ error }}
+        <strong>错误：</strong> {{ error }}
     </div>
     {% endif %}
 
@@ -37,7 +37,7 @@
     <div class="bg-bg-elevated rounded-lg shadow mb-6 p-6">
         <form method="get" action="/zfs/observability/vdev-stats" class="flex gap-4 items-end">
             <div class="flex-1">
-                <label for="pool" class="block text-sm font-medium text-text-secondary mb-1">Select Pool</label>
+                <label for="pool" class="block text-sm font-medium text-text-secondary mb-1">选择存储池</label>
                 <select name="pool" id="pool" class="form-input focus:ring-blue-500 focus:border-blue-500">
                     {% for pool_name in all_pools %}
                     <option value="{{ pool_name }}" {% if selected_pool == pool_name %}selected{% endif %}>{{ pool_name }}</option>
@@ -45,7 +45,7 @@
                 </select>
             </div>
             <button type="submit" class="px-6 py-2 btn-primary transition-colors">
-                Load VDEVs
+                加载 VDEV
             </button>
         </form>
     </div>
@@ -55,9 +55,9 @@
     <div class="bg-bg-elevated rounded-lg shadow" x-data="{ autoRefresh: true }" x-init="window.autoRefresh = autoRefresh">
         <div class="px-6 py-4 border-b border-border-subtle">
             <div class="flex justify-between items-center">
-                <h2 class="text-xl font-semibold">VDEV Statistics for {{ selected_pool }}</h2>
+                <h2 class="text-xl font-semibold">{{ selected_pool }} 的 VDEV 统计</h2>
                 <div class="flex items-center gap-4">
-                    <span class="text-sm text-text-secondary" id="last-update">Live Monitoring</span>
+                    <span class="text-sm text-text-secondary" id="last-update">实时监控</span>
                     <button @click="autoRefresh = !autoRefresh; window.autoRefresh = autoRefresh" 
                             class="px-4 py-2 transition-colors"
                             :class="autoRefresh ? 'btn-success' : 'btn-secondary'">
@@ -65,7 +65,7 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                             </svg>
-                            <span x-text="autoRefresh ? 'Auto-refresh: ON' : 'Auto-refresh: OFF'"></span>
+                            <span x-text="autoRefresh ? '自动刷新：开' : '自动刷新：关'"></span>
                         </span>
                     </button>
                 </div>
@@ -80,13 +80,13 @@
                 <table class="min-w-full">
                     <thead class="bg-bg-elevated-2 text-text-primary">
                         <tr>
-                            <th class="px-4 py-3 text-left text-sm font-semibold">Device / VDEV</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold">Allocated</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold">Free</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold">Read Ops</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold">Write Ops</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold">Read BW</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold">Write BW</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold">设备 / VDEV</th>
+                            <th class="px-4 py-3 text-right text-sm font-semibold">已分配</th>
+                            <th class="px-4 py-3 text-right text-sm font-semibold">空闲</th>
+                            <th class="px-4 py-3 text-right text-sm font-semibold">读操作</th>
+                            <th class="px-4 py-3 text-right text-sm font-semibold">写操作</th>
+                            <th class="px-4 py-3 text-right text-sm font-semibold">读带宽</th>
+                            <th class="px-4 py-3 text-right text-sm font-semibold">写带宽</th>
                         </tr>
                     </thead>
                     <tbody class="bg-bg-elevated font-mono text-sm">
@@ -119,12 +119,12 @@
             
             <div class="mt-6 p-4 bg-primary-900/20 border border-primary-500/30 rounded-lg">
                 <p class="text-sm text-primary-300">
-                    <strong>Note:</strong> These statistics show real-time I/O performance for each virtual device (VDEV) in the pool. 
-                    Individual disks, mirrors, and RAIDZ groups are all represented here.
+                    <strong>注意：</strong>这些统计显示存储池中每个虚拟设备（VDEV）的实时 I/O 性能。
+                    单块磁盘、镜像和 RAIDZ 组都会在此处列出。
                 </p>
             </div>
             {% else %}
-            <p class="text-text-secondary text-center py-8">No VDEV statistics available for this pool</p>
+            <p class="text-text-secondary text-center py-8">此存储池没有可用的 VDEV 统计</p>
             {% endif %}
         </div>
     </div>
@@ -133,7 +133,7 @@
         <svg class="w-16 h-16 mx-auto text-text-tertiary mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
         </svg>
-        <p class="text-xl text-text-secondary">Select a pool to view VDEV statistics</p>
+        <p class="text-xl text-text-secondary">选择一个存储池以查看 VDEV 统计</p>
     </div>
     {% endif %}
 </div>
@@ -146,7 +146,7 @@
     const lastUpdate = document.getElementById('last-update');
     function updateLastRefresh() {
         const now = new Date();
-        lastUpdate.textContent = `Last updated: ${now.toLocaleTimeString()}`;
+        lastUpdate.textContent = `最后更新：${now.toLocaleTimeString()}`;
     }
     
     // Update timestamp when HTMX completes a request

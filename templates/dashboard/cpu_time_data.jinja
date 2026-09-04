@@ -5,14 +5,14 @@
     {% set cpu = realtime.cpu_pct %}
     <div class="space-y-2">
         {% for key, label, desc, color in [
-            ('user', 'User', 'Non-kernel code', 'bg-primary-500'),
-            ('system', 'System', 'Kernel processes', 'bg-info-500'),
-            ('nice', 'Nice', 'Low-priority procs', 'bg-purple-500'),
-            ('iowait', 'IO Wait', 'Disk I/O wait', 'bg-warning-500'),
-            ('irq', 'HW IRQ', 'Hardware interrupts', 'bg-danger-500'),
-            ('softirq', 'SW IRQ', 'Software interrupts', 'bg-pink-500'),
-            ('steal', 'Steal', 'Hypervisor stolen', 'bg-orange-500'),
-            ('idle', 'Idle', 'Waiting for work', 'bg-success-500'),
+            ('user', '用户', '非内核代码', 'bg-primary-500'),
+            ('system', '系统', '内核进程', 'bg-info-500'),
+            ('nice', 'Nice', '低优先级进程', 'bg-purple-500'),
+            ('iowait', 'IO 等待', '磁盘 I/O 等待', 'bg-warning-500'),
+            ('irq', '硬中断', '硬件中断', 'bg-danger-500'),
+            ('softirq', '软中断', '软件中断', 'bg-pink-500'),
+            ('steal', 'Steal', '被 Hypervisor 占用', 'bg-orange-500'),
+            ('idle', '空闲', '等待任务', 'bg-success-500'),
         ] %}
         <div>
             <div class="flex justify-between text-xs mb-1">
@@ -26,6 +26,6 @@
         {% endfor %}
     </div>
     {% else %}
-    <p class="text-text-tertiary text-sm text-center py-2">CPU data unavailable</p>
+    <p class="text-text-tertiary text-sm text-center py-2">CPU 数据不可用</p>
     {% endif %}
 </div>

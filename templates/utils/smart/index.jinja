@@ -4,20 +4,20 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils" class="hover:text-primary-400">Utilities</a>
+        <a href="/utils" class="hover:text-primary-400">实用工具</a>
         <span class="mx-2">/</span>
-        <span class="text-text-primary">SMART Disk Monitoring</span>
+        <span class="text-text-primary">SMART 磁盘监控</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">SMART Disk Monitoring</h1>
+        <h1 class="text-3xl font-bold text-text-primary">SMART 磁盘监控</h1>
         <div class="space-x-2">
             <a href="/utils/smart/smartd" class="btn-primary px-4 py-2 inline-block">
-                Smartd Config
+                Smartd 配置
             </a>
             <a href="/utils/scheduling" class="bg-blue-600 hover:bg-blue-700 text-text-primary px-4 py-2 rounded inline-block">
-                Scheduled Tests
+                计划测试
             </a>
         </div>
     </div>
@@ -31,7 +31,7 @@
 
     {% if request.query_params.get('error') %}
     <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded mb-4">
-        <strong>Error:</strong> {{ request.query_params.get('error') }}
+        <strong>错误：</strong> {{ request.query_params.get('error') }}
     </div>
     {% endif %}
 
@@ -45,36 +45,36 @@
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            <p class="text-text-secondary text-lg">Detecting disks...</p>
-            <p class="text-text-tertiary text-sm mt-1">Probing SMART-capable devices, this may take a moment.</p>
+            <p class="text-text-secondary text-lg">正在检测磁盘……</p>
+            <p class="text-text-tertiary text-sm mt-1">正在探测支持 SMART 的设备，可能需要片刻。</p>
         </div>
     </div>
 
     <!-- Legend -->
     <div class="mt-6 bg-bg-elevated rounded-lg p-4">
-        <h3 class="text-sm font-semibold text-text-secondary mb-2">Action Icons:</h3>
+        <h3 class="text-sm font-semibold text-text-secondary mb-2">操作图标说明：</h3>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2 text-xs text-text-tertiary">
             <div><svg class="w-5 h-5 inline text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                    </svg> View Details</div>
+                    </svg> 查看详细信息</div>
             <div><svg class="w-5 h-5 inline text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                    </svg> SMART Attributes</div>
+                    </svg> SMART 属性</div>
             <div><svg class="w-5 h-5 inline text-danger-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                    </svg> Health Status</div>
+                    </svg> 健康状态</div>
             <div><svg class="w-5 h-5 inline text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
-                    </svg> Run Tests</div>
+                    </svg> 运行测试</div>
             <div><svg class="w-5 h-5 inline text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                    </svg> Temperature</div>
+                    </svg> 温度</div>
             <div><svg class="w-5 h-5 inline text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                    </svg> Error Log</div>
+                    </svg> 错误日志</div>
             <div><svg class="w-5 h-5 inline text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
-                    </svg> Download Data</div>
+                    </svg> 下载数据</div>
         </div>
     </div>
 
@@ -82,8 +82,8 @@
     <div class="mt-4 bg-info-900/30 border-2 border-info-500/50 text-info-400 px-4 py-3 rounded">
         <strong><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg> About SMART Monitoring:</strong>
-        <p class="mt-1 text-sm">SMART (Self-Monitoring, Analysis and Reporting Technology) is a monitoring system included in computer hard disk drives and solid-state drives. It monitors various indicators of drive reliability with the intent of anticipating hardware failures.</p>
+                    </svg> 关于 SMART 监控：</strong>
+        <p class="mt-1 text-sm">SMART（Self-Monitoring, Analysis and Reporting Technology，自我监测、分析与报告技术）是计算机硬盘和固态硬盘内置的监控系统。它通过监测驱动器可靠性的各项指标，力求提前预判硬件故障。</p>
     </div>
 </div>
 {% endblock %}

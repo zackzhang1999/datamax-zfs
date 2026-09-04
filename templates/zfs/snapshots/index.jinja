@@ -4,36 +4,36 @@
 <div class="max-w-7xl mx-auto space-y-6">
     <!-- Breadcrumb Navigation -->
     <nav class="flex items-center text-sm text-text-secondary">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
-        <span class="text-text-primary font-medium">Snapshots</span>
+        <span class="text-text-primary font-medium">快照</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h1 class="text-3xl font-bold text-text-primary">ZFS Snapshots</h1>
+            <h1 class="text-3xl font-bold text-text-primary">ZFS 快照</h1>
         </div>
         <div class="flex flex-wrap gap-2">
             <a href="/zfs/snapshots/create/form" class="btn-success inline-flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                 </svg>
-                Create Snapshot
+                创建快照
             </a>
             <a href="/zfs/snapshots/diff/form" class="btn-info inline-flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
-                Compare Snapshots
+                比较快照
             </a>
             <a href="/zfs/snapshots/sanoid" class="btn-primary inline-flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                Sanoid Scheduling
+                Sanoid 计划任务
             </a>
         </div>
     </div>
@@ -56,12 +56,12 @@
         <div class="p-4">
             <form method="get" action="/zfs/snapshots" class="flex flex-col sm:flex-row gap-4 items-end">
                 <div class="flex-1 w-full">
-                    <label for="dataset" class="form-label">Filter by Dataset</label>
+                    <label for="dataset" class="form-label">按数据集筛选</label>
                     <input type="text" 
                            id="dataset" 
                            name="dataset" 
                            value="{{ selected_dataset or '' }}" 
-                           placeholder="e.g., tank/data"
+                           placeholder="例如：tank/data"
                            class="form-input w-full">
                 </div>
                 <div class="flex gap-2">
@@ -69,14 +69,14 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
                         </svg>
-                        Filter
+                        筛选
                     </button>
                     {% if selected_dataset %}
                     <a href="/zfs/snapshots" class="btn-secondary inline-flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
-                        Clear
+                        清除
                     </a>
                     {% endif %}
                 </div>
@@ -94,8 +94,8 @@
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            <p class="text-text-secondary text-lg">Loading snapshots...</p>
-            <p class="text-text-tertiary text-sm mt-1">Collecting snapshot and bookmark data, this may take a moment.</p>
+            <p class="text-text-secondary text-lg">正在加载快照……</p>
+            <p class="text-text-tertiary text-sm mt-1">正在收集快照与书签数据，可能需要片刻。</p>
         </div>
     </div>
 </div>

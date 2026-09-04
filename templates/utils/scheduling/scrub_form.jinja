@@ -6,20 +6,20 @@
 <div class="container mx-auto px-4 py-8 max-w-4xl">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils" class="hover:text-primary-400">Utilities</a>
+        <a href="/utils" class="hover:text-primary-400">实用工具</a>
         <span class="mx-2">/</span>
-        <a href="/utils/scheduling" class="hover:text-primary-400">Scheduling</a>
+        <a href="/utils/scheduling" class="hover:text-primary-400">计划任务</a>
         <span class="mx-2">/</span>
-        <span class="text-text-primary">{% if task %}Edit Scrub Schedule{% else %}New Scrub Schedule{% endif %}</span>
+        <span class="text-text-primary">{% if task %}编辑数据清洗计划{% else %}新建数据清洗计划{% endif %}</span>
     </nav>
 
     <!-- Page Header -->
     <div class="mb-6">
         <h1 class="text-3xl font-bold text-text-primary mb-2">
-            {% if task %}Edit Scrub Schedule{% else %}New Scrub Schedule{% endif %}
+            {% if task %}编辑数据清洗计划{% else %}新建数据清洗计划{% endif %}
         </h1>
         <p class="text-text-secondary text-sm">
-            Runs zpool scrub on the selected pool. The schedule is registered with the operating system scheduler as soon as it is saved.
+            在选定的存储池上运行 zpool scrub。保存后，计划会立即注册到操作系统调度器中。
         </p>
     </div>
 
@@ -32,16 +32,16 @@
                 {% endif %}
 
                 <div class="mb-6">
-                    <label class="form-label" for="pool">ZFS Pool</label>
+                    <label class="form-label" for="pool">ZFS 存储池</label>
                     <select name="pool" id="pool" class="form-select" required>
-                        <option value="">Select a pool...</option>
+                        <option value="">请选择存储池……</option>
                         {% for pool in pools %}
                         <option value="{{ pool }}" {% if task and task.pool == pool %}selected{% endif %}>{{ pool }}</option>
                         {% endfor %}
                     </select>
                     {% if task and task.pool and task.pool not in pools %}
                     <p class="text-warning-400 text-xs mt-1">
-                        The pool this schedule refers to ({{ task.pool }}) is not currently imported.
+                        该计划所引用的存储池（{{ task.pool }}）当前尚未导入。
                     </p>
                     {% endif %}
                 </div>
@@ -50,21 +50,21 @@
 
                 <div class="flex items-center justify-between pt-4 border-t border-border-subtle">
                     <button type="submit" class="btn-primary">
-                        {% if task %}Save Changes{% else %}Create Schedule{% endif %}
+                        {% if task %}保存更改{% else %}创建计划{% endif %}
                     </button>
-                    <a href="/utils/scheduling" class="btn-secondary">Cancel</a>
+                    <a href="/utils/scheduling" class="btn-secondary">取消</a>
                 </div>
             </form>
         </div>
     </div>
 
     <div class="card-nested bg-info-900/20 border-info-700">
-        <h3 class="font-semibold mb-2 text-text-primary">About scrub schedules</h3>
+        <h3 class="font-semibold mb-2 text-text-primary">关于数据清洗计划</h3>
         <ul class="space-y-1 text-sm text-text-secondary">
-            <li>A monthly scrub is enough for most pools. Weekly scrubs suit pools holding critical data.</li>
-            <li>Scrubbing competes with normal workload for disk bandwidth, so prefer quiet hours.</li>
-            <li>If a scrub from a previous run is still going, the runner leaves it alone instead of starting a second one.</li>
-            <li>Current per-pool scrub state is on the <a href="/utils/scrub" class="text-primary-400 hover:text-primary-300">Scrub Status</a> page.</li>
+            <li>对大多数存储池而言，每月一次数据清洗已经足够；存放关键数据的存储池适合每周清洗。</li>
+            <li>数据清洗会与正常业务负载争抢磁盘带宽，因此建议安排在空闲时段。</li>
+            <li>如果上一次启动的数据清洗仍在进行，运行器会保持其运行，而不会启动第二次清洗。</li>
+            <li>各存储池当前的数据清洗状态请查看<a href="/utils/scrub" class="text-primary-400 hover:text-primary-300">数据清洗状态</a>页面。</li>
         </ul>
     </div>
 </div>

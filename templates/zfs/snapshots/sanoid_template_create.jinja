@@ -4,11 +4,11 @@
 <div class="container mx-auto px-4 py-8 max-w-4xl">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm text-text-secondary mb-4 flex items-center gap-2">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
-        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">Snapshots</a>
+        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">快照</a>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
@@ -16,13 +16,13 @@
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
-        <span class="text-text-primary">Create Template</span>
+        <span class="text-text-primary">创建模板</span>
     </nav>
 
     <!-- Page Header -->
     <div class="mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">Create Snapshot Policy Template</h1>
-        <p class="text-text-secondary mt-2">Define a reusable snapshot retention policy</p>
+        <h1 class="text-3xl font-bold text-text-primary">创建快照策略模板</h1>
+        <p class="text-text-secondary mt-2">定义可复用的快照保留策略</p>
     </div>
 
     <!-- Error Message -->
@@ -37,8 +37,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <div class="text-sm">
-                <strong class="text-info-400">Info:</strong>
-                <span class="text-text-secondary">Templates define how many snapshots to keep at each interval. Set to 0 to disable that interval.</span>
+                <strong class="text-info-400">提示：</strong>
+                <span class="text-text-secondary">模板定义每个时间间隔要保留的快照数量。设为 0 即可禁用该间隔。</span>
             </div>
         </div>
     </div>
@@ -46,10 +46,10 @@
     <!-- Form -->
     <div class="card">
         <form method="post" action="/zfs/snapshots/sanoid/template/create">
-            <!-- Template Name -->
+            <!-- 模板名称 -->
             <div class="mb-6">
                 <label for="template_name" class="form-label">
-                    Template Name <span class="text-danger-400">*</span>
+                    模板名称 <span class="text-danger-400">*</span>
                 </label>
                 <input 
                     type="text" 
@@ -57,11 +57,11 @@
                     name="template_name" 
                     required
                     pattern="[a-zA-Z0-9_\-]+"
-                    placeholder="e.g., production, backup, minimal"
+                    placeholder="例如：production、backup、minimal"
                     class="form-input"
                 >
                 <p class="text-text-tertiary text-xs mt-1">
-                    Alphanumeric characters, hyphens, and underscores only
+                    仅限字母数字、短横线和下划线
                 </p>
             </div>
 
@@ -71,7 +71,7 @@
                     <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
-                    Snapshot Retention
+                    快照保留
                 </h3>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -82,7 +82,7 @@
                                 <svg class="w-4 h-4 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                 </svg>
-                                Frequently (15-min)
+                                频繁（每 15 分钟）
                             </span>
                         </label>
                         <input 
@@ -93,17 +93,17 @@
                             value="0"
                             class="form-input"
                         >
-                        <p class="text-text-tertiary text-xs mt-1">Number of 15-minute snapshots to keep</p>
+                        <p class="text-text-tertiary text-xs mt-1">要保留的 15 分钟快照数量</p>
                     </div>
 
-                    <!-- Hourly -->
+                    <!-- 每小时 -->
                     <div>
                         <label for="hourly" class="form-label">
                             <span class="flex items-center gap-2">
                                 <svg class="w-4 h-4 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                Hourly
+                                每小时
                             </span>
                         </label>
                         <input 
@@ -114,17 +114,17 @@
                             value="48"
                             class="form-input"
                         >
-                        <p class="text-text-tertiary text-xs mt-1">Number of hourly snapshots to keep</p>
+                        <p class="text-text-tertiary text-xs mt-1">要保留的每小时快照数量</p>
                     </div>
 
-                    <!-- Daily -->
+                    <!-- 每天 -->
                     <div>
                         <label for="daily" class="form-label">
                             <span class="flex items-center gap-2">
                                 <svg class="w-4 h-4 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                 </svg>
-                                Daily
+                                每天
                             </span>
                         </label>
                         <input 
@@ -135,17 +135,17 @@
                             value="30"
                             class="form-input"
                         >
-                        <p class="text-text-tertiary text-xs mt-1">Number of daily snapshots to keep</p>
+                        <p class="text-text-tertiary text-xs mt-1">要保留的每日快照数量</p>
                     </div>
 
-                    <!-- Weekly -->
+                    <!-- 每周 -->
                     <div>
                         <label for="weekly" class="form-label">
                             <span class="flex items-center gap-2">
                                 <svg class="w-4 h-4 text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                 </svg>
-                                Weekly
+                                每周
                             </span>
                         </label>
                         <input 
@@ -156,17 +156,17 @@
                             value="8"
                             class="form-input"
                         >
-                        <p class="text-text-tertiary text-xs mt-1">Number of weekly snapshots to keep</p>
+                        <p class="text-text-tertiary text-xs mt-1">要保留的每周快照数量</p>
                     </div>
 
-                    <!-- Monthly -->
+                    <!-- 每月 -->
                     <div>
                         <label for="monthly" class="form-label">
                             <span class="flex items-center gap-2">
                                 <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                 </svg>
-                                Monthly
+                                每月
                             </span>
                         </label>
                         <input 
@@ -177,17 +177,17 @@
                             value="6"
                             class="form-input"
                         >
-                        <p class="text-text-tertiary text-xs mt-1">Number of monthly snapshots to keep</p>
+                        <p class="text-text-tertiary text-xs mt-1">要保留的每月快照数量</p>
                     </div>
 
-                    <!-- Yearly -->
+                    <!-- 每年 -->
                     <div>
                         <label for="yearly" class="form-label">
                             <span class="flex items-center gap-2">
                                 <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                 </svg>
-                                Yearly
+                                每年
                             </span>
                         </label>
                         <input 
@@ -198,49 +198,49 @@
                             value="0"
                             class="form-input"
                         >
-                        <p class="text-text-tertiary text-xs mt-1">Number of yearly snapshots to keep</p>
+                        <p class="text-text-tertiary text-xs mt-1">要保留的每年快照数量</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Advanced Options -->
+            <!-- 高级选项 -->
             <div class="card-nested mb-6">
                 <h3 class="text-lg font-semibold text-text-primary mb-4 flex items-center gap-2">
                     <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                     </svg>
-                    Advanced Options
+                    高级选项
                 </h3>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Auto-snap -->
                     <div>
                         <label for="autosnap" class="form-label">
-                            Auto-Snapshot
+                            自动快照
                         </label>
                         <select 
                             id="autosnap" 
                             name="autosnap"
                             class="form-select"
                         >
-                            <option value="yes">Yes - Automatically create snapshots</option>
-                            <option value="no">No - Manual only</option>
+                            <option value="yes">是 - 自动创建快照</option>
+                            <option value="no">否 - 仅手动</option>
                         </select>
                     </div>
 
                     <!-- Auto-prune -->
                     <div>
                         <label for="autoprune" class="form-label">
-                            Auto-Prune
+                            自动清理
                         </label>
                         <select 
                             id="autoprune" 
                             name="autoprune"
                             class="form-select"
                         >
-                            <option value="yes">Yes - Automatically prune old snapshots</option>
-                            <option value="no">No - Keep all snapshots</option>
+                            <option value="yes">是 - 自动清理旧快照</option>
+                            <option value="no">否 - 保留所有快照</option>
                         </select>
                     </div>
                 </div>
@@ -252,20 +252,20 @@
                     <svg class="w-4 h-4 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
-                    Common Template Examples
+                    常用模板示例
                 </h3>
                 <div class="space-y-2 text-xs">
                     <div>
-                        <strong class="text-success-400">Production:</strong>
-                        <p class="text-text-secondary">hourly=48, daily=30, weekly=8, monthly=6 (2 days of hourly, 1 month of daily)</p>
+                        <strong class="text-success-400">生产环境：</strong>
+                        <p class="text-text-secondary">hourly=48, daily=30, weekly=8, monthly=6 （保留 2 天的每小时快照、1 个月的每日快照）</p>
                     </div>
                     <div>
-                        <strong class="text-info-400">Backup:</strong>
-                        <p class="text-text-secondary">frequently=0, hourly=0, daily=7, weekly=4, monthly=12 (weekly backups, kept for 3 months)</p>
+                        <strong class="text-info-400">备份：</strong>
+                        <p class="text-text-secondary">frequently=0, hourly=0, daily=7, weekly=4, monthly=12 （每周备份，保留 3 个月）</p>
                     </div>
                     <div>
-                        <strong class="text-warning-400">Frequent:</strong>
-                        <p class="text-text-secondary">frequently=96, hourly=24, daily=7 (24 hours of 15-min, 1 day of hourly, 1 week of daily)</p>
+                        <strong class="text-warning-400">频繁：</strong>
+                        <p class="text-text-secondary">frequently=96, hourly=24, daily=7 （保留 24 小时的 15 分钟快照、1 天的每小时快照、1 周的每日快照）</p>
                     </div>
                 </div>
             </div>
@@ -279,7 +279,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                     </svg>
-                    Create Template
+                    创建模板
                 </button>
                 <a 
                     href="/zfs/snapshots/sanoid" 
@@ -288,7 +288,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
-                    Cancel
+                    取消
                 </a>
             </div>
         </form>

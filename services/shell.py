@@ -65,12 +65,12 @@ class ShellSession:
             })
             
             if result.returncode != 0:
-                return output, f"Command exited with status {result.returncode}"
+                return output, f"命令退出，状态码 {result.returncode}"
             
             return output, None
             
         except subprocess.TimeoutExpired:
-            error_msg = "Command timed out after 30 seconds"
+            error_msg = "命令执行超过 30 秒，已超时"
             self.history.append({
                 "timestamp": datetime.now().isoformat(),
                 "command": command,
@@ -80,7 +80,7 @@ class ShellSession:
             })
             return "", error_msg
         except Exception as exc:
-            error_msg = f"Command failed: {str(exc)}"
+            error_msg = f"命令执行失败：{str(exc)}"
             self.history.append({
                 "timestamp": datetime.now().isoformat(),
                 "command": command,
@@ -115,7 +115,7 @@ class ShellSession:
         
         # Check if directory exists
         if not os.path.exists(path):
-            error_msg = f"cd: {path}: No such file or directory"
+            error_msg = f"cd: {path}: 没有此文件或目录"
             self.history.append({
                 "timestamp": datetime.now().isoformat(),
                 "command": f"cd {path}",
@@ -126,7 +126,7 @@ class ShellSession:
             return "", error_msg
         
         if not os.path.isdir(path):
-            error_msg = f"cd: {path}: Not a directory"
+            error_msg = f"cd: {path}: 不是目录"
             self.history.append({
                 "timestamp": datetime.now().isoformat(),
                 "command": f"cd {path}",
@@ -144,11 +144,11 @@ class ShellSession:
             "timestamp": datetime.now().isoformat(),
             "command": f"cd {path}",
             "cwd": old_cwd,
-            "output": f"Changed directory to {self.cwd}",
+            "output": f"已切换到目录 {self.cwd}",
             "returncode": 0,
         })
         
-        return f"Changed directory to {self.cwd}", None
+        return f"已切换到目录 {self.cwd}", None
 
     def get_history_text(self) -> str:
         """
@@ -159,8 +159,8 @@ class ShellSession:
         """
         lines = [
             "=" * 80,
-            "SHELL COMMAND HISTORY",
-            f"Generated: {datetime.now().isoformat()}",
+            "SHELL 命令历史",
+            f"生成时间：{datetime.now().isoformat()}",
             "=" * 80,
             "",
         ]
@@ -170,7 +170,7 @@ class ShellSession:
             lines.append(f"# {entry['command']}")
             if entry['output']:
                 lines.append(entry['output'])
-            lines.append(f"Exit code: {entry['returncode']}")
+            lines.append(f"退出码：{entry['returncode']}")
             lines.append("-" * 80)
             lines.append("")
         

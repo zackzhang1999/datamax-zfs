@@ -24,10 +24,10 @@
 
             <!-- Used / Avail / Total / Cap -->
             <div class="flex gap-4 text-xs text-text-secondary">
-                <span>Used: <span class="text-text-primary font-medium">{{ pool.used|default(pool.alloc)|default('?') }}</span></span>
-                <span>Avail: <span class="text-text-primary font-medium">{{ pool.avail|default(pool.free)|default('?') }}</span></span>
-                <span>Total: <span class="text-text-primary font-medium">{{ pool.total|default(pool.size)|default('?') }}</span></span>
-                <span>Cap: <span class="font-medium {% if cap_pct >= 90 %}text-danger-400{% elif cap_pct >= 80 %}text-warning-400{% else %}text-text-primary{% endif %}">{{ pool.cap|default('?') }}</span></span>
+                <span>已用：<span class="text-text-primary font-medium">{{ pool.used|default(pool.alloc)|default('?') }}</span></span>
+                <span>可用：<span class="text-text-primary font-medium">{{ pool.avail|default(pool.free)|default('?') }}</span></span>
+                <span>总计：<span class="text-text-primary font-medium">{{ pool.total|default(pool.size)|default('?') }}</span></span>
+                <span>容量：<span class="font-medium {% if cap_pct >= 90 %}text-danger-400{% elif cap_pct >= 80 %}text-warning-400{% else %}text-text-primary{% endif %}">{{ pool.cap|default('?') }}</span></span>
             </div>
 
             <!-- Capacity bar -->
@@ -44,9 +44,9 @@
 
             <!-- Health badge -->
             <span class="px-2 py-0.5 rounded text-xs font-semibold whitespace-nowrap
-                {% if is_healthy %} bg-success-500/20 text-success-400
-                {% elif is_degraded %} bg-warning-500/20 text-warning-400
-                {% elif is_faulted %} bg-danger-500/20 text-danger-400
+                {% if is_healthy %} bg-success-600 text-white
+                {% elif is_degraded %} bg-warning-500 text-white
+                {% elif is_faulted %} bg-danger-600 text-white
                 {% else %} bg-bg-elevated-3 text-text-secondary
                 {% endif %}">
                 {{ health }}
@@ -58,46 +58,46 @@
                download
                hx-boost="false"
                class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-danger-500/20 text-danger-400 border border-danger-500/30 hover:bg-danger-500/30 transition-colors whitespace-nowrap"
-               title="Download diagnostic zip for troubleshooting">
+               title="下载用于故障排查的诊断压缩包">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
-                Diagnostics
+                诊断信息
             </a>
             {% endif %}
         </div>
 
         {# Line 2: Extended details - datasets, snapshots, vdevs, disks, errors #}
         <div class="flex items-center gap-4 mt-2 pt-2 border-t border-border-subtle text-xs text-text-secondary flex-wrap">
-            <span title="Datasets">
+            <span title="数据集">
                 <svg class="w-3.5 h-3.5 inline-block mr-0.5 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
-                <span class="text-text-primary font-medium">{{ pool.dataset_count|default(0) }}</span> datasets
+                <span class="text-text-primary font-medium">{{ pool.dataset_count|default(0) }}</span> 个数据集
             </span>
-            <span title="Snapshots">
+            <span title="快照">
                 <svg class="w-3.5 h-3.5 inline-block mr-0.5 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                <span class="text-text-primary font-medium">{{ pool.snapshot_count|default(0) }}</span> snapshots
+                <span class="text-text-primary font-medium">{{ pool.snapshot_count|default(0) }}</span> 个快照
             </span>
-            <span title="Virtual devices">
+            <span title="虚拟设备（vdev）">
                 <svg class="w-3.5 h-3.5 inline-block mr-0.5 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                <span class="text-text-primary font-medium">{{ pool.vdev_count|default(0) }}</span> vdevs
+                <span class="text-text-primary font-medium">{{ pool.vdev_count|default(0) }}</span> 个 vdev
             </span>
-            <span title="Physical disks">
+            <span title="物理磁盘">
                 <svg class="w-3.5 h-3.5 inline-block mr-0.5 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/></svg>
-                <span class="text-text-primary font-medium">{{ pool.disk_count|default(0) }}</span> disks
+                <span class="text-text-primary font-medium">{{ pool.disk_count|default(0) }}</span> 块磁盘
             </span>
 
             <span class="ml-auto"></span>
 
             <!-- Error counts with legend label -->
-            <span class="text-text-tertiary font-medium">Errors:</span>
-            <span title="Read errors" class="{% if pool.read_errors|default(0) > 0 %}text-danger-400 font-medium{% endif %}">
-                Read: {{ pool.read_errors|default(0) }}
+            <span class="text-text-tertiary font-medium">错误：</span>
+            <span title="读取错误" class="{% if pool.read_errors|default(0) > 0 %}text-danger-400 font-medium{% endif %}">
+                读：{{ pool.read_errors|default(0) }}
             </span>
-            <span title="Write errors" class="{% if pool.write_errors|default(0) > 0 %}text-danger-400 font-medium{% endif %}">
-                Write: {{ pool.write_errors|default(0) }}
+            <span title="写入错误" class="{% if pool.write_errors|default(0) > 0 %}text-danger-400 font-medium{% endif %}">
+                写：{{ pool.write_errors|default(0) }}
             </span>
-            <span title="Checksum errors" class="{% if pool.cksum_errors|default(0) > 0 %}text-danger-400 font-medium{% endif %}">
-                Cksum: {{ pool.cksum_errors|default(0) }}
+            <span title="校验和错误" class="{% if pool.cksum_errors|default(0) > 0 %}text-danger-400 font-medium{% endif %}">
+                校验：{{ pool.cksum_errors|default(0) }}
             </span>
         </div>
     </div>
@@ -108,6 +108,6 @@
     <svg class="mx-auto h-10 w-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
     </svg>
-    <p>No ZFS pools found</p>
+    <p>未找到 ZFS 存储池</p>
 </div>
 {% endif %}

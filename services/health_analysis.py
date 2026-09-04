@@ -98,7 +98,7 @@ class HealthAnalysisService:
         if not self.smartctl_path:
             self.smartctl_path = self._find_smartctl_path()
         if not self.smartctl_path:
-            raise Exception("smartctl not found. Install smartmontools package.")
+            raise Exception("未找到 smartctl。请安装 smartmontools 软件包。")
         return self.smartctl_path
 
     # ------------------------------------------------------------------
@@ -173,7 +173,7 @@ class HealthAnalysisService:
             "started_at": datetime.now().isoformat(),
             "completed_at": None,
             "status": "running",
-            "progress": "Initializing...",
+            "progress": "正在初始化……",
             "options": {
                 "check_disk_health": check_disk_health,
                 "check_smart_tests": check_smart_tests,
@@ -209,7 +209,7 @@ class HealthAnalysisService:
 
         try:
             # Step 1: Gather pool info
-            report["progress"] = "Gathering pool information..."
+            report["progress"] = "正在收集存储池信息……"
             self._update_report(report_id, report)
 
             report["pools"] = self._gather_pool_info()
@@ -217,13 +217,13 @@ class HealthAnalysisService:
             self._update_report(report_id, report)
 
             # Step 2: List disks
-            report["progress"] = "Scanning for disks..."
+            report["progress"] = "正在扫描磁盘……"
             self._update_report(report_id, report)
 
             disk_paths = self._list_disk_paths()
 
             # Step 2b: Probe pool disks not found by smartctl --scan (USB drives)
-            report["progress"] = "Probing for USB-connected pool disks..."
+            report["progress"] = "正在探测通过 USB 连接的存储池磁盘……"
             self._update_report(report_id, report)
             usb_paths = self._probe_pool_disks(report["pools"], disk_paths)
             if usb_paths:
@@ -233,7 +233,7 @@ class HealthAnalysisService:
             if check_disk_health:
                 for idx, disk_path in enumerate(disk_paths):
                     disk_name = disk_path.split("/")[-1]
-                    report["progress"] = f"Analyzing disk {idx + 1}/{len(disk_paths)}: {disk_name}"
+                    report["progress"] = f"正在分析磁盘 {idx + 1}/{len(disk_paths)}：{disk_name}"
                     self._update_report(report_id, report)
 
                     disk_report = self._analyze_disk(disk_path, aggressive_hours)

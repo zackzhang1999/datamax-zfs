@@ -4,35 +4,35 @@
 <div class="container mx-auto px-4 py-8 max-w-7xl">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm text-text-secondary mb-4 flex items-center gap-2">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
-        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">Snapshots</a>
+        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">快照</a>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
-        <span class="text-text-primary">Sanoid Scheduling</span>
+        <span class="text-text-primary">Sanoid 计划任务</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
         <div>
-            <h1 class="text-3xl font-bold text-text-primary">Sanoid Automated Snapshots</h1>
-            <p class="text-text-secondary mt-2">Manage automated snapshot scheduling and retention policies</p>
+            <h1 class="text-3xl font-bold text-text-primary">Sanoid 自动快照</h1>
+            <p class="text-text-secondary mt-2">管理自动快照计划任务和留存策略</p>
         </div>
         <div class="flex gap-2">
             <a href="/zfs/snapshots/sanoid/dataset/add" class="btn-success flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                 </svg>
-                Add Dataset
+                添加数据集
             </a>
             <a href="/zfs/snapshots/sanoid/template/create" class="btn-primary flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
-                Create Policy
+                创建策略
             </a>
         </div>
     </div>
@@ -54,37 +54,37 @@
             <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            Sanoid Status
+            Sanoid 状态
         </h2>
         {% if status %}
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
             <div class="card-nested">
-                <div class="text-text-tertiary text-xs uppercase mb-1">Status</div>
+                <div class="text-text-tertiary text-xs uppercase mb-1">状态</div>
                 <div class="text-text-primary font-semibold">
                     {% if status.installed %}
-                    <span class="badge-success">Installed</span>
+                    <span class="badge-success">已安装</span>
                     {% else %}
-                    <span class="badge-danger">Not Installed</span>
+                    <span class="badge-danger">未安装</span>
                     {% endif %}
                 </div>
             </div>
             {% if status.installed %}
             <div class="card-nested">
-                <div class="text-text-tertiary text-xs uppercase mb-1">Version</div>
-                <div class="text-text-primary font-semibold">{{ status.version or 'Unknown' }}</div>
+                <div class="text-text-tertiary text-xs uppercase mb-1">版本</div>
+                <div class="text-text-primary font-semibold">{{ status.version or '未知' }}</div>
             </div>
             <div class="card-nested">
-                <div class="text-text-tertiary text-xs uppercase mb-1">Configuration</div>
+                <div class="text-text-tertiary text-xs uppercase mb-1">配置</div>
                 <div class="text-text-primary font-semibold">
                     {% if status.config_exists %}
-                    <span class="badge-success">Found</span>
+                    <span class="badge-success">已找到</span>
                     {% else %}
-                    <span class="badge-warning">Missing</span>
+                    <span class="badge-warning">缺失</span>
                     {% endif %}
                 </div>
             </div>
             <div class="card-nested">
-                <div class="text-text-tertiary text-xs uppercase mb-1">Path</div>
+                <div class="text-text-tertiary text-xs uppercase mb-1">路径</div>
                 <div class="text-text-primary text-sm font-mono truncate">{{ status.path }}</div>
             </div>
             {% endif %}
@@ -104,7 +104,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
                     </span>
-                    <span>Take Snapshots Now</span>
+                    <span>立即创建快照</span>
                 </button>
             </form>
             <form method="post" action="/zfs/snapshots/sanoid/run" class="inline" id="form-prune-snapshots">
@@ -114,19 +114,19 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                     </svg>
-                    Prune Snapshots Now
+                    立即清理快照
                 </button>
             </form>
             <a href="/zfs/snapshots/sanoid/validate" class="btn-secondary flex items-center gap-2" hx-boost="false">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
-                Validate Config
+                校验配置
             </a>
         </div>
         {% endif %}
         {% else %}
-        <div class="text-text-tertiary">Unable to determine Sanoid status</div>
+        <div class="text-text-tertiary">无法确定 Sanoid 状态</div>
         {% endif %}
     </div>
 
@@ -137,7 +137,7 @@
                 <svg class="w-5 h-5 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
                 </svg>
-                Configured Datasets
+                已配置数据集
                 <span class="badge-info">{{ datasets|length if datasets else 0 }}</span>
             </h2>
         </div>
@@ -147,11 +147,11 @@
             <table class="min-w-full">
                 <thead class="bg-bg-elevated-2">
                     <tr>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Dataset</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Template</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Recursive</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Retention</th>
-                        <th class="px-4 py-3 text-right text-xs font-medium text-text-secondary uppercase tracking-wider">Actions</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">数据集</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">模板</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">递归</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">留存</th>
+                        <th class="px-4 py-3 text-right text-xs font-medium text-text-secondary uppercase tracking-wider">操作</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-border-subtle">
@@ -183,13 +183,13 @@
                         <td class="px-4 py-3 text-right">
                             <div class="flex justify-end gap-2">
                                 <a href="/zfs/snapshots/sanoid/dataset/{{ dataset_name }}/edit" 
-                                   class="text-primary-400 hover:text-primary-300 transition-colors" title="Edit">
+                                   class="text-primary-400 hover:text-primary-300 transition-colors" title="编辑">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                     </svg>
                                 </a>
                                 <form method="post" action="/zfs/snapshots/sanoid/dataset/{{ dataset_name }}/remove" class="inline" id="form-remove-dataset-{{ loop.index }}">
-                                    <button type="button" class="text-danger-400 hover:text-danger-300 transition-colors" title="Remove"
+                                    <button type="button" class="text-danger-400 hover:text-danger-300 transition-colors" title="移除"
                                             onclick="showConfirm('modal-remove-dataset-{{ loop.index }}')">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
@@ -208,12 +208,12 @@
             <svg class="w-16 h-16 text-text-tertiary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
             </svg>
-            <div class="text-text-secondary mb-4">No datasets configured for automated snapshots</div>
+            <div class="text-text-secondary mb-4">未配置任何自动快照数据集</div>
             <a href="/zfs/snapshots/sanoid/dataset/add" class="btn-success flex items-center gap-2 inline-flex">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                 </svg>
-                Add Your First Dataset
+                添加你的第一个数据集
             </a>
         </div>
         {% endif %}
@@ -226,7 +226,7 @@
                 <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
-                Snapshot Policies
+                快照策略
                 <span class="badge-info">{{ templates|length if templates else 0 }}</span>
             </h2>
         </div>
@@ -239,13 +239,13 @@
                     <h3 class="text-text-primary font-semibold">{{ template_name.replace('template_', '') }}</h3>
                     <div class="flex gap-2">
                         <a href="/zfs/snapshots/sanoid/template/{{ template_name }}/edit" 
-                           class="text-primary-400 hover:text-primary-300 transition-colors" title="Edit Policy">
+                           class="text-primary-400 hover:text-primary-300 transition-colors" title="编辑策略">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                             </svg>
                         </a>
                         <form method="post" action="/zfs/snapshots/sanoid/template/{{ template_name }}/delete" class="inline" id="form-delete-template-{{ loop.index }}">
-                            <button type="button" class="text-danger-400 hover:text-danger-300 transition-colors" title="Delete Policy"
+                            <button type="button" class="text-danger-400 hover:text-danger-300 transition-colors" title="删除策略"
                                     onclick="showConfirm('modal-delete-template-{{ loop.index }}')">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
@@ -257,46 +257,46 @@
                 <div class="space-y-2 text-sm">
                     {% if config.frequently and config.frequently != '0' %}
                     <div class="flex justify-between text-text-secondary">
-                        <span>Frequently:</span>
+                        <span>高频（15 分钟）：</span>
                         <span class="font-semibold text-info-400">{{ config.frequently }}</span>
                     </div>
                     {% endif %}
                     {% if config.hourly and config.hourly != '0' %}
                     <div class="flex justify-between text-text-secondary">
-                        <span>Hourly:</span>
+                        <span>每小时：</span>
                         <span class="font-semibold text-info-400">{{ config.hourly }}</span>
                     </div>
                     {% endif %}
                     {% if config.daily and config.daily != '0' %}
                     <div class="flex justify-between text-text-secondary">
-                        <span>Daily:</span>
+                        <span>每天：</span>
                         <span class="font-semibold text-success-400">{{ config.daily }}</span>
                     </div>
                     {% endif %}
                     {% if config.weekly and config.weekly != '0' %}
                     <div class="flex justify-between text-text-secondary">
-                        <span>Weekly:</span>
+                        <span>每周：</span>
                         <span class="font-semibold text-warning-400">{{ config.weekly }}</span>
                     </div>
                     {% endif %}
                     {% if config.monthly and config.monthly != '0' %}
                     <div class="flex justify-between text-text-secondary">
-                        <span>Monthly:</span>
+                        <span>每月：</span>
                         <span class="font-semibold text-purple-400">{{ config.monthly }}</span>
                     </div>
                     {% endif %}
                     {% if config.yearly and config.yearly != '0' %}
                     <div class="flex justify-between text-text-secondary">
-                        <span>Yearly:</span>
+                        <span>每年：</span>
                         <span class="font-semibold text-primary-400">{{ config.yearly }}</span>
                     </div>
                     {% endif %}
                     <div class="flex justify-between text-text-tertiary text-xs mt-3 pt-2 border-t border-border-subtle">
-                        <span>Auto-snap:</span>
+                        <span>自动快照：</span>
                         <span>{{ config.autosnap or 'yes' }}</span>
                     </div>
                     <div class="flex justify-between text-text-tertiary text-xs">
-                        <span>Auto-prune:</span>
+                        <span>自动清理：</span>
                         <span>{{ config.autoprune or 'yes' }}</span>
                     </div>
                 </div>
@@ -305,7 +305,7 @@
         </div>
         {% else %}
         <div class="text-center py-8 text-text-tertiary">
-            No templates defined
+            未定义任何模板
         </div>
         {% endif %}
     </div>
@@ -317,10 +317,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <div class="text-sm">
-                <strong class="text-info-400">About Sanoid:</strong>
-                <span class="text-text-secondary">Sanoid is a policy-driven snapshot management tool that automatically creates 
-                and prunes ZFS snapshots according to defined retention policies. It runs via cron and ensures consistent, 
-                automated backup protection for your datasets.</span>
+                <strong class="text-info-400">关于 Sanoid：</strong>
+                <span class="text-text-secondary">Sanoid 是一个策略驱动的快照管理工具，可根据定义的留存策略自动创建
+                并清理 ZFS 快照。它通过 cron 运行，为你的数据集提供一致的自动化备份保护。</span>
             </div>
         </div>
     </div>
@@ -328,9 +327,9 @@
 
 <!-- Confirmation Modals -->
 {% set id = 'modal-prune-snapshots' %}
-{% set title = 'Prune Snapshots' %}
-{% set message = 'This will prune old snapshots according to policy. Continue?' %}
-{% set confirm_text = 'Prune' %}
+{% set title = '清理快照' %}
+{% set message = '这将根据策略清理旧快照。是否继续？' %}
+{% set confirm_text = '清理' %}
 {% set confirm_class = 'warning' %}
 {% set confirm_action = 'document.getElementById("form-prune-snapshots").submit()' %}
 {% include 'partials/confirm.jinja' %}
@@ -338,9 +337,9 @@
 {% if datasets %}
     {% for dataset_name, config in datasets.items() %}
     {% set id = 'modal-remove-dataset-' + loop.index|string %}
-    {% set title = 'Remove Dataset' %}
-    {% set message = 'Remove ' + dataset_name + ' from Sanoid configuration?' %}
-    {% set confirm_text = 'Remove' %}
+    {% set title = '移除数据集' %}
+    {% set message = '将 ' + dataset_name + ' 从 Sanoid 配置中移除？' %}
+    {% set confirm_text = '移除' %}
     {% set confirm_class = 'danger' %}
     {% set confirm_action = 'document.getElementById("form-remove-dataset-' + loop.index|string + '").submit()' %}
     {% include 'partials/confirm.jinja' %}
@@ -350,9 +349,9 @@
 {% if templates %}
     {% for template_name, config in templates.items() %}
     {% set id = 'modal-delete-template-' + loop.index|string %}
-    {% set title = 'Delete Policy' %}
-    {% set message = 'Delete policy "' + template_name.replace('template_', '') + '"? Datasets using this policy will need to be reconfigured.' %}
-    {% set confirm_text = 'Delete' %}
+    {% set title = '删除策略' %}
+    {% set message = '删除策略 "' + template_name.replace('template_', '') + '"？使用此策略的数据集将需要重新配置。' %}
+    {% set confirm_text = '删除' %}
     {% set confirm_class = 'danger' %}
     {% set confirm_action = 'document.getElementById("form-delete-template-' + loop.index|string + '").submit()' %}
     {% include 'partials/confirm.jinja' %}

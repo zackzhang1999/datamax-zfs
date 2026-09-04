@@ -6,20 +6,20 @@
 <div class="container mx-auto px-4 py-8 max-w-4xl">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils" class="hover:text-primary-400">Utilities</a>
+        <a href="/utils" class="hover:text-primary-400">实用工具</a>
         <span class="mx-2">/</span>
-        <a href="/utils/scheduling" class="hover:text-primary-400">Scheduling</a>
+        <a href="/utils/scheduling" class="hover:text-primary-400">计划任务</a>
         <span class="mx-2">/</span>
-        <span class="text-text-primary">{% if task %}Edit Health Check Schedule{% else %}New Health Check Schedule{% endif %}</span>
+        <span class="text-text-primary">{% if task %}编辑健康检查计划{% else %}新建健康检查计划{% endif %}</span>
     </nav>
 
     <!-- Page Header -->
     <div class="mb-6">
         <h1 class="text-3xl font-bold text-text-primary mb-2">
-            {% if task %}Edit Health Check Schedule{% else %}New Health Check Schedule{% endif %}
+            {% if task %}编辑健康检查计划{% else %}新建健康检查计划{% endif %}
         </h1>
         <p class="text-text-secondary text-sm">
-            Generates a health analysis report on a schedule. The schedule is registered with the operating system scheduler as soon as it is saved.
+            按计划生成健康分析报告。保存后，计划会立即注册到操作系统调度器中。
         </p>
     </div>
 
@@ -32,35 +32,35 @@
                 {% endif %}
 
                 <div class="mb-6">
-                    <label class="form-label" for="name">Schedule Name</label>
+                    <label class="form-label" for="name">计划名称</label>
                     <input type="text" name="name" id="name" class="form-input"
                            value="{{ task.name if task and task.name else '' }}"
-                           placeholder="e.g., Weekly full health report">
-                    <p class="text-text-tertiary text-xs mt-1">Used to identify this schedule in the task list.</p>
+                           placeholder="例如：每周完整健康报告">
+                    <p class="text-text-tertiary text-xs mt-1">用于在任务列表中标识该计划。</p>
                 </div>
 
                 <div class="mb-6">
-                    <h3 class="font-semibold text-lg mb-4 text-text-primary">Checks to Include</h3>
+                    <h3 class="font-semibold text-lg mb-4 text-text-primary">包含的检查项</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <label class="flex items-center">
                             <input type="checkbox" name="check_disk_health" value="true" class="form-checkbox"
                                    {% if not task or task.check_disk_health %}checked{% endif %}>
-                            <span class="ml-3 text-text-secondary">Check disk health</span>
+                            <span class="ml-3 text-text-secondary">检查磁盘健康状况</span>
                         </label>
                         <label class="flex items-center">
                             <input type="checkbox" name="check_smart_tests" value="true" class="form-checkbox"
                                    {% if not task or task.check_smart_tests %}checked{% endif %}>
-                            <span class="ml-3 text-text-secondary">Check SMART test coverage</span>
+                            <span class="ml-3 text-text-secondary">检查 SMART 测试覆盖情况</span>
                         </label>
                         <label class="flex items-center">
                             <input type="checkbox" name="check_scrubs" value="true" class="form-checkbox"
                                    {% if not task or task.check_scrubs %}checked{% endif %}>
-                            <span class="ml-3 text-text-secondary">Check scrub status</span>
+                            <span class="ml-3 text-text-secondary">检查数据清洗状态</span>
                         </label>
                         <label class="flex items-center">
                             <input type="checkbox" name="aggressive_hours" value="true" class="form-checkbox"
                                    {% if task and task.aggressive_hours %}checked{% endif %}>
-                            <span class="ml-3 text-text-secondary">Aggressive power-on hour thresholds</span>
+                            <span class="ml-3 text-text-secondary">使用更严格的通电时长阈值</span>
                         </label>
                     </div>
                 </div>
@@ -69,20 +69,20 @@
 
                 <div class="flex items-center justify-between pt-4 border-t border-border-subtle">
                     <button type="submit" class="btn-primary">
-                        {% if task %}Save Changes{% else %}Create Schedule{% endif %}
+                        {% if task %}保存更改{% else %}创建计划{% endif %}
                     </button>
-                    <a href="/utils/scheduling" class="btn-secondary">Cancel</a>
+                    <a href="/utils/scheduling" class="btn-secondary">取消</a>
                 </div>
             </form>
         </div>
     </div>
 
     <div class="card-nested bg-info-900/20 border-info-700">
-        <h3 class="font-semibold mb-2 text-text-primary">About health check schedules</h3>
+        <h3 class="font-semibold mb-2 text-text-primary">关于健康检查计划</h3>
         <ul class="space-y-1 text-sm text-text-secondary">
-            <li>Each run produces a stored report, so a weekly schedule builds a history you can compare over time.</li>
-            <li>Aggressive power-on hour thresholds flag disks earlier, which is useful for a fleet of aging drives.</li>
-            <li>Reports appear on the <a href="/utils/health" class="text-primary-400 hover:text-primary-300">Health Analysis</a> page.</li>
+            <li>每次运行都会生成一份留存的报告，因此每周的计划可以积累出便于对比的历史记录。</li>
+            <li>更严格的通电时长阈值会更早地对磁盘发出告警，适合管理日渐老化的磁盘阵列。</li>
+            <li>报告会显示在<a href="/utils/health" class="text-primary-400 hover:text-primary-300">健康分析</a>页面上。</li>
         </ul>
     </div>
 </div>

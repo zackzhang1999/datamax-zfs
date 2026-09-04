@@ -22,17 +22,17 @@ DEFAULT_SESSION_TIMEOUT = 3600
 
 # Preset choices for the UI dropdown (value in seconds, label)
 SESSION_TIMEOUT_PRESETS = [
-    (300, "5 minutes"),
-    (900, "15 minutes"),
-    (1800, "30 minutes"),
-    (3600, "1 hour"),
-    (7200, "2 hours"),
-    (14400, "4 hours"),
-    (28800, "8 hours"),
-    (43200, "12 hours"),
-    (86400, "1 day"),
-    (172800, "2 days"),
-    (604800, "7 days"),
+    (300, "5 分钟"),
+    (900, "15 分钟"),
+    (1800, "30 分钟"),
+    (3600, "1 小时"),
+    (7200, "2 小时"),
+    (14400, "4 小时"),
+    (28800, "8 小时"),
+    (43200, "12 小时"),
+    (86400, "1 天"),
+    (172800, "2 天"),
+    (604800, "7 天"),
 ]
 
 # Set of valid preset values for validation
@@ -102,7 +102,7 @@ def save_session_timeout(seconds: int) -> None:
     """
     int_seconds = int(seconds)
     if int_seconds not in VALID_TIMEOUT_VALUES:
-        raise ValueError(f"Invalid session timeout value: {int_seconds}")
+        raise ValueError(f"无效的会话超时值：{int_seconds}")
 
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -129,10 +129,10 @@ def format_timeout_display(seconds: int) -> str:
     """
     if seconds < 3600:
         minutes = seconds // 60
-        return f"{minutes} minute{'s' if minutes != 1 else ''}"
+        return f"{minutes} 分钟"
     elif seconds < 86400:
         hours = seconds // 3600
-        return f"{hours} hour{'s' if hours != 1 else ''}"
+        return f"{hours} 小时"
     else:
         days = seconds // 86400
-        return f"{days} day{'s' if days != 1 else ''}"
+        return f"{days} 天"

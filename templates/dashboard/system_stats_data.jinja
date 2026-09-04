@@ -10,7 +10,7 @@
         <svg class="w-4 h-4 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        <span class="text-text-secondary">Uptime:</span>
+        <span class="text-text-secondary">运行时间：</span>
         <span class="text-text-primary font-semibold">{{ realtime.uptime.formatted }}</span>
     </div>
     {% endif %}
@@ -22,7 +22,7 @@
     <table class="w-full text-sm mb-3">
         <tbody class="divide-y divide-border-subtle">
             <tr><td class="py-1.5 text-text-secondary w-16">CPU</td><td class="py-1.5 text-text-primary text-xs">{{ specs.cpu_model }}</td></tr>
-            <tr><td class="py-1.5 text-text-secondary">Cores</td><td class="py-1.5 text-text-primary">{{ specs.cpu_count_physical or '?' }} physical / {{ specs.cpu_count }} logical</td></tr>
+            <tr><td class="py-1.5 text-text-secondary">核心数</td><td class="py-1.5 text-text-primary">{{ specs.cpu_count_physical or '?' }} 物理 / {{ specs.cpu_count }} 逻辑</td></tr>
         </tbody>
     </table>
     {% endif %}
@@ -37,7 +37,7 @@
         <svg class="w-4 h-4 {{ temp_color }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17.25a3 3 0 11-1.5-2.598V5.25a1.5 1.5 0 113 0v9.402a3 3 0 01-1.5 2.598z"/>
         </svg>
-        <span class="text-text-secondary">CPU Temp:</span>
+        <span class="text-text-secondary">CPU 温度：</span>
         <span class="{{ temp_color }} font-semibold">{{ temp.current }} &deg;C</span>
         {% if temp.label %}<span class="text-text-tertiary text-xs">({{ temp.label }})</span>{% endif %}
     </div>
@@ -46,8 +46,8 @@
         <svg class="w-4 h-4 text-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17.25a3 3 0 11-1.5-2.598V5.25a1.5 1.5 0 113 0v9.402a3 3 0 01-1.5 2.598z"/>
         </svg>
-        <span class="text-text-secondary">CPU Temp:</span>
-        <span class="text-text-tertiary text-xs">Not available</span>
+        <span class="text-text-secondary">CPU 温度：</span>
+        <span class="text-text-tertiary text-xs">不可用</span>
     </div>
     {% endif %}
 </div>
@@ -76,14 +76,14 @@
 <div id="dash-tasks" hx-swap-oob="true" class="mt-2 pt-2 border-t border-border-subtle">
     {% if realtime.tasks %}
     <div class="text-xs text-text-secondary">
-        <span class="font-medium text-text-primary">{{ realtime.tasks.total }}</span> tasks:
-        <span class="text-success-400">{{ realtime.tasks.running }} run</span>,
-        <span>{{ realtime.tasks.sleeping }} sleep</span>,
-        <span>{{ realtime.tasks.stopped }} stop</span>,
-        <span class="{% if realtime.tasks.zombie > 0 %}text-danger-400{% endif %}">{{ realtime.tasks.zombie }} zombie</span>
+        <span class="font-medium text-text-primary">{{ realtime.tasks.total }}</span> 个任务：
+        <span class="text-success-400">{{ realtime.tasks.running }} 运行</span>,
+        <span>{{ realtime.tasks.sleeping }} 睡眠</span>,
+        <span>{{ realtime.tasks.stopped }} 已停止</span>,
+        <span class="{% if realtime.tasks.zombie > 0 %}text-danger-400{% endif %}">{{ realtime.tasks.zombie }} 僵尸</span>
         {% if realtime.system_load %}
-        / <span class="font-medium text-text-primary">{{ realtime.tasks.threads }}</span> threads
-        ({{ realtime.system_load.cpu_count }} CPUs)
+        / <span class="font-medium text-text-primary">{{ realtime.tasks.threads }}</span> 线程
+        ({{ realtime.system_load.cpu_count }} 个 CPU)
         {% endif %}
     </div>
     {% endif %}

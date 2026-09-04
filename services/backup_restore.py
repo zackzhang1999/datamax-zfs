@@ -95,8 +95,6 @@ USER_CONFIG_FILES = [
     "theme.conf",
     "session_timeout.json",
     "ssh_connections.json",
-    "fleet_servers.json",
-    ".fleet_key",
     "scrub_schedules.json",
     "smart_scheduled_tests.json",
     "syncoid_jobs.json",
@@ -411,7 +409,7 @@ def create_archive(
     Create an encrypted backup archive and return its bytes.
     """
     if not passphrase or len(passphrase) < 8:
-        raise ValueError("Passphrase must be at least 8 characters long.")
+        raise ValueError("密码短语长度至少为 8 个字符。")
 
     entries = _enumerate_files(include_history, include_secret, include_system)
     manifest = build_manifest(include_history, include_secret, include_system)
@@ -450,23 +448,23 @@ def _split_archive(blob: bytes) -> Tuple[Dict[str, Any], bytes, bytes]:
     """
     if not blob.startswith(MAGIC):
         raise ValueError(
-            "File is not a WebZFS backup archive (missing WZFSBAK1 magic)."
+            "该文件不是 WebZFS 备份归档（缺少 WZFSBAK1 魔数）。"
         )
     rest = blob[len(MAGIC):]
     newline_pos = rest.find(b"\n")
     if newline_pos == -1:
-        raise ValueError("Backup archive header is malformed (no header terminator).")
+        raise ValueError("备份归档头部格式错误（缺少头部终止符）。")
     header_line = rest[: newline_pos + 1]
     ciphertext = rest[newline_pos + 1 :]
 
     try:
         header = json.loads(header_line.decode("utf-8").strip())
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-        raise ValueError(f"Backup archive header is not valid JSON: {exc}") from exc
+        raise ValueError(f"备份归档头部不是有效的 JSON：{exc}") from exc
 
     if header.get("v") != FORMAT_VERSION:
         raise ValueError(
-            f"Unsupported backup format version: {header.get('v')}. Expected {FORMAT_VERSION}."
+            f"不支持的备份格式版本：{header.get('v')}。应为 {FORMAT_VERSION}。"
         )
 
     aad = MAGIC + header_line
@@ -483,7 +481,7 @@ def _decrypt_payload(blob: bytes, passphrase: str) -> Tuple[Dict[str, Any], byte
         salt = _decode_b64(header["salt"])
         nonce = _decode_b64(header["nonce"])
     except (KeyError, ValueError) as exc:
-        raise ValueError(f"Backup archive header is missing required fields: {exc}") from exc
+        raise ValueError(f"备份归档头部缺少必需字段：{exc}") from exc
 
     key = _derive_key(passphrase, salt)
     aesgcm = AESGCM(key)
@@ -491,7 +489,7 @@ def _decrypt_payload(blob: bytes, passphrase: str) -> Tuple[Dict[str, Any], byte
         plaintext = aesgcm.decrypt(nonce, ciphertext, aad)
     except Exception as exc:
         raise ValueError(
-            "Decryption failed. The passphrase is incorrect or the file is corrupted."
+            "解密失败。密码短语不正确或文件已损坏。"
         ) from exc
 
     return header, plaintext
@@ -504,10 +502,10 @@ def _read_manifest_from_payload(payload: bytes) -> Dict[str, Any]:
             try:
                 member = tar.getmember("manifest.json")
             except KeyError as exc:
-                raise ValueError("Backup archive is missing manifest.json.") from exc
+                raise ValueError("备份归档缺少 manifest.json。") from exc
             extracted = tar.extractfile(member)
             if extracted is None:
-                raise ValueError("Could not read manifest.json from backup archive.")
+                raise ValueError("无法从备份归档中读取 manifest.json。")
             return json.loads(extracted.read().decode("utf-8"))
 
 
@@ -620,29 +618,29 @@ def restore_archive(
                 if member.name == "manifest.json":
                     continue
                 if not member.isfile():
-                    skipped.append({"arcname": member.name, "reason": "not a regular file"})
+                    skipped.append({"arcname": member.name, "reason": "不是常规文件"})
                     continue
 
                 meta = manifest_index.get(member.name)
                 if meta is None:
-                    skipped.append({"arcname": member.name, "reason": "not in manifest"})
+                    skipped.append({"arcname": member.name, "reason": "不在清单中"})
                     continue
 
                 category = meta.get("category", "unknown")
                 if selected_categories is not None and category not in selected_categories:
                     skipped.append(
-                        {"arcname": member.name, "reason": f"category {category} not selected"}
+                        {"arcname": member.name, "reason": f"未选择类别 {category}"}
                     )
                     continue
 
                 target = _resolve_target_path(member.name)
                 if target is None:
-                    skipped.append({"arcname": member.name, "reason": "path not allowed"})
+                    skipped.append({"arcname": member.name, "reason": "路径不被允许"})
                     continue
 
                 extracted = tar.extractfile(member)
                 if extracted is None:
-                    failed.append({"arcname": member.name, "reason": "could not read entry"})
+                    failed.append({"arcname": member.name, "reason": "无法读取归档条目"})
                     continue
                 data = extracted.read()
 
@@ -654,7 +652,7 @@ def restore_archive(
                         failed.append(
                             {
                                 "arcname": member.name,
-                                "reason": "sha256 mismatch",
+                                "reason": "sha256 校验和不匹配",
                             }
                         )
                         continue
@@ -675,7 +673,7 @@ def restore_archive(
                         failed.append(
                             {
                                 "arcname": member.name,
-                                "reason": f"could not back up existing file: {exc}",
+                                "reason": f"无法备份现有文件：{exc}",
                             }
                         )
                         continue
@@ -741,10 +739,10 @@ def stash_upload(blob: bytes) -> str:
 def load_stash(token: str) -> bytes:
     """Load a previously stashed archive blob by token."""
     if not token or "/" in token or ".." in token:
-        raise ValueError("Invalid stash token.")
+        raise ValueError("无效的暂存令牌。")
     path = _staging_dir() / f"{token}.wzbak"
     if not path.exists():
-        raise ValueError("Upload session expired or not found. Please upload again.")
+        raise ValueError("上传会话已过期或不存在，请重新上传。")
     return path.read_bytes()
 
 

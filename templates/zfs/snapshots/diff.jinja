@@ -4,21 +4,21 @@
 <div class="container mx-auto px-4 py-8 max-w-4xl">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm text-text-secondary mb-4 flex items-center gap-2">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
-        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">Snapshots</a>
+        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">快照</a>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
-        <span class="text-text-primary">Diff</span>
+        <span class="text-text-primary">比较</span>
     </nav>
 
     <!-- Page Header -->
     <div class="mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">Compare Snapshots</h1>
-        <p class="text-text-secondary mt-2">View differences between snapshots or snapshot and current state</p>
+        <h1 class="text-3xl font-bold text-text-primary">比较快照</h1>
+        <p class="text-text-secondary mt-2">查看两个快照之间、或快照与当前状态之间的差异</p>
     </div>
 
     <!-- Error Message -->
@@ -31,7 +31,7 @@
                 </svg>
             </div>
             <div class="flex-1 ml-3">
-                <h3 class="text-sm font-semibold text-danger-400">Error</h3>
+                <h3 class="text-sm font-semibold text-danger-400">错误</h3>
                 <div class="mt-1 text-sm text-danger-300">
                     <pre class="whitespace-pre-wrap font-mono text-xs">{{ error }}</pre>
                 </div>
@@ -47,9 +47,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <div class="text-sm">
-                <strong class="text-info-400">About Snapshot Diff:</strong>
-                <span class="text-text-secondary">The diff operation shows what has changed in files and directories between 
-                two points in time. This is useful for auditing changes, troubleshooting issues, or understanding what will be lost during a rollback.</span>
+                <strong class="text-info-400">关于快照比较：</strong>
+                <span class="text-text-secondary">比较操作会显示两个时间点之间文件和目录发生的变化。
+                这对于审计变更、排查问题，或了解回滚将丢失哪些内容非常有用。</span>
             </div>
         </div>
     </div>
@@ -60,14 +60,14 @@
             <!-- Dataset Filter -->
             <div class="mb-6">
                 <label for="dataset_filter" class="form-label">
-                    Filter by Dataset <span class="text-text-tertiary">(Optional)</span>
+                    按数据集筛选 <span class="text-text-tertiary">（可选）</span>
                 </label>
                 <select 
                     id="dataset_filter" 
                     class="form-select"
                     onchange="filterSnapshots()"
                 >
-                    <option value="">-- All Datasets --</option>
+                    <option value="">-- 全部数据集 --</option>
                     {% if snapshots %}
                         {% set datasets = snapshots|map(attribute='dataset')|unique|list %}
                         {% for ds in datasets %}
@@ -76,14 +76,14 @@
                     {% endif %}
                 </select>
                 <p class="text-text-tertiary text-xs mt-1">
-                    Filter snapshots by dataset to make selection easier
+                    按数据集筛选快照，以便更容易选择
                 </p>
             </div>
 
             <!-- First Snapshot -->
             <div class="mb-6">
                 <label for="snapshot1" class="form-label">
-                    First Snapshot (Earlier) <span class="text-danger-400">*</span>
+                    第一个快照（较早） <span class="text-danger-400">*</span>
                 </label>
                 {% if snapshots and snapshots|length > 0 %}
                 <select 
@@ -92,7 +92,7 @@
                     required
                     class="form-select"
                 >
-                    <option value="">-- Select First Snapshot --</option>
+                    <option value="">-- 请选择第一个快照 --</option>
                     {% for snap in snapshots %}
                     <option value="{{ snap.name }}" data-dataset="{{ snap.dataset }}" {% if snapshot1 == snap.name %}selected{% endif %}>
                         {{ snap.name }} ({{ snap.creation }})
@@ -100,7 +100,7 @@
                     {% endfor %}
                 </select>
                 <p class="text-text-tertiary text-xs mt-1">
-                    Select the older/earlier snapshot for comparison
+                    选择较旧/较早的快照进行比较
                 </p>
                 {% else %}
                 <div class="card-nested bg-warning-900/20 border-warning-900">
@@ -109,8 +109,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                         </svg>
                         <div class="text-sm">
-                            <strong class="text-warning-400">Warning:</strong>
-                            <span class="text-text-secondary">No snapshots found.</span>
+                            <strong class="text-warning-400">警告：</strong>
+                            <span class="text-text-secondary">未找到快照。</span>
                         </div>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
             <!-- Second Snapshot (Optional) -->
             <div class="mb-6">
                 <label for="snapshot2" class="form-label">
-                    Second Snapshot (Later) <span class="text-text-tertiary">(Optional)</span>
+                    第二个快照（较晚） <span class="text-text-tertiary">（可选）</span>
                 </label>
                 {% if snapshots and snapshots|length > 0 %}
                 <select 
@@ -128,7 +128,7 @@
                     name="snapshot2"
                     class="form-select"
                 >
-                    <option value="">-- Current State (no second snapshot) --</option>
+                    <option value="">-- 当前状态（不选第二个快照） --</option>
                     {% for snap in snapshots %}
                     <option value="{{ snap.name }}" data-dataset="{{ snap.dataset }}">
                         {{ snap.name }} ({{ snap.creation }})
@@ -136,7 +136,7 @@
                     {% endfor %}
                 </select>
                 <p class="text-text-tertiary text-xs mt-1">
-                    Leave empty to compare with the current state of the dataset
+                    留空则与数据集的当前状态进行比较
                 </p>
                 {% endif %}
             </div>
@@ -147,7 +147,7 @@
                     <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                     </svg>
-                    Comparison Modes
+                    比较模式
                 </h3>
                 <div class="space-y-3 text-xs">
                     <div class="flex items-start gap-3">
@@ -155,9 +155,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
                         </svg>
                         <div>
-                            <strong class="text-text-primary">Snapshot to Snapshot:</strong>
-                            <p class="text-text-secondary">Compare two specific snapshots to see what changed between them.</p>
-                            <p class="text-text-tertiary italic mt-1">Both fields must be filled.</p>
+                            <strong class="text-text-primary">快照对快照：</strong>
+                            <p class="text-text-secondary">比较两个指定的快照，查看它们之间发生的变化。</p>
+                            <p class="text-text-tertiary italic mt-1">两个字段都必须填写。</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-3">
@@ -165,9 +165,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                         </svg>
                         <div>
-                            <strong class="text-text-primary">Snapshot to Current:</strong>
-                            <p class="text-text-secondary">Compare a snapshot to the current state of the dataset to see what has changed since.</p>
-                            <p class="text-text-tertiary italic mt-1">Leave second snapshot empty.</p>
+                            <strong class="text-text-primary">快照对当前状态：</strong>
+                            <p class="text-text-secondary">将快照与数据集的当前状态比较，查看此后发生的变化。</p>
+                            <p class="text-text-tertiary italic mt-1">将第二个快照留空。</p>
                         </div>
                     </div>
                 </div>
@@ -179,20 +179,20 @@
                     <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                     </svg>
-                    Example Usage
+                    使用示例
                 </h3>
                 <div class="space-y-2 text-xs">
                     <div>
-                        <strong class="text-success-400">Pre-upgrade Check:</strong>
-                        <p class="text-text-secondary">Compare a pre-upgrade snapshot with current state to see what the upgrade changed.</p>
+                        <strong class="text-success-400">升级前检查：</strong>
+                        <p class="text-text-secondary">将升级前的快照与当前状态比较，查看升级改动了哪些内容。</p>
                     </div>
                     <div>
-                        <strong class="text-success-400">Audit Changes:</strong>
-                        <p class="text-text-secondary">See what files were added, modified, or deleted during a specific time period.</p>
+                        <strong class="text-success-400">审计变更：</strong>
+                        <p class="text-text-secondary">查看在特定时间段内添加、修改或删除了哪些文件。</p>
                     </div>
                     <div>
-                        <strong class="text-success-400">Rollback Preview:</strong>
-                        <p class="text-text-secondary">Before rolling back, check what you'll lose by comparing snapshot with current.</p>
+                        <strong class="text-success-400">回滚预览：</strong>
+                        <p class="text-text-secondary">回滚之前，通过将快照与当前状态比较来检查将丢失的内容。</p>
                     </div>
                 </div>
             </div>
@@ -207,7 +207,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
-                    Compare Snapshots
+                    比较快照
                 </button>
                 <a 
                     href="/zfs/snapshots" 
@@ -216,7 +216,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
-                    Cancel
+                    取消
                 </a>
             </div>
         </form>
@@ -238,14 +238,14 @@
                                 </svg>
                             </div>
                             <h3 class="text-lg font-semibold text-text-primary">
-                                Comparison Notice
+                                比较提示
                             </h3>
                         </div>
                         <button 
                             type="button"
                             onclick="closeWarningModal()"
                             class="text-text-secondary hover:text-text-primary transition-colors rounded-lg p-1.5"
-                            aria-label="Close"
+                            aria-label="关闭"
                         >
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -256,22 +256,22 @@
                     <!-- Body -->
                     <div class="p-6">
                         <p class="text-sm text-text-secondary mb-4">
-                            Comparing snapshots may take a long time depending on:
+                            比较快照可能需要较长时间，具体取决于：
                         </p>
                         <ul class="text-sm text-text-secondary space-y-2 mb-4 ml-6 list-disc">
-                            <li>Size of the snapshots</li>
-                            <li>Number of changed files</li>
-                            <li>System performance</li>
+                            <li>快照的大小</li>
+                            <li>发生变更的文件数量</li>
+                            <li>系统性能</li>
                         </ul>
                         <div class="card-nested bg-warning-900/20 border-warning-900 mb-4">
                             <p class="text-sm text-warning-400 font-medium">
-                                Please be patient while the comparison is being performed.
+                                比较执行期间请耐心等待。
                             </p>
                         </div>
                         <div class="flex items-center justify-center gap-2 text-sm">
-                            <span class="text-text-tertiary">Auto-starting in</span>
+                            <span class="text-text-tertiary">将在</span>
                             <span id="countdownTimer" class="font-bold text-primary-400 text-lg">5</span>
-                            <span class="text-text-tertiary">seconds...</span>
+                            <span class="text-text-tertiary">秒后自动开始……</span>
                         </div>
                     </div>
                     
@@ -282,14 +282,14 @@
                             onclick="closeWarningModal()"
                             class="btn-secondary"
                         >
-                            Cancel
+                            取消
                         </button>
                         <button 
                             type="button"
                             onclick="proceedWithComparison()"
                             class="btn-primary"
                         >
-                            OK, Continue
+                            好的，继续
                         </button>
                     </div>
                 </div>
@@ -303,29 +303,29 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
             </svg>
-            Understanding Diff Output
+            理解比较输出
         </h3>
         <div class="text-xs text-text-secondary space-y-2">
-            <p>The diff output uses symbols to indicate the type of change:</p>
+            <p>比较输出使用符号来表示变更类型：</p>
             <ul class="space-y-1.5 ml-4">
                 <li class="flex items-center gap-2">
                     <code class="px-2 py-0.5 bg-success-900/50 text-success-400 rounded font-mono">+</code>
-                    <span>File or directory was <strong class="text-text-primary">added</strong></span>
+                    <span>文件或目录被<strong class="text-text-primary">添加</strong></span>
                 </li>
                 <li class="flex items-center gap-2">
                     <code class="px-2 py-0.5 bg-warning-900/50 text-warning-400 rounded font-mono">M</code>
-                    <span>File was <strong class="text-text-primary">modified</strong></span>
+                    <span>文件被<strong class="text-text-primary">修改</strong></span>
                 </li>
                 <li class="flex items-center gap-2">
                     <code class="px-2 py-0.5 bg-danger-900/50 text-danger-400 rounded font-mono">-</code>
-                    <span>File or directory was <strong class="text-text-primary">removed</strong></span>
+                    <span>文件或目录被<strong class="text-text-primary">移除</strong></span>
                 </li>
                 <li class="flex items-center gap-2">
                     <code class="px-2 py-0.5 bg-info-900/50 text-info-400 rounded font-mono">R</code>
-                    <span>File or directory was <strong class="text-text-primary">renamed</strong></span>
+                    <span>文件或目录被<strong class="text-text-primary">重命名</strong></span>
                 </li>
             </ul>
-            <p class="mt-3">Each line shows: <code class="text-text-primary bg-bg-elevated-2 px-2 py-0.5 rounded">&lt;change type&gt; &lt;file path&gt;</code></p>
+            <p class="mt-3">每行显示：<code class="text-text-primary bg-bg-elevated-2 px-2 py-0.5 rounded">&lt;变更类型&gt; &lt;文件路径&gt;</code></p>
         </div>
     </div>
 </div>
@@ -418,7 +418,7 @@ function showCompareWarning() {
     // Validate form first
     const snapshot1 = document.getElementById('snapshot1').value;
     if (!snapshot1) {
-        alert('Please select the first snapshot before comparing.');
+        alert('请先选择第一个快照再进行比较。');
         return;
     }
     

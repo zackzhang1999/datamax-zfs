@@ -4,11 +4,11 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils" class="hover:text-primary-400">Utilities</a>
+        <a href="/utils" class="hover:text-primary-400">实用工具</a>
         <span class="mx-2">/</span>
-        <a href="/utils/health" class="hover:text-primary-400">Health Analysis</a>
+        <a href="/utils/health" class="hover:text-primary-400">健康分析</a>
         <span class="mx-2">/</span>
-        <span class="text-text-primary">Report {{ report.started_at[:19] | replace('T', ' ') if report.started_at else report.id }}</span>
+        <span class="text-text-primary">报告 {{ report.started_at[:19] | replace('T', ' ') if report.started_at else report.id }}</span>
     </nav>
 
     {% if request.query_params.get('message') %}
@@ -20,11 +20,11 @@
     <!-- Report Header -->
     <div class="flex justify-between items-start mb-6">
         <div>
-            <h1 class="text-3xl font-bold text-text-primary mb-1">Health Report</h1>
+            <h1 class="text-3xl font-bold text-text-primary mb-1">健康报告</h1>
             <p class="text-text-tertiary text-sm">
-                Started: {{ report.started_at[:19] | replace('T', ' ') if report.started_at else 'Unknown' }}
+                开始时间：{{ report.started_at[:19] | replace('T', ' ') if report.started_at else '未知' }}
                 {% if report.completed_at %}
-                | Completed: {{ report.completed_at[:19] | replace('T', ' ') }}
+                | 完成时间：{{ report.completed_at[:19] | replace('T', ' ') }}
                 {% endif %}
             </p>
         </div>
@@ -32,7 +32,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
             </svg>
-            Back to Reports
+            返回报告列表
         </a>
     </div>
 

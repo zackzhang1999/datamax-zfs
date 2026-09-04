@@ -8,27 +8,27 @@
     <nav class="text-sm mb-6" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-2">
             <li class="flex items-center">
-                <a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">Home</a>
+                <a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">首页</a>
                 <svg class="w-4 h-4 mx-2 text-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li class="flex items-center">
-                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300 transition-colors">Observability</a>
+                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300 transition-colors">运行观测</a>
                 <svg class="w-4 h-4 mx-2 text-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li>
-                <span class="text-text-primary font-medium">Search Logs</span>
+                <span class="text-text-primary font-medium">搜索日志</span>
             </li>
         </ol>
     </nav>
 
     <!-- Page Header -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-text-primary mb-2">Search ZFS Logs</h1>
-        <p class="text-text-secondary">Search across all ZFS log sources</p>
+        <h1 class="text-3xl font-bold text-text-primary mb-2">搜索 ZFS 日志</h1>
+        <p class="text-text-secondary">在所有 ZFS 日志来源中搜索</p>
     </div>
 
     <!-- Error Message -->
@@ -38,7 +38,7 @@
             <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <div><strong class="font-semibold">Error:</strong> {{ error }}</div>
+            <div><strong class="font-semibold">错误：</strong> {{ error }}</div>
         </div>
     </div>
     {% endif %}
@@ -48,27 +48,27 @@
         <div class="p-6">
             <form method="get" action="/zfs/observability/search" class="space-y-6">
                 <div>
-                    <label for="query" class="form-label">Search Query</label>
+                    <label for="query" class="form-label">搜索关键词</label>
                     <input type="text" id="query" name="query" value="{{ query or '' }}" 
-                        placeholder="Enter search term (e.g., error, pool name, dataset name)"
+                        placeholder="输入搜索词（例如 error、存储池名称、数据集名称）"
                         class="form-input"
                         autofocus>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label for="source" class="form-label">Search In</label>
+                        <label for="source" class="form-label">搜索范围</label>
                         <select id="source" name="source" class="form-select">
-                            <option value="all" {% if source == 'all' %}selected{% endif %}>All Sources</option>
-                            <option value="pool_history" {% if source == 'pool_history' %}selected{% endif %}>Pool History</option>
-                            <option value="events" {% if source == 'events' %}selected{% endif %}>Pool Events</option>
-                            <option value="kernel" {% if source == 'kernel' %}selected{% endif %}>Kernel Debug Log</option>
-                            <option value="syslog" {% if source == 'syslog' %}selected{% endif %}>System Log</option>
+                            <option value="all" {% if source == 'all' %}selected{% endif %}>全部来源</option>
+                            <option value="pool_history" {% if source == 'pool_history' %}selected{% endif %}>存储池历史记录</option>
+                            <option value="events" {% if source == 'events' %}selected{% endif %}>存储池事件</option>
+                            <option value="kernel" {% if source == 'kernel' %}selected{% endif %}>内核调试日志</option>
+                            <option value="syslog" {% if source == 'syslog' %}selected{% endif %}>系统日志</option>
                         </select>
                     </div>
                     
                     <div>
-                        <label for="limit" class="form-label">Max Results</label>
+                        <label for="limit" class="form-label">最大结果数</label>
                         <select id="limit" name="limit" class="form-select">
                             <option value="50" {% if limit == 50 %}selected{% endif %}>50</option>
                             <option value="100" {% if limit == 100 %}selected{% endif %}>100</option>
@@ -83,7 +83,7 @@
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
-                        Search
+                        搜索
                     </button>
                 </div>
             </form>
@@ -95,9 +95,9 @@
     <div class="card overflow-hidden">
         <div class="px-6 py-4 border-b border-border-subtle">
             <h2 class="text-xl font-semibold text-text-primary">
-                Search Results for "<span class="text-primary-400">{{ query }}</span>" 
-                {% if source != 'all' %}<span class="text-text-secondary text-base font-normal">in {{ source|replace('_', ' ')|title }}</span>{% endif %}
-                <span class="text-sm font-normal text-text-secondary ml-2">({{ results|length }} found)</span>
+                “<span class="text-primary-400">{{ query }}</span>”的搜索结果 
+                {% if source != 'all' %}<span class="text-text-secondary text-base font-normal">范围：{{ source|replace('_', ' ')|title }}</span>{% endif %}
+                <span class="text-sm font-normal text-text-secondary ml-2">（找到 {{ results|length }} 条）</span>
             </h2>
         </div>
         
@@ -121,14 +121,14 @@
                 
                 {% if result.command %}
                 <div class="mb-2">
-                    <span class="font-medium text-text-primary">Command:</span>
+                    <span class="font-medium text-text-primary">命令：</span>
                     <code class="ml-2 text-sm bg-bg-elevated-2 px-2 py-1 rounded font-mono text-primary-400">{{ result.command }}</code>
                 </div>
                 {% endif %}
                 
                 {% if result.class %}
                 <div class="mb-2">
-                    <span class="font-medium text-text-primary">Event Class:</span>
+                    <span class="font-medium text-text-primary">事件类别：</span>
                     <span class="ml-2 badge
                         {% if 'error' in result.class.lower() %}badge-danger
                         {% elif 'warn' in result.class.lower() %}badge-warning
@@ -150,7 +150,7 @@
                 
                 {% if result.raw %}
                 <details class="mt-3">
-                    <summary class="text-sm text-primary-400 hover:text-primary-300 cursor-pointer transition-colors">Show raw data</summary>
+                    <summary class="text-sm text-primary-400 hover:text-primary-300 cursor-pointer transition-colors">显示原始数据</summary>
                     <pre class="mt-2 text-xs text-text-secondary bg-gray-900 p-3 rounded overflow-x-auto font-mono border border-gray-800">{{ result.raw }}</pre>
                 </details>
                 {% endif %}
@@ -158,13 +158,13 @@
                 {% if result.user or result.host or result.pool %}
                 <div class="mt-3 flex flex-wrap gap-4 text-sm text-text-secondary">
                     {% if result.user %}
-                    <span><strong class="text-text-primary">User:</strong> {{ result.user }}</span>
+                    <span><strong class="text-text-primary">用户：</strong> {{ result.user }}</span>
                     {% endif %}
                     {% if result.host %}
-                    <span><strong class="text-text-primary">Host:</strong> {{ result.host }}</span>
+                    <span><strong class="text-text-primary">主机：</strong> {{ result.host }}</span>
                     {% endif %}
                     {% if result.pool %}
-                    <span><strong class="text-text-primary">Pool:</strong> {{ result.pool }}</span>
+                    <span><strong class="text-text-primary">存储池：</strong> {{ result.pool }}</span>
                     {% endif %}
                 </div>
                 {% endif %}
@@ -176,8 +176,8 @@
             <svg class="mx-auto w-16 h-16 text-text-tertiary mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <p class="text-lg text-text-secondary mb-2">No results found for "{{ query }}"</p>
-            <p class="text-sm text-text-tertiary">Try a different search term or broaden your search criteria</p>
+            <p class="text-lg text-text-secondary mb-2">未找到与“{{ query }}”相关的结果</p>
+            <p class="text-sm text-text-tertiary">请尝试其他搜索词或放宽搜索条件</p>
         </div>
         {% endif %}
     </div>
@@ -187,34 +187,34 @@
             <svg class="mx-auto w-16 h-16 text-info-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
-            <h3 class="text-lg font-semibold text-info-400 mb-2">Search ZFS Logs</h3>
-            <p class="text-sm text-info-400 mb-6">Enter a search term above to search across all ZFS log sources</p>
+            <h3 class="text-lg font-semibold text-info-400 mb-2">搜索 ZFS 日志</h3>
+            <p class="text-sm text-info-400 mb-6">在上方输入搜索词，即可在所有 ZFS 日志来源中搜索</p>
             <div class="text-left max-w-md mx-auto">
-                <p class="text-sm font-semibold text-info-400 mb-2">Example searches:</p>
+                <p class="text-sm font-semibold text-info-400 mb-2">搜索示例：</p>
                 <ul class="text-sm text-info-400 space-y-1.5">
                     <li class="flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
-                        "error" - Find all error messages
+                        "error" - 查找所有错误消息
                     </li>
                     <li class="flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
-                        "tank" - Find all mentions of pool "tank"
+                        "tank" - 查找所有提及存储池 "tank" 的内容
                     </li>
                     <li class="flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
-                        "scrub" - Find scrub-related events
+                        "scrub" - 查找与数据清洗相关的事件
                     </li>
                     <li class="flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
-                        "destroy" - Find destroy operations
+                        "destroy" - 查找销毁操作
                     </li>
                 </ul>
             </div>

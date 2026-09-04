@@ -4,21 +4,21 @@
 <div class="container mx-auto px-4 py-8 max-w-6xl">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm text-text-secondary mb-4 flex items-center gap-2">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
-        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">Snapshots</a>
+        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">快照</a>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
-        <span class="text-text-primary">Diff Result</span>
+        <span class="text-text-primary">比较结果</span>
     </nav>
 
     <!-- Page Header -->
     <div class="mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">Snapshot Comparison Results</h1>
-        <p class="text-text-secondary mt-2">Differences between snapshots</p>
+        <h1 class="text-3xl font-bold text-text-primary">快照比较结果</h1>
+        <p class="text-text-secondary mt-2">快照之间的差异</p>
     </div>
 
     <!-- Comparison Info -->
@@ -27,15 +27,15 @@
             <svg class="w-4 h-4 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
             </svg>
-            Comparing
+            正在比较
         </h3>
         <div class="space-y-2">
             <div class="flex items-center gap-3">
-                <span class="text-text-secondary w-16">From:</span>
+                <span class="text-text-secondary w-16">从：</span>
                 <code class="text-success-400 bg-bg-elevated-2 px-2 py-1 rounded">{{ snapshot1 }}</code>
             </div>
             <div class="flex items-center gap-3">
-                <span class="text-text-secondary w-16">To:</span>
+                <span class="text-text-secondary w-16">到：</span>
                 <code class="text-info-400 bg-bg-elevated-2 px-2 py-1 rounded">{{ snapshot2 }}</code>
             </div>
         </div>
@@ -44,13 +44,13 @@
     <!-- Diff Output - loaded async via HTMX -->
     <div class="card">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-semibold text-text-primary">Changes Detected</h2>
+            <h2 class="text-xl font-semibold text-text-primary">检测到的变更</h2>
             <div class="flex gap-2">
                 <a href="/zfs/snapshots/diff/form" class="btn-primary flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
-                    New Comparison
+                    新建比较
                 </a>
             </div>
         </div>
@@ -63,8 +63,8 @@
             <!-- Loading state -->
             <div class="text-center py-12">
                 <div class="loading-spinner loading-spinner-lg mx-auto mb-4"></div>
-                <div class="text-text-secondary text-lg mb-2">Computing differences...</div>
-                <p class="text-text-tertiary text-sm">This may take a moment for large datasets.</p>
+                <div class="text-text-secondary text-lg mb-2">正在计算差异……</div>
+                <p class="text-text-tertiary text-sm">对于大型数据集可能需要一些时间。</p>
             </div>
         </div>
     </div>
@@ -75,13 +75,13 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
             </svg>
-            Back to Snapshots
+            返回快照列表
         </a>
         <a href="/zfs/snapshots/diff/form?snapshot1={{ snapshot1 }}" class="btn-info flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
             </svg>
-            Run Another Comparison
+            再进行一次比较
         </a>
     </div>
 
@@ -91,38 +91,38 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
             </svg>
-            Using Diff Results
+            使用比较结果
         </h3>
         <ul class="text-xs text-text-secondary space-y-2">
             <li class="flex items-start gap-2">
                 <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
-                <span>Use diff before rollback to see exactly what will be lost</span>
+                <span>在回滚前使用比较功能，准确查看将丢失的内容</span>
             </li>
             <li class="flex items-start gap-2">
                 <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
-                <span>Monitor important files to detect unauthorized changes</span>
+                <span>监控重要文件，以检测未经授权的更改</span>
             </li>
             <li class="flex items-start gap-2">
                 <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
-                <span>Audit system changes after updates or migrations</span>
+                <span>在更新或迁移之后审计系统变更</span>
             </li>
             <li class="flex items-start gap-2">
                 <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
-                <span>Identify files that need to be backed up separately</span>
+                <span>识别需要单独备份的文件</span>
             </li>
             <li class="flex items-start gap-2">
                 <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
-                <span>Track configuration drift over time</span>
+                <span>跟踪配置随时间的漂移情况</span>
             </li>
         </ul>
     </div>

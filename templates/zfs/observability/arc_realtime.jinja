@@ -8,27 +8,27 @@
     <nav class="text-sm mb-4">
         <ol class="list-none p-0 inline-flex">
             <li class="flex items-center">
-                <a href="/" class="text-primary-400 hover:text-primary-300">Home</a>
+                <a href="/" class="text-primary-400 hover:text-primary-300">首页</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li class="flex items-center">
-                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300">Observability</a>
+                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300">运行观测</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li>
-                <span class="text-text-secondary">ARC Statistics</span>
+                <span class="text-text-secondary">ARC 统计</span>
             </li>
         </ol>
     </nav>
 
     <div class="flex justify-between items-center mb-6" x-data="{ autoRefresh: true }" x-init="window.autoRefresh = autoRefresh">
-        <h1 class="text-3xl font-bold">ARC Statistics</h1>
+        <h1 class="text-3xl font-bold">ARC 统计</h1>
         <div class="flex items-center gap-2">
-            <span class="text-sm text-text-secondary" id="last-update">Live Monitoring</span>
+            <span class="text-sm text-text-secondary" id="last-update">实时监控</span>
             <button @click="autoRefresh = !autoRefresh; window.autoRefresh = autoRefresh" 
                     class="px-4 py-2 transition-colors"
                     :class="autoRefresh ? 'btn-success' : 'btn-secondary'">
@@ -36,7 +36,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                     </svg>
-                    <span x-text="autoRefresh ? 'Auto-refresh: ON' : 'Auto-refresh: OFF'"></span>
+                    <span x-text="autoRefresh ? '自动刷新：开' : '自动刷新：关'"></span>
                 </span>
             </button>
         </div>
@@ -44,22 +44,22 @@
 
     {% if error %}
     <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded mb-4">
-        <strong>Error:</strong> {{ error }}
+        <strong>错误：</strong> {{ error }}
     </div>
     {% endif %}
 
     <!-- System Info -->
     <div class="bg-primary-900/20 border border-primary-500/30 rounded-lg p-4 mb-6">
         <p class="text-sm text-primary-300">
-            <strong>System:</strong> {{ system }}
+            <strong>系统：</strong> {{ system }}
             {% if system == 'Linux' %}
-            - Reading from <code>/proc/spl/kstat/zfs/arcstats</code>
+            - 读取自 <code>/proc/spl/kstat/zfs/arcstats</code>
             {% elif system == 'FreeBSD' %}
-            - Using <code>zfs-stats -A</code> command (requires zfs-stats package)
+            - 使用 <code>zfs-stats -A</code> 命令（需要 zfs-stats 软件包）
             {% elif system == 'NetBSD' %}
-            - Reading from <code>sysctl</code> (kstat.zfs.misc.arcstats)
+            - 读取自 <code>sysctl</code>（kstat.zfs.misc.arcstats）
             {% else %}
-            - ARC statistics not available on this platform
+            - 此平台上 ARC 统计不可用
             {% endif %}
         </p>
     </div>
@@ -70,18 +70,18 @@
         <form method="get" action="/zfs/observability/arc-realtime" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label for="interval" class="block text-sm font-medium text-text-secondary mb-1">Refresh Interval (seconds)</label>
+                    <label for="interval" class="block text-sm font-medium text-text-secondary mb-1">刷新间隔（秒）</label>
                     <select name="interval" id="interval" class="form-input focus:ring-blue-500 focus:border-blue-500">
-                        <option value="1" {% if interval == 1 %}selected{% endif %}>1 second</option>
-                        <option value="2" {% if interval == 2 %}selected{% endif %}>2 seconds</option>
-                        <option value="5" {% if interval == 5 %}selected{% endif %}>5 seconds</option>
-                        <option value="10" {% if interval == 10 %}selected{% endif %}>10 seconds</option>
+                        <option value="1" {% if interval == 1 %}selected{% endif %}>1 秒</option>
+                        <option value="2" {% if interval == 2 %}selected{% endif %}>2 秒</option>
+                        <option value="5" {% if interval == 5 %}selected{% endif %}>5 秒</option>
+                        <option value="10" {% if interval == 10 %}selected{% endif %}>10 秒</option>
                     </select>
                 </div>
                 
                 <div class="flex items-end">
                     <button type="submit" class="px-6 py-2 btn-primary transition-colors">
-                        Apply Settings
+                        应用设置
                     </button>
                 </div>
             </div>
@@ -91,7 +91,7 @@
     <!-- ARC Statistics Display -->
     <div class="bg-bg-elevated rounded-lg shadow">
         <div class="px-6 py-4 border-b border-border-subtle">
-            <h2 class="text-xl font-semibold">Raw ARC Statistics</h2>
+            <h2 class="text-xl font-semibold">原始 ARC 统计</h2>
         </div>
         <div class="p-6">
             <pre x-data
@@ -101,8 +101,8 @@
                  hx-trigger="load, every {{ interval }}s[autoRefresh]"
                  hx-swap="innerHTML">{% if raw_arcstats and not raw_arcstats.get('error') %}{{ raw_arcstats.output }}{% elif raw_arcstats and raw_arcstats.get('error') %}<span class="text-warning-400">{{ raw_arcstats.error }}</span>{% if system == 'FreeBSD' %}
 
-Note: Install zfs-stats with: pkg install zfs-stats
-Add to sudoers: webzfs_user ALL=(ALL) NOPASSWD: /usr/local/bin/zfs-stats{% endif %}{% else %}Loading ARC statistics...{% endif %}</pre>
+注意：安装 zfs-stats：pkg install zfs-stats
+添加到 sudoers：webzfs_user ALL=(ALL) NOPASSWD: /usr/local/bin/zfs-stats{% endif %}{% else %}正在加载 ARC 统计...{% endif %}</pre>
         </div>
     </div>
     {% else %}
@@ -110,8 +110,8 @@ Add to sudoers: webzfs_user ALL=(ALL) NOPASSWD: /usr/local/bin/zfs-stats{% endif
         <svg class="w-16 h-16 mx-auto text-text-tertiary mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        <p class="text-xl text-text-secondary mb-2">ARC statistics not available</p>
-        <p class="text-sm text-text-tertiary">This feature is only available on Linux and FreeBSD systems with ZFS installed</p>
+        <p class="text-xl text-text-secondary mb-2">ARC 统计不可用</p>
+        <p class="text-sm text-text-tertiary">此功能仅在安装了 ZFS 的 Linux 和 FreeBSD 系统上可用</p>
     </div>
     {% endif %}
 </div>
@@ -124,7 +124,7 @@ Add to sudoers: webzfs_user ALL=(ALL) NOPASSWD: /usr/local/bin/zfs-stats{% endif
     const lastUpdate = document.getElementById('last-update');
     function updateLastRefresh() {
         const now = new Date();
-        lastUpdate.textContent = `Last updated: ${now.toLocaleTimeString()}`;
+        lastUpdate.textContent = `最后更新：${now.toLocaleTimeString()}`;
     }
     
     // Update timestamp when HTMX completes a request

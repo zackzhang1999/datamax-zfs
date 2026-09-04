@@ -222,7 +222,7 @@
                 var label = idx === 0 ? name : shortName(name);
                 return '<button type="button" class="hover:text-text-primary underline-offset-2 hover:underline" data-stack-index="' + idx + '">' + label + '</button>';
             });
-            breadcrumb.innerHTML = "Viewing: " + parts.join(' <span class="text-text-tertiary">/</span> ');
+            breadcrumb.innerHTML = "正在查看: " + parts.join(' <span class="text-text-tertiary">/</span> ');
             var buttons = breadcrumb.querySelectorAll("button[data-stack-index]");
             buttons.forEach(function(btn) {
                 btn.addEventListener("click", function() {
@@ -238,16 +238,16 @@
             var lines = [];
             lines.push('<div class="font-semibold text-text-primary mb-1">' + node.name + "</div>");
             lines.push('<div class="grid grid-cols-2 gap-x-3 gap-y-0.5">');
-            lines.push('<span class="text-text-tertiary">Used:</span><span>' + formatBytes(node.used) + "</span>");
-            lines.push('<span class="text-text-tertiary">Referenced:</span><span>' + formatBytes(node.referenced) + "</span>");
+            lines.push('<span class="text-text-tertiary">已用:</span><span>' + formatBytes(node.used) + "</span>");
+            lines.push('<span class="text-text-tertiary">引用量:</span><span>' + formatBytes(node.referenced) + "</span>");
             if (node.available > 0) {
-                lines.push('<span class="text-text-tertiary">Available:</span><span>' + formatBytes(node.available) + "</span>");
+                lines.push('<span class="text-text-tertiary">可用:</span><span>' + formatBytes(node.available) + "</span>");
             }
-            lines.push('<span class="text-text-tertiary">By dataset:</span><span>' + formatBytes(node.used_by_dataset) + "</span>");
-            lines.push('<span class="text-text-tertiary">By snapshots:</span><span>' + formatBytes(node.used_by_snapshots) + "</span>");
-            lines.push('<span class="text-text-tertiary">By children:</span><span>' + formatBytes(node.used_by_children) + "</span>");
-            lines.push('<span class="text-text-tertiary">Compress:</span><span>' + (node.compressratio || "-") + "</span>");
-            lines.push('<span class="text-text-tertiary">Snapshots:</span><span>' + (node.snapshot_count || 0) + "</span>");
+            lines.push('<span class="text-text-tertiary">数据集占用:</span><span>' + formatBytes(node.used_by_dataset) + "</span>");
+            lines.push('<span class="text-text-tertiary">快照占用:</span><span>' + formatBytes(node.used_by_snapshots) + "</span>");
+            lines.push('<span class="text-text-tertiary">子项占用:</span><span>' + formatBytes(node.used_by_children) + "</span>");
+            lines.push('<span class="text-text-tertiary">压缩率:</span><span>' + (node.compressratio || "-") + "</span>");
+            lines.push('<span class="text-text-tertiary">快照数:</span><span>' + (node.snapshot_count || 0) + "</span>");
             lines.push("</div>");
             tooltip.innerHTML = lines.join("");
             tooltip.classList.remove("hidden");
@@ -299,7 +299,7 @@
             }
 
             var label = isFreeSpace
-                ? "free " + formatBytes(node.used)
+                ? "空闲 " + formatBytes(node.used)
                 : shortName(node.name);
             if (width > 50) {
                 var textColor = isFreeSpace ? "#cbd5e1" : "#ffffff";
@@ -420,20 +420,20 @@
             // Refresh theme each load so theme switches apply on next open.
             theme = readTheme();
             if (loadingEl) {
-                loadingEl.textContent = "Loading dataset usage...";
+                loadingEl.textContent = "正在加载数据集用量...";
                 loadingEl.style.display = "";
             }
             svg.style.display = "none";
             return Promise.resolve(fetchTree())
                 .then(function(tree) {
-                    if (!tree) throw new Error("Empty response");
+                    if (!tree) throw new Error("空响应");
                     rootTree = tree;
                     viewStack = [rootTree.name];
                     draw();
                 })
                 .catch(function(err) {
                     if (loadingEl) {
-                        loadingEl.textContent = "Failed to load dataset usage: " + (err && err.message ? err.message : err);
+                        loadingEl.textContent = "加载数据集用量失败: " + (err && err.message ? err.message : err);
                     }
                 });
         }

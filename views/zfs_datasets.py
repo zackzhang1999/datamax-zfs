@@ -68,7 +68,7 @@ async def datasets_index(
                 "datasets": datasets,  # Keep original list for count
                 "pools": pools,  # Grouped datasets by pool
                 "selected_pool": pool,
-                "page_title": "ZFS Datasets"
+                "page_title": "ZFS 数据集"
             }
         )
     except Exception as e:
@@ -79,7 +79,7 @@ async def datasets_index(
                 "datasets": [],
                 "pools": [],
                 "error": str(e),
-                "page_title": "ZFS Datasets"
+                "page_title": "ZFS 数据集"
             }
         )
 
@@ -123,7 +123,7 @@ async def create_dataset_form(
             "parent": parent,
             "pool_datasets": pool_datasets,
             "supports_encryption": supports_encryption,
-            "page_title": "Create Dataset"
+            "page_title": "创建数据集"
         }
     )
 
@@ -153,9 +153,9 @@ async def create_dataset(
         # Handle encryption
         if encryption:
             if not passphrase:
-                raise Exception("Passphrase is required when encryption is enabled")
+                raise Exception("启用加密时必须提供口令")
             if passphrase != passphrase_confirm:
-                raise Exception("Passphrases do not match")
+                raise Exception("两次输入的口令不一致")
             
             # Set encryption properties
             properties['encryption'] = encryption
@@ -165,7 +165,7 @@ async def create_dataset(
         # Handle volume creation
         if dataset_type == "volume":
             if not volsize:
-                raise Exception("Volume size (volsize) is required for volume creation")
+                raise Exception("创建卷时必须指定卷大小（volsize）")
             properties['volsize'] = volsize
             # Volumes don't use mountpoint/atime
         else:
@@ -180,9 +180,9 @@ async def create_dataset(
             # accepted here. Empty values mean inherit from parent.
             if normalization and normalization != 'none' and utf8only == 'off':
                 raise Exception(
-                    "Invalid combination: utf8only cannot be off when "
-                    f"normalization is {normalization}. Normalization "
-                    "requires UTF-8 only file names."
+                    "无效的组合：当 normalization 为 "
+                    f"{normalization} 时 utf8only 不能为 off。"
+                    "normalization 要求文件名仅为 UTF-8。"
                 )
             if casesensitivity:
                 properties['casesensitivity'] = casesensitivity
@@ -216,7 +216,7 @@ async def create_dataset(
         audit_logger.log_dataset_create(user=current_user, dataset_name=dataset_name)
         
         return RedirectResponse(
-            url=f"/zfs/datasets?message=Dataset {dataset_name} created successfully",
+            url=f"/zfs/datasets?message=数据集 {dataset_name} 创建成功",
             status_code=303
         )
     except Exception as e:
@@ -241,7 +241,7 @@ async def create_dataset(
                 "utf8only": utf8only,
                 "encryption": encryption,
                 "supports_encryption": supports_encryption,
-                "page_title": "Create Dataset"
+                "page_title": "创建数据集"
             }
         )
 
@@ -263,7 +263,7 @@ async def dataset_properties(
                 "dataset_name": dataset_path,
                 "properties": properties,
                 "openzfs_man_url": openzfs_man_url,
-                "page_title": f"Dataset Properties: {dataset_path}"
+                "page_title": f"数据集属性：{dataset_path}"
             }
         )
     except Exception as e:
@@ -276,7 +276,7 @@ async def dataset_properties(
                 "properties": None,
                 "openzfs_man_url": None,
                 "error": str(e),
-                "page_title": f"Dataset Properties: {dataset_path}"
+                "page_title": f"数据集属性：{dataset_path}"
             }
         )
 
@@ -297,7 +297,7 @@ async def set_dataset_property(
             property_name=property_name, property_value=property_value
         )
         return RedirectResponse(
-            url=f"/zfs/datasets/{dataset_path}/properties?message=Property updated successfully",
+            url=f"/zfs/datasets/{dataset_path}/properties?message=属性更新成功",
             status_code=303
         )
     except Exception as e:
@@ -325,14 +325,14 @@ async def download_dataset_properties(dataset_path: str):
         # Format output
         output_lines = []
         output_lines.append("=" * 80)
-        output_lines.append(f"ZFS Dataset Properties: {dataset_path}")
-        output_lines.append(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        output_lines.append(f"ZFS 数据集属性：{dataset_path}")
+        output_lines.append(f"生成时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         output_lines.append("=" * 80)
         output_lines.append("")
         
         if properties:
             # Header
-            output_lines.append(f"{'Property':<30} {'Value':<30} {'Source':<20}")
+            output_lines.append(f"{'属性':<30} {'值':<30} {'来源':<20}")
             output_lines.append("-" * 80)
             
             # Property rows (sorted alphabetically)
@@ -343,9 +343,9 @@ async def download_dataset_properties(dataset_path: str):
                 output_lines.append(f"{prop_name:<30} {value:<30} {source:<20}")
             
             output_lines.append("")
-            output_lines.append(f"Total properties: {len(properties)}")
+            output_lines.append(f"属性总数：{len(properties)}")
         else:
-            output_lines.append("No properties available")
+            output_lines.append("无可用属性")
         
         output_lines.append("")
         output_lines.append("=" * 80)
@@ -364,7 +364,7 @@ async def download_dataset_properties(dataset_path: str):
     except Exception as e:
         from fastapi.responses import PlainTextResponse
         return PlainTextResponse(
-            content=f"Error generating properties file: {str(e)}",
+            content=f"生成属性文件时出错：{str(e)}",
             status_code=500
         )
 
@@ -378,7 +378,7 @@ async def mount_dataset(
     try:
         dataset_service.mount_dataset(dataset_path)
         return RedirectResponse(
-            url=f"/zfs/datasets/{dataset_path}?message=Dataset mounted successfully",
+            url=f"/zfs/datasets/{dataset_path}?message=数据集挂载成功",
             status_code=303
         )
     except Exception as e:
@@ -398,7 +398,7 @@ async def unmount_dataset(
     try:
         dataset_service.unmount_dataset(dataset_path, force=force)
         return RedirectResponse(
-            url=f"/zfs/datasets/{dataset_path}?message=Dataset unmounted successfully",
+            url=f"/zfs/datasets/{dataset_path}?message=数据集卸载成功",
             status_code=303
         )
     except Exception as e:
@@ -419,7 +419,7 @@ async def rename_dataset_form(
         name="zfs/datasets/rename.jinja",
         context={
             "dataset_name": dataset_path,
-            "page_title": f"Rename Dataset: {dataset_path}"
+            "page_title": f"重命名数据集：{dataset_path}"
         }
     )
 
@@ -437,7 +437,7 @@ async def rename_dataset(
         dataset_service.rename_dataset(dataset_path, new_name, force=force)
         audit_logger.log_dataset_rename(user=current_user, old_name=dataset_path, new_name=new_name)
         return RedirectResponse(
-            url=f"/zfs/datasets/{new_name}?message=Dataset renamed successfully",
+            url=f"/zfs/datasets/{new_name}?message=数据集重命名成功",
             status_code=303
         )
     except Exception as e:
@@ -449,7 +449,7 @@ async def rename_dataset(
                 "dataset_name": dataset_path,
                 "new_name": new_name,
                 "error": str(e),
-                "page_title": f"Rename Dataset: {dataset_path}"
+                "page_title": f"重命名数据集：{dataset_path}"
             }
         )
 
@@ -463,7 +463,7 @@ async def promote_dataset(
     try:
         dataset_service.promote_dataset(dataset_path)
         return RedirectResponse(
-            url=f"/zfs/datasets/{dataset_path}?message=Dataset promoted successfully",
+            url=f"/zfs/datasets/{dataset_path}?message=数据集提升成功",
             status_code=303
         )
     except Exception as e:
@@ -483,7 +483,7 @@ async def load_encryption_key(
     try:
         dataset_service.load_key(dataset_path, key_location if key_location else None)
         return RedirectResponse(
-            url=f"/zfs/datasets/{dataset_path}?message=Encryption key loaded successfully",
+            url=f"/zfs/datasets/{dataset_path}?message=加密密钥加载成功",
             status_code=303
         )
     except Exception as e:
@@ -502,7 +502,7 @@ async def unload_encryption_key(
     try:
         dataset_service.unload_key(dataset_path)
         return RedirectResponse(
-            url=f"/zfs/datasets/{dataset_path}?message=Encryption key unloaded successfully",
+            url=f"/zfs/datasets/{dataset_path}?message=加密密钥卸载成功",
             status_code=303
         )
     except Exception as e:
@@ -521,7 +521,7 @@ async def change_encryption_key(
     """Change encryption key for a dataset"""
     try:
         dataset_service.change_key(dataset_path, inherit=inherit)
-        message = "Encryption key inherited from parent" if inherit else "Encryption key changed successfully"
+        message = "已从父数据集继承加密密钥" if inherit else "加密密钥修改成功"
         return RedirectResponse(
             url=f"/zfs/datasets/{dataset_path}?message={message}",
             status_code=303
@@ -542,7 +542,7 @@ async def inherit_encryption_key(
     try:
         dataset_service.change_key(dataset_path, inherit=True)
         return RedirectResponse(
-            url=f"/zfs/datasets/{dataset_path}?message=Dataset now inherits encryption key from parent",
+            url=f"/zfs/datasets/{dataset_path}?message=数据集现在继承父数据集的加密密钥",
             status_code=303
         )
     except Exception as e:
@@ -567,9 +567,9 @@ async def set_dataset_quota(
             user=current_user,
             operation="set_quota",
             pool=dataset_path.split('/')[0],
-            details=f"Set quota={value} on dataset {dataset_path}"
+            details=f"在数据集 {dataset_path} 上设置 quota={value}"
         )
-        message = f"Quota set to {value} on {dataset_path}" if value != 'none' else f"Quota removed from {dataset_path}"
+        message = f"已在 {dataset_path} 上将配额设置为 {value}" if value != 'none' else f"已移除 {dataset_path} 的配额"
         return RedirectResponse(
             url=f"/zfs/datasets/{dataset_path}?message={message}",
             status_code=303
@@ -578,11 +578,11 @@ async def set_dataset_quota(
         # Produce a clean, user-friendly error message
         raw = str(e).strip().replace('\n', ' ')
         if 'size is less than current used or reserved space' in raw:
-            error_msg = "Quota must be larger than the current used space"
+            error_msg = "配额必须大于当前已用空间"
         elif 'invalid property value' in raw:
-            error_msg = "Invalid quota value. Use sizes like 100G, 500G, 1T, or none"
+            error_msg = "无效的配额值。请使用 100G、500G、1T 或 none 等取值"
         else:
-            error_msg = "Failed to set quota. Check the value and try again"
+            error_msg = "设置配额失败。请检查取值后重试"
         # Re-render page with error instead of redirect to keep URL clean
         try:
             dataset = dataset_service.get_dataset(dataset_path)
@@ -598,7 +598,7 @@ async def set_dataset_quota(
                     "dataset": dataset,
                     "space_usage": space_usage,
                     "error": error_msg,
-                    "page_title": f"Dataset: {dataset_path}"
+                    "page_title": f"数据集：{dataset_path}"
                 }
             )
         except Exception:
@@ -635,6 +635,75 @@ async def peek_dataset_directory(
     )
 
 
+@router.get("/{dataset_path:path}/destroy/confirm", response_class=HTMLResponse)
+async def destroy_dataset_confirm(request: Request, dataset_path: str):
+    """Display the dataset destruction confirmation page."""
+    dataset_service.validate_dataset_name(dataset_path)
+    return templates.TemplateResponse(
+        request,
+        name="zfs/datasets/destroy_confirm.jinja",
+        context={
+            "dataset_name": dataset_path,
+            "page_title": f"销毁数据集：{dataset_path}",
+        }
+    )
+
+
+@router.post("/{dataset_path:path}/destroy", response_class=HTMLResponse)
+async def destroy_dataset(
+    request: Request,
+    dataset_path: str,
+    confirm: Annotated[str, Form()],
+    recursive: Annotated[bool, Form()] = False,
+    force: Annotated[bool, Form()] = False,
+    current_user: str = Depends(get_current_user)
+):
+    """Destroy (delete) a dataset after typed-name confirmation."""
+    if confirm.strip() != dataset_path:
+        return templates.TemplateResponse(
+            request,
+            name="zfs/datasets/destroy_confirm.jinja",
+            context={
+                "dataset_name": dataset_path,
+                "page_title": f"销毁数据集：{dataset_path}",
+                "error": "数据集名称确认不匹配。请输入完全一致的数据集名称以确认销毁。",
+            },
+            status_code=400,
+        )
+
+    try:
+        dataset_service.destroy_dataset(
+            dataset_path, recursive=recursive, force=force
+        )
+        audit_logger.log_dataset_destroy(
+            user=current_user,
+            dataset_name=dataset_path,
+            recursive=recursive,
+        )
+        return RedirectResponse(
+            url="/zfs/datasets?message=数据集已销毁",
+            status_code=303
+        )
+    except Exception as e:
+        audit_logger.log_dataset_destroy(
+            user=current_user,
+            dataset_name=dataset_path,
+            recursive=recursive,
+            success=False,
+            error=str(e),
+        )
+        return templates.TemplateResponse(
+            request,
+            name="zfs/datasets/destroy_confirm.jinja",
+            context={
+                "dataset_name": dataset_path,
+                "page_title": f"销毁数据集：{dataset_path}",
+                "error": str(e),
+            },
+            status_code=400,
+        )
+
+
 # Catch-all route - MUST BE LAST to not interfere with more specific routes above
 @router.get("/{dataset_path:path}", response_class=HTMLResponse)
 async def dataset_detail(
@@ -659,7 +728,7 @@ async def dataset_detail(
             context={
                 "dataset": dataset,
                 "space_usage": space_usage,
-                "page_title": f"Dataset: {dataset_path}"
+                "page_title": f"数据集：{dataset_path}"
             }
         )
     except Exception as e:
@@ -670,6 +739,6 @@ async def dataset_detail(
                 "dataset": None,
                 "space_usage": [],
                 "error": str(e),
-                "page_title": f"Dataset: {dataset_path}"
+                "page_title": f"数据集：{dataset_path}"
             }
         )

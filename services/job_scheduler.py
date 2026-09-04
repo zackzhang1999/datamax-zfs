@@ -63,10 +63,10 @@ LEGACY_UNIT_PREFIX = "webzfs-syncoid-job-"
 TASK_TYPES = ("syncoid", "scrub", "smart", "health")
 
 TASK_TYPE_LABELS = {
-    "syncoid": "Syncoid replication",
-    "scrub": "Pool scrub",
-    "smart": "SMART self-test",
-    "health": "Health check",
+    "syncoid": "Syncoid 数据复制",
+    "scrub": "存储池数据清洗",
+    "smart": "SMART 自检",
+    "health": "健康检查",
 }
 
 
@@ -149,7 +149,7 @@ def collect_scheduled_tasks() -> List[Dict[str, Any]]:
                     "task_id": job["id"],
                     "schedule": job.get("schedule", ""),
                     "enabled": job.get("enabled", True),
-                    "description": job.get("name") or f"job {job['id']}",
+                    "description": job.get("name") or f"任务 {job['id']}",
                 })
         except Exception as read_error:
             logger.warning(f"Could not read syncoid jobs: {read_error}")
@@ -161,7 +161,7 @@ def collect_scheduled_tasks() -> List[Dict[str, Any]]:
                     "task_id": record["id"],
                     "schedule": record.get("schedule", ""),
                     "enabled": record.get("enabled", True),
-                    "description": f"pool {record.get('pool', 'unknown')}",
+                    "description": f"存储池 {record.get('pool', 'unknown')}",
                 })
         except Exception as read_error:
             logger.warning(f"Could not read scrub schedules: {read_error}")
@@ -173,7 +173,7 @@ def collect_scheduled_tasks() -> List[Dict[str, Any]]:
                     "task_id": record["id"],
                     "schedule": record.get("schedule", ""),
                     "enabled": record.get("enabled", True),
-                    "description": record.get("name") or f"health check {record['id']}",
+                    "description": record.get("name") or f"健康检查 {record['id']}",
                 })
         except Exception as read_error:
             logger.warning(f"Could not read health schedules: {read_error}")
@@ -187,7 +187,7 @@ def collect_scheduled_tasks() -> List[Dict[str, Any]]:
                 "schedule": record.get("schedule", ""),
                 "enabled": record.get("enabled", True),
                 "description": (
-                    f"{record.get('test_type', 'short')} test on "
+                    f"{record.get('test_type', 'short')} 测试，磁盘 "
                     f"{record.get('disk', 'unknown disk')}"
                 ),
             })
@@ -224,7 +224,7 @@ class TaskScheduler:
             enabled: When False the entry is removed instead.
         """
         if task_type not in TASK_TYPES:
-            raise TaskSchedulerError(f"Unknown task type '{task_type}'")
+            raise TaskSchedulerError(f"未知的任务类型 '{task_type}'")
 
         if not enabled:
             self.unregister_task(task_type, task_id)
@@ -313,8 +313,8 @@ class TaskScheduler:
         oncalendar = cron_to_oncalendar(schedule or "")
         if not oncalendar:
             raise TaskSchedulerError(
-                f"Schedule '{schedule}' could not be converted to a "
-                f"systemd OnCalendar expression"
+                f"计划 '{schedule}' 无法转换为 "
+                f"systemd OnCalendar 表达式"
             )
 
         base_name = unit_base_name(task_type, task_id)
@@ -414,7 +414,7 @@ class TaskScheduler:
             )
         except subprocess.CalledProcessError as write_error:
             raise TaskSchedulerError(
-                f"Failed to write {path}: {write_error.stderr}"
+                f"写入 {path} 失败：{write_error.stderr}"
             )
 
     def _systemctl(self, *args: str, check: bool = True) -> None:
@@ -425,7 +425,7 @@ class TaskScheduler:
             )
         except subprocess.CalledProcessError as ctl_error:
             raise TaskSchedulerError(
-                f"systemctl {' '.join(args)} failed: {ctl_error.stderr}"
+                f"systemctl {' '.join(args)} 执行失败：{ctl_error.stderr}"
             )
 
     # BSD: root crontab block
@@ -528,7 +528,7 @@ class TaskScheduler:
             )
         except subprocess.CalledProcessError as write_error:
             raise TaskSchedulerError(
-                f"Failed to install crontab: {write_error.stderr}"
+                f"安装 crontab 失败：{write_error.stderr}"
             )
 
 
@@ -553,7 +553,7 @@ class SyncoidJobScheduler:
             task_type="syncoid",
             task_id=job["id"],
             schedule=job.get("schedule", ""),
-            description=job.get("name") or f"job {job['id']}",
+            description=job.get("name") or f"任务 {job['id']}",
             enabled=job.get("enabled", True),
         )
 

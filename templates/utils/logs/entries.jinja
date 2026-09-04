@@ -3,9 +3,9 @@
     <table class="w-full">
         <thead>
             <tr class="bg-surface-700/50 text-left">
-                <th class="px-4 py-3 text-text-secondary font-medium text-sm w-44">Timestamp</th>
-                <th class="px-4 py-3 text-text-secondary font-medium text-sm w-20">Level</th>
-                <th class="px-4 py-3 text-text-secondary font-medium text-sm">Details</th>
+                <th class="px-4 py-3 text-text-secondary font-medium text-sm w-44">时间戳</th>
+                <th class="px-4 py-3 text-text-secondary font-medium text-sm w-20">级别</th>
+                <th class="px-4 py-3 text-text-secondary font-medium text-sm">详细信息</th>
             </tr>
         </thead>
         <tbody class="divide-y divide-surface-600">
@@ -16,11 +16,11 @@
                 </td>
                 <td class="px-4 py-3">
                     {% if entry.level == 'INFO' %}
-                    <span class="px-2 py-1 text-xs font-medium rounded-full bg-success-500/20 text-success-400">INFO</span>
+                    <span class="px-2 py-1 text-xs font-medium rounded-full bg-success-500/20 text-success-400">信息</span>
                     {% elif entry.level == 'WARNING' %}
-                    <span class="px-2 py-1 text-xs font-medium rounded-full bg-warning-500/20 text-warning-400">WARN</span>
+                    <span class="px-2 py-1 text-xs font-medium rounded-full bg-warning-500/20 text-warning-400">警告</span>
                     {% elif entry.level == 'ERROR' %}
-                    <span class="px-2 py-1 text-xs font-medium rounded-full bg-danger-500/20 text-danger-400">ERROR</span>
+                    <span class="px-2 py-1 text-xs font-medium rounded-full bg-danger-500/20 text-danger-400">错误</span>
                     {% else %}
                     <span class="px-2 py-1 text-xs font-medium rounded-full bg-surface-600 text-text-secondary">{{ entry.level }}</span>
                     {% endif %}
@@ -61,12 +61,12 @@
     <svg class="w-16 h-16 mx-auto text-text-secondary mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
     </svg>
-    <h3 class="text-xl font-semibold text-text-primary mb-2">No Log Entries</h3>
+    <h3 class="text-xl font-semibold text-text-primary mb-2">暂无日志条目</h3>
     <p class="text-text-secondary">
         {% if search %}
-        No entries matching "{{ search }}" found.
+        未找到与"{{ search }}"匹配的条目。
         {% else %}
-        The log file is empty or does not exist yet.
+        日志文件为空或尚不存在。
         {% endif %}
     </p>
 </div>

@@ -59,7 +59,7 @@
 
         {# Title #}
         <h3 class="text-xl font-semibold text-text-primary text-center mb-2">
-          {{ title|default('Confirm Action') }}
+          {{ title|default('确认操作') }}
         </h3>
 
         {# Message #}
@@ -75,7 +75,7 @@
             class="btn-secondary flex-1"
             x-on:click="open = false"
           >
-            {{ cancel_text|default('Cancel') }}
+            {{ cancel_text|default('取消') }}
           </button>
 
           {# Confirm Button #}
@@ -90,7 +90,7 @@
               <span class="htmx-indicator">
                 <div class="loading-spinner loading-spinner-sm"></div>
               </span>
-              <span>{{ confirm_text|default('Confirm') }}</span>
+              <span>{{ confirm_text|default('确认') }}</span>
             </button>
           {% else %}
             <button
@@ -99,7 +99,7 @@
               x-on:click="open = false"
               onclick="{{ confirm_action }}"
             >
-              {{ confirm_text|default('Confirm') }}
+              {{ confirm_text|default('确认') }}
             </button>
           {% endif %}
         </div>

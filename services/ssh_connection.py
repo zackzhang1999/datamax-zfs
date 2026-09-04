@@ -122,11 +122,11 @@ class SSHConnectionService:
             # Copy public key to remote server
             success = self._copy_key_to_remote(host, port, username, password, public_key_path)
             if not success:
-                raise Exception("Failed to copy SSH key to remote server. Check credentials and network connectivity.")
+                raise Exception("无法将 SSH 密钥复制到远程服务器。请检查凭据和网络连接。")
             
             # Test key-based authentication
             if not self._test_key_auth(host, port, username, private_key_path):
-                raise Exception("SSH key authentication test failed. Key may not have been installed correctly.")
+                raise Exception("SSH 密钥认证测试失败。密钥可能未正确安装。")
             
             # Get key fingerprint
             fingerprint = self._get_key_fingerprint(public_key_path)
@@ -176,7 +176,7 @@ class SSHConnectionService:
                     Path(public_key_path).unlink(missing_ok=True)
             except:
                 pass
-            raise Exception(f"Failed to create SSH connection: {str(e)}")
+            raise Exception(f"创建 SSH 连接失败：{str(e)}")
     
     def update_connection(
         self,
@@ -222,7 +222,7 @@ class SSHConnectionService:
                 logger.info(f"Updated SSH connection: {connection_id}")
                 return
         
-        raise Exception(f"Connection {connection_id} not found")
+        raise Exception(f"未找到连接 {connection_id}")
     
     def delete_connection(self, connection_id: str, remove_from_remote: bool = False) -> None:
         """
@@ -261,7 +261,7 @@ class SSHConnectionService:
                 logger.info(f"Deleted SSH connection: {connection_id}")
                 return
         
-        raise Exception(f"Connection {connection_id} not found")
+        raise Exception(f"未找到连接 {connection_id}")
     
     def test_connection(self, connection_id: str) -> Dict[str, Any]:
         """
@@ -278,7 +278,7 @@ class SSHConnectionService:
             if not conn:
                 return {
                     "status": "error",
-                    "message": f"Connection {connection_id} not found"
+                    "message": f"未找到连接 {connection_id}"
                 }
             
             # Test connection with key
@@ -295,7 +295,7 @@ class SSHConnectionService:
                 
                 return {
                     "status": "success",
-                    "message": f"Successfully connected to {conn['host']}"
+                    "message": f"已成功连接到 {conn['host']}"
                 }
             else:
                 conn["status"] = "error"
@@ -303,7 +303,7 @@ class SSHConnectionService:
                 
                 return {
                     "status": "error",
-                    "message": f"Failed to connect to {conn['host']}"
+                    "message": f"连接 {conn['host']} 失败"
                 }
                 
         except Exception as e:
@@ -374,9 +374,9 @@ class SSHConnectionService:
             return private_key_path, public_key_path
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to generate SSH key: {e.stderr}")
+            raise Exception(f"生成 SSH 密钥失败：{e.stderr}")
         except Exception as e:
-            raise Exception(f"Failed to generate SSH key: {str(e)}")
+            raise Exception(f"生成 SSH 密钥失败：{str(e)}")
     
     def _copy_key_to_remote(
         self,
@@ -591,11 +591,11 @@ class SSHConnectionService:
             parts = result.stdout.strip().split()
             if len(parts) >= 2:
                 return parts[1]  # Return the SHA256:XXXX part
-            return "Unknown"
+            return "未知"
             
         except Exception as e:
             logger.warning(f"Failed to get key fingerprint: {e}")
-            return "Unknown"
+            return "未知"
     
     # Host Key Trust Management
     
@@ -719,7 +719,7 @@ class SSHConnectionService:
         """
         conn = self.get_connection(connection_id)
         if not conn:
-            raise Exception(f"SSH connection {connection_id} not found")
+            raise Exception(f"未找到 SSH 连接 {connection_id}")
         
         key_path = Path(conn["private_key_path"]).resolve()
         
@@ -728,11 +728,11 @@ class SSHConnectionService:
         # connections file.
         if key_path.parent != self.keys_dir:
             raise Exception(
-                f"Private key for connection '{conn['name']}' is outside the managed key directory"
+                f"连接 '{conn['name']}' 的私钥不在受管理的密钥目录内"
             )
         if not key_path.is_file():
             raise Exception(
-                f"Private key file for connection '{conn['name']}' is missing"
+                f"连接 '{conn['name']}' 的私钥文件缺失"
             )
         
         return conn
@@ -807,7 +807,7 @@ class SSHConnectionService:
             
         except IOError as e:
             logger.error(f"Failed to save connections: {e}")
-            raise Exception(f"Failed to save connections: {str(e)}")
+            raise Exception(f"保存连接失败：{str(e)}")
     
     # Integration Methods for Other Features
     
@@ -826,7 +826,7 @@ class SSHConnectionService:
         """
         conn = self.get_connection(connection_id)
         if not conn:
-            raise Exception(f"Connection {connection_id} not found")
+            raise Exception(f"未找到连接 {connection_id}")
         
         # Ensure the host key is trusted so strict checking succeeds
         self.ensure_host_key_trusted(conn["host"], conn["port"])
@@ -856,7 +856,7 @@ class SSHConnectionService:
         """
         conn = self.get_connection(connection_id)
         if not conn:
-            raise Exception(f"Connection {connection_id} not found")
+            raise Exception(f"未找到连接 {connection_id}")
         
         client = paramiko.SSHClient()
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())

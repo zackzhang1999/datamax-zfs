@@ -428,7 +428,7 @@ class DiskUtilsService:
                             base_disk = self._get_base_disk_name_netbsd(device)
                             if base_disk:
                                 if base_disk not in system_disks:
-                                    system_disks[base_disk] = f"OS disk (mounted: {mountpoint})"
+                                    system_disks[base_disk] = f"系统盘（挂载于 {mountpoint}）"
         except Exception:
             pass
         
@@ -453,7 +453,7 @@ class DiskUtilsService:
                         base_disk = self._get_base_disk_name_netbsd(device)
                         if base_disk:
                             if base_disk not in system_disks:
-                                system_disks[base_disk] = "Swap disk"
+                                system_disks[base_disk] = "Swap 磁盘"
                             else:
                                 system_disks[base_disk] += " / Swap"
         except Exception:
@@ -560,7 +560,7 @@ class DiskUtilsService:
                             base_disk = self._get_base_disk_name_linux(device)
                             if base_disk:
                                 if base_disk not in system_disks:
-                                    system_disks[base_disk] = f"OS disk (mounted: {mountpoint})"
+                                    system_disks[base_disk] = f"系统盘（挂载于 {mountpoint}）"
         except Exception:
             pass
         
@@ -604,7 +604,7 @@ class DiskUtilsService:
                                     if parent_dev and parent_dev != device:
                                         base_disk = self._get_base_disk_name_linux(parent_dev)
                                         if base_disk and base_disk not in system_disks:
-                                            system_disks[base_disk] = "OS disk (encrypted/LVM)"
+                                            system_disks[base_disk] = "系统盘（加密/LVM）"
         except Exception:
             pass
         
@@ -620,7 +620,7 @@ class DiskUtilsService:
                         base_disk = self._get_base_disk_name_linux(device)
                         if base_disk:
                             if base_disk not in system_disks:
-                                system_disks[base_disk] = "Swap disk"
+                                system_disks[base_disk] = "Swap 磁盘"
                             else:
                                 system_disks[base_disk] += " / Swap"
         except Exception:
@@ -668,7 +668,7 @@ class DiskUtilsService:
                                         for dep in deps:
                                             base_disk = self._get_base_disk_name_linux(dep)
                                             if base_disk and base_disk not in system_disks:
-                                                system_disks[base_disk] = f"OS disk (mounted: {target})"
+                                                system_disks[base_disk] = f"系统盘（挂载于 {target}）"
                                 except Exception:
                                     pass
                             elif source.startswith('/dev/'):
@@ -676,7 +676,7 @@ class DiskUtilsService:
                                 device = source.replace('/dev/', '')
                                 base_disk = self._get_base_disk_name_linux(device)
                                 if base_disk and base_disk not in system_disks:
-                                    system_disks[base_disk] = f"OS disk (mounted: {target})"
+                                    system_disks[base_disk] = f"系统盘（挂载于 {target}）"
         except Exception:
             pass
         
@@ -718,7 +718,7 @@ class DiskUtilsService:
                             base_disk = self._get_base_disk_name_freebsd(device)
                             if base_disk:
                                 if base_disk not in system_disks:
-                                    system_disks[base_disk] = f"OS disk (mounted: {mountpoint})"
+                                    system_disks[base_disk] = f"系统盘（挂载于 {mountpoint}）"
         except Exception:
             pass
         
@@ -743,7 +743,7 @@ class DiskUtilsService:
                         base_disk = self._get_base_disk_name_freebsd(device)
                         if base_disk:
                             if base_disk not in system_disks:
-                                system_disks[base_disk] = "Swap disk"
+                                system_disks[base_disk] = "Swap 磁盘"
                             else:
                                 system_disks[base_disk] += " / Swap"
         except Exception:

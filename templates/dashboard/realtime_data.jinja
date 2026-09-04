@@ -10,7 +10,7 @@
     <div class="space-y-2">
         <div>
             <div class="flex justify-between text-xs mb-1">
-                <span class="text-text-secondary">Used</span>
+                <span class="text-text-secondary">已用</span>
                 <span class="text-text-primary font-medium">{{ mem.used_human }} ({{ mem.used_percent }}%)</span>
             </div>
             <div class="w-full h-2 bg-bg-elevated-3 rounded-full overflow-hidden">
@@ -19,7 +19,7 @@
         </div>
         <div>
             <div class="flex justify-between text-xs mb-1">
-                <span class="text-text-secondary">Buff/Cache</span>
+                <span class="text-text-secondary">缓冲/缓存</span>
                 <span class="text-text-primary font-medium">{{ mem.buff_cache_human }} ({{ mem.buff_cache_percent }}%)</span>
             </div>
             <div class="w-full h-2 bg-bg-elevated-3 rounded-full overflow-hidden">
@@ -28,7 +28,7 @@
         </div>
         <div>
             <div class="flex justify-between text-xs mb-1">
-                <span class="text-text-secondary">Available</span>
+                <span class="text-text-secondary">可用</span>
                 <span class="text-text-primary font-medium">{{ mem.available_human }} ({{ mem.available_percent }}%)</span>
             </div>
             <div class="w-full h-2 bg-bg-elevated-3 rounded-full overflow-hidden">
@@ -37,7 +37,7 @@
         </div>
         <div>
             <div class="flex justify-between text-xs mb-1">
-                <span class="text-text-secondary">Swap</span>
+                <span class="text-text-secondary">交换分区</span>
                 <span class="text-text-primary font-medium">{{ mem.swap_used_human }} / {{ mem.swap_total_human }} ({{ mem.swap_percent }}%)</span>
             </div>
             <div class="w-full h-2 bg-bg-elevated-3 rounded-full overflow-hidden">
@@ -46,7 +46,7 @@
         </div>
     </div>
     <div class="mt-1 text-xs text-text-tertiary text-center">
-        Total RAM: {{ mem.total_human }}
+        内存总量：{{ mem.total_human }}
     </div>
     {% endif %}
 </div>

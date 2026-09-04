@@ -4,11 +4,11 @@
 <div class="max-w-4xl mx-auto space-y-6">
     <!-- Breadcrumb Navigation -->
     <nav class="flex items-center text-sm text-text-secondary">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
-        <a href="/zfs/datasets" class="hover:text-text-primary transition-colors">Datasets</a>
+        <a href="/zfs/datasets" class="hover:text-text-primary transition-colors">数据集</a>
         {% if pool %}
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -18,17 +18,17 @@
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
-        <span class="text-text-primary font-medium">Create</span>
+        <span class="text-text-primary font-medium">创建</span>
     </nav>
 
     <!-- Page Header -->
     <div>
-        <h1 class="text-3xl font-bold text-text-primary">Create ZFS Dataset</h1>
+        <h1 class="text-3xl font-bold text-text-primary">创建 ZFS 数据集</h1>
         <p class="text-text-secondary mt-1">
             {% if pool %}
-            Create a new dataset in pool <span class="font-mono text-text-primary">{{ pool }}</span>
+            在存储池 <span class="font-mono text-text-primary">{{ pool }}</span> 中创建新数据集
             {% else %}
-            Create a new filesystem or volume dataset
+            创建新的文件系统或卷数据集
             {% endif %}
         </p>
     </div>
@@ -62,7 +62,7 @@
                 <!-- Dataset Name - Two Part Input -->
                 <div>
                     <label class="form-label">
-                        Dataset Name <span class="text-danger-400">*</span>
+                        数据集名称 <span class="text-danger-400">*</span>
                     </label>
                     
                     {% if pool and pool_datasets %}
@@ -73,7 +73,7 @@
                                 x-model="parentDataset"
                                 class="form-select"
                             >
-                                <option value="">Select parent dataset...</option>
+                                <option value="">请选择父数据集...</option>
                                 {% for ds in pool_datasets %}
                                 <option value="{{ ds.name }}" {% if ds.name == pool or ds.name == parent %}selected{% endif %}>{{ ds.name }}</option>
                                 {% endfor %}
@@ -91,13 +91,13 @@
                     </div>
                     <p class="text-sm mt-2 text-text-tertiary">
                         <span x-show="!isNameIncomplete" class="text-text-secondary">
-                            Full path: <span class="font-mono text-text-primary" x-text="fullDatasetName"></span>
+                            完整路径：<span class="font-mono text-text-primary" x-text="fullDatasetName"></span>
                         </span>
                         <span x-show="isNameIncomplete && !datasetSuffix" class="text-text-tertiary">
-                            Select a parent dataset and enter a name for the new dataset
+                            请选择父数据集并输入新数据集的名称
                         </span>
                         <span x-show="datasetSuffix && datasetSuffix.includes('/')" class="text-danger-400">
-                            Dataset name cannot contain slashes - use the dropdown to select parent
+                            数据集名称不能包含斜杠——请使用下拉框选择父数据集
                         </span>
                     </p>
                     {% elif pool %}
@@ -119,13 +119,13 @@
                     </div>
                     <p class="text-sm mt-2 text-text-tertiary">
                         <span x-show="!isNameIncomplete" class="text-text-secondary">
-                            Full path: <span class="font-mono text-text-primary" x-text="fullDatasetName"></span>
+                            完整路径：<span class="font-mono text-text-primary" x-text="fullDatasetName"></span>
                         </span>
                         <span x-show="isNameIncomplete && !datasetSuffix" class="text-text-tertiary">
-                            Enter a name for the new dataset in pool <span class="font-mono">{{ pool }}</span>
+                            请输入存储池 <span class="font-mono">{{ pool }}</span> 中新数据集的名称
                         </span>
                         <span x-show="datasetSuffix && datasetSuffix.includes('/')" class="text-danger-400">
-                            Dataset name cannot contain slashes
+                            数据集名称不能包含斜杠
                         </span>
                     </p>
                     {% else %}
@@ -135,12 +135,12 @@
                         x-model="parentDataset"
                         x-init="datasetSuffix = 'placeholder'"
                         class="form-input"
-                        placeholder="e.g., tank/mydata or tank/storage/documents"
+                        placeholder="例如 tank/mydata 或 tank/storage/documents"
                     >
                     <!-- Override hidden field for legacy mode -->
                     <input type="hidden" name="dataset_name" :value="parentDataset" x-show="false">
                     <p class="text-text-tertiary text-sm mt-1">
-                        Full path including pool name (e.g., poolname/dataset/subdataset)
+                        包含存储池名称的完整路径（例如 poolname/dataset/subdataset）
                     </p>
                     <script>
                         // For legacy mode, we need to submit parentDataset directly
@@ -160,7 +160,7 @@
                 <!-- Dataset Type -->
                 <div>
                     <label for="dataset_type" class="form-label">
-                        Dataset Type <span class="text-danger-400">*</span>
+                        数据集类型 <span class="text-danger-400">*</span>
                     </label>
                     <select 
                         id="dataset_type" 
@@ -168,36 +168,36 @@
                         class="form-select"
                         x-model="datasetType"
                     >
-                        <option value="filesystem">Filesystem</option>
-                        <option value="volume">Volume (zvol)</option>
+                        <option value="filesystem">文件系统</option>
+                        <option value="volume">卷 (zvol)</option>
                     </select>
                     <p class="text-text-tertiary text-sm mt-1">
-                        Filesystem for file storage, Volume for block devices
+                        文件系统用于文件存储，卷用于块设备
                     </p>
                 </div>
 
                 <!-- Volume Size (only for volumes) -->
                 <div x-show="datasetType === 'volume'" x-transition>
                     <label for="volsize" class="form-label">
-                        Volume Size <span class="text-danger-400">*</span>
+                        卷大小 <span class="text-danger-400">*</span>
                     </label>
                     <input 
                         type="text" 
                         id="volsize" 
                         name="volsize"
                         class="form-input"
-                        placeholder="e.g., 10G, 500M, 1T"
+                        placeholder="例如 10G、500M、1T"
                         :required="datasetType === 'volume'"
                     >
                     <p class="text-text-tertiary text-sm mt-1">
-                        Specify size with unit: K, M, G, T (e.g., 10G for 10 gigabytes)
+                        请使用单位指定大小：K、M、G、T（例如 10G 表示 10 GB）
                     </p>
                 </div>
 
                 <!-- Mountpoint (only for filesystems) -->
                 <div x-show="datasetType === 'filesystem'" x-transition>
                     <label for="mountpoint" class="form-label">
-                        Mountpoint
+                        挂载点
                     </label>
                     <input 
                         type="text" 
@@ -205,148 +205,148 @@
                         name="mountpoint" 
                         value="{{ mountpoint if mountpoint else '' }}"
                         class="form-input"
-                        placeholder="Leave empty for automatic (e.g., /poolname/dataset)"
+                        placeholder="留空则自动设置（例如 /poolname/dataset）"
                     >
                     <p class="text-text-tertiary text-sm mt-1">
-                        Custom mountpoint path, or leave empty to use default. Use 'none' to disable mounting.
+                        自定义挂载点路径，留空则使用默认值。使用 'none' 可禁用挂载。
                     </p>
                 </div>
 
                 <!-- Compression -->
                 <div>
                     <label for="compression" class="form-label">
-                        Compression
+                        压缩
                     </label>
                     <select 
                         id="compression" 
                         name="compression"
                         class="form-select"
                     >
-                        <option value="off" {% if compression == 'off' %}selected{% endif %}>Off</option>
-                        <option value="lz4" {% if not compression or compression == 'lz4' %}selected{% endif %}>LZ4 (Recommended)</option>
+                        <option value="off" {% if compression == 'off' %}selected{% endif %}>关闭</option>
+                        <option value="lz4" {% if not compression or compression == 'lz4' %}selected{% endif %}>LZ4（推荐）</option>
                         <option value="gzip" {% if compression == 'gzip' %}selected{% endif %}>GZIP</option>
-                        <option value="gzip-1" {% if compression == 'gzip-1' %}selected{% endif %}>GZIP-1 (Fastest)</option>
-                        <option value="gzip-9" {% if compression == 'gzip-9' %}selected{% endif %}>GZIP-9 (Best)</option>
+                        <option value="gzip-1" {% if compression == 'gzip-1' %}selected{% endif %}>GZIP-1（最快）</option>
+                        <option value="gzip-9" {% if compression == 'gzip-9' %}selected{% endif %}>GZIP-9（最佳压缩）</option>
                         <option value="zstd" {% if compression == 'zstd' %}selected{% endif %}>ZSTD</option>
-                        <option value="lzjb" {% if compression == 'lzjb' %}selected{% endif %}>LZJB (Legacy)</option>
+                        <option value="lzjb" {% if compression == 'lzjb' %}selected{% endif %}>LZJB（旧式）</option>
                     </select>
                     <p class="text-text-tertiary text-sm mt-1">
-                        LZ4 is recommended for best performance/compression balance
+                        推荐使用 LZ4，可在性能与压缩率之间取得最佳平衡
                     </p>
                 </div>
 
                 <!-- Record Size -->
                 <div>
                     <label for="recordsize" class="form-label">
-                        Record Size
+                        记录大小
                     </label>
                     <select 
                         id="recordsize" 
                         name="recordsize"
                         class="form-select"
                     >
-                        <option value="">Default (128K)</option>
-                        <option value="4K" {% if recordsize == '4K' %}selected{% endif %}>4K (Database)</option>
-                        <option value="8K" {% if recordsize == '8K' %}selected{% endif %}>8K (Database)</option>
-                        <option value="16K" {% if recordsize == '16K' %}selected{% endif %}>16K (Small files)</option>
+                        <option value="">默认 (128K)</option>
+                        <option value="4K" {% if recordsize == '4K' %}selected{% endif %}>4K（数据库）</option>
+                        <option value="8K" {% if recordsize == '8K' %}selected{% endif %}>8K（数据库）</option>
+                        <option value="16K" {% if recordsize == '16K' %}selected{% endif %}>16K（小文件）</option>
                         <option value="32K" {% if recordsize == '32K' %}selected{% endif %}>32K</option>
                         <option value="64K" {% if recordsize == '64K' %}selected{% endif %}>64K</option>
-                        <option value="128K" {% if recordsize == '128K' %}selected{% endif %}>128K (Default)</option>
+                        <option value="128K" {% if recordsize == '128K' %}selected{% endif %}>128K（默认）</option>
                         <option value="256K" {% if recordsize == '256K' %}selected{% endif %}>256K</option>
-                        <option value="512K" {% if recordsize == '512K' %}selected{% endif %}>512K (Large files)</option>
-                        <option value="1M" {% if recordsize == '1M' %}selected{% endif %}>1M (Large files)</option>
+                        <option value="512K" {% if recordsize == '512K' %}selected{% endif %}>512K（大文件）</option>
+                        <option value="1M" {% if recordsize == '1M' %}selected{% endif %}>1M（大文件）</option>
                     </select>
                     <p class="text-text-tertiary text-sm mt-1">
-                        Smaller recordsize (4K-16K) for databases, larger (256K-1M) for large sequential files
+                        较小的记录大小（4K-16K）适用于数据库，较大的（256K-1M）适用于大型顺序文件
                     </p>
                 </div>
 
                 <!-- ATime -->
                 <div>
                     <label for="atime" class="form-label">
-                        Access Time Updates (atime)
+                        访问时间更新 (atime)
                     </label>
                     <select 
                         id="atime" 
                         name="atime"
                         class="form-select"
                     >
-                        <option value="off" {% if not atime or atime == 'off' %}selected{% endif %}>Off (Recommended)</option>
-                        <option value="on" {% if atime == 'on' %}selected{% endif %}>On</option>
+                        <option value="off" {% if not atime or atime == 'off' %}selected{% endif %}>关闭（推荐）</option>
+                        <option value="on" {% if atime == 'on' %}selected{% endif %}>开启</option>
                     </select>
                     <p class="text-text-tertiary text-sm mt-1">
-                        <strong>Off is recommended:</strong> Disabling atime improves performance by not writing to disk on every file read. 
-                        Enable atime only if you need to track when files were last accessed (e.g., for compliance, backup software that relies on access times, or mail servers).
+                        <strong>推荐关闭：</strong>禁用 atime 可避免每次读取文件时写入磁盘，从而提升性能。
+                        仅在需要追踪文件最后访问时间时才启用 atime（例如合规要求、依赖访问时间的备份软件或邮件服务器）。
                     </p>
                 </div>
 
                 <!-- Creation-Only Filesystem Properties -->
                 <div x-show="datasetType === 'filesystem'" x-transition class="space-y-6 border-t border-border-subtle pt-6">
                     <div>
-                        <h3 class="text-lg font-semibold text-text-primary mb-1">Creation-Only Properties</h3>
+                        <h3 class="text-lg font-semibold text-text-primary mb-1">仅创建时可设置的属性</h3>
                         <p class="text-text-secondary text-sm">
-                            These properties cannot be changed after the dataset is created. Leave at Default to inherit from the parent dataset.
+                            这些属性在数据集创建后无法更改。保持默认则继承父数据集的设置。
                         </p>
                     </div>
 
                     <!-- Case Sensitivity -->
                     <div>
                         <label for="casesensitivity" class="form-label">
-                            Case Sensitivity
+                            大小写敏感性
                         </label>
                         <select 
                             id="casesensitivity" 
                             name="casesensitivity"
                             class="form-select"
                         >
-                            <option value="">Default (inherit)</option>
-                            <option value="sensitive" {% if casesensitivity == 'sensitive' %}selected{% endif %}>sensitive (POSIX standard)</option>
-                            <option value="insensitive" {% if casesensitivity == 'insensitive' %}selected{% endif %}>insensitive (Windows/SMB style)</option>
+                            <option value="">默认（继承）</option>
+                            <option value="sensitive" {% if casesensitivity == 'sensitive' %}selected{% endif %}>sensitive（POSIX 标准）</option>
+                            <option value="insensitive" {% if casesensitivity == 'insensitive' %}selected{% endif %}>insensitive（Windows/SMB 风格）</option>
                             <option value="mixed" {% if casesensitivity == 'mixed' %}selected{% endif %}>mixed</option>
                         </select>
                         <p class="text-text-tertiary text-sm mt-1">
-                            Controls whether file names are case sensitive. Use insensitive or mixed for SMB shares accessed by Windows clients.
+                            控制文件名是否区分大小写。对于由 Windows 客户端访问的 SMB 共享，请使用 insensitive 或 mixed。
                         </p>
                     </div>
 
                     <!-- Normalization -->
                     <div>
                         <label for="normalization" class="form-label">
-                            Unicode Normalization
+                            Unicode 规范化
                         </label>
                         <select 
                             id="normalization" 
                             name="normalization"
                             class="form-select"
                         >
-                            <option value="">Default (inherit)</option>
-                            <option value="none" {% if normalization == 'none' %}selected{% endif %}>none - no normalization, names compared byte for byte</option>
-                            <option value="formC" {% if normalization == 'formC' %}selected{% endif %}>formC - composed (e with accent stored as one character)</option>
-                            <option value="formD" {% if normalization == 'formD' %}selected{% endif %}>formD - decomposed (e plus accent stored separately, matches macOS)</option>
-                            <option value="formKC" {% if normalization == 'formKC' %}selected{% endif %}>formKC - composed, also treats lookalike characters as equal</option>
-                            <option value="formKD" {% if normalization == 'formKD' %}selected{% endif %}>formKD - decomposed, also treats lookalike characters as equal</option>
+                            <option value="">默认（继承）</option>
+                            <option value="none" {% if normalization == 'none' %}selected{% endif %}>none - 不做规范化，文件名按字节比较</option>
+                            <option value="formC" {% if normalization == 'formC' %}selected{% endif %}>formC - 组合形式（带重音符的 e 存储为单个字符）</option>
+                            <option value="formD" {% if normalization == 'formD' %}selected{% endif %}>formD - 分解形式（e 与重音符分开存储，与 macOS 一致）</option>
+                            <option value="formKC" {% if normalization == 'formKC' %}selected{% endif %}>formKC - 组合形式，同时将形近字符视为相同</option>
+                            <option value="formKD" {% if normalization == 'formKD' %}selected{% endif %}>formKD - 分解形式，同时将形近字符视为相同</option>
                         </select>
                         <p class="text-text-tertiary text-sm mt-1">
-                            Some accented characters can be written in Unicode in more than one way. Normalization makes ZFS treat these different spellings as the same file name. Choose formD for datasets shared with macOS clients, formC for general cross-platform use, or none if all clients are Linux/BSD. Selecting any form other than none implies UTF-8 only file names.
+                            某些带重音的字符在 Unicode 中有多种写法。规范化使 ZFS 将这些不同写法视为同一个文件名。与 macOS 客户端共享的数据集请选择 formD；一般跨平台使用请选择 formC；若所有客户端均为 Linux/BSD 则选择 none。选择 none 以外的任何形式都意味着文件名仅限 UTF-8。
                         </p>
                     </div>
 
                     <!-- UTF-8 Only -->
                     <div>
                         <label for="utf8only" class="form-label">
-                            UTF-8 Only File Names
+                            仅限 UTF-8 文件名
                         </label>
                         <select 
                             id="utf8only" 
                             name="utf8only"
                             class="form-select"
                         >
-                            <option value="">Default (inherit)</option>
+                            <option value="">默认（继承）</option>
                             <option value="on" {% if utf8only == 'on' %}selected{% endif %}>on</option>
                             <option value="off" {% if utf8only == 'off' %}selected{% endif %}>off</option>
                         </select>
                         <p class="text-text-tertiary text-sm mt-1">
-                            Reject file names that are not valid UTF-8. Cannot be off when a normalization form other than none is selected.
+                            拒绝非有效 UTF-8 的文件名。当选择了 none 以外的规范化形式时，此项不能为 off。
                         </p>
                     </div>
                 </div>
@@ -354,9 +354,9 @@
                 <!-- Encryption -->
                 <div>
                     <label for="encryption" class="form-label">
-                        Encryption
+                        加密
                         {% if not supports_encryption %}
-                        <span class="text-text-tertiary text-xs ml-2">(Not supported on this platform)</span>
+                        <span class="text-text-tertiary text-xs ml-2">（此平台不支持）</span>
                         {% endif %}
                     </label>
                     <select 
@@ -366,9 +366,9 @@
                         x-model="encryption"
                         {% if not supports_encryption %}disabled{% endif %}
                     >
-                        <option value="">Off (No Encryption)</option>
+                        <option value="">关闭（不加密）</option>
                         {% if supports_encryption %}
-                        <option value="aes-256-gcm">AES-256-GCM (Recommended)</option>
+                        <option value="aes-256-gcm">AES-256-GCM（推荐）</option>
                         <option value="aes-128-gcm">AES-128-GCM</option>
                         <option value="aes-192-gcm">AES-192-GCM</option>
                         <option value="aes-256-ccm">AES-256-CCM</option>
@@ -378,11 +378,11 @@
                     </select>
                     {% if supports_encryption %}
                     <p class="text-text-tertiary text-sm mt-1">
-                        Enable native ZFS encryption. AES-256-GCM provides the best security and performance.
+                        启用 ZFS 原生加密。AES-256-GCM 提供最佳的安全性与性能。
                     </p>
                     {% else %}
                     <p class="text-warning-400 text-sm mt-1">
-                        ZFS encryption is not supported on NetBSD. Datasets will be created without encryption.
+                        NetBSD 不支持 ZFS 加密。创建的数据集将不带加密。
                     </p>
                     {% endif %}
                 </div>
@@ -391,31 +391,31 @@
                 <div x-show="encryption !== ''" x-transition class="space-y-4">
                     <div>
                         <label for="passphrase" class="form-label">
-                            Encryption Passphrase <span class="text-danger-400">*</span>
+                            加密口令 <span class="text-danger-400">*</span>
                         </label>
                         <input 
                             type="password" 
                             id="passphrase" 
                             name="passphrase"
                             class="form-input"
-                            placeholder="Enter a strong passphrase"
+                            placeholder="请输入一个强口令"
                             :required="encryption !== ''"
                         >
                         <p class="text-text-tertiary text-sm mt-1">
-                            This passphrase will be required to unlock the dataset after system reboot.
+                            系统重启后需要此口令才能解锁数据集。
                         </p>
                     </div>
 
                     <div>
                         <label for="passphrase_confirm" class="form-label">
-                            Confirm Passphrase <span class="text-danger-400">*</span>
+                            确认口令 <span class="text-danger-400">*</span>
                         </label>
                         <input 
                             type="password" 
                             id="passphrase_confirm" 
                             name="passphrase_confirm"
                             class="form-input"
-                            placeholder="Re-enter passphrase"
+                            placeholder="请再次输入口令"
                             :required="encryption !== ''"
                         >
                     </div>
@@ -427,9 +427,9 @@
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
                             </svg>
                             <div>
-                                <h4 class="text-sm font-semibold text-info-400 mb-1">Keyfile Support</h4>
+                                <h4 class="text-sm font-semibold text-info-400 mb-1">密钥文件支持</h4>
                                 <p class="text-sm text-text-secondary">
-                                    To use a keyfile instead of a passphrase, you can change the key format from the command line after creation using: 
+                                    如需使用密钥文件代替口令，可在创建后通过命令行更改密钥格式：
                                     <code class="bg-bg-tertiary px-1 py-0.5 rounded text-xs">zfs change-key -o keyformat=raw -o keylocation=file:///path/to/keyfile dataset-name</code>
                                 </p>
                             </div>
@@ -439,9 +439,9 @@
 
                 <!-- Additional Options Section -->
                 <div class="border-t border-border-subtle pt-6">
-                    <h3 class="text-lg font-semibold text-text-primary mb-2">Additional Options</h3>
+                    <h3 class="text-lg font-semibold text-text-primary mb-2">更多选项</h3>
                     <p class="text-text-secondary text-sm">
-                        More properties can be configured after creation via the properties page.
+                        创建后可在属性页面配置更多属性。
                     </p>
                 </div>
 
@@ -452,12 +452,12 @@
                             <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
                         </svg>
                         <div>
-                            <h3 class="text-sm font-semibold text-warning-400 mb-2">Important Notes:</h3>
+                            <h3 class="text-sm font-semibold text-warning-400 mb-2">重要提示：</h3>
                             <ul class="list-disc list-inside space-y-1 text-sm text-text-secondary">
-                                <li>Dataset names must be unique within the pool</li>
-                                <li>Parent datasets must exist (or will be created automatically)</li>
-                                <li>Volumes (zvols) require a size specification</li>
-                                <li>Most properties can be changed after creation, except case sensitivity, normalization, and UTF-8 only which are fixed at creation time</li>
+                                <li>数据集名称在存储池内必须唯一</li>
+                                <li>父数据集必须已存在（否则将自动创建）</li>
+                                <li>卷（zvol）必须指定大小</li>
+                                <li>大多数属性可在创建后更改，但大小写敏感性、Unicode 规范化和仅限 UTF-8 在创建时固定，之后无法更改</li>
                             </ul>
                         </div>
                     </div>
@@ -466,7 +466,7 @@
                 <!-- Action Buttons -->
                 <div class="flex justify-end gap-3 pt-4">
                     <a href="/zfs/datasets" class="btn-secondary">
-                        Cancel
+                        取消
                     </a>
                     <button 
                         type="submit" 
@@ -482,7 +482,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                             </svg>
                         </span>
-                        <span>Create Dataset</span>
+                        <span>创建数据集</span>
                     </button>
                 </div>
             </form>

@@ -81,7 +81,7 @@ async def settings_index(request: Request, message: str = "", error: str = ""):
             "corner_styles": corner_styles,
             "message": message,
             "error": error,
-            "page_title": "WebZFS Settings",
+            "page_title": "DataMax-zfs 设置",
         },
     )
 
@@ -90,7 +90,7 @@ async def settings_index(request: Request, message: str = "", error: str = ""):
     # references in <head> and the old body class. HX-Refresh on this 200
     # response (not the 303 redirect, which browsers follow transparently
     # before HTMX can see the header) tells HTMX to reload the entire page.
-    if message and ("Theme changed" in message or "Corner style" in message):
+    if message and ("主题已切换" in message or "边角样式" in message):
         response.headers["HX-Refresh"] = "true"
 
     return response
@@ -101,7 +101,7 @@ async def apply_theme(request: Request, theme: str = Form(...)):
     """Apply the selected theme and save to config."""
     if not is_valid_theme(theme):
         return RedirectResponse(
-            url="/utils/settings?error=Invalid theme selection",
+            url="/utils/settings?error=无效的主题选择",
             status_code=303,
         )
 
@@ -109,12 +109,12 @@ async def apply_theme(request: Request, theme: str = Form(...)):
     if success:
         theme_name = THEME_REGISTRY.get(theme, theme)
         return RedirectResponse(
-            url=f"/utils/settings?message=Theme changed to {theme_name}",
+            url=f"/utils/settings?message=主题已切换为 {theme_name}",
             status_code=303,
         )
     else:
         return RedirectResponse(
-            url="/utils/settings?error=Failed to save theme. Check file permissions on /opt/webzfs/.config/webzfs/",
+            url="/utils/settings?error=保存主题失败。请检查 /opt/webzfs/.config/webzfs/ 的文件权限",
             status_code=303,
         )
 
@@ -124,7 +124,7 @@ async def apply_corner_style(request: Request, corner_style: str = Form(...)):
     """Apply the selected corner style and save to config."""
     if not is_valid_corner_style(corner_style):
         return RedirectResponse(
-            url="/utils/settings?error=Invalid corner style selection",
+            url="/utils/settings?error=无效的边角样式选择",
             status_code=303,
         )
 
@@ -132,12 +132,12 @@ async def apply_corner_style(request: Request, corner_style: str = Form(...)):
     if success:
         style_name = CORNER_STYLE_DISPLAY_NAMES.get(corner_style, corner_style)
         return RedirectResponse(
-            url=f"/utils/settings?message=Corner style changed to {style_name}",
+            url=f"/utils/settings?message=边角样式已切换为 {style_name}",
             status_code=303,
         )
     else:
         return RedirectResponse(
-            url="/utils/settings?error=Failed to save corner style. Check file permissions on /opt/webzfs/.config/webzfs/",
+            url="/utils/settings?error=保存边角样式失败。请检查 /opt/webzfs/.config/webzfs/ 的文件权限",
             status_code=303,
         )
 
@@ -146,7 +146,7 @@ async def apply_corner_style(request: Request, corner_style: str = Form(...)):
 async def theme_preview(request: Request, theme_id: str):
     """Return the theme preview partial with CSS variables for the selected theme."""
     if not is_valid_theme(theme_id):
-        return HTMLResponse("<p class='text-danger-400'>Invalid theme</p>")
+        return HTMLResponse("<p class='text-danger-400'>无效的主题</p>")
 
     theme_variables = get_theme_variables(theme_id)
     theme_name = THEME_REGISTRY.get(theme_id, theme_id)
@@ -167,7 +167,7 @@ async def save_session_timeout_view(request: Request, session_timeout: int = For
     """Save user-configured session timeout value."""
     if session_timeout not in VALID_TIMEOUT_VALUES:
         return RedirectResponse(
-            url="/utils/settings?error=Invalid session timeout selection",
+            url="/utils/settings?error=无效的会话超时选择",
             status_code=303,
         )
 
@@ -175,13 +175,13 @@ async def save_session_timeout_view(request: Request, session_timeout: int = For
         save_session_timeout(session_timeout)
     except (ValueError, OSError) as exc:
         return RedirectResponse(
-            url=f"/utils/settings?error=Failed to save session timeout: {exc}",
+            url=f"/utils/settings?error=保存会话超时失败：{exc}",
             status_code=303,
         )
 
     display = format_timeout_display(session_timeout)
     return RedirectResponse(
-        url=f"/utils/settings?message=Session timeout set to {display}. New sessions will use this value.",
+        url=f"/utils/settings?message=会话超时已设置为 {display}。新会话将使用此值。",
         status_code=303,
     )
 
@@ -193,12 +193,12 @@ async def reset_session_timeout_view(request: Request):
         reset_session_timeout()
     except OSError as exc:
         return RedirectResponse(
-            url=f"/utils/settings?error=Failed to reset session timeout: {exc}",
+            url=f"/utils/settings?error=重置会话超时失败：{exc}",
             status_code=303,
         )
 
     return RedirectResponse(
-        url=f"/utils/settings?message=Session timeout reset to default ({format_timeout_display(DEFAULT_SESSION_TIMEOUT)})",
+        url=f"/utils/settings?message=会话超时已重置为默认值（{format_timeout_display(DEFAULT_SESSION_TIMEOUT)}）",
         status_code=303,
     )
 
@@ -233,9 +233,9 @@ async def backup_export(
     to the user as a file download.
     """
     if passphrase != confirm_passphrase:
-        return _redirect_with(error="Passphrases do not match.")
+        return _redirect_with(error="两次输入的口令不一致。")
     if len(passphrase) < 8:
-        return _redirect_with(error="Passphrase must be at least 8 characters long.")
+        return _redirect_with(error="口令长度至少为 8 个字符。")
 
     try:
         blob = backup_restore.create_archive(
@@ -246,7 +246,7 @@ async def backup_export(
         )
     except Exception as exc:
         logger.exception("Failed to build backup archive")
-        return _redirect_with(error=f"Failed to build backup archive: {exc}")
+        return _redirect_with(error=f"构建备份存档失败：{exc}")
 
     filename = backup_restore.default_archive_filename()
     return StreamingResponse(
@@ -272,10 +272,10 @@ async def backup_inspect(
     """
     blob = await archive.read()
     if not blob:
-        return _redirect_with(error="No file was uploaded.")
+        return _redirect_with(error="未上传任何文件。")
     if len(blob) > MAX_UPLOAD_SIZE:
         return _redirect_with(
-            error=f"Uploaded file is too large (limit {MAX_UPLOAD_SIZE // (1024 * 1024)} MB)."
+            error=f"上传的文件过大（上限 {MAX_UPLOAD_SIZE // (1024 * 1024)} MB）。"
         )
 
     try:
@@ -284,13 +284,13 @@ async def backup_inspect(
         return _redirect_with(error=str(exc))
     except Exception as exc:
         logger.exception("Failed to inspect backup archive")
-        return _redirect_with(error=f"Failed to inspect archive: {exc}")
+        return _redirect_with(error=f"检查存档失败：{exc}")
 
     try:
         token = backup_restore.stash_upload(blob)
     except Exception as exc:
         logger.exception("Failed to stash uploaded archive")
-        return _redirect_with(error=f"Failed to stage upload: {exc}")
+        return _redirect_with(error=f"暂存上传文件失败：{exc}")
 
     # Group manifest files by category for the confirmation UI.
     files_by_category: dict = {}
@@ -309,7 +309,7 @@ async def backup_inspect(
             "files_by_category": files_by_category,
             "current_hostname": info["current_hostname"],
             "current_platform": info["current_platform"],
-            "page_title": "Confirm Restore",
+            "page_title": "确认恢复",
         },
     )
 
@@ -342,7 +342,7 @@ async def backup_restore_apply(
         selected.append(backup_restore.CATEGORY_ENV)
 
     if not selected:
-        return _redirect_with(error="No categories were selected for restore.")
+        return _redirect_with(error="未选择任何要恢复的类别。")
 
     try:
         blob = backup_restore.load_stash(token)
@@ -357,7 +357,7 @@ async def backup_restore_apply(
         return _redirect_with(error=str(exc))
     except Exception as exc:
         logger.exception("Failed to apply backup restore")
-        return _redirect_with(error=f"Failed to restore archive: {exc}")
+        return _redirect_with(error=f"恢复存档失败：{exc}")
     finally:
         backup_restore.discard_stash(token)
 
@@ -366,13 +366,13 @@ async def backup_restore_apply(
     if failed_count:
         return _redirect_with(
             error=(
-                f"Restore completed with errors: {restored_count} files restored, "
-                f"{failed_count} failed. Check server logs for details."
+                f"恢复完成但有错误：已恢复 {restored_count} 个文件，"
+                f"{failed_count} 个失败。详情请查看服务器日志。"
             )
         )
     return _redirect_with(
         message=(
-            f"Restore complete. {restored_count} files written. "
-            f"Existing files were preserved as *.pre-restore-{result['timestamp']}."
+            f"恢复完成。已写入 {restored_count} 个文件。"
+            f"现有文件已保留为 *.pre-restore-{result['timestamp']}。"
         )
     )

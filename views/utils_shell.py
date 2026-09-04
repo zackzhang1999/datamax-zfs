@@ -82,7 +82,7 @@ def download_history(username: str = Depends(get_current_user)):
 def clear(username: str = Depends(get_current_user)):
     """Clear the shell session (reset history and cwd)."""
     clear_shell_session(username)
-    return {"status": "success", "message": "Shell session cleared"}
+    return {"status": "success", "message": "Shell 会话已清除"}
 
 
 @router.post("/autocomplete")

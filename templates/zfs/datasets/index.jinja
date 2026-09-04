@@ -4,16 +4,16 @@
 <div class="space-y-6">
     <!-- Breadcrumb Navigation -->
     <nav class="flex items-center text-sm text-text-secondary">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
-        <span class="text-text-primary font-medium">Datasets</span>
+        <span class="text-text-primary font-medium">数据集</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 class="text-3xl font-bold text-text-primary">ZFS Datasets Management</h1>
+        <h1 class="text-3xl font-bold text-text-primary">ZFS 数据集管理</h1>
     </div>
 
     <!-- Success/Error Messages -->
@@ -52,8 +52,8 @@
                     <svg class="w-5 h-5 text-primary-400 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
-                    <h2 class="text-xl font-semibold text-text-primary">Pool: {{ pool_name }}</h2>
-                    <span class="badge-info">{{ pool_datasets|length }} dataset{{ 's' if pool_datasets|length != 1 else '' }}</span>
+                    <h2 class="text-xl font-semibold text-text-primary">存储池：{{ pool_name }}</h2>
+                    <span class="badge-info">{{ pool_datasets|length }} 个数据集</span>
                 </div>
                 <a href="/zfs/datasets/create/form?pool={{ pool_name }}" 
                    class="btn-success text-xs px-2 py-1 inline-flex items-center gap-1"
@@ -61,7 +61,7 @@
                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
-                    Add Dataset
+                    添加数据集
                 </a>
             </summary>
             
@@ -129,14 +129,14 @@
                     <div class="flex items-center gap-1">
                         <a href="/zfs/datasets/{{ dataset.name }}" 
                            class="inline-flex text-primary-400 hover:text-primary-300 transition-colors" 
-                           title="View Details">
+                           title="查看详情">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                             </svg>
                         </a>
                         <a href="/zfs/datasets/{{ dataset.name }}/properties" 
                            class="inline-flex text-success-400 hover:text-success-300 transition-colors" 
-                           title="Properties">
+                           title="属性">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -146,7 +146,7 @@
                         <form method="post" action="/zfs/datasets/{{ dataset.name }}/mount" class="inline-flex">
                             <button type="submit" 
                                     class="inline-flex text-purple-400 hover:text-purple-300 transition-colors bg-transparent border-0 p-0 cursor-pointer" 
-                                    title="Mount Dataset">
+                                    title="挂载数据集">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"></path>
                                 </svg>
@@ -155,7 +155,7 @@
                         <form method="post" action="/zfs/datasets/{{ dataset.name }}/unmount" id="form-unmount-{{ dataset.name.replace('/', '-') }}" class="inline-flex">
                             <button type="button"
                                     class="inline-flex text-yellow-400 hover:text-yellow-300 transition-colors bg-transparent border-0 p-0 cursor-pointer" 
-                                    title="Unmount Dataset"
+                                    title="卸载数据集"
                                     onclick="showConfirm('confirm-unmount-{{ dataset.name.replace('/', '-') }}')">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -169,7 +169,7 @@
                         {% endif %}
                         <a href="/zfs/datasets/{{ dataset.name }}/rename/form" 
                            class="inline-flex text-orange-400 hover:text-orange-300 transition-colors" 
-                           title="Rename Dataset">
+                           title="重命名数据集">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                             </svg>
@@ -191,22 +191,22 @@
                         <tr>
                             <th class="dataset-sort-header px-3 py-2 text-left text-xs font-medium uppercase tracking-wider cursor-pointer select-none hover:text-text-primary transition-colors"
                                 data-sort-key="name"
-                                title="Click to sort by name">
-                                <span class="inline-flex items-center gap-1">Dataset Name<span class="dataset-sort-indicator text-text-tertiary"></span></span>
+                                title="点击按名称排序">
+                                <span class="inline-flex items-center gap-1">数据集名称<span class="dataset-sort-indicator text-text-tertiary"></span></span>
                             </th>
-                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">Type</th>
-                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">Enc</th>
+                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">类型</th>
+                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">加密</th>
                             <th class="dataset-sort-header px-2 py-2 text-left text-xs font-medium uppercase tracking-wider cursor-pointer select-none hover:text-text-primary transition-colors"
                                 data-sort-key="used"
-                                title="Click to sort by used space">
-                                <span class="inline-flex items-center gap-1">Used<span class="dataset-sort-indicator text-text-tertiary"></span></span>
+                                title="点击按已用空间排序">
+                                <span class="inline-flex items-center gap-1">已用<span class="dataset-sort-indicator text-text-tertiary"></span></span>
                             </th>
-                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">Avail</th>
-                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">Refer</th>
-                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">Mountpoint</th>
-                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">Comp</th>
-                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">Ratio</th>
-                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
+                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">可用</th>
+                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">引用量</th>
+                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">挂载点</th>
+                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">压缩</th>
+                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">比率</th>
+                            <th class="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider">操作</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-border-subtle">
@@ -229,7 +229,7 @@
             <svg class="w-4 h-4 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
             </svg>
-            Total Datasets: <span class="font-semibold text-text-primary">{{ datasets|length }}</span>
+            数据集总数：<span class="font-semibold text-text-primary">{{ datasets|length }}</span>
         </p>
     </div>
     {% else %}
@@ -240,13 +240,13 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
             </svg>
         </div>
-        <h3 class="text-xl font-semibold text-text-primary mb-2">No ZFS Datasets Found</h3>
-        <p class="text-text-secondary mb-6">Create a new dataset to get started.</p>
+        <h3 class="text-xl font-semibold text-text-primary mb-2">未找到 ZFS 数据集</h3>
+        <p class="text-text-secondary mb-6">创建一个新数据集以开始使用。</p>
         <a href="/zfs/datasets/create/form" class="btn-success inline-flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
             </svg>
-            Create Dataset
+            创建数据集
         </a>
     </div>
     {% endif %}
@@ -256,9 +256,9 @@
         {% for dataset in datasets %}
         {% if dataset.type == 'filesystem' and dataset.mountpoint not in ['-', 'none'] %}
         {% set id = 'confirm-unmount-' ~ dataset.name.replace('/', '-') %}
-        {% set title = 'Unmount Dataset' %}
-        {% set message = 'Unmount dataset ' ~ dataset.name ~ '? This will make the filesystem inaccessible until remounted.' %}
-        {% set confirm_text = 'Unmount' %}
+        {% set title = '卸载数据集' %}
+        {% set message = '确定要卸载数据集 ' ~ dataset.name ~ ' 吗？在重新挂载之前，该文件系统将无法访问。' %}
+        {% set confirm_text = '卸载' %}
         {% set confirm_class = 'warning' %}
         {% set confirm_action = 'document.getElementById("form-unmount-' ~ dataset.name.replace('/', '-') ~ '").submit()' %}
         {% include 'partials/confirm.jinja' %}
@@ -501,43 +501,43 @@
             <svg class="w-4 h-4 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            Action Icons
+            操作图标说明
         </h3>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 text-sm text-text-secondary">
             <div class="flex items-center gap-2">
                 <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                 </svg>
-                <span>View Details</span>
+                <span>查看详情</span>
             </div>
             <div class="flex items-center gap-2">
                 <svg class="w-4 h-4 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
-                <span>Properties</span>
+                <span>属性</span>
             </div>
             <div class="flex items-center gap-2">
                 <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"></path>
                 </svg>
-                <span>Mount</span>
+                <span>挂载</span>
             </div>
             <div class="flex items-center gap-2">
                 <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                 </svg>
-                <span>Unmount</span>
+                <span>卸载</span>
             </div>
             <div class="flex items-center gap-2">
                 <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                 </svg>
-                <span>Rename</span>
+                <span>重命名</span>
             </div>
         </div>
         <p class="text-xs text-text-tertiary mt-3">
-            <strong>Note:</strong> Dataset destruction must be performed manually via command line for safety. Mount/unmount actions are only available for filesystems.
+            <strong>注意：</strong>销毁数据集是不可逆的危险操作。如确需删除数据集，请进入数据集详情页，在“操作”区域点击“销毁数据集”，并按照确认页提示操作。挂载/卸载操作仅适用于文件系统。
         </p>
     </div>
 </div>

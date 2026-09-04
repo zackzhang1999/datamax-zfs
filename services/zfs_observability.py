@@ -76,9 +76,9 @@ class ZFSObservabilityService:
             return history[-limit:]
         
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool history command timed out after {timeout} seconds. History may be very large.")
+            raise Exception(f"zpool history 命令在 {timeout} 秒后超时。历史记录可能非常大。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get pool history: {e.stderr}")
+            raise Exception(f"获取存储池历史记录失败：{e.stderr}")
     
     def get_pool_events(
         self,
@@ -158,9 +158,9 @@ class ZFSObservabilityService:
             return events
         
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool events command timed out after {timeout} seconds. The system may be unresponsive.")
+            raise Exception(f"zpool events 命令在 {timeout} 秒后超时。系统可能无响应。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get pool events: {e.stderr}")
+            raise Exception(f"获取存储池事件失败：{e.stderr}")
     
     def clear_pool_events(self, pool_name: Optional[str] = None) -> None:
         """
@@ -185,9 +185,9 @@ class ZFSObservabilityService:
                 timeout=timeout
             )
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool clear events command timed out after {timeout} seconds. The system may be unresponsive.")
+            raise Exception(f"zpool 清除事件命令在 {timeout} 秒后超时。系统可能无响应。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to clear pool events: {e.stderr}")
+            raise Exception(f"清除存储池事件失败：{e.stderr}")
     
     def get_kernel_debug_log(
         self,
@@ -230,7 +230,7 @@ class ZFSObservabilityService:
             
             # Check if file exists first
             if not Path(dbgmsg_path).exists():
-                return ["Debug log not available (missing /proc/spl/kstat/zfs/dbgmsg)"]
+                return ["调试日志不可用（缺少 /proc/spl/kstat/zfs/dbgmsg）"]
             
             # Use sudo cat to read the privileged file
             result = subprocess.run(
@@ -246,9 +246,9 @@ class ZFSObservabilityService:
                     with open(dbgmsg_path, 'r') as f:
                         log_lines = f.readlines()
                 except PermissionError:
-                    return [f"Permission denied reading {dbgmsg_path}",
+                    return [f"读取 {dbgmsg_path} 的权限被拒绝",
                             "",
-                            "To fix this on Linux, add to sudoers:",
+                            "在 Linux 上修复方法，请将以下内容添加到 sudoers：",
                             "  webzfs ALL=(ALL) NOPASSWD: /usr/bin/cat /proc/spl/kstat/zfs/dbgmsg"]
             else:
                 log_lines = result.stdout.split('\n')
@@ -262,7 +262,7 @@ class ZFSObservabilityService:
             return [line.strip() for line in log_lines[-lines:] if line.strip()]
             
         except Exception as e:
-            return [f"Error reading debug log: {str(e)}"]
+            return [f"读取调试日志出错：{str(e)}"]
     
     def _get_kernel_debug_log_sysctl(
         self,
@@ -300,11 +300,11 @@ class ZFSObservabilityService:
             
             if result.returncode != 0 or not result.stdout.strip():
                 # Debug messages may not be enabled
-                return ["Debug log not available (sysctl kstat.zfs.misc.dbgmsg not accessible)",
+                return ["调试日志不可用（无法访问 sysctl kstat.zfs.misc.dbgmsg）",
                         "",
-                        "To enable ZFS debug messages on FreeBSD, you may need to:",
-                        "  1. Set: sysctl vfs.zfs.dbgmsg_enable=1",
-                        "  2. Or check if ZFS debug options are compiled in"]
+                        "要在 FreeBSD 上启用 ZFS 调试消息，可能需要：",
+                        "  1. 执行：sysctl vfs.zfs.dbgmsg_enable=1",
+                        "  2. 或检查内核是否编译了 ZFS 调试选项"]
             
             # Parse the output - each line is a debug message
             log_lines = result.stdout.strip().split('\n')
@@ -318,7 +318,7 @@ class ZFSObservabilityService:
             return [line.strip() for line in log_lines[-lines:] if line.strip()]
             
         except Exception as e:
-            return [f"Error reading debug log via sysctl: {str(e)}"]
+            return [f"通过 sysctl 读取调试日志出错：{str(e)}"]
     
     def get_syslog_zfs(
         self,
@@ -385,7 +385,7 @@ class ZFSObservabilityService:
                     return zfs_lines
                 # journalctl worked but no ZFS lines found; do not
                 # fall through to syslog files in that case
-                return [{'message': 'No ZFS messages found in journalctl output'}]
+                return [{'message': 'journalctl 输出中未找到 ZFS 消息'}]
 
             err = (result.stderr or '').strip()
             if err:
@@ -418,7 +418,7 @@ class ZFSObservabilityService:
                     if zfs_lines:
                         return zfs_lines[-lines:]
                     # File readable but no ZFS lines; stop searching
-                    return [{'message': f'No ZFS messages found in {path}'}]
+                    return [{'message': f'{path} 中未找到 ZFS 消息'}]
                 err = (result.stderr or '').strip()
                 if err and 'No such file' not in err:
                     label = f'sudo tail {path}' if use_sudo else f'tail {path}'
@@ -427,17 +427,17 @@ class ZFSObservabilityService:
         # Last resort: dmesg ring buffer
         fallback = self._fallback_syslog_read(lines)
         if fallback and fallback[0].get('message') not in (
-            'Syslog not available',
-            'Error reading syslog',
+            '系统日志不可用',
+            '读取系统日志出错',
         ):
             return fallback
 
         if attempt_errors:
             return [
-                {'message': 'Syslog not available. Tried:'},
+                {'message': '系统日志不可用。已尝试：'},
             ] + [{'message': '  ' + msg} for msg in attempt_errors] + [
                 {'message': ''},
-                {'message': 'Add journalctl to webzfs sudoers, or add the webzfs user to the systemd-journal group:'},
+                {'message': '请将 journalctl 加入 webzfs 的 sudoers，或将 webzfs 用户加入 systemd-journal 组：'},
                 {'message': '  sudo usermod -aG systemd-journal webzfs'},
             ]
         return fallback
@@ -461,7 +461,7 @@ class ZFSObservabilityService:
             arcstats_path = Path('/proc/spl/kstat/zfs/arcstats')
             
             if not arcstats_path.exists():
-                return {'error': 'ARC stats not available'}
+                return {'error': 'ARC 统计信息不可用'}
             
             stats = {}
             with open(arcstats_path, 'r') as f:
@@ -490,10 +490,11 @@ class ZFSObservabilityService:
             if 'c_max' in stats:
                 stats['c_max_human'] = self._format_bytes(stats['c_max'])
             
+            self._add_l2arc_summary(stats)
             return stats
             
         except Exception as e:
-            return {'error': f'Failed to read ARC stats: {str(e)}'}
+            return {'error': f'读取 ARC 统计信息失败：{str(e)}'}
     
     def _get_arc_summary_sysctl(self) -> Dict[str, Any]:
         """
@@ -512,7 +513,7 @@ class ZFSObservabilityService:
             )
             
             if result.returncode != 0:
-                return {'error': 'Failed to read sysctl for ARC stats'}
+                return {'error': '读取 ARC 统计信息的 sysctl 失败'}
             
             stats = {}
             
@@ -541,7 +542,7 @@ class ZFSObservabilityService:
                     stats[stat_name] = value
             
             if not stats:
-                return {'error': 'ARC stats not available via sysctl'}
+                return {'error': '无法通过 sysctl 获取 ARC 统计信息'}
             
             # Calculate derived stats
             if 'hits' in stats and 'misses' in stats:
@@ -555,10 +556,95 @@ class ZFSObservabilityService:
             if 'c_max' in stats:
                 stats['c_max_human'] = self._format_bytes(stats['c_max'])
             
+            self._add_l2arc_summary(stats)
             return stats
             
         except Exception as e:
-            return {'error': f'Failed to read ARC stats: {str(e)}'}
+            return {'error': f'读取 ARC 统计信息失败：{str(e)}'}
+
+    def _add_l2arc_summary(self, stats: Dict[str, Any]) -> None:
+        """Add L2ARC (SSD cache) derived statistics to a parsed arcstats dict."""
+        hits = stats.get('l2_hits', 0) or 0
+        misses = stats.get('l2_misses', 0) or 0
+        try:
+            hits = int(hits)
+            misses = int(misses)
+        except (TypeError, ValueError):
+            hits = 0
+            misses = 0
+
+        total = hits + misses
+        if total > 0:
+            stats['l2_hit_rate'] = round((hits / total) * 100, 2)
+            stats['l2_miss_rate'] = round((misses / total) * 100, 2)
+        else:
+            stats['l2_hit_rate'] = 0
+            stats['l2_miss_rate'] = 0
+
+        def first_nonzero(*keys: str) -> int:
+            for key in keys:
+                value = stats.get(key)
+                if value is None:
+                    continue
+                try:
+                    parsed = int(value)
+                except (TypeError, ValueError):
+                    continue
+                if parsed > 0:
+                    return parsed
+            return 0
+
+        # On some kernels l2_size/l2_asize stay zero while the persistent
+        # L2ARC rebuild counters hold the real footprint, so fall back to
+        # those before deciding whether an L2ARC is present.
+        l2arc_counters = [
+            first_nonzero('l2_size', 'l2_rebuild_size'),
+            first_nonzero('l2_asize', 'l2_rebuild_asize'),
+            hits,
+            misses,
+            int(stats.get('l2_feeds') or 0),
+        ]
+        stats['l2arc_active'] = sum(l2arc_counters) > 0
+
+        stats['l2_size_human'] = self._format_bytes(
+            first_nonzero('l2_size', 'l2_rebuild_size'),
+        )
+        stats['l2_asize_human'] = self._format_bytes(
+            first_nonzero('l2_asize', 'l2_rebuild_asize'),
+        )
+        stats['l2_hdr_size_human'] = self._format_bytes(
+            first_nonzero('l2_hdr_size'),
+        )
+
+        byte_fields = {
+            'l2_read_bytes': 'l2_read_bytes_human',
+            'l2_write_bytes': 'l2_write_bytes_human',
+        }
+        for source, target in byte_fields.items():
+            value = stats.get(source)
+            if isinstance(value, int):
+                stats[target] = self._format_bytes(value)
+            elif value is not None:
+                try:
+                    stats[target] = self._format_bytes(int(value))
+                except (TypeError, ValueError):
+                    stats[target] = 'N/A'
+
+        count_fields = {
+            'l2_hits': 'l2_hits_human',
+            'l2_misses': 'l2_misses_human',
+            'l2_feeds': 'l2_feeds_human',
+            'l2_writes_sent': 'l2_writes_sent_human',
+        }
+        for source, target in count_fields.items():
+            value = stats.get(source)
+            if value is None:
+                stats[target] = '0'
+                continue
+            try:
+                stats[target] = f"{int(value):,}"
+            except (TypeError, ValueError):
+                stats[target] = str(value)
     
     def get_zfs_module_parameters(self) -> Dict[str, Any]:
         """
@@ -571,7 +657,7 @@ class ZFSObservabilityService:
             params_path = Path('/sys/module/zfs/parameters')
             
             if not params_path.exists():
-                return {'error': 'ZFS module parameters not available'}
+                return {'error': 'ZFS 模块参数不可用'}
             
             parameters = {}
             for param_file in params_path.iterdir():
@@ -586,7 +672,7 @@ class ZFSObservabilityService:
             return parameters
             
         except Exception as e:
-            return {'error': f'Failed to read module parameters: {str(e)}'}
+            return {'error': f'读取模块参数失败：{str(e)}'}
     
     def search_logs(
         self,
@@ -642,7 +728,7 @@ class ZFSObservabilityService:
             return results[:limit]
             
         except Exception as e:
-            return [{'error': f'Search failed: {str(e)}'}]
+            return [{'error': f'搜索失败：{str(e)}'}]
     
     # Private helper methods
     
@@ -765,10 +851,10 @@ class ZFSObservabilityService:
                 if line.strip():
                     zfs_lines.append({'message': line.strip()})
             
-            return zfs_lines if zfs_lines else [{'message': 'No ZFS messages found'}]
+            return zfs_lines if zfs_lines else [{'message': '未找到 ZFS 消息'}]
             
         except Exception as e:
-            return [{'message': f'Error reading syslog: {str(e)}'}]
+            return [{'message': f'读取系统日志出错：{str(e)}'}]
     
     def _fallback_syslog_read(self, lines: int) -> List[Dict[str, Any]]:
         """Fallback method to read syslog without journalctl"""
@@ -798,10 +884,10 @@ class ZFSObservabilityService:
                         zfs_lines.append({'message': line.strip()})
                 return zfs_lines
             
-            return [{'message': 'Syslog not available'}]
+            return [{'message': '系统日志不可用'}]
             
         except:
-            return [{'message': 'Error reading syslog'}]
+            return [{'message': '读取系统日志出错'}]
     
     def _format_bytes(self, bytes_val: int) -> str:
         """Format bytes to human-readable string"""

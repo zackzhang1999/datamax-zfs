@@ -4,11 +4,11 @@
 <div class="container mx-auto px-4 py-8 max-w-4xl">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm text-text-secondary mb-4 flex items-center gap-2">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
-        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">Snapshots</a>
+        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">快照</a>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
@@ -16,13 +16,13 @@
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
-        <span class="text-text-primary">Add Dataset</span>
+        <span class="text-text-primary">添加数据集</span>
     </nav>
 
     <!-- Page Header -->
     <div class="mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">Add Dataset to Sanoid</h1>
-        <p class="text-text-secondary mt-2">Configure automated snapshot policy for a dataset</p>
+        <h1 class="text-3xl font-bold text-text-primary">添加数据集到 Sanoid</h1>
+        <p class="text-text-secondary mt-2">为数据集配置自动快照策略</p>
     </div>
 
     <!-- Error Message -->
@@ -37,8 +37,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <div class="text-sm">
-                <strong class="text-info-400">Info:</strong>
-                <span class="text-text-secondary">Adding a dataset to Sanoid will enable automated snapshot creation and pruning according to the selected template policy.</span>
+                <strong class="text-info-400">提示：</strong>
+                <span class="text-text-secondary">将数据集添加到 Sanoid 后，将根据所选模板策略启用自动快照创建和清理。</span>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
             <!-- Dataset Selection -->
             <div class="mb-6">
                 <label for="dataset_name" class="form-label">
-                    Dataset <span class="text-danger-400">*</span>
+                    数据集 <span class="text-danger-400">*</span>
                 </label>
                 {% if datasets and datasets|length > 0 %}
                 <select 
@@ -58,13 +58,13 @@
                     required
                     class="form-select"
                 >
-                    <option value="">-- Select a Dataset --</option>
+                    <option value="">-- 请选择数据集 --</option>
                     {% for ds in datasets %}
                     <option value="{{ ds.name }}">{{ ds.name }}</option>
                     {% endfor %}
                 </select>
                 <p class="text-text-tertiary text-xs mt-1">
-                    Choose the dataset you want to enable automated snapshots for
+                    选择要启用自动快照的数据集
                 </p>
                 {% else %}
                 <div class="card-nested bg-warning-900/20 border-warning-900">
@@ -73,8 +73,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                         </svg>
                         <div class="text-sm">
-                            <strong class="text-warning-400">Warning:</strong>
-                            <span class="text-text-secondary">No datasets found.</span>
+                            <strong class="text-warning-400">警告：</strong>
+                            <span class="text-text-secondary">未找到数据集。</span>
                         </div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
             <!-- Template Selection -->
             <div class="mb-6">
                 <label for="template" class="form-label">
-                    Snapshot Policy Template <span class="text-danger-400">*</span>
+                    快照策略模板 <span class="text-danger-400">*</span>
                 </label>
                 {% if templates and templates|length > 0 %}
                 <select 
@@ -94,7 +94,7 @@
                     onchange="showTemplateInfo()"
                     class="form-select"
                 >
-                    <option value="">-- Select a Template --</option>
+                    <option value="">-- 请选择模板 --</option>
                     {% for template_name, config in templates.items() %}
                     <option value="{{ template_name.replace('template_', '') }}" data-config='{{ config|tojson }}'>
                         {{ template_name.replace('template_', '') }}
@@ -102,7 +102,7 @@
                     {% endfor %}
                 </select>
                 <p class="text-text-tertiary text-xs mt-1">
-                    Select a retention policy template that defines how often snapshots are taken and how long they're kept
+                    选择一个留存策略模板，它定义了快照的创建频率和保留时长
                 </p>
                 <div id="template_info" class="mt-3 hidden card-nested bg-primary-900/20 border-primary-900"></div>
                 {% else %}
@@ -112,8 +112,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                         </svg>
                         <div class="text-sm">
-                            <strong class="text-warning-400">Warning:</strong>
-                            <span class="text-text-secondary">No templates found. <a href="/zfs/snapshots/sanoid/template/create" class="text-primary-400 hover:text-primary-300">Create a template first</a>.</span>
+                            <strong class="text-warning-400">警告：</strong>
+                            <span class="text-text-secondary">未找到模板。<a href="/zfs/snapshots/sanoid/template/create" class="text-primary-400 hover:text-primary-300">请先创建一个模板</a>。</span>
                         </div>
                     </div>
                 </div>
@@ -123,7 +123,7 @@
             <!-- Recursive Option -->
             <div class="mb-6">
                 <label for="recursive" class="form-label">
-                    Recursive Mode <span class="text-danger-400">*</span>
+                    递归模式 <span class="text-danger-400">*</span>
                 </label>
                 <select 
                     id="recursive" 
@@ -131,9 +131,9 @@
                     required
                     class="form-select"
                 >
-                    <option value="no">No - Only this dataset</option>
-                    <option value="yes">Yes - Process children individually</option>
-                    <option value="zfs">ZFS - Atomic recursive snapshots</option>
+                    <option value="no">否 —— 仅此数据集</option>
+                    <option value="yes">是 —— 分别处理子数据集</option>
+                    <option value="zfs">ZFS —— 原子化递归快照</option>
                 </select>
                 <div class="mt-2 card-nested text-xs space-y-2">
                     <div class="flex items-start gap-2">
@@ -142,7 +142,7 @@
                         </svg>
                         <div>
                             <strong class="text-text-primary">no:</strong>
-                            <span class="text-text-secondary">Only snapshot this dataset</span>
+                            <span class="text-text-secondary">仅为此数据集创建快照</span>
                         </div>
                     </div>
                     <div class="flex items-start gap-2">
@@ -151,7 +151,7 @@
                         </svg>
                         <div>
                             <strong class="text-text-primary">yes:</strong>
-                            <span class="text-text-secondary">Snapshot children individually (newly added children get immediate policy)</span>
+                            <span class="text-text-secondary">分别为子数据集创建快照（新增的子数据集立即应用策略）</span>
                         </div>
                     </div>
                     <div class="flex items-start gap-2">
@@ -160,7 +160,7 @@
                         </svg>
                         <div>
                             <strong class="text-text-primary">zfs:</strong>
-                            <span class="text-text-secondary">Use ZFS recursive flag (atomic, consistent snapshots)</span>
+                            <span class="text-text-secondary">使用 ZFS 递归标志（原子化、一致的快照）</span>
                         </div>
                     </div>
                 </div>
@@ -176,19 +176,19 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                     </svg>
-                    Add Dataset
+                    添加数据集
                 </button>
                 {% else %}
                 <button 
                     type="button"
                     disabled
-                    title="Create a snapshot policy template first"
+                    title="请先创建一个快照策略模板"
                     class="btn-success flex items-center gap-2 opacity-50 cursor-not-allowed"
                 >
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                     </svg>
-                    Add Dataset
+                    添加数据集
                 </button>
                 {% endif %}
                 <a 
@@ -198,7 +198,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
-                    Cancel
+                    取消
                 </a>
             </div>
         </form>
@@ -213,14 +213,14 @@ function showTemplateInfo() {
     
     if (option.value) {
         const config = JSON.parse(option.getAttribute('data-config'));
-        let html = '<div class="flex items-center gap-2 mb-2"><svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><strong class="text-primary-400">Retention Policy:</strong></div><div class="grid grid-cols-2 gap-2 text-xs">';
+        let html = '<div class="flex items-center gap-2 mb-2"><svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><strong class="text-primary-400">留存策略：</strong></div><div class="grid grid-cols-2 gap-2 text-xs">';
         
-        if (config.frequently && config.frequently !== '0') html += `<div class="text-text-secondary">Frequently: <span class="text-info-400 font-semibold">${config.frequently}</span></div>`;
-        if (config.hourly && config.hourly !== '0') html += `<div class="text-text-secondary">Hourly: <span class="text-info-400 font-semibold">${config.hourly}</span></div>`;
-        if (config.daily && config.daily !== '0') html += `<div class="text-text-secondary">Daily: <span class="text-success-400 font-semibold">${config.daily}</span></div>`;
-        if (config.weekly && config.weekly !== '0') html += `<div class="text-text-secondary">Weekly: <span class="text-warning-400 font-semibold">${config.weekly}</span></div>`;
-        if (config.monthly && config.monthly !== '0') html += `<div class="text-text-secondary">Monthly: <span class="text-purple-400 font-semibold">${config.monthly}</span></div>`;
-        if (config.yearly && config.yearly !== '0') html += `<div class="text-text-secondary">Yearly: <span class="text-primary-400 font-semibold">${config.yearly}</span></div>`;
+        if (config.frequently && config.frequently !== '0') html += `<div class="text-text-secondary">高频（15 分钟）：<span class="text-info-400 font-semibold">${config.frequently}</span></div>`;
+        if (config.hourly && config.hourly !== '0') html += `<div class="text-text-secondary">每小时：<span class="text-info-400 font-semibold">${config.hourly}</span></div>`;
+        if (config.daily && config.daily !== '0') html += `<div class="text-text-secondary">每天：<span class="text-success-400 font-semibold">${config.daily}</span></div>`;
+        if (config.weekly && config.weekly !== '0') html += `<div class="text-text-secondary">每周：<span class="text-warning-400 font-semibold">${config.weekly}</span></div>`;
+        if (config.monthly && config.monthly !== '0') html += `<div class="text-text-secondary">每月：<span class="text-purple-400 font-semibold">${config.monthly}</span></div>`;
+        if (config.yearly && config.yearly !== '0') html += `<div class="text-text-secondary">每年：<span class="text-primary-400 font-semibold">${config.yearly}</span></div>`;
         
         html += '</div>';
         infoDiv.innerHTML = html;

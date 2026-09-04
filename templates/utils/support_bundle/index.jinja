@@ -4,17 +4,17 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils" class="hover:text-primary-400">Utilities</a>
+        <a href="/utils" class="hover:text-primary-400">实用工具</a>
         <span class="mx-2">/</span>
-        <span class="text-text-primary">Support Bundle</span>
+        <span class="text-text-primary">支持信息包</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex justify-between items-center mb-6">
         <div>
-            <h1 class="text-3xl font-bold text-text-primary">Support Bundle</h1>
+            <h1 class="text-3xl font-bold text-text-primary">支持信息包</h1>
             <p class="text-text-secondary mt-1">
-                Collect diagnostic data for troubleshooting and sharing with community or support.
+                收集诊断数据，用于故障排查及与社区或技术支持分享。
             </p>
         </div>
     </div>
@@ -22,7 +22,7 @@
     <!-- Error Message -->
     {% if error %}
     <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded mb-4">
-        <strong>Error:</strong> {{ error }}
+        <strong>错误：</strong> {{ error }}
     </div>
     {% endif %}
 
@@ -34,12 +34,11 @@
                       d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <div>
-                <h3 class="text-lg font-semibold text-info-400 mb-2">About Support Bundles</h3>
+                <h3 class="text-lg font-semibold text-info-400 mb-2">关于支持信息包</h3>
                 <p class="text-text-secondary text-sm">
-                    A support bundle collects the selected diagnostic information from your system and
-                    packages it into a single zip file. This file can then be shared with the community,
-                    forum posts, or support channels to help diagnose issues with your ZFS configuration.
-                    Select the items you want to include below, then click Generate.
+                    支持信息包会将选定的系统诊断信息收集并打包为单个 zip 文件。该文件可分享给社区、
+                    论坛帖子或技术支持渠道，以帮助诊断你的 ZFS 配置问题。
+                    请在下方选择要包含的项目，然后点击“生成”。
                 </p>
             </div>
         </div>
@@ -53,12 +52,12 @@
                       d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
             </svg>
             <div>
-                <h3 class="text-base font-semibold text-warning-400 mb-1">Privacy Notice</h3>
+                <h3 class="text-base font-semibold text-warning-400 mb-1">隐私提示</h3>
                 <p class="text-warning-400/90 text-sm">
-                    The generated bundle will contain real data from this system, including hostnames,
-                    IP addresses, pool names, dataset names, mount paths, and system configuration details.
-                    <strong>Always review the contents of the zip file before sharing it publicly.</strong>
-                    Deselect any categories below that may contain information you do not want to disclose.
+                    生成的信息包将包含此系统的真实数据，包括主机名、
+                    IP 地址、存储池名称、数据集名称、挂载路径和系统配置细节。
+                    <strong>公开分享之前，请务必检查 zip 文件的内容。</strong>
+                    如某些类别包含你不想披露的信息，请在下方取消勾选。
                 </p>
             </div>
         </div>
@@ -75,7 +74,7 @@
                     <button type="button"
                             class="text-xs text-primary-400 hover:text-primary-300 transition-colors"
                             onclick="toggleCategory(this, '{{ category_name | replace(' ', '_') | replace('/', '_') }}')">
-                        Select All
+                        全选
                     </button>
                 </div>
                 <div class="space-y-3">
@@ -107,19 +106,19 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
-                Generate Support Bundle
+                生成支持信息包
             </button>
 
             <div class="flex gap-2">
                 <button type="button"
                         class="btn-secondary px-4 py-2 text-sm"
                         onclick="selectAll(true)">
-                    Select All
+                    全选
                 </button>
                 <button type="button"
                         class="btn-secondary px-4 py-2 text-sm"
                         onclick="selectAll(false)">
-                    Deselect All
+                    取消全选
                 </button>
             </div>
         </div>
@@ -146,18 +145,18 @@
         checkboxes.forEach(function(cb) {
             cb.checked = newState;
         });
-        button.textContent = newState ? 'Deselect All' : 'Select All';
+        button.textContent = newState ? '取消全选' : '全选';
     }
 
     // Show a generating indicator when the form is submitted
     document.getElementById('bundle-form').addEventListener('submit', function() {
         var btn = document.getElementById('generate-btn');
         btn.disabled = true;
-        btn.innerHTML = '<svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Generating...';
+        btn.innerHTML = '<svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> 正在生成...';
         // Re-enable after a timeout so the user can retry if the download fails
         setTimeout(function() {
             btn.disabled = false;
-            btn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg> Generate Support Bundle';
+            btn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg> 生成支持信息包';
         }, 15000);
     });
 </script>

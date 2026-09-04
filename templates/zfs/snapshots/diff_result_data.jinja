@@ -6,19 +6,19 @@
     <div class="text-xs flex flex-wrap gap-4">
         <div class="flex items-center gap-1.5">
             <code class="px-2 py-0.5 bg-success-900/50 text-success-400 rounded font-mono">+</code>
-            <span class="text-text-secondary">Added</span>
+            <span class="text-text-secondary">已添加</span>
         </div>
         <div class="flex items-center gap-1.5">
             <code class="px-2 py-0.5 bg-warning-900/50 text-warning-400 rounded font-mono">M</code>
-            <span class="text-text-secondary">Modified</span>
+            <span class="text-text-secondary">已修改</span>
         </div>
         <div class="flex items-center gap-1.5">
             <code class="px-2 py-0.5 bg-danger-900/50 text-danger-400 rounded font-mono">-</code>
-            <span class="text-text-secondary">Removed</span>
+            <span class="text-text-secondary">已移除</span>
         </div>
         <div class="flex items-center gap-1.5">
             <code class="px-2 py-0.5 bg-info-900/50 text-info-400 rounded font-mono">R</code>
-            <span class="text-text-secondary">Renamed</span>
+            <span class="text-text-secondary">已重命名</span>
         </div>
     </div>
 </div>
@@ -38,7 +38,7 @@
             </svg>
             <div>
                 <div class="text-success-400 text-2xl font-bold">{{ additions }}</div>
-                <div class="text-text-secondary text-xs">Added</div>
+                <div class="text-text-secondary text-xs">已添加</div>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
             </svg>
             <div>
                 <div class="text-warning-400 text-2xl font-bold">{{ modifications }}</div>
-                <div class="text-text-secondary text-xs">Modified</div>
+                <div class="text-text-secondary text-xs">已修改</div>
             </div>
         </div>
     </div>
@@ -60,7 +60,7 @@
             </svg>
             <div>
                 <div class="text-danger-400 text-2xl font-bold">{{ deletions }}</div>
-                <div class="text-text-secondary text-xs">Removed</div>
+                <div class="text-text-secondary text-xs">已移除</div>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@
             </svg>
             <div>
                 <div class="text-info-400 text-2xl font-bold">{{ renames }}</div>
-                <div class="text-text-secondary text-xs">Renamed</div>
+                <div class="text-text-secondary text-xs">已重命名</div>
             </div>
         </div>
     </div>
@@ -83,7 +83,7 @@
     <svg class="w-16 h-16 text-success-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
     </svg>
-    <div class="text-text-primary text-lg font-semibold mb-2">No differences found</div>
-    <p class="text-text-secondary text-sm">The snapshots are identical.</p>
+    <div class="text-text-primary text-lg font-semibold mb-2">未发现差异</div>
+    <p class="text-text-secondary text-sm">两个快照完全相同。</p>
 </div>
 {% endif %}

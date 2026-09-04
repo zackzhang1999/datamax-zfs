@@ -64,8 +64,8 @@ def _collect_tasks() -> List[Dict[str, Any]]:
             tasks.append({
                 "task_type": "scrub",
                 "task_id": record["id"],
-                "title": f"Scrub {record.get('pool', 'unknown')}",
-                "detail": f"Pool {record.get('pool', 'unknown')}",
+                "title": f"数据清洗 {record.get('pool', 'unknown')}",
+                "detail": f"存储池 {record.get('pool', 'unknown')}",
                 "schedule": record.get("schedule", ""),
                 "enabled": record.get("enabled", True),
                 "last_run": record.get("last_run"),
@@ -82,13 +82,13 @@ def _collect_tasks() -> List[Dict[str, Any]]:
             disk = record.get("disk", "unknown")
             if disk == ALL_DISKS:
                 # One row for the whole fleet rather than one row per disk.
-                detail = "All disks present at run time"
+                detail = "运行时存在的所有磁盘"
             else:
-                detail = f"Disk {disk}"
+                detail = f"磁盘 {disk}"
             tasks.append({
                 "task_type": "smart",
                 "task_id": record["id"],
-                "title": f"SMART {test_type} test",
+                "title": f"SMART {test_type} 测试",
                 "detail": detail,
                 "schedule": record.get("schedule", ""),
                 "enabled": record.get("enabled", True),
@@ -105,8 +105,8 @@ def _collect_tasks() -> List[Dict[str, Any]]:
             tasks.append({
                 "task_type": "health",
                 "task_id": record["id"],
-                "title": record.get("name") or f"Health check {record['id']}",
-                "detail": "Full health analysis report",
+                "title": record.get("name") or f"健康检查 {record['id']}",
+                "detail": "完整健康状况分析报告",
                 "schedule": record.get("schedule", ""),
                 "enabled": record.get("enabled", True),
                 "last_run": record.get("last_run"),
@@ -122,9 +122,9 @@ def _collect_tasks() -> List[Dict[str, Any]]:
             tasks.append({
                 "task_type": "syncoid",
                 "task_id": record["id"],
-                "title": record.get("name") or f"Syncoid job {record['id']}",
+                "title": record.get("name") or f"Syncoid 任务 {record['id']}",
                 "detail": (
-                    f"{record.get('source_dataset', '?')} to "
+                    f"{record.get('source_dataset', '?')} 至 "
                     f"{record.get('target_dataset', '?')}"
                 ),
                 "schedule": record.get("schedule", ""),
@@ -150,7 +150,7 @@ async def scheduling_index(request: Request):
     return templates.TemplateResponse(
         request,
         name="utils/scheduling/index.jinja",
-        context={"page_title": "Scheduling"},
+        context={"page_title": "计划任务"},
     )
 
 
@@ -223,7 +223,7 @@ async def scrub_new_form(request: Request):
         request,
         name="utils/scheduling/scrub_form.jinja",
         context={
-            "page_title": "New Scrub Schedule",
+            "page_title": "新建数据清洗计划",
             "task": None,
             "pools": _pool_names(),
             "schedule_presets": get_schedule_presets(),
@@ -243,7 +243,7 @@ async def smart_new_form(request: Request):
         request,
         name="utils/scheduling/smart_form.jinja",
         context={
-            "page_title": "New SMART Test Schedule",
+            "page_title": "新建 SMART 测试计划",
             "task": None,
             "all_disks_value": ALL_DISKS,
             "schedule_presets": get_schedule_presets(),
@@ -276,7 +276,7 @@ async def health_new_form(request: Request):
         request,
         name="utils/scheduling/health_form.jinja",
         context={
-            "page_title": "New Health Check Schedule",
+            "page_title": "新建健康检查计划",
             "task": None,
             "schedule_presets": get_schedule_presets(),
         },
@@ -289,14 +289,14 @@ async def scheduling_edit_form(request: Request, task_type: str, task_id: str):
     template_name = FORM_TEMPLATES.get(task_type)
     if template_name is None:
         return RedirectResponse(
-            url=f"/utils/scheduling?error=Unsupported task type '{task_type}'",
+            url=f"/utils/scheduling?error=不支持的任务类型 '{task_type}'",
             status_code=303,
         )
 
     task = _load_task_record(task_type, task_id)
     if task is None:
         return RedirectResponse(
-            url="/utils/scheduling?error=Scheduled task not found",
+            url="/utils/scheduling?error=未找到计划任务",
             status_code=303,
         )
 
@@ -307,7 +307,7 @@ async def scheduling_edit_form(request: Request, task_type: str, task_id: str):
         request,
         name=template_name,
         context={
-            "page_title": "Edit Scheduled Task",
+            "page_title": "编辑计划任务",
             "task": task,
             "pools": _pool_names() if task_type == "scrub" else [],
             "all_disks_value": ALL_DISKS,
@@ -356,14 +356,14 @@ async def scheduling_save(
     is_valid, schedule_error = validate_cron_expression(schedule)
     if not is_valid:
         return RedirectResponse(
-            url=f"/utils/scheduling?error=Invalid schedule: {schedule_error}",
+            url=f"/utils/scheduling?error=无效的计划表达式：{schedule_error}",
             status_code=303,
         )
 
     try:
         if task_type == "scrub":
             if not pool:
-                raise ValueError("A pool must be selected for a scrub schedule")
+                raise ValueError("必须为数据清洗计划选择一个存储池")
             if task_id:
                 storage_service.update_scrub_schedule(
                     int(task_id), pool=pool, schedule=schedule, enabled=is_enabled
@@ -373,13 +373,13 @@ async def scheduling_save(
                 saved_id = storage_service.create_scrub_schedule(
                     pool=pool, schedule=schedule, enabled=is_enabled
                 )
-            description = f"pool {pool}"
+            description = f"存储池 {pool}"
 
         elif task_type == "smart":
             if not disk:
-                raise ValueError("A disk must be selected for a SMART test schedule")
+                raise ValueError("必须为 SMART 测试计划选择一块磁盘")
             selected_test = test_type or "short"
-            disk_text = "all disks" if disk == ALL_DISKS else disk
+            disk_text = "所有磁盘" if disk == ALL_DISKS else disk
             if task_id:
                 smart_service.update_scheduled_test(
                     task_id,
@@ -396,10 +396,10 @@ async def scheduling_save(
                     schedule=schedule,
                     enabled=is_enabled,
                 )
-            description = f"{selected_test} test on {disk_text}"
+            description = f"{disk_text} 的 {selected_test} 测试"
 
         elif task_type == "health":
-            schedule_name = name or "Scheduled health check"
+            schedule_name = name or "计划健康检查"
             if task_id:
                 storage_service.update_health_schedule(
                     int(task_id),
@@ -425,7 +425,7 @@ async def scheduling_save(
             description = schedule_name
 
         else:
-            raise ValueError(f"Unsupported task type '{task_type}'")
+            raise ValueError(f"不支持的任务类型 '{task_type}'")
 
         task_scheduler.register_task(
             task_type=task_type,
@@ -436,7 +436,7 @@ async def scheduling_save(
         )
 
         return RedirectResponse(
-            url="/utils/scheduling?message=Scheduled task saved",
+            url="/utils/scheduling?message=计划任务已保存",
             status_code=303,
         )
     except Exception as save_error:
@@ -452,7 +452,7 @@ async def scheduling_toggle(request: Request, task_type: str, task_id: str):
     record = _load_task_record(task_type, task_id)
     if record is None:
         return RedirectResponse(
-            url="/utils/scheduling?error=Scheduled task not found",
+            url="/utils/scheduling?error=未找到计划任务",
             status_code=303,
         )
 
@@ -461,20 +461,20 @@ async def scheduling_toggle(request: Request, task_type: str, task_id: str):
     try:
         if task_type == "scrub":
             storage_service.update_scrub_schedule(int(task_id), enabled=new_state)
-            description = f"pool {record.get('pool', 'unknown')}"
+            description = f"存储池 {record.get('pool', 'unknown')}"
         elif task_type == "health":
             storage_service.update_health_schedule(int(task_id), enabled=new_state)
-            description = record.get("name") or f"health check {task_id}"
+            description = record.get("name") or f"健康检查 {task_id}"
         elif task_type == "smart":
             smart_service.update_scheduled_test(task_id, enabled=new_state)
             toggled_disk = record.get("disk", "unknown")
             if toggled_disk == ALL_DISKS:
-                toggled_disk = "all disks"
+                toggled_disk = "所有磁盘"
             description = (
-                f"{record.get('test_type', 'short')} test on {toggled_disk}"
+                f"{toggled_disk} 的 {record.get('test_type', 'short')} 测试"
             )
         else:
-            raise ValueError(f"Unsupported task type '{task_type}'")
+            raise ValueError(f"不支持的任务类型 '{task_type}'")
 
         task_scheduler.register_task(
             task_type=task_type,
@@ -484,9 +484,9 @@ async def scheduling_toggle(request: Request, task_type: str, task_id: str):
             enabled=new_state,
         )
 
-        state_text = "enabled" if new_state else "disabled"
+        state_text = "已启用" if new_state else "已禁用"
         return RedirectResponse(
-            url=f"/utils/scheduling?message=Scheduled task {state_text}",
+            url=f"/utils/scheduling?message=计划任务{state_text}",
             status_code=303,
         )
     except Exception as toggle_error:
@@ -509,10 +509,10 @@ async def scheduling_delete(request: Request, task_type: str, task_id: str):
         elif task_type == "smart":
             smart_service.delete_scheduled_test(task_id)
         else:
-            raise ValueError(f"Unsupported task type '{task_type}'")
+            raise ValueError(f"不支持的任务类型 '{task_type}'")
 
         return RedirectResponse(
-            url="/utils/scheduling?message=Scheduled task deleted",
+            url="/utils/scheduling?message=计划任务已删除",
             status_code=303,
         )
     except Exception as delete_error:
@@ -534,7 +534,7 @@ async def scheduling_run_now(request: Request, task_type: str, task_id: str):
     handler = TASK_HANDLERS.get(task_type)
     if handler is None:
         return RedirectResponse(
-            url=f"/utils/scheduling?error=Unsupported task type '{task_type}'",
+            url=f"/utils/scheduling?error=不支持的任务类型 '{task_type}'",
             status_code=303,
         )
 
@@ -546,7 +546,7 @@ async def scheduling_run_now(request: Request, task_type: str, task_id: str):
     worker.start()
 
     return RedirectResponse(
-        url="/utils/scheduling?message=Task started; results appear once it finishes",
+        url="/utils/scheduling?message=任务已启动，完成后将显示结果",
         status_code=303,
     )
 
@@ -557,7 +557,7 @@ async def scheduling_sync(request: Request):
     try:
         task_scheduler.sync_all()
         return RedirectResponse(
-            url="/utils/scheduling?message=OS scheduler synchronized",
+            url="/utils/scheduling?message=操作系统调度器已同步",
             status_code=303,
         )
     except Exception as sync_error:

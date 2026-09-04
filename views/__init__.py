@@ -20,7 +20,6 @@ import views.utils_settings
 import views.utils_health
 import views.utils_scheduling
 import views.utils_support_bundle
-import views.fleet
 
 
 router = APIRouter()
@@ -32,9 +31,6 @@ router.include_router(views.zfs_snapshots.router)
 router.include_router(views.zfs_replication.router)
 router.include_router(views.zfs_observability.router)
 router.include_router(views.zfs_performance.router)
-
-# Fleet Monitoring Routes
-router.include_router(views.fleet.router)
 
 # Utilities Routes (organized under /utils)
 router.include_router(views.utils_scrub.router, prefix="/utils")

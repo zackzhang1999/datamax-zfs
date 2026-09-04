@@ -10,48 +10,48 @@
     <nav class="text-sm mb-4">
         <ol class="list-none p-0 inline-flex">
             <li class="flex items-center">
-                <a href="/" class="text-primary-400 hover:text-primary-300">Home</a>
+                <a href="/" class="text-primary-400 hover:text-primary-300">首页</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li class="flex items-center">
-                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300">Observability</a>
+                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300">运行观测</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li>
-                <span class="text-text-secondary">Per-Dataset I/O Statistics</span>
+                <span class="text-text-secondary">逐数据集 I/O 统计</span>
             </li>
         </ol>
     </nav>
 
-    <h1 class="text-3xl font-bold mb-6">Per-Dataset I/O Statistics</h1>
+    <h1 class="text-3xl font-bold mb-6">逐数据集 I/O 统计</h1>
 
     <!-- Mode selector -->
     <div class="bg-bg-elevated rounded-lg shadow mb-6 p-6">
         <div class="flex flex-wrap gap-2 mb-4">
             <a href="/zfs/observability/dataset-stats?mode=default&dataset={{ selected_dataset }}&children={{ 'true' if include_children else 'false' }}"
                class="px-4 py-2 rounded transition-colors {% if mode == 'default' %}btn-primary{% else %}btn-secondary{% endif %}">
-                All Datasets
+                全部数据集
             </a>
             <a href="/zfs/observability/dataset-stats?mode=top&dataset={{ selected_dataset }}&children={{ 'true' if include_children else 'false' }}"
                class="px-4 py-2 rounded transition-colors {% if mode == 'top' %}btn-primary{% else %}btn-secondary{% endif %}">
-                Top by Bandwidth
+                按带宽排序
             </a>
             <a href="/zfs/observability/dataset-stats?mode=files&dataset={{ selected_dataset }}&children={{ 'true' if include_children else 'false' }}"
                class="px-4 py-2 rounded transition-colors {% if mode == 'files' %}btn-primary{% else %}btn-secondary{% endif %}">
-                Open Files
+                打开的文件
             </a>
         </div>
 
         <form method="get" action="/zfs/observability/dataset-stats" class="flex flex-wrap gap-4 items-end">
             <input type="hidden" name="mode" value="{{ mode }}">
             <div class="flex-1 min-w-[240px]">
-                <label for="dataset" class="block text-sm font-medium text-text-secondary mb-1">Filter by Dataset</label>
+                <label for="dataset" class="block text-sm font-medium text-text-secondary mb-1">按数据集筛选</label>
                 <select name="dataset" id="dataset" class="form-input focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">All datasets</option>
+                    <option value="">全部数据集</option>
                     {% for dataset_name in all_datasets %}
                     <option value="{{ dataset_name }}" {% if selected_dataset == dataset_name %}selected{% endif %}>{{ dataset_name }}</option>
                     {% endfor %}
@@ -59,23 +59,23 @@
             </div>
             {% if mode == 'top' %}
             <div class="min-w-[180px]">
-                <label for="sort" class="block text-sm font-medium text-text-secondary mb-1">Sort By</label>
+                <label for="sort" class="block text-sm font-medium text-text-secondary mb-1">排序方式</label>
                 <select name="sort" id="sort" class="form-input focus:ring-blue-500 focus:border-blue-500">
-                    <option value="total" {% if sort == 'total' %}selected{% endif %}>Total Bandwidth</option>
-                    <option value="read" {% if sort == 'read' %}selected{% endif %}>Read Bandwidth</option>
-                    <option value="write" {% if sort == 'write' %}selected{% endif %}>Write Bandwidth</option>
-                    <option value="rops" {% if sort == 'rops' %}selected{% endif %}>Read Ops</option>
-                    <option value="wops" {% if sort == 'wops' %}selected{% endif %}>Write Ops</option>
+                    <option value="total" {% if sort == 'total' %}selected{% endif %}>总带宽</option>
+                    <option value="read" {% if sort == 'read' %}selected{% endif %}>读带宽</option>
+                    <option value="write" {% if sort == 'write' %}selected{% endif %}>写带宽</option>
+                    <option value="rops" {% if sort == 'rops' %}selected{% endif %}>读操作数</option>
+                    <option value="wops" {% if sort == 'wops' %}selected{% endif %}>写操作数</option>
                 </select>
             </div>
             {% endif %}
             <div class="flex items-center gap-2 pb-2">
                 <input type="checkbox" name="children" id="children" value="true"
                        class="form-checkbox" {% if include_children %}checked{% endif %}>
-                <label for="children" class="text-sm text-text-secondary">Include children</label>
+                <label for="children" class="text-sm text-text-secondary">包含子数据集</label>
             </div>
             <button type="submit" class="px-6 py-2 btn-primary transition-colors">
-                Apply
+                应用
             </button>
         </form>
     </div>
@@ -85,12 +85,12 @@
         <div class="px-6 py-4 border-b border-border-subtle">
             <div class="flex justify-between items-center">
                 <h2 class="text-xl font-semibold">
-                    {% if mode == 'files' %}Open Files by Dataset
-                    {% elif mode == 'top' %}Busiest Datasets
-                    {% else %}Dataset I/O Rates{% endif %}
+                    {% if mode == 'files' %}按数据集查看打开的文件
+                    {% elif mode == 'top' %}最繁忙的数据集
+                    {% else %}数据集 I/O 速率{% endif %}
                 </h2>
                 <div class="flex items-center gap-4">
-                    <span class="text-sm text-text-secondary" id="last-update">Live Monitoring</span>
+                    <span class="text-sm text-text-secondary" id="last-update">实时监控</span>
                     {% if mode != 'files' %}
                     <button @click="autoRefresh = !autoRefresh; window.autoRefresh = autoRefresh"
                             class="px-4 py-2 transition-colors"
@@ -99,7 +99,7 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                             </svg>
-                            <span x-text="autoRefresh ? 'Auto-refresh: ON' : 'Auto-refresh: OFF'"></span>
+                            <span x-text="autoRefresh ? '自动刷新：开' : '自动刷新：关'"></span>
                         </span>
                     </button>
                     {% else %}
@@ -107,7 +107,7 @@
                             hx-target="#stats-body"
                             hx-swap="innerHTML"
                             class="px-4 py-2 btn-secondary transition-colors">
-                        Refresh
+                        刷新
                     </button>
                     {% endif %}
                 </div>
@@ -127,10 +127,10 @@
 
     <div class="mt-6 p-4 bg-primary-900/20 border border-primary-500/30 rounded-lg">
         <p class="text-sm text-primary-300">
-            <strong>Note:</strong> Read and write rates are computed from ZFS dataset kstats over a one second sample,
-            the same way <code>zpool iostat</code> reports pool activity. The Open Files view lists the processes
-            currently holding files open on each dataset, which is useful when a dataset or pool cannot be unmounted
-            or exported.
+            <strong>注意：</strong>读写速率基于 ZFS 数据集 kstats 在一秒采样间隔内计算得出，
+            与 <code>zpool iostat</code> 报告存储池活动的方式相同。“打开的文件”视图列出
+            当前在各个数据集上持有打开文件的进程，当数据集或存储池无法卸载或导出时，
+            此视图非常有用。
         </p>
     </div>
 </div>
@@ -142,7 +142,7 @@
     const lastUpdate = document.getElementById('last-update');
     function updateLastRefresh() {
         const now = new Date();
-        lastUpdate.textContent = `Last updated: ${now.toLocaleTimeString()}`;
+        lastUpdate.textContent = `最后更新：${now.toLocaleTimeString()}`;
     }
 
     document.body.addEventListener('htmx:afterSwap', updateLastRefresh);

@@ -39,7 +39,7 @@ async def support_bundle_index(request: Request):
         name="utils/support_bundle/index.jinja",
         context={
             "categories": categories,
-            "page_title": "Support Bundle",
+            "page_title": "支持信息包",
         },
     )
 
@@ -66,8 +66,8 @@ async def generate_support_bundle(request: Request):
             name="utils/support_bundle/index.jinja",
             context={
                 "categories": _grouped_items(),
-                "page_title": "Support Bundle",
-                "error": "No items were selected. Please select at least one item.",
+                "page_title": "支持信息包",
+                "error": "未选择任何项目。请至少选择一项。",
             },
         )
 

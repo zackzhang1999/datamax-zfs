@@ -62,7 +62,7 @@ def read_log_file(log_path: Path, lines: int = 500, search: Optional[str] = None
         entries.append({
             'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             'level': 'ERROR',
-            'message': f'Error reading log file: {str(e)}',
+            'message': f'读取日志文件时出错：{str(e)}',
             'raw': str(e)
         })
     
@@ -201,7 +201,7 @@ async def logs_index(
             context={
                 "logs_info": logs_info,
                 "log_dir": str(audit_logger.log_dir),
-                "page_title": "Audit Logs"
+                "page_title": "审计日志"
             }
         )
     except Exception as e:
@@ -212,7 +212,7 @@ async def logs_index(
                 "logs_info": {},
                 "log_dir": "",
                 "error": str(e),
-                "page_title": "Audit Logs"
+                "page_title": "审计日志"
             }
         )
 
@@ -234,7 +234,7 @@ async def view_log(
                 request,
                 name="partials/error.jinja",
                 context={
-                    "error": f"Invalid log category: {category}. Valid categories: {', '.join(valid_categories)}",
+                    "error": f"无效的日志类别：{category}。有效类别：{', '.join(valid_categories)}",
                     "back_url": "/utils/logs"
                 }
             )
@@ -245,9 +245,9 @@ async def view_log(
         
         # Category display names
         category_names = {
-            'auth': 'Authentication',
-            'zfs_operations': 'ZFS Operations',
-            'file_access': 'File Access'
+            'auth': '身份认证',
+            'zfs_operations': 'ZFS 操作',
+            'file_access': '文件访问'
         }
         
         return templates.TemplateResponse(
@@ -260,7 +260,7 @@ async def view_log(
                 "file_info": file_info,
                 "lines": lines,
                 "search": search or "",
-                "page_title": f"Log Viewer: {category_names.get(category, category)}"
+                "page_title": f"日志查看器：{category_names.get(category, category)}"
             }
         )
     except Exception as e:
@@ -275,7 +275,7 @@ async def view_log(
                 "lines": lines,
                 "search": search or "",
                 "error": str(e),
-                "page_title": f"Log Viewer: {category}"
+                "page_title": f"日志查看器：{category}"
             }
         )
 
@@ -291,7 +291,7 @@ async def download_log(
         valid_categories = [c.value for c in LogCategory]
         if category not in valid_categories:
             return PlainTextResponse(
-                content=f"Invalid log category: {category}",
+                content=f"无效的日志类别：{category}",
                 status_code=400
             )
         
@@ -299,7 +299,7 @@ async def download_log(
         
         if not log_path.exists():
             return PlainTextResponse(
-                content=f"Log file not found: {category}.log",
+                content=f"未找到日志文件：{category}.log",
                 status_code=404
             )
         
@@ -318,7 +318,7 @@ async def download_log(
         
     except Exception as e:
         return PlainTextResponse(
-            content=f"Error downloading log: {str(e)}",
+            content=f"下载日志时出错：{str(e)}",
             status_code=500
         )
 
@@ -337,7 +337,7 @@ async def get_log_entries_partial(
         valid_categories = [c.value for c in LogCategory]
         if category not in valid_categories:
             return HTMLResponse(
-                content=f'<div class="text-danger-400">Invalid log category: {category}</div>',
+                content=f'<div class="text-danger-400">无效的日志类别：{category}</div>',
                 status_code=400
             )
         
@@ -356,6 +356,6 @@ async def get_log_entries_partial(
         
     except Exception as e:
         return HTMLResponse(
-            content=f'<div class="text-danger-400">Error loading entries: {str(e)}</div>',
+            content=f'<div class="text-danger-400">加载日志条目时出错：{str(e)}</div>',
             status_code=500
         )

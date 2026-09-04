@@ -49,11 +49,11 @@ def run_syncoid_job(job_id: int, trigger: str = "scheduled") -> Dict[str, Any]:
 
     job = storage.get_syncoid_job(job_id)
     if not job:
-        return {"success": False, "status": "error", "error": f"Syncoid job #{job_id} not found"}
+        return {"success": False, "status": "error", "error": f"未找到 Syncoid 任务 #{job_id}"}
 
     if trigger == "scheduled" and not job.get("enabled", True):
         # Guard against a stale timer/cron entry firing for a disabled job.
-        return {"success": False, "status": "skipped", "error": "Job is disabled"}
+        return {"success": False, "status": "skipped", "error": "任务已禁用"}
 
     # Per-job overlap lock. If a previous run is still active, skip
     # this occurrence and record the skip so it is visible in the UI.
@@ -72,7 +72,7 @@ def run_syncoid_job(job_id: int, trigger: str = "scheduled") -> Dict[str, Any]:
             return {
                 "success": False,
                 "status": "skipped",
-                "error": "Previous run of this job is still active; skipped.",
+                "error": "此任务的上一次运行仍在进行中，已跳过。",
             }
 
         return _execute_locked_job(job, trigger, storage)
@@ -110,14 +110,14 @@ def _execute_locked_job(
             ssh_service.mark_connection_used(connection_id, "replication")
         except Exception as resolve_error:
             connection_error = (
-                f"SSH connection could not be resolved: {resolve_error}"
+                f"无法解析 SSH 连接：{resolve_error}"
             )
 
     replication_type = job.get("replication_type", "local")
 
     execution_id = storage.create_execution_record(
         job_id=f"syncoid-{job_id}",
-        job_name=f"{job.get('name', 'Syncoid job')} ({trigger})",
+        job_name=f"{job.get('name', 'Syncoid 任务')} ({trigger})",
         source_dataset=job.get("source_dataset", ""),
         target_dataset=job.get("target_dataset", ""),
         replication_type=replication_type,
@@ -183,7 +183,7 @@ def _execute_locked_job(
                 percentage_complete=progress.get("percentage", 0.0),
                 transfer_rate=progress.get("transfer_rate", "N/A"),
                 estimated_time_remaining=progress.get("eta"),
-                status_message="Syncoid transfer in progress",
+                status_message="Syncoid 传输进行中",
             )
         except Exception:
             # Progress recording must never break the replication.
@@ -234,7 +234,7 @@ def _execute_locked_job(
         )
         return {"success": True, "status": "success", "execution_id": execution_id}
 
-    error_message = result.get("error") or result.get("stderr") or "Syncoid failed"
+    error_message = result.get("error") or result.get("stderr") or "Syncoid 执行失败"
     finish(
         "failure",
         error_message=error_message,
@@ -260,18 +260,17 @@ def _validate_job_datasets(job: Dict[str, Any]) -> Optional[str]:
     from services.zfs_dataset import ZFSDatasetService
 
     checks = [
-        ("Source dataset", (job.get("source_dataset") or "").strip()),
-        ("Target dataset", (job.get("target_dataset") or "").strip()),
+        ("源数据集", (job.get("source_dataset") or "").strip()),
+        ("目标数据集", (job.get("target_dataset") or "").strip()),
     ]
     for field_label, dataset_name in checks:
         if not dataset_name:
-            return f"{field_label} is empty. Edit the job and set a ZFS dataset name."
+            return f"{field_label}为空。请编辑任务并设置 ZFS 数据集名称。"
         if dataset_name.startswith("/"):
             return (
-                f"{field_label} '{dataset_name}' is a mountpoint path, not a "
-                "ZFS dataset name. Edit the job and use the dataset name "
-                "without a leading slash (for example 'zdata' or "
-                "'zdata/backups')."
+                f"{field_label} '{dataset_name}' 是挂载点路径，而不是 "
+                "ZFS 数据集名称。请编辑任务，使用不带前导斜杠的数据集名称"
+                "（例如 'zdata' 或 'zdata/backups'）。"
             )
         try:
             ZFSDatasetService.validate_dataset_name(dataset_name)
@@ -288,7 +287,7 @@ def _combine_output(result: Dict[str, Any], max_chars: int = 100000) -> str:
     if stderr:
         combined = f"{combined}\n--- stderr ---\n{stderr}" if combined else stderr
     if len(combined) > max_chars:
-        combined = combined[:max_chars] + "\n... output truncated ..."
+        combined = combined[:max_chars] + "\n... 输出已截断 ..."
     return combined
 
 

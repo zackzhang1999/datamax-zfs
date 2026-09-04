@@ -4,18 +4,18 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils/smart" class="hover:text-blue-400">SMART Monitoring</a> 
+        <a href="/utils/smart" class="hover:text-blue-400">SMART 监控</a> 
         <span class="mx-2">/</span> 
         <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}" class="hover:text-blue-400">{{ disk_path }}</a>
         <span class="mx-2">/</span> 
-        <span class="text-text-primary">Temperature</span>
+        <span class="text-text-primary">温度</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">Disk Temperature: {{ disk_path }}</h1>
+        <h1 class="text-3xl font-bold text-text-primary">磁盘温度：{{ disk_path }}</h1>
         <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}" class="btn-secondary hover:bg-bg-elevated-2 text-text-primary px-4 py-2 rounded inline-block">
-            ← Back to Disk
+            ← 返回磁盘
         </a>
     </div>
 
@@ -32,11 +32,11 @@
             <div class="text-6xl font-bold mb-2 {% if temperature.temperature|int >= 60 %}text-red-400{% elif temperature.temperature|int >= 50 %}text-yellow-400{% else %}text-green-400{% endif %}">
                 {{ temperature.temperature }}°{{ temperature.unit }}
             </div>
-            <div class="text-text-tertiary">Current Disk Temperature</div>
+            <div class="text-text-tertiary">当前磁盘温度</div>
         </div>
 
         <div class="text-text-tertiary text-sm">
-            Last checked: {{ temperature.timestamp }}
+            上次检查：{{ temperature.timestamp }}
         </div>
 
         <!-- Temperature Status -->
@@ -44,56 +44,56 @@
             {% set temp_val = temperature.temperature|int %}
             {% if temp_val < 40 %}
             <div class="bg-info-900/30 border-2 border-info-500/50 text-info-400 px-4 py-3 rounded inline-block">
-                <strong>❄️ Cool:</strong> Disk temperature is within optimal range.
+                <strong>❄️ 偏凉：</strong>磁盘温度处于最佳范围。
             </div>
             {% elif temp_val < 50 %}
             <div class="bg-success-900/30 border-2 border-success-500/50 text-success-400 px-4 py-3 rounded inline-block">
                 <strong><svg class="w-5 h-5 inline text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    </svg> Normal:</strong> Disk temperature is within acceptable range.
+                    </svg> 正常：</strong>磁盘温度处于可接受范围。
             </div>
             {% elif temp_val < 60 %}
             <div class="bg-yellow-900 border border-yellow-700 text-yellow-200 px-4 py-3 rounded inline-block">
                 <strong><svg class="w-5 h-5 inline text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                    </svg> Warm:</strong> Disk temperature is elevated. Check cooling.
+                    </svg> 偏热：</strong>磁盘温度偏高，请检查散热。
             </div>
             {% else %}
             <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded inline-block">
-                <strong>🔥 Hot:</strong> Disk temperature is high! Improve cooling immediately.
+                <strong>🔥 过热：</strong>磁盘温度过高！请立即改善散热。
             </div>
             {% endif %}
         </div>
         {% else %}
         <div class="text-text-tertiary mb-4">
-            <div class="text-2xl">Temperature data not available</div>
+            <div class="text-2xl">温度数据不可用</div>
         </div>
         {% endif %}
     </div>
 
     <!-- Temperature Ranges -->
     <div class="mt-6 bg-bg-elevated rounded-lg p-6">
-        <h2 class="text-xl font-bold text-text-primary mb-4">Temperature Guidelines</h2>
+        <h2 class="text-xl font-bold text-text-primary mb-4">温度参考范围</h2>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
             <div class="bg-blue-900 border border-blue-700 p-4 rounded">
-                <div class="text-blue-300 font-semibold mb-2">❄️ Cool (< 40°C)</div>
-                <div class="text-blue-200">Optimal operating temperature</div>
+                <div class="text-blue-300 font-semibold mb-2">❄️ 偏凉（< 40°C）</div>
+                <div class="text-blue-200">最佳工作温度</div>
             </div>
             <div class="bg-green-900 border border-green-700 p-4 rounded">
                 <div class="text-green-300 font-semibold mb-2"><svg class="w-5 h-5 inline text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    </svg> Normal (40-50°C)</div>
-                <div class="text-green-200">Acceptable range for most drives</div>
+                    </svg> 正常（40-50°C）</div>
+                <div class="text-green-200">大多数硬盘的可接受范围</div>
             </div>
             <div class="bg-yellow-900 border border-yellow-700 p-4 rounded">
                 <div class="text-yellow-300 font-semibold mb-2"><svg class="w-5 h-5 inline text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                    </svg> Warm (50-60°C)</div>
-                <div class="text-yellow-200">Consider improving cooling</div>
+                    </svg> 偏热（50-60°C）</div>
+                <div class="text-yellow-200">建议改善散热</div>
             </div>
             <div class="bg-red-900 border border-red-700 p-4 rounded">
-                <div class="text-red-300 font-semibold mb-2">🔥 Hot (> 60°C)</div>
-                <div class="text-red-200">Critical - improve cooling</div>
+                <div class="text-red-300 font-semibold mb-2">🔥 过热（> 60°C）</div>
+                <div class="text-red-200">危险 - 需改善散热</div>
             </div>
         </div>
     </div>
@@ -102,12 +102,11 @@
     <div class="mt-6 bg-info-900/30 border-2 border-info-500/50 text-info-400 px-4 py-3 rounded">
         <strong><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg> About Disk Temperature:</strong>
+                    </svg> 关于磁盘温度：</strong>
         <p class="mt-2 text-sm">
-            Operating temperature significantly affects disk lifespan and reliability. Most hard drives are designed to 
-            operate between 0°C and 60°C, with optimal performance typically between 20°C and 45°C. High temperatures 
-            can accelerate wear and increase the risk of failure. SSDs generally tolerate higher temperatures better 
-            than traditional hard drives.
+            工作温度显著影响磁盘寿命和可靠性。大多数硬盘的设计工作温度为
+            0°C 到 60°C，最佳性能区间通常为 20°C 到 45°C。高温会加速磨损，
+            并增加故障风险。相比传统机械硬盘，固态硬盘通常能承受更高的温度。
         </p>
     </div>
 </div>

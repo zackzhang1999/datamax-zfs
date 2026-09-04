@@ -4,17 +4,17 @@
 <div class="space-y-8">
     <!-- Breadcrumb -->
     <nav class="flex items-center text-sm text-text-secondary mb-8">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
-        <span class="text-text-primary font-medium">Create Pool</span>
+        <span class="text-text-primary font-medium">创建存储池</span>
     </nav>
 
     <!-- Page Header -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-text-primary mb-2">Create New ZFS Pool</h1>
-        <p class="text-text-secondary text-sm">Drag disks to configure your pool topology</p>
+        <h1 class="text-3xl font-bold text-text-primary mb-2">创建新的 ZFS 存储池</h1>
+        <p class="text-text-secondary text-sm">拖拽磁盘以配置您的存储池拓扑</p>
     </div>
 
     <!-- Error Message -->
@@ -40,12 +40,12 @@
                 <div class="card-body p-4">
                     <div class="flex items-center justify-between">
                         <div>
-                            <h2 class="text-lg font-semibold text-text-primary mb-1">Pool Configuration</h2>
-                            <p class="text-xs text-text-tertiary">Set the name for your new ZFS pool</p>
+                            <h2 class="text-lg font-semibold text-text-primary mb-1">存储池配置</h2>
+                            <p class="text-xs text-text-tertiary">为新的 ZFS 存储池设置名称</p>
                         </div>
                     </div>
                     <div class="mt-4">
-                        <label for="pool_name_header" class="form-label">Pool Name</label>
+                        <label for="pool_name_header" class="form-label">存储池名称</label>
                         <input 
                             type="text" 
                             id="pool_name_header" 
@@ -53,7 +53,7 @@
                             pattern="[a-zA-Z0-9_\-]+"
                             class="form-input"
                             value="{{ pool_name if pool_name else '' }}">
-                        <p class="mt-1.5 text-xs text-text-tertiary">Use alphanumeric characters, dashes, and underscores only</p>
+                        <p class="mt-1.5 text-xs text-text-tertiary">仅可使用字母、数字、短横线和下划线</p>
                     </div>
                 </div>
             </div>
@@ -62,8 +62,8 @@
             <div class="card">
                 <div class="card-body p-4 space-y-6">
                     <div class="flex items-center justify-between">
-                        <h2 class="text-xl font-semibold text-text-primary">Pool Topology</h2>
-                        <span class="text-xs text-text-tertiary bg-bg-elevated px-3 py-1.5 rounded">Total: <span id="total-capacity">0 TB</span></span>
+                        <h2 class="text-xl font-semibold text-text-primary">存储池拓扑</h2>
+                        <span class="text-xs text-text-tertiary bg-bg-elevated px-3 py-1.5 rounded">总计：<span id="total-capacity">0 TB</span></span>
                     </div>
 
                     <!-- Data VDEVs Section -->
@@ -72,13 +72,13 @@
                         <div class="flex items-center justify-between gap-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-1 h-6 bg-primary-400 rounded-full"></div>
-                                <h3 class="text-lg font-semibold text-text-primary">Data VDEVs</h3>
+                                <h3 class="text-lg font-semibold text-text-primary">数据 VDEV</h3>
                                 <span id="data-capacity" class="text-xs text-primary-400 font-mono">0 TB</span>
                             </div>
                             <div class="flex items-center gap-3">
                                 <select id="vdev_type" class="form-select text-sm py-1.5 min-w-[140px]">
-                                    <option value="single">Single Disk</option>
-                                    <option value="mirror" selected>Mirror</option>
+                                    <option value="single">单块磁盘</option>
+                                    <option value="mirror" selected>镜像</option>
                                     <option value="raidz">RAID-Z</option>
                                     <option value="raidz2">RAID-Z2</option>
                                     <option value="raidz3">RAID-Z3</option>
@@ -103,14 +103,14 @@
                             <svg class="w-12 h-12 mb-3 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                             </svg>
-                            <p class="text-sm font-medium mb-2 opacity-60">No VDEVs created yet</p>
-                            <p class="text-xs opacity-60">Click "Add VDEV" to create your first data vdev</p>
+                            <p class="text-sm font-medium mb-2 opacity-60">尚未创建 VDEV</p>
+                            <p class="text-xs opacity-60">点击“添加 VDEV”以创建您的第一个数据 VDEV</p>
                         </div>
 
                         <!-- Optional VDEVs - Add Button Menu -->
                         <div class="pt-6">
                             <div class="flex items-center gap-3 mb-4">
-                                <h3 class="text-lg font-semibold text-text-primary">Optional Special VDEVs</h3>
+                                <h3 class="text-lg font-semibold text-text-primary">可选的特殊 VDEV</h3>
                             </div>
                             <div class="flex flex-wrap gap-2">
                                 <button type="button" onclick="toggleSection('spare')" id="btn-spare" class="btn-secondary text-sm">
@@ -151,8 +151,8 @@
                             <div class="flex items-center justify-between mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-1 h-6 bg-warning-400 rounded-full"></div>
-                                    <h3 class="text-lg font-semibold text-text-primary">Spare</h3>
-                                    <span class="text-xs text-text-tertiary">(Hot spares - not mirrored)</span>
+                                    <h3 class="text-lg font-semibold text-text-primary">热备盘</h3>
+                                    <span class="text-xs text-text-tertiary">（热备盘 - 不镜像）</span>
                                 </div>
                                 <button type="button" onclick="closeSection('spare')" class="text-text-tertiary hover:text-danger-400 transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -169,7 +169,7 @@
                                     <!-- Spare disks will be added here -->
                                 </div>
                                 <div id="spare-empty" class="flex items-center justify-center py-6 text-text-tertiary text-xs">
-                                    Drag disks here for hot spares
+                                    将磁盘拖到这里作为热备盘
                                 </div>
                             </div>
                         </div>
@@ -179,8 +179,8 @@
                             <div class="flex items-center justify-between mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-1 h-6 bg-success-400 rounded-full"></div>
-                                    <h3 class="text-lg font-semibold text-text-primary">Cache (L2ARC)</h3>
-                                    <span class="text-xs text-text-tertiary">(Striped - not mirrored)</span>
+                                    <h3 class="text-lg font-semibold text-text-primary">缓存（L2ARC）</h3>
+                                    <span class="text-xs text-text-tertiary">（条带化 - 不镜像）</span>
                                 </div>
                                 <button type="button" onclick="closeSection('cache')" class="text-text-tertiary hover:text-danger-400 transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -197,7 +197,7 @@
                                     <!-- Cache disks will be added here -->
                                 </div>
                                 <div id="cache-empty" class="flex items-center justify-center py-6 text-text-tertiary text-xs">
-                                    Drag SSDs here for L2ARC cache (will be striped)
+                                    将 SSD 拖到这里用作 L2ARC 缓存（将条带化）
                                 </div>
                             </div>
                         </div>
@@ -207,8 +207,8 @@
                             <div class="flex items-center justify-between mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-1 h-6 bg-info-400 rounded-full"></div>
-                                    <h3 class="text-lg font-semibold text-text-primary">Log (SLOG)</h3>
-                                    <span class="text-xs text-text-tertiary">(Can be mirrored)</span>
+                                    <h3 class="text-lg font-semibold text-text-primary">日志（SLOG）</h3>
+                                    <span class="text-xs text-text-tertiary">（可配置镜像）</span>
                                 </div>
                                 <button type="button" onclick="closeSection('log')" class="text-text-tertiary hover:text-danger-400 transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -225,7 +225,7 @@
                                     <!-- Log disks will be added here -->
                                 </div>
                                 <div id="log-empty" class="flex items-center justify-center py-6 text-text-tertiary text-xs">
-                                    Drag SSDs here for SLOG (can be mirrored for redundancy)
+                                    将 SSD 拖到这里用作 SLOG（可配置镜像以提供冗余）
                                 </div>
                             </div>
                         </div>
@@ -235,8 +235,8 @@
                             <div class="flex items-center justify-between mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-1 h-6 bg-purple-400 rounded-full"></div>
-                                    <h3 class="text-lg font-semibold text-text-primary">Metadata</h3>
-                                    <span class="text-xs text-text-tertiary">(Must be mirrored - depth matches data redundancy)</span>
+                                    <h3 class="text-lg font-semibold text-text-primary">元数据</h3>
+                                    <span class="text-xs text-text-tertiary">（必须镜像 - 深度须与数据冗余级别一致）</span>
                                 </div>
                                 <button type="button" onclick="closeSection('metadata')" class="text-text-tertiary hover:text-danger-400 transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -251,7 +251,7 @@
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                                 </svg>
-                                Add Metadata Mirror
+                                添加元数据镜像
                             </button>
                         </div>
 
@@ -260,8 +260,8 @@
                             <div class="flex items-center justify-between mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-1 h-6 bg-pink-400 rounded-full"></div>
-                                    <h3 class="text-lg font-semibold text-text-primary">Dedup</h3>
-                                    <span class="text-xs text-text-tertiary">(Deduplication table)</span>
+                                    <h3 class="text-lg font-semibold text-text-primary">去重</h3>
+                                    <span class="text-xs text-text-tertiary">（去重表）</span>
                                 </div>
                                 <button type="button" onclick="closeSection('dedup')" class="text-text-tertiary hover:text-danger-400 transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -278,7 +278,7 @@
                                     <!-- Dedup disks will be added here -->
                                 </div>
                                 <div id="dedup-empty" class="flex items-center justify-center py-6 text-text-tertiary text-xs">
-                                    Drag SSDs here for deduplication table
+                                    将 SSD 拖到这里用于去重表
                                 </div>
                             </div>
                         </div>
@@ -297,14 +297,14 @@
                                 </svg>
                             </div>
                             <div>
-                                <h2 class="text-lg font-semibold text-text-primary">Command Preview</h2>
-                                <p class="text-xs text-text-tertiary">The zpool command that will be executed</p>
+                                <h2 class="text-lg font-semibold text-text-primary">命令预览</h2>
+                                <p class="text-xs text-text-tertiary">将要执行的 zpool 命令</p>
                             </div>
                         </div>
                         <button type="button" 
                                 onclick="copyCommandToClipboard()"
                                 class="btn-secondary text-sm py-1.5 px-3 inline-flex items-center gap-2"
-                                title="Copy to clipboard">
+                                title="复制到剪贴板">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                             </svg>
@@ -314,7 +314,7 @@
                     
                     <div class="bg-bg-base border border-border-subtle rounded-lg p-4 font-mono text-sm">
                         <div id="command-preview" class="text-text-primary whitespace-pre-wrap break-all leading-relaxed">
-                            <span class="text-text-tertiary italic">Configure your pool to see the command...</span>
+                            <span class="text-text-tertiary italic">配置您的存储池以查看命令…</span>
                         </div>
                     </div>
                     
@@ -322,7 +322,7 @@
                         <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        <p>This preview shows the exact <code class="bg-bg-base px-1 py-0.5 rounded">zpool create</code> command that will be executed. The command updates in real-time as you modify your pool configuration.</p>
+                        <p>此预览显示将要执行的精确 <code class="bg-bg-base px-1 py-0.5 rounded">zpool create</code> 命令。当您修改存储池配置时，命令会实时更新。</p>
                     </div>
                 </div>
             </div>
@@ -330,25 +330,25 @@
             <!-- Advanced Options Card -->
             <div class="card">
                 <div class="card-body p-4 space-y-4">
-                    <h2 class="text-lg font-semibold text-text-primary">Advanced Options</h2>
+                    <h2 class="text-lg font-semibold text-text-primary">高级选项</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- AShift -->
                         <div>
                             <label for="ashift" class="form-label text-sm">
                                 Sector Size (ashift)
                                 {% if not supports_ashift %}
-                                <span class="text-text-tertiary text-xs ml-2">(Not supported on this platform)</span>
+                                <span class="text-text-tertiary text-xs ml-2">（此平台不支持）</span>
                                 {% endif %}
                             </label>
                             <select id="ashift" name="ashift"
                                 class="form-select {% if not supports_ashift %}opacity-50 cursor-not-allowed{% endif %}"
                                 {% if not supports_ashift %}disabled{% endif %}
                             >
-                                <option value="" {% if not supports_ashift %}selected{% endif %}>Auto (Recommended)</option>
+                                <option value="" {% if not supports_ashift %}selected{% endif %}>自动（推荐）</option>
                                 {% if supports_ashift %}
-                                <option value="9">9 (512-byte sectors)</option>
-                                <option value="12" selected>12 (4K sectors)</option>
-                                <option value="13">13 (8K sectors)</option>
+                                <option value="9">9（512 字节扇区）</option>
+                                <option value="12" selected>12（4K 扇区）</option>
+                                <option value="13">13（8K 扇区）</option>
                                 {% endif %}
                             </select>
                             {% if not supports_ashift %}
@@ -362,7 +362,7 @@
                         <div class="flex items-center gap-3">
                             <input type="checkbox" id="force" name="force" class="form-checkbox">
                             <label for="force" class="text-sm text-text-primary cursor-pointer">
-                                Force creation if devices in use
+                                设备正在使用时强制创建
                             </label>
                         </div>
                     </div>
@@ -399,7 +399,7 @@
             <div class="card sticky top-6">
                 <div class="card-body p-4 space-y-4">
                     <div class="flex items-center justify-between mb-2">
-                        <h2 class="text-xl font-semibold text-text-primary">Available Disks</h2>
+                        <h2 class="text-xl font-semibold text-text-primary">可用磁盘</h2>
                         <div class="flex flex-col items-end gap-1">
                             <button type="button" 
                                     onclick="showConfirm('confirm-check-disks')" 
@@ -409,25 +409,25 @@
                                 </svg>
                                 Detect Disks in Use
                             </button>
-                            <span class="text-xs text-text-tertiary italic">(Linux Only)</span>
+                            <span class="text-xs text-text-tertiary italic">（仅 Linux）</span>
                         </div>
                     </div>
 
                     <!-- Disk Status Legend -->
                     <div class="mb-4 p-3 bg-bg-elevated rounded-lg border border-border-subtle">
-                        <h3 class="text-xs font-semibold text-text-primary mb-2 uppercase tracking-wider">Disk Status</h3>
+                        <h3 class="text-xs font-semibold text-text-primary mb-2 uppercase tracking-wider">磁盘状态</h3>
                         <div class="space-y-2 text-xs">
                             <div class="flex items-center gap-2">
                                 <div class="w-5 h-5 rounded border-2 flex-shrink-0" style="border-color: #dc2626; background-color: rgba(153, 27, 27, 0.5);"></div>
-                                <span class="text-text-secondary"><strong>OS/System Disk</strong> - CANNOT be used (contains OS/swap)</span>
+                                <span class="text-text-secondary"><strong>操作系统/系统磁盘</strong> - 不可使用（包含操作系统/交换空间）</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <div class="w-5 h-5 rounded border-2 flex-shrink-0" style="border-color: #f87171; background-color: rgba(153, 27, 27, 0.3);"></div>
-                                <span class="text-text-secondary">In Active Pool - Cannot be used</span>
+                                <span class="text-text-secondary">正在使用的存储池 - 不可使用</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <div class="w-5 h-5 rounded border-2 flex-shrink-0" style="border-color: #fbbf24; background-color: rgba(120, 53, 15, 0.3);"></div>
-                                <span class="text-text-secondary">Has ZFS Label - Use with caution</span>
+                                <span class="text-text-secondary">带有 ZFS 标签 - 请谨慎使用</span>
                             </div>
                         </div>
                         <div class="mt-3 pt-3 border-t border-border-subtle">
@@ -435,17 +435,17 @@
                                 <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                                 </svg>
-                                <span><strong>CRITICAL:</strong> OS/System disks are automatically blocked to prevent accidental system destruction!</span>
+                                <span><strong>严重警告：</strong>为防止意外破坏系统，操作系统/系统磁盘已被自动阻止使用！</span>
                             </p>
                             <p class="text-xs text-warning-400 flex items-start gap-1">
                                 <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                                 </svg>
-                                <span>To clear ZFS label: <code class="bg-bg-base px-1 py-0.5 rounded text-xs font-mono">sudo zpool labelclear -f /dev/sdX</code></span>
+                                <span>清除 ZFS 标签：<code class="bg-bg-base px-1 py-0.5 rounded text-xs font-mono">sudo zpool labelclear -f /dev/sdX</code></span>
                             </p>
                             <p class="text-xs text-danger-400 mt-2 flex items-start gap-1">
                                 <span class="flex-shrink-0">⚠️</span>
-                                <span>WARNING: Clearing labels may cause data loss if the disk is part of another pool!</span>
+                                <span>警告：如果磁盘属于其他存储池，清除标签可能导致数据丢失！</span>
                             </p>
                         </div>
                     </div>
@@ -461,7 +461,7 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-sm font-semibold text-text-primary">Hard Drives</h3>
+                                    <h3 class="text-sm font-semibold text-text-primary">机械硬盘</h3>
                                     <p class="text-xs text-text-tertiary">{{ hdds|length }} available</p>
                                 </div>
                             </div>
@@ -530,7 +530,7 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-base font-semibold text-text-primary">Solid State Drives</h3>
+                                    <h3 class="text-base font-semibold text-text-primary">固态硬盘</h3>
                                     <p class="text-xs text-text-tertiary">{{ ssds|length }} available</p>
                                 </div>
                             </div>
@@ -594,7 +594,7 @@
                             <svg class="w-12 h-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
                             </svg>
-                            <p class="text-sm">No disks available</p>
+                            <p class="text-sm">没有可用磁盘</p>
                         </div>
                         {% endif %}
                     </div>
@@ -646,13 +646,13 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
               </svg>
             </div>
-            <h3 class="text-xl font-semibold text-text-primary text-center mb-2">Check for In-Use Disks</h3>
+            <h3 class="text-xl font-semibold text-text-primary text-center mb-2">检查磁盘是否正在使用</h3>
             <div class="text-text-secondary text-center mb-6">
-              This will check all disks for active pool usage and ZFS labels. Using disks that are in active pools or have ZFS labels may result in DATA LOSS if not handled carefully.<br><br><strong>Note:</strong> This automated check is not perfect. As an administrator, you should independently verify that disks are not in use before adding them to a pool.
+              此操作将检查所有磁盘是否处于活动存储池中以及是否带有 ZFS 标签。如果处理不当，使用活动存储池中的磁盘或带有 ZFS 标签的磁盘可能导致数据丢失。<br><br><strong>注意：</strong>此自动检查并非完美。作为管理员，在将磁盘添加到存储池之前，您应自行核实磁盘未被使用。
             </div>
             <div class="flex space-x-3">
-              <button type="button" class="btn-secondary flex-1" x-on:click="open = false">Cancel</button>
-              <button type="button" class="btn-warning flex-1" x-on:click="state = 'checking'; runDiskCheck()">Check Disks</button>
+              <button type="button" class="btn-secondary flex-1" x-on:click="open = false">取消</button>
+              <button type="button" class="btn-warning flex-1" x-on:click="state = 'checking'; runDiskCheck()">检查磁盘</button>
             </div>
           </div>
         </template>
@@ -663,9 +663,9 @@
             <div class="flex items-center justify-center w-12 h-12 mx-auto mb-4">
               <div class="loading-spinner loading-spinner-lg"></div>
             </div>
-            <h3 class="text-xl font-semibold text-text-primary text-center mb-2">Checking Disks...</h3>
+            <h3 class="text-xl font-semibold text-text-primary text-center mb-2">正在检查磁盘…</h3>
             <div class="text-text-secondary text-center mb-6 text-sm">
-              Scanning all disks for active pool usage and ZFS labels. This may take a moment on systems with many drives.
+              正在扫描所有磁盘的活动存储池使用情况和 ZFS 标签。在磁盘较多的系统上可能需要一些时间。
             </div>
           </div>
         </template>
@@ -678,11 +678,11 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
             </div>
-            <h3 class="text-xl font-semibold text-text-primary text-center mb-2">Disk Check Complete</h3>
+            <h3 class="text-xl font-semibold text-text-primary text-center mb-2">磁盘检查完成</h3>
             <div class="text-text-secondary text-center mb-6 text-sm">
-              Disk statuses have been updated. Review the disk listings for any changes in status.
+              磁盘状态已更新。请查看磁盘列表以了解状态变化。
             </div>
-            <button type="button" class="btn-success w-full" x-on:click="open = false; state = 'confirm'">Close</button>
+            <button type="button" class="btn-success w-full" x-on:click="open = false; state = 'confirm'">关闭</button>
           </div>
         </template>
 
@@ -694,9 +694,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
             </div>
-            <h3 class="text-xl font-semibold text-text-primary text-center mb-2">Disk Check Failed</h3>
+            <h3 class="text-xl font-semibold text-text-primary text-center mb-2">磁盘检查失败</h3>
             <div class="text-text-secondary text-center mb-6 text-sm" x-text="errorMsg"></div>
-            <button type="button" class="btn-secondary w-full" x-on:click="open = false; state = 'confirm'">Close</button>
+            <button type="button" class="btn-secondary w-full" x-on:click="open = false; state = 'confirm'">关闭</button>
           </div>
         </template>
 
@@ -707,9 +707,9 @@
 
 <!-- Confirmation Modal for Pool Creation -->
 {% set id = 'confirm-create-pool' %}
-{% set title = 'Create ZFS Pool' %}
-{% set message = 'Are you sure you want to create this pool? This will DESTROY ALL DATA on the specified devices! This operation cannot be undone.' %}
-{% set confirm_text = 'Create Pool' %}
+{% set title = '创建 ZFS 存储池' %}
+{% set message = '确定要创建此存储池吗？此操作将销毁指定设备上的所有数据！此操作无法撤销。' %}
+{% set confirm_text = '创建存储池' %}
 {% set confirm_class = 'danger' %}
 {% set confirm_action = 'document.getElementById("create-pool-form").submit()' %}
 {% include 'partials/confirm.jinja' %}
@@ -899,7 +899,7 @@ function renderMetadataMirrors() {
     const container = document.getElementById('metadata-container');
     
     if (metadataMirrors.length === 0) {
-        container.innerHTML = '<div class="text-center py-8 text-text-tertiary text-sm">No metadata mirrors. Click "Add Metadata Mirror" to create one.</div>';
+        container.innerHTML = '<div class="text-center py-8 text-text-tertiary text-sm">没有元数据镜像。点击“添加元数据镜像”以创建一个。</div>';
         updateCommandPreview();
         return;
     }
@@ -934,7 +934,7 @@ function renderMetadataMirrors() {
                 <svg class="w-10 h-10 mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                 </svg>
-                <p class="text-xs">Drag SSDs here (must match data redundancy level)</p>
+                <p class="text-xs">将 SSD 拖到这里（必须与数据冗余级别匹配）</p>
             </div>
         ` : '';
         
@@ -942,7 +942,7 @@ function renderMetadataMirrors() {
             <div class="mb-4">
                 <div class="flex items-center justify-between mb-2">
                     <div class="flex items-center gap-2">
-                        <span class="text-sm font-semibold text-text-primary">Metadata Mirror ${displayIndex + 1}</span>
+                        <span class="text-sm font-semibold text-text-primary">元数据镜像 ${displayIndex + 1}</span>
                         <span class="text-xs text-purple-400 font-mono">${mirror.disks.length} disk(s)</span>
                     </div>
                     <button type="button" 
@@ -1085,7 +1085,7 @@ function renderVdevs() {
                 <svg class="w-10 h-10 mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                 </svg>
-                <p class="text-xs">Drag disks here</p>
+                <p class="text-xs">将磁盘拖到这里</p>
             </div>
         ` : '';
         
@@ -1159,8 +1159,8 @@ function dragStart(event, device, name, size, type) {
     
     if (isSystemDisk) {
         event.preventDefault();
-        const systemUsage = diskCard.dataset.systemUsage || 'OS/System disk';
-        alert(`Cannot use system disk!\n\nThis disk is marked as: ${systemUsage}\n\nUsing this disk would destroy your operating system!`);
+        const systemUsage = diskCard.dataset.systemUsage || '操作系统/系统磁盘';
+        alert(`不能使用系统磁盘！\n\n此磁盘标记为：${systemUsage}\n\n使用此磁盘将破坏您的操作系统！`);
         return false;
     }
     
@@ -1370,7 +1370,7 @@ function updateCommandPreview() {
     
     // If no pool name or no vdevs, show placeholder
     if (!poolName || dataVdevs.length === 0) {
-        previewEl.innerHTML = '<span class="text-text-tertiary italic">Configure your pool to see the command...</span>';
+        previewEl.innerHTML = '<span class="text-text-tertiary italic">配置您的存储池以查看命令…</span>';
         return;
     }
     
@@ -1525,7 +1525,7 @@ function copyCommandToClipboard() {
     const poolName = document.getElementById('pool_name_header').value.trim();
     
     if (!poolName || dataVdevs.length === 0) {
-        alert('Please configure your pool first');
+        alert('请先配置您的存储池');
         return;
     }
     
@@ -1613,26 +1613,26 @@ function copyCommandToClipboard() {
         }, 2000);
     }).catch(err => {
         console.error('Failed to copy:', err);
-        alert('Failed to copy command to clipboard');
+        alert('复制命令到剪贴板失败');
     });
 }
 
 function validateAndCreate() {
     const poolName = document.getElementById('pool_name_header').value.trim();
     if (!poolName) {
-        alert('Please enter a pool name');
+        alert('请输入存储池名称');
         document.getElementById('pool_name_header').focus();
         return;
     }
     
     if (!/^[a-zA-Z0-9_-]+$/.test(poolName)) {
-        alert('Pool name can only contain alphanumeric characters, dashes, and underscores');
+        alert('存储池名称只能包含字母、数字、短横线和下划线');
         document.getElementById('pool_name_header').focus();
         return;
     }
     
     if (dataVdevs.length === 0) {
-        alert('Please add at least one vdev');
+        alert('请至少添加一个 VDEV');
         return;
     }
     
@@ -1641,24 +1641,24 @@ function validateAndCreate() {
         const diskCount = vdev.disks.length;
         
         if (diskCount === 0) {
-            alert(`VDEV ${vdev.id + 1} has no disks. Please add disks or remove the vdev.`);
+            alert(`VDEV ${vdev.id + 1} 没有磁盘。请添加磁盘或删除该 VDEV。`);
             return;
         }
         
         if (vdev.type === 'mirror' && diskCount < 2) {
-            alert(`VDEV ${vdev.id + 1}: Mirror requires at least 2 disks`);
+            alert(`VDEV ${vdev.id + 1}：镜像至少需要 2 块磁盘`);
             return;
         }
         if (vdev.type === 'raidz' && diskCount < 3) {
-            alert(`VDEV ${vdev.id + 1}: RAID-Z requires at least 3 disks`);
+            alert(`VDEV ${vdev.id + 1}：RAID-Z 至少需要 3 块磁盘`);
             return;
         }
         if (vdev.type === 'raidz2' && diskCount < 4) {
-            alert(`VDEV ${vdev.id + 1}: RAID-Z2 requires at least 4 disks`);
+            alert(`VDEV ${vdev.id + 1}：RAID-Z2 至少需要 4 块磁盘`);
             return;
         }
         if (vdev.type === 'raidz3' && diskCount < 5) {
-            alert(`VDEV ${vdev.id + 1}: RAID-Z3 requires at least 5 disks`);
+            alert(`VDEV ${vdev.id + 1}：RAID-Z3 至少需要 5 块磁盘`);
             return;
         }
     }
@@ -1767,7 +1767,7 @@ async function runDiskCheck() {
         console.error('Error checking disk usage:', error);
         // Transition modal to error state
         if (modalData) {
-            modalData.errorMsg = 'Error checking disk usage: ' + (error.message || 'Unknown error');
+            modalData.errorMsg = '检查磁盘使用情况时出错：' + (error.message || '未知错误');
             modalData.state = 'error';
         }
     }

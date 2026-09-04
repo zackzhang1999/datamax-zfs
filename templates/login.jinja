@@ -13,10 +13,10 @@
       <!-- Logo/Branding -->
       <div class="text-center mb-8">
         <div class="inline-flex items-center justify-center w-16 h-16 bg-primary-500/10 border-2 border-primary-500/20 rounded-2xl mb-4">
-          <img src="/static/img/webzfs-icon.svg" alt="webzfs" class="w-10 h-10">
+          <img src="/static/img/webzfs-icon.svg" alt="DataMax-zfs" class="w-10 h-10">
         </div>
-        <h1 class="text-3xl font-bold text-text-primary mb-2">ZFS Management</h1>
-        <p class="text-text-secondary">Sign in to your account</p>
+        <h1 class="text-3xl font-bold text-text-primary mb-2">ZFS 管理</h1>
+        <p class="text-text-secondary">登录您的账户</p>
       </div>
 
       <!-- Login form card -->
@@ -40,11 +40,11 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                 </svg>
                 <div>
-                  <p class="text-red-300 font-medium">Account Temporarily Locked</p>
+                  <p class="text-red-300 font-medium">账户已被临时锁定</p>
                   <p class="text-red-400 text-sm mt-1">{{ error }}</p>
                   {% if retry_after %}
                   <p class="text-red-400 text-sm mt-2">
-                    <span id="countdown-timer" class="font-mono font-bold">{{ retry_after }}</span> seconds remaining
+                    <span id="countdown-timer" class="font-mono font-bold">{{ retry_after }}</span> 秒后可重试
                   </p>
                   {% endif %}
                 </div>
@@ -53,7 +53,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 <div>
-                  <p class="text-yellow-300 font-medium">Authentication Failed</p>
+                  <p class="text-yellow-300 font-medium">身份验证失败</p>
                   <p class="text-yellow-400 text-sm mt-1">{{ error }}</p>
                 </div>
                 {% endif %}
@@ -65,14 +65,14 @@
 
             <!-- Username field -->
             <div>
-              {% with label="Username",field="username",required=True,placeholder="Enter your username" %}
+              {% with label="用户名",field="username",required=True,placeholder="请输入用户名" %}
                 {% include "partials/input.jinja" %}
               {% endwith %}
             </div>
 
             <!-- Password field -->
             <div>
-              {% with label="Password",field="password",type="password",required=True,placeholder="Enter your password" %}
+              {% with label="密码",field="password",type="password",required=True,placeholder="请输入密码" %}
                 {% include "partials/input.jinja" %}
               {% endwith %}
             </div>
@@ -88,7 +88,7 @@
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <span>Sign In</span>
+                <span>登录</span>
                 <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                 </svg>
@@ -100,7 +100,7 @@
 
       <!-- Footer -->
       <div class="text-center mt-6 text-text-tertiary text-sm">
-        <p>ZFS Management Interface</p>
+        <p>ZFS 管理界面</p>
       </div>
     </div>
   </div>
@@ -128,8 +128,8 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 <div>
-                  <p class="text-green-300 font-medium">You can try again</p>
-                  <p class="text-green-400 text-sm mt-1">The rate limit has expired. Please enter your credentials.</p>
+                  <p class="text-green-300 font-medium">您可以重试了</p>
+                  <p class="text-green-400 text-sm mt-1">频率限制已解除。请重新输入您的登录信息。</p>
                 </div>
               </div>
             `;

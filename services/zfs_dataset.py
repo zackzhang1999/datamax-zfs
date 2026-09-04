@@ -41,13 +41,12 @@ class ZFSDatasetService:
             ValueError: If the dataset name is invalid
         """
         if not dataset_name:
-            raise ValueError("Dataset name cannot be empty")
+            raise ValueError("数据集名称不能为空")
         
         if not cls.ZFS_DATASET_NAME_PATTERN.match(dataset_name):
             raise ValueError(
-                f"Invalid dataset name '{dataset_name}'. Dataset names must start with an alphanumeric "
-                "character and contain only alphanumeric characters, underscores, hyphens, "
-                "periods, colons, or forward slashes."
+                f"无效的数据集名称 '{dataset_name}'。数据集名称必须以字母或数字开头，"
+                "且只能包含字母、数字、下划线、连字符、句点、冒号或正斜杠。"
             )
     
     @classmethod
@@ -62,17 +61,17 @@ class ZFSDatasetService:
             ValueError: If the snapshot name is invalid
         """
         if not snapshot_name:
-            raise ValueError("Snapshot name cannot be empty")
+            raise ValueError("快照名称不能为空")
         
         if '@' not in snapshot_name:
             raise ValueError(
-                f"Invalid snapshot name format '{snapshot_name}'. Expected format: dataset@snapshot"
+                f"无效的快照名称格式 '{snapshot_name}'。正确格式：dataset@snapshot"
             )
         
         if not cls.ZFS_SNAPSHOT_FULL_PATTERN.match(snapshot_name):
             raise ValueError(
-                f"Invalid snapshot name '{snapshot_name}'. Snapshot names must follow ZFS naming rules: "
-                "alphanumeric characters, underscores, hyphens, periods, colons, or forward slashes."
+                f"无效的快照名称 '{snapshot_name}'。快照名称必须遵循 ZFS 命名规则："
+                "只能包含字母、数字、下划线、连字符、句点、冒号或正斜杠。"
             )
     
     def list_datasets(self, pool_name: Optional[str] = None, 
@@ -145,7 +144,7 @@ class ZFSDatasetService:
             return datasets
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to list datasets: {e.stderr}")
+            raise Exception(f"列出数据集失败：{e.stderr}")
     
     # zfs send -L is required when any block exceeds 128 KiB
     LARGE_BLOCK_THRESHOLD_BYTES = 131072
@@ -217,9 +216,9 @@ class ZFSDatasetService:
             }
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Dataset {dataset_name} does not exist or cannot be accessed")
+            raise Exception(f"数据集 {dataset_name} 不存在或无法访问")
         except Exception as e:
-            raise Exception(f"Failed to get dataset: {str(e)}")
+            raise Exception(f"获取数据集失败：{str(e)}")
     
     def create_dataset(self, dataset_name: str, dataset_type: str = "filesystem",
                       properties: Optional[Dict[str, str]] = None,
@@ -246,12 +245,12 @@ class ZFSDatasetService:
             # Add volume-specific options
             if dataset_type == "volume":
                 if 'volsize' not in props:
-                    raise Exception("volsize property is required for volume creation")
+                    raise Exception("创建卷必须提供 volsize 属性")
                 cmd.extend(['-V', props['volsize']])
                 # Remove volsize from props as it's already handled
                 props = {k: v for k, v in props.items() if k != 'volsize'}
             elif dataset_type != "filesystem":
-                raise Exception(f"Invalid dataset type: {dataset_type}")
+                raise Exception(f"无效的数据集类型：{dataset_type}")
             
             # Add properties
             for key, value in props.items():
@@ -263,10 +262,10 @@ class ZFSDatasetService:
                 
         except subprocess.CalledProcessError as e:
             if 'already exists' in e.stderr.lower():
-                raise Exception(f"Dataset {dataset_name} already exists")
-            raise Exception(f"Failed to create dataset: {e.stderr}")
+                raise Exception(f"数据集 {dataset_name} 已存在")
+            raise Exception(f"创建数据集失败：{e.stderr}")
         except Exception as e:
-            raise Exception(f"Failed to create dataset: {str(e)}")
+            raise Exception(f"创建数据集失败：{str(e)}")
     
     def create_dataset_with_encryption(self, dataset_name: str, passphrase: str,
                                       dataset_type: str = "filesystem",
@@ -303,7 +302,7 @@ class ZFSDatasetService:
             # Add volume-specific options
             if dataset_type == "volume":
                 if 'volsize' not in props:
-                    raise Exception("volsize property is required for volume creation")
+                    raise Exception("创建卷必须提供 volsize 属性")
                 cmd.extend(['-V', props['volsize']])
                 # Remove volsize from props as it's already handled
                 props = {k: v for k, v in props.items() if k != 'volsize'}
@@ -319,10 +318,10 @@ class ZFSDatasetService:
             
         except subprocess.CalledProcessError as e:
             if 'already exists' in e.stderr.lower():
-                raise Exception(f"Dataset {dataset_name} already exists")
-            raise Exception(f"Failed to create encrypted dataset: {e.stderr}")
+                raise Exception(f"数据集 {dataset_name} 已存在")
+            raise Exception(f"创建加密数据集失败：{e.stderr}")
         except Exception as e:
-            raise Exception(f"Failed to create encrypted dataset: {str(e)}")
+            raise Exception(f"创建加密数据集失败：{str(e)}")
     
     def destroy_dataset(self, dataset_name: str, recursive: bool = False,
                        force: bool = False) -> None:
@@ -350,7 +349,7 @@ class ZFSDatasetService:
             run_zfs_command(cmd)
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to destroy dataset: {e.stderr}")
+            raise Exception(f"销毁数据集失败：{e.stderr}")
     
     def clone_dataset(self, snapshot: str, target: str,
                      properties: Optional[Dict[str, str]] = None) -> None:
@@ -379,7 +378,7 @@ class ZFSDatasetService:
             run_zfs_command(cmd)
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to clone dataset: {e.stderr}")
+            raise Exception(f"克隆数据集失败：{e.stderr}")
     
     def rename_dataset(self, old_name: str, new_name: str,
                       force: bool = False) -> None:
@@ -404,7 +403,7 @@ class ZFSDatasetService:
             run_zfs_command(cmd)
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to rename dataset: {e.stderr}")
+            raise Exception(f"重命名数据集失败：{e.stderr}")
     
     def get_properties(self, dataset_name: str) -> Dict[str, Any]:
         """
@@ -434,7 +433,7 @@ class ZFSDatasetService:
             return properties
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get properties: {e.stderr}")
+            raise Exception(f"获取属性失败：{e.stderr}")
     
     def set_property(self, dataset_name: str, property_name: str,
                     property_value: str) -> None:
@@ -451,7 +450,7 @@ class ZFSDatasetService:
             run_zfs_command(['zfs', 'set', f'{property_name}={property_value}', dataset_name])
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to set property: {e.stderr}")
+            raise Exception(f"设置属性失败：{e.stderr}")
     
     def inherit_property(self, dataset_name: str, property_name: str,
                         recursive: bool = False) -> None:
@@ -475,7 +474,7 @@ class ZFSDatasetService:
             run_zfs_command(cmd)
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to inherit property: {e.stderr}")
+            raise Exception(f"继承属性失败：{e.stderr}")
     
     def mount_dataset(self, dataset_name: str) -> None:
         """
@@ -489,7 +488,7 @@ class ZFSDatasetService:
             run_zfs_command(['zfs', 'mount', dataset_name])
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to mount dataset: {e.stderr}")
+            raise Exception(f"挂载数据集失败：{e.stderr}")
     
     def unmount_dataset(self, dataset_name: str, force: bool = False) -> None:
         """
@@ -511,7 +510,7 @@ class ZFSDatasetService:
             run_zfs_command(cmd)
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to unmount dataset: {e.stderr}")
+            raise Exception(f"卸载数据集失败：{e.stderr}")
     
     def get_space_usage(self, dataset_name: str, recursive: bool = False) -> List[Dict[str, Any]]:
         """
@@ -557,7 +556,7 @@ class ZFSDatasetService:
             return usage
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get space usage: {e.stderr}")
+            raise Exception(f"获取空间使用情况失败：{e.stderr}")
     
     def get_space_tree(self, pool_name: str, max_depth: int = 4) -> Dict[str, Any]:
         """
@@ -604,7 +603,7 @@ class ZFSDatasetService:
                  '-o', properties, '-r', pool_name]
             )
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to list datasets for {pool_name}: {e.stderr}")
+            raise Exception(f"列出 {pool_name} 的数据集失败：{e.stderr}")
 
         # Snapshot counts: one entry per dataset.
         snapshot_counts: Dict[str, int] = {}
@@ -655,7 +654,7 @@ class ZFSDatasetService:
             order.append(name)
 
         if pool_name not in nodes:
-            raise Exception(f"Pool {pool_name} not found in zfs list output")
+            raise Exception(f"在 zfs list 输出中未找到存储池 {pool_name}")
 
         # Wire children to parents using slash-delimited names.
         # 'zfs list -r' returns the parent before its children, so we can
@@ -703,7 +702,7 @@ class ZFSDatasetService:
             return children
                 
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to list children: {e.stderr}")
+            raise Exception(f"列出子数据集失败：{e.stderr}")
     
     def promote_dataset(self, dataset_name: str) -> None:
         """
@@ -717,7 +716,7 @@ class ZFSDatasetService:
             run_zfs_command(['zfs', 'promote', dataset_name])
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to promote dataset: {e.stderr}")
+            raise Exception(f"提升数据集失败：{e.stderr}")
     
     def load_key(self, dataset_name: str, key_location: Optional[str] = None) -> None:
         """
@@ -739,7 +738,7 @@ class ZFSDatasetService:
             run_zfs_command(cmd)
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to load encryption key: {e.stderr}")
+            raise Exception(f"加载加密密钥失败：{e.stderr}")
     
     def unload_key(self, dataset_name: str) -> None:
         """
@@ -753,7 +752,7 @@ class ZFSDatasetService:
             run_zfs_command(['zfs', 'unload-key', dataset_name])
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to unload encryption key: {e.stderr}")
+            raise Exception(f"卸载加密密钥失败：{e.stderr}")
     
     def change_key(self, dataset_name: str, inherit: bool = False) -> None:
         """
@@ -775,7 +774,7 @@ class ZFSDatasetService:
             run_zfs_command(cmd)
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to change encryption key: {e.stderr}")
+            raise Exception(f"更改加密密钥失败：{e.stderr}")
     
     # Maximum number of directory entries returned by peek_directory
     PEEK_MAX_ENTRIES = 1000
@@ -816,7 +815,7 @@ class ZFSDatasetService:
                  'type,mounted,mountpoint', dataset_name]
             )
         except subprocess.CalledProcessError as e:
-            result['error'] = f"Failed to query dataset: {e.stderr}"
+            result['error'] = f"查询数据集失败：{e.stderr}"
             return result
         
         props = {}
@@ -826,15 +825,15 @@ class ZFSDatasetService:
                 props[parts[0]] = parts[1]
         
         if props.get('type') != 'filesystem':
-            result['error'] = "Peek is only available for filesystem datasets"
+            result['error'] = "仅支持浏览文件系统类型的数据集"
             return result
         if props.get('mounted') != 'yes':
-            result['error'] = "Dataset is not mounted"
+            result['error'] = "数据集未挂载"
             return result
         
         mountpoint = props.get('mountpoint', '')
         if not mountpoint or mountpoint in ('-', 'none', 'legacy'):
-            result['error'] = "Dataset has no usable mountpoint"
+            result['error'] = "数据集没有可用的挂载点"
             return result
         
         mountpoint_real = os.path.realpath(mountpoint)
@@ -847,7 +846,7 @@ class ZFSDatasetService:
         # Enforce the dataset boundary: the resolved path must stay inside
         # the mountpoint. This blocks ../ traversal and symlink escapes.
         if target_dir != mountpoint_real and not target_dir.startswith(mountpoint_real + os.sep):
-            result['error'] = "Path is outside the dataset mountpoint"
+            result['error'] = "路径超出数据集挂载点范围"
             return result
         
         # Recompute the effective subpath from the resolved location so the
@@ -868,7 +867,7 @@ class ZFSDatasetService:
                 })
         
         if not os.path.isdir(target_dir):
-            result['error'] = "Directory does not exist"
+            result['error'] = "目录不存在"
             return result
         
         # List directory entries
@@ -900,10 +899,10 @@ class ZFSDatasetService:
                     else:
                         files.append(item)
         except PermissionError:
-            result['error'] = "Permission denied reading this directory"
+            result['error'] = "读取此目录的权限被拒绝"
             return result
         except OSError as e:
-            result['error'] = f"Failed to read directory: {e}"
+            result['error'] = f"读取目录失败：{e}"
             return result
         
         folders.sort(key=lambda x: x['name'].lower())

@@ -4,15 +4,15 @@
 <div class="max-w-4xl mx-auto space-y-6">
     <!-- Breadcrumb Navigation -->
     <nav class="flex items-center text-sm text-text-secondary">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
-        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">Snapshots</a>
+        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">快照</a>
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
-        <span class="text-text-primary font-medium">Rollback</span>
+        <span class="text-text-primary font-medium">回滚</span>
     </nav>
 
     <!-- Page Header -->
@@ -21,9 +21,9 @@
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
             </svg>
-            Rollback to Snapshot
+            回滚到快照
         </h1>
-        <p class="text-warning-300 mt-2 font-semibold">This operation will destroy recent data!</p>
+        <p class="text-warning-300 mt-2 font-semibold">此操作将销毁近期的数据！</p>
     </div>
 
     <!-- Error Message -->
@@ -39,10 +39,10 @@
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            CRITICAL DATA LOSS WARNING
+            严重数据丢失警告
         </h3>
         <p class="text-danger-200 mb-3">
-            You are about to <strong>rollback the dataset</strong> to this snapshot:
+            你即将<strong>将数据集回滚</strong>到此快照：
         </p>
         <div class="bg-danger-950 border border-danger-700 rounded-lg p-4 mb-3">
             <p class="text-danger-300 font-mono text-lg break-all">
@@ -53,7 +53,7 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
             </svg>
-            ALL DATA CREATED AFTER THIS SNAPSHOT WILL BE PERMANENTLY DESTROYED!
+            此快照之后创建的所有数据都将被永久销毁！
         </p>
     </div>
 
@@ -64,7 +64,7 @@
                 <svg class="w-5 h-5 text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                What Will Happen
+                将发生什么
             </h2>
         </div>
         <div class="p-6">
@@ -73,37 +73,37 @@
                     <svg class="w-5 h-5 text-warning-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
                     </svg>
-                    <span>The dataset will be <strong class="text-text-primary">rolled back</strong> to the state it was in when this snapshot was created</span>
+                    <span>数据集将被<strong class="text-text-primary">回滚</strong>到创建此快照时的状态</span>
                 </li>
                 <li class="flex items-start gap-3">
                     <svg class="w-5 h-5 text-danger-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <span><strong class="text-text-primary">ALL changes made after</strong> this snapshot will be <strong class="text-text-primary">permanently lost</strong></span>
+                    <span>此快照之后的<strong class="text-text-primary">所有更改</strong>都将<strong class="text-text-primary">永久丢失</strong></span>
                 </li>
                 <li class="flex items-start gap-3">
                     <svg class="w-5 h-5 text-danger-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <span>Files created after the snapshot will be <strong class="text-text-primary">deleted</strong></span>
+                    <span>快照之后创建的文件将被<strong class="text-text-primary">删除</strong></span>
                 </li>
                 <li class="flex items-start gap-3">
                     <svg class="w-5 h-5 text-danger-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <span>Files modified after the snapshot will <strong class="text-text-primary">revert</strong> to their snapshot state</span>
+                    <span>快照之后修改的文件将<strong class="text-text-primary">恢复</strong>到快照时的状态</span>
                 </li>
                 <li class="flex items-start gap-3">
                     <svg class="w-5 h-5 text-danger-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <span>If "Force" is enabled, <strong class="text-text-primary">more recent snapshots will also be destroyed</strong></span>
+                    <span>如果启用了"强制"选项，<strong class="text-text-primary">更新的快照也会被销毁</strong></span>
                 </li>
                 <li class="flex items-start gap-3">
                     <svg class="w-5 h-5 text-info-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <span>The rollback snapshot itself will remain intact</span>
+                    <span>回滚目标的快照本身将保持不变</span>
                 </li>
             </ul>
         </div>
@@ -115,24 +115,24 @@
             <svg class="w-4 h-4 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
             </svg>
-            When to use rollback
+            何时使用回滚
         </h3>
         <ul class="mt-2 space-y-1 text-xs text-text-secondary">
             <li class="flex items-start gap-2">
                 <span class="text-text-tertiary mt-0.5">•</span>
-                <span>Recovering from accidental data deletion or corruption</span>
+                <span>从意外的数据删除或损坏中恢复</span>
             </li>
             <li class="flex items-start gap-2">
                 <span class="text-text-tertiary mt-0.5">•</span>
-                <span>Reverting after a failed upgrade or configuration change</span>
+                <span>在升级或配置更改失败后进行还原</span>
             </li>
             <li class="flex items-start gap-2">
                 <span class="text-text-tertiary mt-0.5">•</span>
-                <span>Undoing unwanted modifications to important files</span>
+                <span>撤销对重要文件的不必要修改</span>
             </li>
             <li class="flex items-start gap-2">
                 <span class="text-text-tertiary mt-0.5">•</span>
-                <span>Restoring system to a known good state</span>
+                <span>将系统恢复到已知的良好状态</span>
             </li>
         </ul>
     </div>
@@ -144,7 +144,7 @@
                 <svg class="w-5 h-5 text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                Confirmation Required
+                需要确认
             </h2>
         </div>
         <div class="p-6">
@@ -159,13 +159,13 @@
                             class="form-checkbox mt-0.5"
                         >
                         <span class="ml-2">
-                            <span class="text-sm text-danger-400 font-semibold block">Force rollback - Destroy more recent snapshots</span>
+                            <span class="text-sm text-danger-400 font-semibold block">强制回滚 —— 销毁更新的快照</span>
                             <span class="text-text-tertiary text-xs block mt-0.5">
                                 <svg class="w-3 h-3 inline text-warning-400 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                                 </svg>
-                                If checked, ZFS will destroy all snapshots newer than this one to complete the rollback.
-                                <strong>This cannot be undone!</strong> Only enable if you're certain.
+                                勾选后，ZFS 将销毁所有比此快照更新的快照以完成回滚。
+                                <strong>此操作无法撤销！</strong>只有在完全确定时才启用。
                             </span>
                         </span>
                     </label>
@@ -174,7 +174,7 @@
                 <!-- Type Confirmation -->
                 <div>
                     <label for="confirm" class="form-label">
-                        Type the <strong>full snapshot name</strong> to confirm: <span class="text-danger-400">*</span>
+                        输入<strong>完整的快照名称</strong>以确认：<span class="text-danger-400">*</span>
                     </label>
                     <div class="bg-bg-elevated-3 border border-border-default rounded-lg p-3 mb-3">
                         <code class="text-success-400 text-sm font-mono break-all">{{ snapshot_name }}</code>
@@ -184,12 +184,12 @@
                         id="confirm" 
                         name="confirm" 
                         required
-                        placeholder="Type the snapshot name here..."
+                        placeholder="在此输入快照名称……"
                         class="form-input w-full border-warning-600 focus:border-warning-500 focus:ring-warning-500/20"
                         autocomplete="off"
                     >
                     <p class="text-text-tertiary text-xs mt-1">
-                        You must type the exact snapshot name above to proceed with rollback.
+                        你必须准确输入上面的快照名称才能继续回滚。
                     </p>
                 </div>
 
@@ -199,33 +199,33 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        FINAL WARNING
+                        最后警告
                     </h4>
-                    <p class="text-danger-200 text-sm mb-2">This operation is <strong>DESTRUCTIVE and IRREVERSIBLE</strong>.</p>
+                    <p class="text-danger-200 text-sm mb-2">此操作<strong>具有破坏性且不可撤销</strong>。</p>
                     <ul class="space-y-1 text-xs text-danger-200">
                         <li class="flex items-start gap-2">
                             <svg class="w-3 h-3 text-success-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            <span>Make sure you have alternative backups of any important data</span>
+                            <span>确保已为重要数据准备了其他备份</span>
                         </li>
                         <li class="flex items-start gap-2">
                             <svg class="w-3 h-3 text-success-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            <span>Verify this is the correct snapshot to rollback to</span>
+                            <span>确认这是要回滚到的正确快照</span>
                         </li>
                         <li class="flex items-start gap-2">
                             <svg class="w-3 h-3 text-success-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            <span>Understand that all recent changes will be lost</span>
+                            <span>清楚所有近期更改都将丢失</span>
                         </li>
                         <li class="flex items-start gap-2">
                             <svg class="w-3 h-3 text-success-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            <span>Consider cloning the snapshot instead if you want to preserve current data</span>
+                            <span>如需保留当前数据，请考虑改为克隆此快照</span>
                         </li>
                     </ul>
                 </div>
@@ -239,7 +239,7 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
                         </svg>
-                        Yes, Rollback Dataset
+                        是，回滚数据集
                     </button>
                     <a 
                         href="/zfs/snapshots/{{ snapshot_name }}/detail" 
@@ -248,7 +248,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
-                        Cancel (Recommended)
+                        取消（推荐）
                     </a>
                 </div>
             </form>
@@ -261,36 +261,36 @@
             <svg class="w-4 h-4 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
             </svg>
-            Consider These Safer Alternatives
+            考虑这些更安全的替代方案
         </h3>
         <ul class="text-xs text-text-secondary space-y-2">
             <li class="flex items-start gap-2">
                 <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <span><strong>Clone the snapshot:</strong> Create a new dataset from this snapshot without affecting the current one - 
-                <a href="/zfs/snapshots/{{ snapshot_name }}/clone/form" class="text-primary-400 hover:text-primary-300 transition-colors">Clone Now</a>
+                <span><strong>克隆此快照：</strong>从此快照创建一个新数据集，而不影响当前数据集 ——
+                <a href="/zfs/snapshots/{{ snapshot_name }}/clone/form" class="text-primary-400 hover:text-primary-300 transition-colors">立即克隆</a>
                 </span>
             </li>
             <li class="flex items-start gap-2">
                 <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <span><strong>Compare changes:</strong> Review what has changed since this snapshot - 
-                <a href="/zfs/snapshots/diff/form?snapshot1={{ snapshot_name }}" class="text-primary-400 hover:text-primary-300 transition-colors">View Diff</a>
+                <span><strong>比较变更：</strong>查看自该快照以来发生了哪些变化 ——
+                <a href="/zfs/snapshots/diff/form?snapshot1={{ snapshot_name }}" class="text-primary-400 hover:text-primary-300 transition-colors">查看差异</a>
                 </span>
             </li>
             <li class="flex items-start gap-2">
                 <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <span><strong>Selective restore:</strong> Manually copy specific files from the snapshot's .zfs/snapshot directory</span>
+                <span><strong>选择性恢复：</strong>从快照的 .zfs/snapshot 目录手动复制特定文件</span>
             </li>
             <li class="flex items-start gap-2">
                 <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <span><strong>Create a new snapshot:</strong> Take a snapshot of the current state before rolling back, just in case</span>
+                <span><strong>创建新快照：</strong>在回滚之前先为当前状态创建一个快照，以防万一</span>
             </li>
         </ul>
     </div>

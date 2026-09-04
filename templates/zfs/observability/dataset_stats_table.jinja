@@ -4,7 +4,7 @@
 {% if not stats.available %}
 <div class="bg-warning-900/20 border border-warning-500/40 text-warning-300 px-4 py-3 rounded-lg">
     <p class="text-sm">
-        Per-dataset statistics are not available on this system.
+        此系统上无法使用逐数据集统计。
     </p>
     {% for note in stats.notes %}
     <p class="text-xs mt-2 text-text-secondary">{{ note }}</p>
@@ -16,12 +16,12 @@
         <table class="min-w-full">
             <thead class="bg-bg-elevated-2 text-text-primary">
                 <tr>
-                    <th class="px-4 py-3 text-left text-sm font-semibold">Dataset</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">数据集</th>
                     <th class="px-4 py-3 text-left text-sm font-semibold">PID</th>
-                    <th class="px-4 py-3 text-left text-sm font-semibold">User</th>
-                    <th class="px-4 py-3 text-left text-sm font-semibold">Command</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">用户</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">命令</th>
                     <th class="px-4 py-3 text-left text-sm font-semibold">FD</th>
-                    <th class="px-4 py-3 text-left text-sm font-semibold">Open File</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">打开的文件</th>
                 </tr>
             </thead>
             <tbody class="bg-bg-elevated font-mono text-sm">
@@ -39,7 +39,7 @@
         </table>
     </div>
     {% else %}
-    <p class="text-text-secondary text-center py-8">No open files were found on the matching datasets.</p>
+    <p class="text-text-secondary text-center py-8">在匹配的数据集上未找到打开的文件。</p>
     {% endif %}
 {% else %}
     {% if stats.datasets %}
@@ -50,11 +50,11 @@
                     {% if mode == 'top' %}
                     <th class="px-4 py-3 text-left text-sm font-semibold">#</th>
                     {% endif %}
-                    <th class="px-4 py-3 text-left text-sm font-semibold">Dataset</th>
-                    <th class="px-4 py-3 text-right text-sm font-semibold">Read Ops/s</th>
-                    <th class="px-4 py-3 text-right text-sm font-semibold">Write Ops/s</th>
-                    <th class="px-4 py-3 text-right text-sm font-semibold">Read BW/s</th>
-                    <th class="px-4 py-3 text-right text-sm font-semibold">Write BW/s</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">数据集</th>
+                    <th class="px-4 py-3 text-right text-sm font-semibold">读操作/秒</th>
+                    <th class="px-4 py-3 text-right text-sm font-semibold">写操作/秒</th>
+                    <th class="px-4 py-3 text-right text-sm font-semibold">读带宽/秒</th>
+                    <th class="px-4 py-3 text-right text-sm font-semibold">写带宽/秒</th>
                 </tr>
             </thead>
             <tbody class="bg-bg-elevated font-mono text-sm">
@@ -75,7 +75,7 @@
     </div>
     {% else %}
     <p class="text-text-secondary text-center py-8">
-        No datasets matched the current filter, or no I/O activity was recorded during the sample interval.
+        没有数据集匹配当前筛选条件，或采样间隔内未记录到 I/O 活动。
     </p>
     {% endif %}
 {% endif %}

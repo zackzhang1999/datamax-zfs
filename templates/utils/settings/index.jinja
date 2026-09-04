@@ -2,7 +2,7 @@
 
 {% set active_page = 'utils' %}
 
-{% block title %}WebZFS Settings{% endblock %}
+{% block title %}DataMax-zfs 设置{% endblock %}
 
 {% block after_body %}
 {# Fix for HTMX hx-boost intercepting theme form submission.
@@ -32,17 +32,17 @@
 {% block content %}
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils" class="hover:text-primary-400">Utilities</a>
+        <a href="/utils" class="hover:text-primary-400">实用工具</a>
         <span class="mx-2">/</span>
-        <span class="text-text-primary">WebZFS Settings</span>
+        <span class="text-text-primary">DataMax-zfs 设置</span>
     </nav>
 
     <div class="space-y-6">
         <!-- Page Header -->
         <div class="flex items-center justify-between">
             <div>
-                <h1 class="text-3xl font-bold text-text-primary">WebZFS Settings</h1>
-                <p class="text-text-secondary mt-1">Configure the appearance and behavior of WebZFS</p>
+                <h1 class="text-3xl font-bold text-text-primary">DataMax-zfs 设置</h1>
+                <p class="text-text-secondary mt-1">配置 DataMax-zfs 的外观和行为</p>
             </div>
         </div>
 
@@ -74,9 +74,9 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-xl font-semibold text-text-primary">Theme</h2>
+                        <h2 class="text-xl font-semibold text-text-primary">主题</h2>
                         <p class="text-sm text-text-secondary">
-                            Current theme: <span class="text-primary-400 font-medium">{{ active_theme_name }}</span>
+                            当前主题：<span class="text-primary-400 font-medium">{{ active_theme_name }}</span>
                         </p>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                         <!-- Left: Theme Selector and Apply -->
                         <div class="space-y-4">
                             <div>
-                                <label for="theme-select" class="form-label">Select Theme</label>
+                                <label for="theme-select" class="form-label">选择主题</label>
                                 <select
                                     id="theme-select"
                                     name="theme"
@@ -110,9 +110,9 @@
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                     </svg>
-                                    Apply Theme
+                                    应用主题
                                 </button>
-                                <span class="text-sm text-text-tertiary">Theme will be applied immediately</span>
+                                <span class="text-sm text-text-tertiary">主题将立即应用</span>
                             </div>
 
                             <div class="card-nested mt-4">
@@ -121,8 +121,8 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <div class="text-sm text-text-secondary">
-                                        <p class="mb-1">Themes override the CSS color variables used throughout WebZFS.</p>
-                                        <p>Your selection is saved to <code>/opt/webzfs/.config/webzfs/theme.conf</code> and persists across sessions.</p>
+                                        <p class="mb-1">主题会覆盖 DataMax-zfs 全局使用的 CSS 颜色变量。</p>
+                                        <p>你的选择会保存到 <code>/opt/webzfs/.config/webzfs/theme.conf</code>，并在不同会话之间保持。</p>
                                     </div>
                                 </div>
                             </div>
@@ -147,9 +147,9 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-xl font-semibold text-text-primary">Corner Style</h2>
+                        <h2 class="text-xl font-semibold text-text-primary">圆角样式</h2>
                         <p class="text-sm text-text-secondary">
-                            Current style: <span class="text-info-400 font-medium">{{ active_corner_style_name }}</span>
+                            当前样式：<span class="text-info-400 font-medium">{{ active_corner_style_name }}</span>
                         </p>
                     </div>
                 </div>
@@ -168,7 +168,7 @@
                                 >
                                 <span class="text-text-primary font-medium">{{ style.name }}</span>
                                 {% if style.active %}
-                                <span class="ml-auto text-xs text-info-400">Active</span>
+                                <span class="ml-auto text-xs text-info-400">使用中</span>
                                 {% endif %}
                             </div>
                             <p class="text-xs text-text-tertiary">{{ style.description }}</p>
@@ -179,12 +179,12 @@
                             {% if style.id == 'rounded' %}
                             <div class="mt-1 flex items-center justify-center h-12 bg-bg-elevated-2 text-xs text-text-secondary"
                                  style="border: 1px solid var(--border-default); border-radius: 10px !important; clip-path: none !important;">
-                                Sample
+                                示例
                             </div>
                             {% elif style.id == 'squared' %}
                             <div class="mt-1 flex items-center justify-center h-12 bg-bg-elevated-2 text-xs text-text-secondary"
                                  style="border: 1px solid var(--border-default); border-radius: 0 !important; clip-path: none !important;">
-                                Sample
+                                示例
                             </div>
                             {% else %}
                             {# Octagonal sample: clip-path bevel + inset
@@ -197,7 +197,7 @@
                                  style="border: 0 !important; border-radius: 0 !important;
                                         box-shadow: inset 0 0 0 1px var(--border-default);
                                         clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);">
-                                Sample
+                                示例
                             </div>
                             {% endif %}
                         </label>
@@ -209,9 +209,9 @@
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Apply Corner Style
+                            应用圆角样式
                         </button>
-                        <span class="text-sm text-text-tertiary">Applies to every page once saved</span>
+                        <span class="text-sm text-text-tertiary">保存后应用于所有页面</span>
                     </div>
 
                     <div class="card-nested mt-4">
@@ -220,8 +220,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             <div class="text-sm text-text-secondary">
-                                <p class="mb-1">Corner style controls the shape of cards, buttons, badges, and icon tiles across every page in WebZFS.</p>
-                                <p>The selection is saved to <code>/opt/webzfs/.config/webzfs/corner_style.conf</code> and persists across sessions.</p>
+                                <p class="mb-1">圆角样式控制 DataMax-zfs 所有页面中卡片、按钮、徽章和图标块的形状。</p>
+                                <p>选择会保存到 <code>/opt/webzfs/.config/webzfs/corner_style.conf</code>，并在不同会话之间保持。</p>
                             </div>
                         </div>
                     </div>
@@ -239,9 +239,9 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-xl font-semibold text-text-primary">Session Timeout</h2>
+                        <h2 class="text-xl font-semibold text-text-primary">会话超时</h2>
                         <p class="text-sm text-text-secondary">
-                            Current auto-logout timeout: <span class="text-warning-400 font-medium">{{ current_session_timeout_display }}</span>
+                            当前自动退出登录超时：<span class="text-warning-400 font-medium">{{ current_session_timeout_display }}</span>
                         </p>
                     </div>
                 </div>
@@ -249,7 +249,7 @@
                 <form action="/utils/settings/save-session-timeout" method="post" hx-boost="false">
                     <div class="space-y-4 max-w-md">
                         <div>
-                            <label for="session-timeout-select" class="form-label">Auto-Logout After</label>
+                            <label for="session-timeout-select" class="form-label">自动退出登录时间</label>
                             <select
                                 id="session-timeout-select"
                                 name="session_timeout"
@@ -257,7 +257,7 @@
                             >
                                 {% for value, label in session_timeout_presets %}
                                 <option value="{{ value }}" {% if value == current_session_timeout %}selected{% endif %}>
-                                    {{ label }}{% if value == default_session_timeout %} (default){% endif %}
+                                    {{ label }}{% if value == default_session_timeout %}（默认）{% endif %}
                                 </option>
                                 {% endfor %}
                             </select>
@@ -268,9 +268,9 @@
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
-                                Save Timeout
+                                保存超时设置
                             </button>
-                            <span class="text-sm text-text-tertiary">Applies to new login sessions</span>
+                            <span class="text-sm text-text-tertiary">应用于新的登录会话</span>
                         </div>
                     </div>
                 </form>
@@ -278,15 +278,15 @@
                 <div class="border-t border-border-subtle mt-6 pt-4">
                     <div class="flex items-center justify-between">
                         <div>
-                            <h3 class="text-sm font-medium text-text-primary">Reset to Default</h3>
-                            <p class="text-xs text-text-tertiary mt-0.5">Restore session timeout to {{ default_session_timeout_display }}</p>
+                            <h3 class="text-sm font-medium text-text-primary">恢复默认</h3>
+                            <p class="text-xs text-text-tertiary mt-0.5">将会话超时恢复为 {{ default_session_timeout_display }}</p>
                         </div>
                         <form action="/utils/settings/reset-session-timeout" method="post" hx-boost="false">
                             <button type="submit" class="btn btn-sm bg-bg-elevated-2 text-text-secondary border border-border-default hover:bg-bg-elevated-3 hover:text-text-primary">
                                 <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                                 </svg>
-                                Reset to Default
+                                恢复默认
                             </button>
                         </form>
                     </div>
@@ -298,8 +298,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         <div class="text-sm text-text-secondary">
-                            <p class="mb-1">This controls how long you stay logged in before WebZFS automatically logs you out due to inactivity. Shorter timeouts are more secure; longer timeouts are more convenient.</p>
-                            <p>Changes apply to new login sessions only -- your current session will keep its existing expiration. Override is saved to <code>~/.config/webzfs/session_timeout.json</code> and persists across restarts.</p>
+                            <p class="mb-1">此设置控制你在因不活动而被 DataMax-zfs 自动退出登录之前保持登录的时长。较短的超时更安全；较长的超时更方便。</p>
+                            <p>更改仅应用于新的登录会话——当前会话将保留原有的过期时间。覆盖配置保存到 <code>~/.config/webzfs/session_timeout.json</code>，并在重启后保持。</p>
                         </div>
                     </div>
                 </div>
@@ -316,9 +316,9 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-xl font-semibold text-text-primary">Backup &amp; Restore Configuration</h2>
+                        <h2 class="text-xl font-semibold text-text-primary">备份与恢复配置</h2>
                         <p class="text-sm text-text-secondary">
-                            Export every WebZFS setting, SSH key, and managed system file as an encrypted archive
+                            将所有 DataMax-zfs 设置、SSH 密钥和受管的系统文件导出为加密归档
                         </p>
                     </div>
                 </div>
@@ -326,14 +326,14 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <!-- Export Panel -->
                     <div class="card-nested">
-                        <h3 class="text-lg font-semibold text-text-primary mb-3">Export Configuration</h3>
+                        <h3 class="text-lg font-semibold text-text-primary mb-3">导出配置</h3>
                         <p class="text-sm text-text-secondary mb-4">
-                            Build an encrypted archive containing your themes, session settings, SSH connections and keys, fleet servers, sanoid configuration, syncoid jobs, scrub schedules, SMART schedules, and (optionally) the application secret. The download is encrypted with AES-256-GCM using a key derived from your passphrase.
+                            生成一个加密归档，包含你的主题、会话设置、SSH 连接与密钥、Sanoid 配置、Syncoid 任务、数据清洗计划、SMART 计划以及（可选）应用密钥。下载文件使用 AES-256-GCM 加密，密钥由你的口令派生。
                         </p>
 
                         <form action="/utils/settings/backup/export" method="post" hx-boost="false" class="space-y-3">
                             <div>
-                                <label for="export-passphrase" class="form-label">Passphrase</label>
+                                <label for="export-passphrase" class="form-label">口令</label>
                                 <input
                                     type="password"
                                     id="export-passphrase"
@@ -343,11 +343,11 @@
                                     autocomplete="new-password"
                                     required
                                 />
-                                <p class="text-xs text-text-tertiary mt-1">Minimum 8 characters. You will need this passphrase to restore.</p>
+                                <p class="text-xs text-text-tertiary mt-1">至少 8 个字符。恢复时需要此口令。</p>
                             </div>
 
                             <div>
-                                <label for="export-confirm-passphrase" class="form-label">Confirm Passphrase</label>
+                                <label for="export-confirm-passphrase" class="form-label">确认口令</label>
                                 <input
                                     type="password"
                                     id="export-confirm-passphrase"
@@ -363,22 +363,22 @@
                                 <label class="flex items-start gap-2 cursor-pointer">
                                     <input type="checkbox" name="include_system" value="1" class="form-checkbox mt-1" checked />
                                     <span class="text-sm text-text-secondary">
-                                        <span class="text-text-primary font-medium">Include system config files</span>
-                                        <br>sanoid.conf and WebZFS-managed cron entries. Recommended.
+                                        <span class="text-text-primary font-medium">包含系统配置文件</span>
+                                        <br>sanoid.conf 和 DataMax-zfs 管理的 cron 条目。推荐勾选。
                                     </span>
                                 </label>
                                 <label class="flex items-start gap-2 cursor-pointer">
                                     <input type="checkbox" name="include_secret" value="1" class="form-checkbox mt-1" checked />
                                     <span class="text-sm text-text-secondary">
-                                        <span class="text-text-primary font-medium">Include application secret (.env)</span>
-                                        <br>Preserves issued login tokens across the restore.
+                                        <span class="text-text-primary font-medium">包含应用密钥（.env）</span>
+                                        <br>在恢复后保留已签发的登录令牌。
                                     </span>
                                 </label>
                                 <label class="flex items-start gap-2 cursor-pointer">
                                     <input type="checkbox" name="include_history" value="1" class="form-checkbox mt-1" />
                                     <span class="text-sm text-text-secondary">
-                                        <span class="text-text-primary font-medium">Include history records</span>
-                                        <br>Replication, SMART test, notification, and health report history.
+                                        <span class="text-text-primary font-medium">包含历史记录</span>
+                                        <br>数据复制、SMART 检测、通知和健康报告的历史记录。
                                     </span>
                                 </label>
                             </div>
@@ -388,7 +388,7 @@
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4"></path>
                                     </svg>
-                                    Download Encrypted Backup
+                                    下载加密备份
                                 </button>
                             </div>
                         </form>
@@ -396,14 +396,14 @@
 
                     <!-- Import Panel -->
                     <div class="card-nested">
-                        <h3 class="text-lg font-semibold text-text-primary mb-3">Restore from Backup</h3>
+                        <h3 class="text-lg font-semibold text-text-primary mb-3">从备份恢复</h3>
                         <p class="text-sm text-text-secondary mb-4">
-                            Upload a previously created backup archive. The archive is decrypted and you will see a confirmation page listing every file that would be written. Existing files are preserved with a <code>.pre-restore-&lt;timestamp&gt;</code> suffix instead of being deleted.
+                            上传此前创建的备份归档。归档会被解密，你将看到一个确认页面，列出将被写入的所有文件。现有文件不会被删除，而是会以 <code>.pre-restore-&lt;timestamp&gt;</code> 后缀重命名保留。
                         </p>
 
                         <form action="/utils/settings/backup/inspect" method="post" enctype="multipart/form-data" hx-boost="false" class="space-y-3">
                             <div>
-                                <label for="restore-archive" class="form-label">Backup Archive</label>
+                                <label for="restore-archive" class="form-label">备份归档</label>
                                 <input
                                     type="file"
                                     id="restore-archive"
@@ -412,11 +412,11 @@
                                     accept=".wzbak,application/octet-stream"
                                     required
                                 />
-                                <p class="text-xs text-text-tertiary mt-1">Select a <code>.wzbak</code> file produced by the export above.</p>
+                                <p class="text-xs text-text-tertiary mt-1">选择由上方导出生成的 <code>.wzbak</code> 文件。</p>
                             </div>
 
                             <div>
-                                <label for="restore-passphrase" class="form-label">Passphrase</label>
+                                <label for="restore-passphrase" class="form-label">口令</label>
                                 <input
                                     type="password"
                                     id="restore-passphrase"
@@ -425,7 +425,7 @@
                                     autocomplete="current-password"
                                     required
                                 />
-                                <p class="text-xs text-text-tertiary mt-1">The passphrase used when this archive was created.</p>
+                                <p class="text-xs text-text-tertiary mt-1">创建此归档时使用的口令。</p>
                             </div>
 
                             <div class="pt-2">
@@ -433,9 +433,9 @@
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                                     </svg>
-                                    Inspect Archive
+                                    检查归档
                                 </button>
-                                <span class="text-sm text-text-tertiary ml-2">Nothing is written until you confirm on the next page</span>
+                                <span class="text-sm text-text-tertiary ml-2">在下一页确认之前不会写入任何内容</span>
                             </div>
                         </form>
                     </div>
@@ -447,8 +447,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                         </svg>
                         <div class="text-sm text-text-secondary">
-                            <p class="mb-1"><span class="text-text-primary font-medium">Treat the exported file as a secret.</span> Anyone who has both the file and the passphrase can recover every SSH private key, fleet password, and (if included) the application secret. Store the file somewhere safe and use a strong passphrase.</p>
-                            <p>The archive uses AES-256-GCM with PBKDF2-HMAC-SHA256 key derivation (600,000 iterations).</p>
+                            <p class="mb-1"><span class="text-text-primary font-medium">请将导出的文件视为机密。</span>任何同时拥有该文件和口令的人都能恢复所有 SSH 私钥以及（如包含）应用密钥。请将文件保存在安全的位置，并使用强口令。</p>
+                            <p>归档使用 AES-256-GCM 加密，密钥派生算法为 PBKDF2-HMAC-SHA256（600,000 次迭代）。</p>
                         </div>
                     </div>
                 </div>

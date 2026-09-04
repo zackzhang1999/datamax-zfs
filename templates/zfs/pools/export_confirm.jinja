@@ -4,7 +4,7 @@
 <div class="space-y-6 max-w-3xl mx-auto">
     <!-- Breadcrumb -->
     <nav class="flex items-center text-sm text-text-secondary">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
@@ -12,13 +12,13 @@
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
-        <span class="text-text-primary font-medium">Export</span>
+        <span class="text-text-primary font-medium">导出</span>
     </nav>
 
     <!-- Page Header -->
     <div>
-        <h1 class="text-3xl font-bold text-text-primary">Export Pool</h1>
-        <p class="text-text-secondary mt-1">Safely export pool for maintenance or migration</p>
+        <h1 class="text-3xl font-bold text-text-primary">导出存储池</h1>
+        <p class="text-text-secondary mt-1">安全导出存储池以便维护或迁移</p>
     </div>
 
     <!-- Warning -->
@@ -30,32 +30,32 @@
                 </svg>
             </div>
             <div class="flex-1">
-                <h3 class="text-lg font-semibold text-warning-400 mb-2">Warning: Critical Operation</h3>
-                <p class="text-text-secondary mb-3">You are about to export pool <strong class="font-mono text-text-primary">{{ pool_name }}</strong>.</p>
+                <h3 class="text-lg font-semibold text-warning-400 mb-2">警告：关键操作</h3>
+                <p class="text-text-secondary mb-3">您即将导出存储池 <strong class="font-mono text-text-primary">{{ pool_name }}</strong>。</p>
                 <ul class="text-sm text-text-secondary space-y-2">
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 text-warning-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
-                        <span>All datasets in this pool will be unmounted</span>
+                        <span>此存储池中的所有数据集将被卸载</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 text-warning-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
-                        <span>The pool will no longer be accessible until re-imported</span>
+                        <span>重新导入之前，该存储池将无法访问</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 text-warning-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
-                        <span>Any active processes using the pool's datasets will be disrupted</span>
+                        <span>任何正在使用该存储池数据集的活动进程都将被中断</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 text-success-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        <span>Data will remain safe on disk and can be re-imported later</span>
+                        <span>数据将安全保留在磁盘上，以后可以重新导入</span>
                     </li>
                 </ul>
             </div>
@@ -65,23 +65,23 @@
     <!-- Confirmation Form -->
     <div class="card">
         <div class="card-body">
-            <h2 class="text-xl font-semibold text-text-primary mb-4">Confirm Export</h2>
+            <h2 class="text-xl font-semibold text-text-primary mb-4">确认导出</h2>
             
             <form method="post" action="/zfs/pools/{{ pool_name }}/export" class="space-y-4" id="form-export-pool" hx-boost="false">
                 <p class="text-sm text-text-secondary">
-                    This will unmount all datasets in the pool and remove it from the active pools list.
-                    The pool can be re-imported at any time. No data is deleted.
+                    这将卸载存储池中的所有数据集，并将其从活动存储池列表中移除。
+                    该存储池可以随时重新导入，不会删除任何数据。
                 </p>
 
                 <!-- Buttons -->
                 <div class="flex justify-end gap-3 pt-4">
                     <a href="/zfs/pools/{{ pool_name }}" class="btn-secondary">
-                        Cancel
+                        取消
                     </a>
                     <button type="button" 
                             class="btn-danger"
                             onclick="showConfirm('confirm-export-pool')">
-                        Export Pool
+                        导出存储池
                     </button>
                 </div>
             </form>
@@ -94,28 +94,28 @@
             <svg class="w-4 h-4 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            What happens when you export a pool?
+            导出存储池时会发生什么？
         </h3>
         <ol class="text-sm text-text-secondary space-y-2">
             <li class="flex items-start gap-2">
                 <span class="text-text-tertiary font-medium">1.</span>
-                <span>All datasets in the pool are unmounted</span>
+                <span>存储池中的所有数据集被卸载</span>
             </li>
             <li class="flex items-start gap-2">
                 <span class="text-text-tertiary font-medium">2.</span>
-                <span>The pool is removed from the active pools list</span>
+                <span>存储池从活动存储池列表中移除</span>
             </li>
             <li class="flex items-start gap-2">
                 <span class="text-text-tertiary font-medium">3.</span>
-                <span>The pool's configuration is written to disk</span>
+                <span>存储池的配置写入磁盘</span>
             </li>
             <li class="flex items-start gap-2">
                 <span class="text-text-tertiary font-medium">4.</span>
-                <span>The pool can be re-imported on this or another system</span>
+                <span>存储池可以在本机或其他系统上重新导入</span>
             </li>
             <li class="flex items-start gap-2">
                 <span class="text-text-tertiary font-medium">5.</span>
-                <span>No data is deleted - everything remains on the physical disks</span>
+                <span>不会删除任何数据——所有内容都保留在物理磁盘上</span>
             </li>
         </ol>
     </div>
@@ -130,10 +130,10 @@
                 <div class="flex items-center justify-center mb-4">
                     <div class="loading-spinner"></div>
                 </div>
-                <h3 class="text-xl font-semibold text-text-primary mb-2">Exporting Pool</h3>
+                <h3 class="text-xl font-semibold text-text-primary mb-2">正在导出存储池</h3>
                 <p class="text-text-secondary">
-                    Exporting pool <strong class="font-mono text-text-primary">{{ pool_name }}</strong>.
-                    This may take a moment while all datasets are unmounted. Please wait.
+                    正在导出存储池 <strong class="font-mono text-text-primary">{{ pool_name }}</strong>。
+                    卸载所有数据集可能需要一些时间，请稍候。
                 </p>
             </div>
         </div>
@@ -142,9 +142,9 @@
 
 <!-- Confirmation Modal -->
 {% set id = 'confirm-export-pool' %}
-{% set title = 'Export ZFS Pool' %}
-{% set message = 'Are you sure you want to export ' ~ pool_name ~ '? All datasets will be unmounted and the pool will no longer be accessible until re-imported.' %}
-{% set confirm_text = 'Export Pool' %}
+{% set title = '导出 ZFS 存储池' %}
+{% set message = '确定要导出 ' ~ pool_name ~ ' 吗？所有数据集将被卸载，在重新导入之前该存储池将无法访问。' %}
+{% set confirm_text = '导出存储池' %}
 {% set confirm_class = 'danger' %}
 {% set confirm_action = 'submitExportForm()' %}
 {% include 'partials/confirm.jinja' %}

@@ -84,9 +84,9 @@ class ZFSPerformanceService:
             }
         
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool iostat command timed out after {timeout} seconds. The system may be unresponsive.")
+            raise Exception(f"zpool iostat 命令在 {timeout} 秒后超时。系统可能无响应。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get pool iostat: {e.stderr}")
+            raise Exception(f"获取存储池 iostat 失败：{e.stderr}")
     
     def get_system_iostat(
         self,
@@ -120,7 +120,7 @@ class ZFSPerformanceService:
                 # FreeBSD iostat syntax: -w interval -c count
                 cmd.extend(['-w', str(interval), '-c', '2'])
             else:
-                return {'error': f'iostat not supported on {self.system}'}
+                return {'error': f'{self.system} 不支持 iostat'}
             
             result = subprocess.run(
                 cmd,
@@ -176,13 +176,13 @@ class ZFSPerformanceService:
             
         except FileNotFoundError:
             if self.system == 'Linux':
-                return {'error': 'iostat command not found. Please Install it.)'}
+                return {'error': '未找到 iostat 命令。请安装 sysstat 软件包。'}
             elif self.system == 'FreeBSD':
-                return {'error': 'iostat command not found. Please Install it.'}
+                return {'error': '未找到 iostat 命令。请安装它。'}
             else:
-                return {'error': f'iostat command not found on {self.system}'}
+                return {'error': f'{self.system} 上未找到 iostat 命令'}
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get system iostat: {e.stderr}")
+            raise Exception(f"获取系统 iostat 失败：{e.stderr}")
     
     def get_gstat(
         self,
@@ -205,7 +205,7 @@ class ZFSPerformanceService:
             Dictionary with gstat output
         """
         if self.system != 'FreeBSD':
-            return {'error': 'gstat only available on FreeBSD'}
+            return {'error': 'gstat 仅在 FreeBSD 上可用'}
 
         try:
             # gstat usage: gstat [-abBcCdops] [-f filter] [-I interval]
@@ -227,7 +227,7 @@ class ZFSPerformanceService:
             }
 
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get gstat: {e.stderr}")
+            raise Exception(f"获取 gstat 失败：{e.stderr}")
     
     # ZFS process/thread name patterns shared between Linux psutil enumeration
     # and the FreeBSD ps-based enumeration. Matched as prefixes against the
@@ -325,7 +325,7 @@ class ZFSPerformanceService:
             return processes
 
         except Exception as e:
-            raise Exception(f"Failed to get ZFS processes: {str(e)}")
+            raise Exception(f"获取 ZFS 进程失败：{str(e)}")
 
     def _matches_zfs_pattern(self, thread_name: str) -> bool:
         """Return True if the given name matches any ZFS process pattern."""
@@ -591,9 +591,9 @@ class ZFSPerformanceService:
             return {'pools': pools}
         
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool list command timed out after {timeout} seconds. The system may be unresponsive.")
+            raise Exception(f"zpool list 命令在 {timeout} 秒后超时。系统可能无响应。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get capacity stats: {e.stderr}")
+            raise Exception(f"获取容量统计失败：{e.stderr}")
 
     @staticmethod
     def _format_bytes_zfs(size_bytes: int) -> str:
@@ -668,7 +668,7 @@ class ZFSPerformanceService:
             return datasets
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get dataset space usage: {e.stderr}")
+            raise Exception(f"获取数据集空间使用情况失败：{e.stderr}")
     
     def get_arc_stats_realtime(
         self,
@@ -701,7 +701,7 @@ class ZFSPerformanceService:
             return stats_series
             
         except Exception as e:
-            raise Exception(f"Failed to get realtime ARC stats: {str(e)}")
+            raise Exception(f"获取实时 ARC 统计信息失败：{str(e)}")
     
     def get_vdev_stats(
         self,
@@ -762,9 +762,9 @@ class ZFSPerformanceService:
             return vdevs
         
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool iostat vdev stats command timed out after {timeout} seconds. The system may be unresponsive.")
+            raise Exception(f"zpool iostat vdev 统计命令在 {timeout} 秒后超时。系统可能无响应。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get vdev stats: {e.stderr}")
+            raise Exception(f"获取 vdev 统计信息失败：{e.stderr}")
     
     def estimate_scrub_time(
         self,
@@ -811,13 +811,13 @@ class ZFSPerformanceService:
             
             return {
                 'status': 'none',
-                'info': 'No scrub in progress'
+                'info': '当前没有正在进行的数据清洗'
             }
         
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool status command timed out after {timeout} seconds. The system may be unresponsive.")
+            raise Exception(f"zpool status 命令在 {timeout} 秒后超时。系统可能无响应。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to estimate scrub time: {e.stderr}")
+            raise Exception(f"估算数据清洗时间失败：{e.stderr}")
     
     # Private helper methods
     
@@ -899,7 +899,7 @@ class ZFSPerformanceService:
             arcstats_path = Path('/proc/spl/kstat/zfs/arcstats')
             
             if not arcstats_path.exists():
-                return {'error': 'ARC stats not available'}
+                return {'error': 'ARC 统计信息不可用'}
             
             stats = {}
             with open(arcstats_path, 'r') as f:
@@ -926,7 +926,7 @@ class ZFSPerformanceService:
             return stats
             
         except Exception as e:
-            return {'error': f'Failed to read ARC stats: {str(e)}'}
+            return {'error': f'读取 ARC 统计信息失败：{str(e)}'}
 
     def _read_arc_stats_sysctl(self) -> Dict[str, Any]:
         """Read ARC statistics using sysctl (for BSD systems)"""
@@ -939,7 +939,7 @@ class ZFSPerformanceService:
             )
             
             if result.returncode != 0:
-                return {'error': 'Failed to read sysctl for ARC stats'}
+                return {'error': '读取 ARC 统计信息的 sysctl 失败'}
             
             stats = {}
             
@@ -968,7 +968,7 @@ class ZFSPerformanceService:
                     stats[stat_name] = value
             
             if not stats:
-                return {'error': 'ARC stats not available via sysctl'}
+                return {'error': '无法通过 sysctl 获取 ARC 统计信息'}
             
             # Calculate derived metrics
             if 'hits' in stats and 'misses' in stats:
@@ -980,7 +980,7 @@ class ZFSPerformanceService:
             return stats
             
         except Exception as e:
-            return {'error': f'Failed to read ARC stats: {str(e)}'}
+            return {'error': f'读取 ARC 统计信息失败：{str(e)}'}
     
     def get_raw_arcstats(self) -> Dict[str, Any]:
         """
@@ -999,7 +999,7 @@ class ZFSPerformanceService:
                 
                 if not arcstats_path.exists():
                     return {
-                        'error': 'ARC stats not available - /proc/spl/kstat/zfs/arcstats not found',
+                        'error': 'ARC 统计信息不可用——未找到 /proc/spl/kstat/zfs/arcstats',
                         'system': self.system
                     }
                 
@@ -1026,7 +1026,7 @@ class ZFSPerformanceService:
                     
                     if result.returncode != 0:
                         return {
-                            'error': f'zfs-stats failed: {result.stderr}',
+                            'error': f'zfs-stats 执行失败：{result.stderr}',
                             'system': self.system
                         }
                     
@@ -1039,12 +1039,12 @@ class ZFSPerformanceService:
                     
                 except FileNotFoundError:
                     return {
-                        'error': 'zfs-stats command not found. Install with: pkg install zfs-stats',
+                        'error': '未找到 zfs-stats 命令。安装方式：pkg install zfs-stats',
                         'system': self.system
                     }
                 except subprocess.TimeoutExpired:
                     return {
-                        'error': 'zfs-stats command timed out',
+                        'error': 'zfs-stats 命令超时',
                         'system': self.system
                     }
             
@@ -1058,7 +1058,7 @@ class ZFSPerformanceService:
                         timeout=30
                     )
                     
-                    output = result.stdout if result.stdout else 'No ARC stats found via sysctl'
+                    output = result.stdout if result.stdout else '通过 sysctl 未找到 ARC 统计信息'
                     
                     return {
                         'output': output,
@@ -1069,17 +1069,17 @@ class ZFSPerformanceService:
                     
                 except subprocess.TimeoutExpired:
                     return {
-                        'error': 'sysctl command timed out',
+                        'error': 'sysctl 命令超时',
                         'system': self.system
                     }
             else:
                 return {
-                    'error': f'Raw ARC stats not available on {self.system}',
+                    'error': f'{self.system} 上无法获取原始 ARC 统计信息',
                     'system': self.system
                 }
                 
         except Exception as e:
             return {
-                'error': f'Failed to get raw ARC stats: {str(e)}',
+                'error': f'获取原始 ARC 统计信息失败：{str(e)}',
                 'system': self.system
             }

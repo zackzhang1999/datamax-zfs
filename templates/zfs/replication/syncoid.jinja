@@ -3,15 +3,15 @@
 {% block content %}
 <div class="container-page max-w-5xl">
     <!-- Breadcrumb -->
-    <nav class="text-sm mb-6" aria-label="Breadcrumb">
+    <nav class="text-sm mb-6" aria-label="面包屑">
         <ol class="flex items-center space-x-2">
-            <li><a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">Home</a></li>
+            <li><a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">首页</a></li>
             <li class="text-text-tertiary">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
-            <li><a href="/zfs/replication" class="text-primary-400 hover:text-primary-300 transition-colors">Replication</a></li>
+            <li><a href="/zfs/replication" class="text-primary-400 hover:text-primary-300 transition-colors">数据复制</a></li>
             <li class="text-text-tertiary">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -23,8 +23,8 @@
 
     <!-- Page Header -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-text-primary mb-2">Syncoid Replication</h1>
-        <p class="text-text-secondary">Scheduled ZFS replication using Syncoid with automatic incremental sync</p>
+        <h1 class="text-3xl font-bold text-text-primary mb-2">Syncoid 数据复制</h1>
+        <p class="text-text-secondary">使用 Syncoid 进行计划的 ZFS 数据复制，自动增量同步</p>
     </div>
 
     <!-- Messages -->
@@ -33,7 +33,7 @@
             <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <span><strong>Error:</strong> {{ error }}</span>
+            <span><strong>错误：</strong> {{ error }}</span>
         </div>
     {% endif %}
 
@@ -52,7 +52,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
             </svg>
             <div>
-                <strong class="font-semibold">Warning:</strong> Syncoid is not installed on this system. 
+                <strong class="font-semibold">警告：</strong>此系统上未安装 Syncoid。
                 {% if system == 'FreeBSD' %}
                 <div class="mt-2 bg-bg-elevated-3 p-2 rounded border border-border-default inline-block">
                     <code class="text-xs text-warning-400">pkg install sanoid</code>
@@ -69,13 +69,13 @@
                 <svg class="w-5 h-5 mr-2 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
-                Scheduled Jobs
+                计划任务
             </h2>
             <a href="/zfs/replication/syncoid/jobs/create/form" class="btn-success inline-flex items-center whitespace-nowrap">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                 </svg>
-                Create Scheduled Job
+                创建计划任务
             </a>
         </div>
         <div class="card-body">
@@ -84,14 +84,14 @@
                 <table class="min-w-full divide-y divide-border-subtle">
                     <thead>
                         <tr>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">Name</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">Source</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">Target</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">Connection</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">Schedule</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">Last Run</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">Status</th>
-                            <th class="px-4 py-3 text-right text-xs font-medium text-text-tertiary uppercase tracking-wider">Actions</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">名称</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">源</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">目标</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">连接</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">计划</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">上次运行</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">状态</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-text-tertiary uppercase tracking-wider">操作</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-border-subtle">
@@ -104,49 +104,49 @@
                             <td class="px-4 py-3 whitespace-nowrap text-sm text-text-secondary font-mono">{{ job.target_dataset }}</td>
                             <td class="px-4 py-3 whitespace-nowrap text-sm text-text-secondary">
                                 {% if job.connection_missing %}
-                                    <span class="badge-danger text-xs">Connection missing</span>
+                                    <span class="badge-danger text-xs">连接缺失</span>
                                 {% elif job.connection_name %}
                                     {{ job.connection_name }}
                                     <span class="text-text-tertiary text-xs">({{ job.replication_type }})</span>
                                 {% else %}
-                                    Local
+                                    本地
                                 {% endif %}
                             </td>
                             <td class="px-4 py-3 whitespace-nowrap text-sm text-text-secondary" title="{{ job.schedule }}">{{ job.schedule_label }}</td>
                             <td class="px-4 py-3 whitespace-nowrap text-sm text-text-secondary">
-                                {% if job.last_run %}{{ job.last_run[:16]|replace('T', ' ') }}{% else %}Never{% endif %}
+                                {% if job.last_run %}{{ job.last_run[:16]|replace('T', ' ') }}{% else %}从未{% endif %}
                             </td>
                             <td class="px-4 py-3 whitespace-nowrap text-sm">
                                 {% if not job.enabled %}
-                                    <span class="badge-warning text-xs">Disabled</span>
+                                    <span class="badge-warning text-xs">已禁用</span>
                                 {% elif job.last_status == 'success' %}
-                                    <span class="badge-success text-xs">Success</span>
+                                    <span class="badge-success text-xs">成功</span>
                                 {% elif job.last_status == 'failure' %}
-                                    <span class="badge-danger text-xs">Failed</span>
+                                    <span class="badge-danger text-xs">失败</span>
                                 {% elif job.last_status == 'skipped' %}
-                                    <span class="badge-warning text-xs">Skipped</span>
+                                    <span class="badge-warning text-xs">已跳过</span>
                                 {% else %}
-                                    <span class="badge-info text-xs">Scheduled</span>
+                                    <span class="badge-info text-xs">已计划</span>
                                 {% endif %}
                             </td>
                             <td class="px-4 py-3 whitespace-nowrap text-sm text-right">
                                 <div class="inline-flex items-center gap-3">
                                     <form method="post" action="/zfs/replication/syncoid/jobs/{{ job.id }}/run" class="inline-flex">
-                                        <button type="submit" class="text-success-400 hover:text-success-300 transition-colors" title="Run Now">
+                                        <button type="submit" class="text-success-400 hover:text-success-300 transition-colors" title="立即运行">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                             </svg>
                                         </button>
                                     </form>
-                                    <a href="/zfs/replication/syncoid/jobs/{{ job.id }}/edit" class="text-info-400 hover:text-info-300 transition-colors" title="Edit">
+                                    <a href="/zfs/replication/syncoid/jobs/{{ job.id }}/edit" class="text-info-400 hover:text-info-300 transition-colors" title="编辑">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                         </svg>
                                     </a>
                                     {% if job.enabled %}
                                     <form method="post" action="/zfs/replication/syncoid/jobs/{{ job.id }}/disable" class="inline-flex">
-                                        <button type="submit" class="text-warning-400 hover:text-warning-300 transition-colors" title="Disable">
+                                        <button type="submit" class="text-warning-400 hover:text-warning-300 transition-colors" title="禁用">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                             </svg>
@@ -154,15 +154,15 @@
                                     </form>
                                     {% else %}
                                     <form method="post" action="/zfs/replication/syncoid/jobs/{{ job.id }}/enable" class="inline-flex">
-                                        <button type="submit" class="text-success-400 hover:text-success-300 transition-colors" title="Enable">
+                                        <button type="submit" class="text-success-400 hover:text-success-300 transition-colors" title="启用">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                             </svg>
                                         </button>
                                     </form>
                                     {% endif %}
-                                    <form method="post" action="/zfs/replication/syncoid/jobs/{{ job.id }}/delete" class="inline-flex" onsubmit="return confirm('Delete scheduled job {{ job.name }}?');">
-                                        <button type="submit" class="text-danger-400 hover:text-danger-300 transition-colors" title="Delete">
+                                    <form method="post" action="/zfs/replication/syncoid/jobs/{{ job.id }}/delete" class="inline-flex" onsubmit="return confirm('确定要删除计划任务 {{ job.name }} 吗？');">
+                                        <button type="submit" class="text-danger-400 hover:text-danger-300 transition-colors" title="删除">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                             </svg>
@@ -176,13 +176,13 @@
                 </table>
             </div>
             <p class="text-text-tertiary text-xs mt-3">
-                Jobs run through the operating system scheduler (systemd timers on Linux, root crontab on FreeBSD/NetBSD) and do not require the browser or a login session. Use the Run Now action for an immediate manual sync of an existing job, for example before system maintenance. Results appear in <a href="/zfs/replication/history" class="text-primary-400 hover:text-primary-300">Replication History</a>.
+                任务通过操作系统计划程序运行（Linux 上使用 systemd 定时器，FreeBSD/NetBSD 上使用 root crontab），无需浏览器或登录会话。使用“立即运行”操作可对现有任务立即执行手动同步，例如在系统维护之前。运行结果会显示在<a href="/zfs/replication/history" class="text-primary-400 hover:text-primary-300">数据复制历史记录</a>中。
             </p>
             {% else %}
             <div class="text-center py-6">
-                <p class="text-text-secondary mb-2">No scheduled Syncoid jobs configured.</p>
-                <p class="text-text-tertiary text-sm mb-2">Scheduled jobs run automatically in the background, even when the browser is closed. Once a job exists, it can also be triggered manually with the Run Now action.</p>
-                <p class="text-text-tertiary text-sm">For a one-off ad hoc transfer, use native <a href="/zfs/replication/send-receive/form" class="text-primary-400 hover:text-primary-300">ZFS Send/Receive</a> instead.</p>
+                <p class="text-text-secondary mb-2">尚未配置计划 Syncoid 任务。</p>
+                <p class="text-text-tertiary text-sm mb-2">计划任务会在后台自动运行，即使浏览器已关闭。任务创建后，也可以使用“立即运行”操作手动触发。</p>
+                <p class="text-text-tertiary text-sm">如需一次性的临时传输，请改用原生 <a href="/zfs/replication/send-receive/form" class="text-primary-400 hover:text-primary-300">ZFS 发送/接收</a>。</p>
             </div>
             {% endif %}
         </div>
@@ -195,13 +195,13 @@
                 <svg class="w-5 h-5 mr-2 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
                 </svg>
-                SSH Connection Management
+                SSH 连接管理
             </h2>
         </div>
         <div class="card-body">
             <p class="text-text-secondary mb-4">
-                Remote replication requires SSH key-based authentication. All SSH keys <strong class="text-text-primary">must</strong>
-                be created through the SSH Connection Manager.
+                远程复制需要使用基于密钥的 SSH 认证。所有 SSH 密钥都<strong class="text-text-primary">必须</strong>
+                通过 SSH 连接管理器创建。
             </p>
             <div class="bg-warning-900/30 border border-warning-700 text-warning-400 px-3 py-2 rounded-lg text-sm mb-4">
                 <p class="flex items-start">
@@ -209,9 +209,9 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                     </svg>
                     <span>
-                        On Linux, WebZFS runs as the <code class="text-xs bg-bg-elevated-3 px-1 py-0.5 rounded">webzfs</code> user.
-                        SSH keys created manually as root will <strong>not</strong> be accessible. Always use the SSH Connection Manager
-                        to generate and manage keys so that the correct ownership and permissions are applied.
+                        在 Linux 上，DataMax-zfs 以 <code class="text-xs bg-bg-elevated-3 px-1 py-0.5 rounded">webzfs</code> 用户身份运行。
+                        以 root 身份手动创建的 SSH 密钥将<strong>无法</strong>被访问。请始终使用 SSH 连接管理器
+                        生成和管理密钥，以确保应用正确的所有权和权限。
                     </span>
                 </p>
             </div>
@@ -221,19 +221,19 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                     </svg>
-                    Manage SSH Connections
+                    管理 SSH 连接
                 </a>
                 <a href="/utils/ssh/add" class="btn-primary inline-flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                     </svg>
-                    Add New Connection
+                    添加新连接
                 </a>
             </div>
             
             {% if ssh_connections and ssh_connections|length > 0 %}
             <div class="mt-4">
-                <p class="text-sm text-text-tertiary mb-2">Configured connections ({{ ssh_connections|length }}):</p>
+                <p class="text-sm text-text-tertiary mb-2">已配置的连接（{{ ssh_connections|length }} 个）：</p>
                 <div class="flex flex-wrap gap-2">
                     {% for conn in ssh_connections %}
                     <span class="badge-info text-xs">{{ conn.name }}</span>
@@ -250,38 +250,38 @@
             <svg class="w-5 h-5 mr-2 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            Syncoid Features
+            Syncoid 功能
         </h3>
         <ul class="space-y-2 text-sm text-text-secondary">
             <li class="flex items-start">
                 <svg class="w-4 h-4 mr-2 mt-0.5 text-info-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
-                <span>Automatic incremental replication with snapshot management</span>
+                <span>自动增量复制及快照管理</span>
             </li>
             <li class="flex items-start">
                 <svg class="w-4 h-4 mr-2 mt-0.5 text-info-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
-                <span>Bandwidth limiting for controlled transfers</span>
+                <span>带宽限制，可控传输</span>
             </li>
             <li class="flex items-start">
                 <svg class="w-4 h-4 mr-2 mt-0.5 text-info-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
-                <span>Compression support for faster transfers</span>
+                <span>压缩支持，传输更快</span>
             </li>
             <li class="flex items-start">
                 <svg class="w-4 h-4 mr-2 mt-0.5 text-info-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
-                <span>Recursive replication of dataset hierarchies</span>
+                <span>递归复制数据集层级结构</span>
             </li>
             <li class="flex items-start">
                 <svg class="w-4 h-4 mr-2 mt-0.5 text-info-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
-                <span>Bookmark support for better snapshot management</span>
+                <span>书签支持，快照管理更完善</span>
             </li>
         </ul>
     </div>

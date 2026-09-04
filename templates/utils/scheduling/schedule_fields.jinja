@@ -5,29 +5,29 @@
 #}
 
 <div class="mb-6">
-    <h3 class="font-semibold text-lg mb-4 text-text-primary">Schedule</h3>
+    <h3 class="font-semibold text-lg mb-4 text-text-primary">计划</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-            <label class="form-label" for="schedule_preset">Preset</label>
+            <label class="form-label" for="schedule_preset">预设</label>
             <select id="schedule_preset" class="form-select">
-                <option value="">Custom</option>
+                <option value="">自定义</option>
                 {% for preset in schedule_presets %}
                 <option value="{{ preset.expression }}" {% if task and task.schedule == preset.expression %}selected{% endif %}>{{ preset.label }}</option>
                 {% endfor %}
             </select>
         </div>
         <div>
-            <label class="form-label" for="schedule">Cron Expression</label>
+            <label class="form-label" for="schedule">Cron 表达式</label>
             <input type="text" name="schedule" id="schedule" required class="form-input"
                    value="{{ task.schedule if task else '0 2 * * 0' }}" placeholder="0 2 * * 0">
-            <p id="schedule-status" class="text-text-tertiary text-xs mt-1">minute hour day month weekday (local time)</p>
+            <p id="schedule-status" class="text-text-tertiary text-xs mt-1">分钟 小时 日期 月份 星期（本地时间）</p>
         </div>
     </div>
     <div id="next-runs" class="hidden mt-3 bg-bg-elevated-3 border border-border-default rounded-lg px-4 py-3 text-sm text-text-secondary"></div>
     <label class="flex items-center mt-4">
         <input type="checkbox" name="enabled" value="true" class="form-checkbox"
                {% if not task or task.enabled %}checked{% endif %}>
-        <span class="ml-3 text-text-secondary">Enabled (task runs on schedule)</span>
+        <span class="ml-3 text-text-secondary">启用（任务将按计划运行）</span>
     </label>
 </div>
 
@@ -50,18 +50,18 @@
             });
             const data = await response.json();
             if (data.valid) {
-                scheduleStatus.textContent = 'Valid schedule';
+                scheduleStatus.textContent = '计划表达式有效';
                 scheduleStatus.className = 'text-success-400 text-xs mt-1';
                 nextRunsBox.classList.remove('hidden');
-                nextRunsBox.innerHTML = '<strong class="text-text-primary">Next runs:</strong> '
+                nextRunsBox.innerHTML = '<strong class="text-text-primary">下次运行：</strong> '
                     + data.next_runs.join(', ');
             } else {
-                scheduleStatus.textContent = data.error || 'Invalid schedule';
+                scheduleStatus.textContent = data.error || '计划表达式无效';
                 scheduleStatus.className = 'text-danger-400 text-xs mt-1';
                 nextRunsBox.classList.add('hidden');
             }
         } catch (err) {
-            scheduleStatus.textContent = 'Could not validate schedule';
+            scheduleStatus.textContent = '无法校验计划表达式';
             scheduleStatus.className = 'text-warning-400 text-xs mt-1';
         }
     }

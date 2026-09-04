@@ -120,8 +120,8 @@ class DatasetIostatService:
         result["datasets"] = filtered
         if not filtered:
             result["notes"].append(
-                "No datasets matched the current filter, or no I/O activity "
-                "was recorded during the sample interval."
+                "没有数据集匹配当前筛选条件，或者在采样间隔内"
+                "没有记录到 I/O 活动。"
             )
         return result
 
@@ -188,8 +188,8 @@ class DatasetIostatService:
         if not os.path.isdir(KSTAT_BASE):
             result["available"] = False
             result["notes"].append(
-                "ZFS dataset kstats were not found at "
-                f"{KSTAT_BASE}. Is the ZFS kernel module loaded?"
+                "在 "
+                f"{KSTAT_BASE} 未找到 ZFS 数据集 kstat。ZFS 内核模块是否已加载？"
             )
             return samples
         paths = glob.glob(os.path.join(KSTAT_BASE, "*", "objset-0x*"))
@@ -249,19 +249,18 @@ class DatasetIostatService:
         except FileNotFoundError:
             result["available"] = False
             result["notes"].append(
-                "The sysctl command is not available, so dataset kstats "
-                "could not be read."
+                "sysctl 命令不可用，无法读取数据集 kstat。"
             )
             return samples
         except subprocess.TimeoutExpired:
             result["available"] = False
             result["notes"].append(
-                "Reading the ZFS kstat sysctl tree timed out."
+                "读取 ZFS kstat sysctl 树超时。"
             )
             return samples
         except Exception as exc:
             result["available"] = False
-            result["notes"].append(f"Could not read ZFS kstats: {exc}")
+            result["notes"].append(f"无法读取 ZFS kstat：{exc}")
             return samples
 
         grouped: Dict[tuple, Dict] = {}
@@ -301,7 +300,7 @@ class DatasetIostatService:
         if not grouped:
             result["available"] = False
             result["notes"].append(
-                "No ZFS dataset kstats were found. Is the ZFS module loaded?"
+                "未找到 ZFS 数据集 kstat。ZFS 模块是否已加载？"
             )
             return samples
 
@@ -333,7 +332,7 @@ class DatasetIostatService:
         mount_map = self._get_mount_map()
         if not mount_map:
             result["notes"].append(
-                "No mounted ZFS datasets were found to inspect for open files."
+                "未找到已挂载的 ZFS 数据集，无法检查打开的文件。"
             )
             return
 
@@ -344,7 +343,7 @@ class DatasetIostatService:
         ]
         if not selected:
             result["notes"].append(
-                "No mounted datasets matched the current filter."
+                "没有已挂载的数据集匹配当前筛选条件。"
             )
             return
 
@@ -355,7 +354,7 @@ class DatasetIostatService:
 
         if not result["files"]:
             result["notes"].append(
-                "No open files were found on the matching datasets."
+                "在匹配的数据集上未找到打开的文件。"
             )
 
     def _get_mount_map(self) -> List[tuple]:
@@ -495,17 +494,17 @@ class DatasetIostatService:
 
         except subprocess.TimeoutExpired:
             result["notes"].append(
-                f"The {tool_name} command timed out while scanning."
+                f"{tool_name} 命令在扫描时超时。"
             )
             return None
         except FileNotFoundError:
             result["notes"].append(
-                f"The {tool_name} command is not installed. Install it to "
-                "list open files per dataset."
+                f"未安装 {tool_name} 命令。请安装它以"
+                "列出每个数据集上打开的文件。"
             )
             return None
         except Exception as exc:
-            result["notes"].append(f"Could not run {tool_name}: {exc}")
+            result["notes"].append(f"无法运行 {tool_name}：{exc}")
             return None
 
     # ------------------------------------------------------------------

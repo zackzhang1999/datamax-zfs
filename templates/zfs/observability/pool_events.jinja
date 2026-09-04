@@ -8,19 +8,19 @@
     <nav class="text-sm mb-6" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-2">
             <li class="flex items-center">
-                <a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">Home</a>
+                <a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">首页</a>
                 <svg class="w-4 h-4 mx-2 text-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li class="flex items-center">
-                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300 transition-colors">Observability</a>
+                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300 transition-colors">运行观测</a>
                 <svg class="w-4 h-4 mx-2 text-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li>
-                <span class="text-text-primary font-medium">Pool Events</span>
+                <span class="text-text-primary font-medium">存储池事件</span>
             </li>
         </ol>
     </nav>
@@ -28,8 +28,8 @@
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
-            <h1 class="text-3xl font-bold text-text-primary mb-2">Pool Events</h1>
-            <p class="text-text-secondary">View and manage ZFS pool event logs</p>
+            <h1 class="text-3xl font-bold text-text-primary mb-2">存储池事件</h1>
+            <p class="text-text-secondary">查看和管理 ZFS 存储池事件日志</p>
         </div>
         <div class="flex gap-2">
             <a href="/zfs/observability/pool-events/download?{% if selected_pools %}pools={{ ','.join(selected_pools) }}&{% endif %}verbose={{ 'true' if verbose else 'false' }}"
@@ -38,14 +38,14 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                 </svg>
-                Download
+                下载
             </a>
-            <form method="post" action="/zfs/observability/pool-events/clear" onsubmit="return confirm('Clear all pool events?');">
+            <form method="post" action="/zfs/observability/pool-events/clear" onsubmit="return confirm('确定要清除所有存储池事件吗？');">
                 <button type="submit" class="btn-danger flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                     </svg>
-                    Clear All Events
+                    清除所有事件
                 </button>
             </form>
         </div>
@@ -59,7 +59,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
             </svg>
             <div>
-                <strong class="font-semibold">Warning:</strong> Some pools could not be accessed:
+                <strong class="font-semibold">警告：</strong>部分存储池无法访问：
                 <ul class="list-disc ml-6 mt-2">
                 {% for error in errors %}
                     <li>{{ error }}</li>
@@ -88,14 +88,14 @@
                 <svg class="w-5 h-5 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
                 </svg>
-                Filter Options
+                筛选选项
             </h2>
         </div>
         <div class="p-6">
             <form method="get" action="/zfs/observability/pool-events" id="eventsForm">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
-                        <label class="form-label">Filter by Pools</label>
+                        <label class="form-label">按存储池筛选</label>
                         {% if all_pools %}
                         <div class="space-y-2 max-h-48 overflow-y-auto border border-border-default rounded-lg p-4 bg-bg-elevated-2">
                             {% for pool in all_pools %}
@@ -110,7 +110,7 @@
                         </div>
                         <input type="hidden" name="pools" id="pools" value="{{ ','.join(selected_pools) if selected_pools else '' }}">
                         {% else %}
-                        <p class="text-sm text-text-secondary py-4 text-center bg-bg-elevated-2 rounded-lg border border-border-default">No pools available</p>
+                        <p class="text-sm text-text-secondary py-4 text-center bg-bg-elevated-2 rounded-lg border border-border-default">没有可用的存储池</p>
                         {% endif %}
                     </div>
                     
@@ -119,9 +119,9 @@
                             <label class="flex items-center cursor-pointer">
                                 <input type="checkbox" name="verbose" value="true" {% if verbose %}checked{% endif %}
                                     class="form-checkbox">
-                                <span class="ml-2 text-sm text-text-primary font-medium">Verbose output</span>
+                                <span class="ml-2 text-sm text-text-primary font-medium">详细输出</span>
                             </label>
-                            <p class="text-xs text-text-secondary mt-2 ml-6">Show full raw event data with detailed formatting</p>
+                            <p class="text-xs text-text-secondary mt-2 ml-6">以详细格式显示完整的原始事件数据</p>
                         </div>
                     </div>
                 </div>
@@ -131,13 +131,13 @@
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
                         </svg>
-                        Apply Filters
+                        应用筛选
                     </button>
                     <button type="button" onclick="selectAllPools()" class="btn-secondary">
-                        Select All
+                        全选
                     </button>
                     <button type="button" onclick="deselectAllPools()" class="btn-secondary">
-                        Deselect All
+                        取消全选
                     </button>
                 </div>
             </form>
@@ -171,21 +171,21 @@
     <div class="card overflow-hidden mb-6">
         <div class="px-6 py-4 border-b border-border-subtle flex justify-between items-center">
             <h2 class="text-xl font-semibold text-text-primary">
-                Pool Events 
-                <span class="text-sm font-normal text-text-secondary ml-2">({{ total_events }} total events)</span>
+                存储池事件 
+                <span class="text-sm font-normal text-text-secondary ml-2">（共 {{ total_events }} 个事件）</span>
             </h2>
             <div class="flex gap-2">
                 <button onclick="expandAll()" class="btn-secondary text-sm">
                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
                     </svg>
-                    Expand All
+                    全部展开
                 </button>
                 <button onclick="collapseAll()" class="btn-secondary text-sm">
                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
-                    Collapse All
+                    全部折叠
                 </button>
             </div>
         </div>
@@ -203,7 +203,7 @@
                         </svg>
                         <h3 class="text-lg font-semibold text-primary-400">{{ pool_name }}</h3>
                     </div>
-                    <span class="badge badge-info">{{ events|length }} events</span>
+                    <span class="badge badge-info">{{ events|length }} 个事件</span>
                 </div>
                 
                 <!-- Pool Events Table (Collapsible Content) -->
@@ -226,8 +226,8 @@
                         <table class="min-w-full divide-y divide-border-subtle">
                             <thead class="bg-bg-elevated-2">
                                 <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Time</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Event Class</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">时间</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">事件类别</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-bg-elevated divide-y divide-border-subtle">
@@ -254,7 +254,7 @@
                         <svg class="w-12 h-12 mx-auto text-text-tertiary mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
                         </svg>
-                        <p class="text-text-secondary">No events for this pool</p>
+                        <p class="text-text-secondary">此存储池没有事件</p>
                     </div>
                     {% endif %}
                 </div>
@@ -265,8 +265,8 @@
             <svg class="w-20 h-20 mx-auto text-text-tertiary mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
             </svg>
-            <p class="text-text-secondary text-lg mb-2">No pool events available</p>
-            <p class="text-text-tertiary text-sm">Events will appear here when ZFS operations occur</p>
+            <p class="text-text-secondary text-lg mb-2">没有可用的存储池事件</p>
+            <p class="text-text-tertiary text-sm">发生 ZFS 操作时，事件将显示在这里</p>
         </div>
         {% endif %}
     </div>
@@ -323,7 +323,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <div>
-                <p class="text-sm text-info-400"><strong>Note:</strong> Pool events are stored in kernel memory and persist across reboots only if saved. Use "Clear All Events" to remove all current events.</p>
+                <p class="text-sm text-info-400"><strong>注意：</strong>存储池事件保存在内核内存中，只有被保存后才能在重启后保留。使用“清除所有事件”可移除当前所有事件。</p>
             </div>
         </div>
     </div>

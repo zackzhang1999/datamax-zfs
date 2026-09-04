@@ -150,7 +150,7 @@ class SystemServicesService:
             )
             return {"name": service_name, "output": result.stdout}
         except Exception as exc:
-            return {"name": service_name, "output": f"Error: {exc}"}
+            return {"name": service_name, "output": f"错误：{exc}"}
 
     # ------------------------------------------------------------------
     # FreeBSD
@@ -260,7 +260,7 @@ class SystemServicesService:
                 output += "\n" + result.stderr
             return {"name": service_name, "output": output}
         except Exception as exc:
-            return {"name": service_name, "output": f"Error: {exc}"}
+            return {"name": service_name, "output": f"错误：{exc}"}
 
     # ------------------------------------------------------------------
     # NetBSD
@@ -528,7 +528,7 @@ class SystemServicesService:
                 output += "\n" + result.stderr
             return {"name": service_name, "output": output}
         except Exception as exc:
-            return {"name": service_name, "output": f"Error: {exc}"}
+            return {"name": service_name, "output": f"错误：{exc}"}
 
     # ------------------------------------------------------------------
     # Shared Helpers

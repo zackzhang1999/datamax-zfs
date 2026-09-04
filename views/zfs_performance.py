@@ -65,7 +65,7 @@ async def pool_iostat_page(
                 "latency": latency,
                 "queue": queue,
                 "iostat_data": iostat_data,
-                "page_title": "Pool I/O Statistics",
+                "page_title": "存储池 I/O 统计",
             },
         )
     except Exception as e:
@@ -76,7 +76,7 @@ async def pool_iostat_page(
                 "all_pools": [],
                 "iostat_data": {},
                 "error": str(e),
-                "page_title": "Pool I/O Statistics",
+                "page_title": "存储池 I/O 统计",
             },
         )
 
@@ -230,7 +230,7 @@ async def arc_realtime_page(
                 "raw_arcstats": raw_arcstats,
                 "system": system,
                 "interval": interval,
-                "page_title": "ARC Statistics",
+                "page_title": "ARC 统计",
             },
         )
     except Exception as e:
@@ -241,7 +241,7 @@ async def arc_realtime_page(
                 "raw_arcstats": {},
                 "system": performance_service.system,
                 "error": str(e),
-                "page_title": "ARC Statistics",
+                "page_title": "ARC 统计",
             },
         )
 
@@ -290,7 +290,7 @@ async def zfs_processes_page(request: Request, interval: int = 5):
             context={
                 "processes": processes,
                 "interval": interval,
-                "page_title": "ZFS Processes",
+                "page_title": "ZFS 进程",
             },
         )
     except Exception as e:
@@ -301,7 +301,7 @@ async def zfs_processes_page(request: Request, interval: int = 5):
                 "processes": [],
                 "interval": interval,
                 "error": str(e),
-                "page_title": "ZFS Processes",
+                "page_title": "ZFS 进程",
             },
         )
 
@@ -379,7 +379,7 @@ async def download_processes():
             output_lines.append("")
             output_lines.append(f"Total processes: {len(processes)}")
         else:
-            output_lines.append("No ZFS processes currently running")
+            output_lines.append("当前没有正在运行的 ZFS 进程")
 
         output_lines.append("")
         output_lines.append("=" * 80)
@@ -394,7 +394,7 @@ async def download_processes():
         )
     except Exception as e:
         return PlainTextResponse(
-            content=f"Error generating process list: {str(e)}",
+            content=f"生成进程列表时出错：{str(e)}",
             status_code=500,
         )
 
@@ -406,7 +406,7 @@ async def processes_table():
         processes = performance_service.get_zfs_processes(sort_by_cpu=True)
 
         if not processes:
-            return HTMLResponse(content='<p class="text-text-secondary text-center py-8">No ZFS processes currently running</p>')
+            return HTMLResponse(content='<p class="text-text-secondary text-center py-8">当前没有正在运行的 ZFS 进程</p>')
 
         html = '<table class="min-w-full divide-y divide-border-subtle">'
         html += '''<thead class="bg-bg-elevated-2">
@@ -474,7 +474,7 @@ async def dataset_space_page(
                 "selected_dataset": dataset,
                 "recursive": recursive,
                 "space_usage": space_usage,
-                "page_title": "Dataset Space Usage",
+                "page_title": "数据集空间用量",
             },
         )
     except Exception as e:
@@ -485,7 +485,7 @@ async def dataset_space_page(
                 "all_datasets": [],
                 "space_usage": [],
                 "error": str(e),
-                "page_title": "Dataset Space Usage",
+                "page_title": "数据集空间用量",
             },
         )
 
@@ -535,7 +535,7 @@ async def vdev_stats_page(
                 "all_pools": pool_names,
                 "selected_pool": selected_pool,
                 "vdev_stats": vdev_stats,
-                "page_title": "Per-VDEV Statistics",
+                "page_title": "逐 VDEV 统计",
             },
         )
     except Exception as e:
@@ -546,7 +546,7 @@ async def vdev_stats_page(
                 "all_pools": [],
                 "vdev_stats": [],
                 "error": str(e),
-                "page_title": "Per-VDEV Statistics",
+                "page_title": "逐 VDEV 统计",
             },
         )
 
@@ -664,7 +664,7 @@ async def system_iostat_page(
                 "interval": interval,
                 "extended": extended,
                 "iostat_data": iostat_data,
-                "page_title": "System I/O Statistics",
+                "page_title": "系统 I/O 统计",
             },
         )
     except Exception as e:
@@ -675,7 +675,7 @@ async def system_iostat_page(
                 "system": performance_service.system,
                 "iostat_data": {},
                 "error": str(e),
-                "page_title": "System I/O Statistics",
+                "page_title": "系统 I/O 统计",
             },
         )
 
@@ -783,7 +783,7 @@ async def dataset_stats_page(
             "mode": mode,
             "sort": sort,
             "stats": stats,
-            "page_title": "Per-Dataset I/O Statistics",
+            "page_title": "逐数据集 I/O 统计",
         },
     )
 
@@ -815,4 +815,3 @@ async def dataset_stats_table(
             "stats": stats,
         },
     )
-

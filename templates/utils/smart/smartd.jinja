@@ -4,16 +4,16 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils/smart" class="hover:text-blue-400">SMART Monitoring</a> 
+        <a href="/utils/smart" class="hover:text-blue-400">SMART 监控</a> 
         <span class="mx-2">/</span> 
-        <span class="text-text-primary">Smartd Configuration</span>
+        <span class="text-text-primary">Smartd 配置</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">Smartd Daemon Configuration</h1>
+        <h1 class="text-3xl font-bold text-text-primary">Smartd 守护进程配置</h1>
         <a href="/utils/smart" class="btn-secondary hover:bg-bg-elevated-2 text-text-primary px-4 py-2 rounded inline-block">
-            ← Back to Disks
+            ← 返回磁盘列表
         </a>
     </div>
 
@@ -26,32 +26,32 @@
     
     {% if request.query_params.get('error') %}
     <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded mb-4">
-        <strong>Error:</strong> {{ request.query_params.get('error') }}
+        <strong>错误：</strong> {{ request.query_params.get('error') }}
     </div>
     {% endif %}
 
     {% if error %}
     <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded mb-4">
-        <strong>Error:</strong> {{ error }}
+        <strong>错误：</strong> {{ error }}
     </div>
     {% endif %}
 
     <!-- Smartd Status -->
     <div class="bg-bg-elevated rounded-lg p-6 mb-6">
-        <h2 class="text-xl font-bold text-text-primary mb-4">Daemon Status</h2>
+        <h2 class="text-xl font-bold text-text-primary mb-4">守护进程状态</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-                <div class="text-text-tertiary text-sm mb-1">Service Status</div>
+                <div class="text-text-tertiary text-sm mb-1">服务状态</div>
                 <div class="text-text-primary">
                     {% if status.running %}
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-900 text-green-300">
                         <span class="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
-                        Running
+                        运行中
                     </span>
                     {% else %}
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-red-900 text-red-300">
                         <span class="w-2 h-2 bg-red-400 rounded-full mr-2"></span>
-                        Stopped
+                        已停止
                     </span>
                     {% endif %}
                 </div>
@@ -61,7 +61,7 @@
                     <button type="button" 
                             class="bg-blue-600 hover:bg-blue-700 text-text-primary px-6 py-2 rounded"
                             onclick="showConfirm('modal-restart-daemon')">
-                        🔄 Restart Daemon
+                        🔄 重启守护进程
                     </button>
                 </form>
             </div>
@@ -70,7 +70,7 @@
         {% if status.status_output %}
         <div class="mt-4">
             <details class="bg-bg-elevated-2 rounded p-4">
-                <summary class="cursor-pointer text-text-secondary font-semibold">View Full Status Output</summary>
+                <summary class="cursor-pointer text-text-secondary font-semibold">查看完整状态输出</summary>
                 <pre class="mt-4 text-xs text-text-secondary overflow-x-auto">{{ status.status_output }}</pre>
             </details>
         </div>
@@ -80,7 +80,7 @@
     <!-- Configuration Editor -->
     <div class="bg-bg-elevated rounded-lg overflow-hidden shadow-lg">
         <div class="p-6 border-b border-gray-700">
-            <h2 class="text-xl font-bold text-text-primary">Configuration File (/etc/smartd.conf)</h2>
+            <h2 class="text-xl font-bold text-text-primary">配置文件（/etc/smartd.conf）</h2>
         </div>
         
         <form method="post" action="/utils/smart/smartd/config" id="form-save-config">
@@ -89,21 +89,21 @@
                     name="config" 
                     rows="20" 
                     class="w-full bg-gray-900 text-text-secondary font-mono text-sm p-4 rounded border border-gray-600 focus:border-blue-500 focus:outline-none"
-                    placeholder="# smartd.conf configuration&#10;# Add your configuration here...">{{ config }}</textarea>
+                    placeholder="# smartd.conf configuration&#10;# 在此添加你的配置…">{{ config }}</textarea>
             </div>
             
             <div class="px-6 py-4 bg-bg-elevated-2 flex justify-between items-center">
                 <div class="text-text-tertiary text-sm">
                     <svg class="w-5 h-5 inline text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                    </svg> Remember to restart the daemon after saving changes
+                    </svg> 保存更改后请记得重启守护进程
                 </div>
                 <button type="button" 
                         class="bg-green-600 hover:bg-green-700 text-text-primary px-6 py-2 rounded font-semibold"
                         onclick="showConfirm('modal-save-config')">
                     <svg class="w-5 h-5 inline text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
-                    </svg> Save Configuration
+                    </svg> 保存配置
                 </button>
             </div>
         </form>
@@ -113,18 +113,18 @@
     <div class="mt-6 bg-info-900/30 border-2 border-info-500/50 text-info-400 px-4 py-3 rounded">
         <strong><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg> Configuration Tips:</strong>
+                    </svg> 配置提示：</strong>
         <ul class="mt-2 text-sm list-disc list-inside space-y-1">
-            <li><strong>DEVICESCAN</strong> - Automatically monitor all SMART-capable devices</li>
-            <li><strong>-a</strong> - Monitor all SMART attributes</li>
-            <li><strong>-o on</strong> - Enable automatic offline testing</li>
-            <li><strong>-S on</strong> - Enable automatic attribute autosave</li>
-            <li><strong>-s (S/../.././02|L/../../6/03)</strong> - Schedule short tests daily at 2am, long tests weekly on Saturday at 3am</li>
-            <li><strong>-m user@example.com</strong> - Send email alerts to specified address</li>
-            <li><strong>-M test</strong> - Send test email on startup</li>
+            <li><strong>DEVICESCAN</strong> - 自动监控所有支持 SMART 的设备</li>
+            <li><strong>-a</strong> - 监控所有 SMART 属性</li>
+            <li><strong>-o on</strong> - 启用自动离线测试</li>
+            <li><strong>-S on</strong> - 启用属性自动保存</li>
+            <li><strong>-s (S/../.././02|L/../../6/03)</strong> - 每天凌晨 2 点运行短测试，每周六凌晨 3 点运行长测试</li>
+            <li><strong>-m user@example.com</strong> - 向指定地址发送邮件告警</li>
+            <li><strong>-M test</strong> - 启动时发送测试邮件</li>
         </ul>
         <div class="mt-3 bg-blue-950 p-3 rounded font-mono text-xs">
-            <div class="text-blue-300 font-semibold mb-2">Example Configuration:</div>
+            <div class="text-blue-300 font-semibold mb-2">示例配置：</div>
             <pre class="text-blue-100"># Monitor all devices
 DEVICESCAN -a -o on -S on -s (S/../.././02|L/../../6/03) -m root -M exec /usr/libexec/smartd/smartd-runner</pre>
         </div>
@@ -134,27 +134,27 @@ DEVICESCAN -a -o on -S on -s (S/../.././02|L/../../6/03) -m root -M exec /usr/li
     <div class="mt-4 bg-yellow-900 border border-yellow-700 text-yellow-200 px-4 py-3 rounded">
         <strong><svg class="w-5 h-5 inline text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                    </svg> Warning:</strong>
+                    </svg> 警告：</strong>
         <p class="mt-1 text-sm">
-            Modifying smartd.conf requires appropriate system permissions. Test your configuration carefully before 
-            deploying to production systems. Syntax errors may prevent the smartd daemon from starting.
+            修改 smartd.conf 需要相应的系统权限。部署到生产系统之前，请仔细测试配置。
+            语法错误可能导致 smartd 守护进程无法启动。
         </p>
     </div>
 </div>
 
 <!-- Confirmation Modals -->
 {% set id = 'modal-restart-daemon' %}
-{% set title = 'Restart Daemon' %}
-{% set message = 'Restart smartd daemon?' %}
-{% set confirm_text = 'Restart' %}
+{% set title = '重启守护进程' %}
+{% set message = '要重启 smartd 守护进程吗？' %}
+{% set confirm_text = '重启' %}
 {% set confirm_class = 'primary' %}
 {% set confirm_action = 'document.getElementById("form-restart-daemon").submit()' %}
 {% include 'partials/confirm.jinja' %}
 
 {% set id = 'modal-save-config' %}
-{% set title = 'Save Configuration' %}
-{% set message = 'Save configuration changes?' %}
-{% set confirm_text = 'Save' %}
+{% set title = '保存配置' %}
+{% set message = '要保存配置更改吗？' %}
+{% set confirm_text = '保存' %}
 {% set confirm_class = 'primary' %}
 {% set confirm_action = 'document.getElementById("form-save-config").submit()' %}
 {% include 'partials/confirm.jinja' %}

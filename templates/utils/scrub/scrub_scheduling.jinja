@@ -6,16 +6,16 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils/" class="hover:text-primary-400">Utilities</a> 
+        <a href="/utils/" class="hover:text-primary-400">实用工具</a> 
         <span class="mx-2">/</span> 
-        <span class="text-text-primary">ZFS Scrub Scheduling</span>
+        <span class="text-text-primary">ZFS 数据清洗计划</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">Scheduled ZFS Scrubs</h1>
+        <h1 class="text-3xl font-bold text-text-primary">计划的 ZFS 数据清洗</h1>
         <a href="/utils/" class="btn-secondary hover:bg-bg-elevated-2 text-text-primary px-4 py-2 rounded inline-block">
-            ← Back to Utilities
+            ← 返回实用工具
         </a>
     </div>
 
@@ -28,47 +28,47 @@
     
     {% if request.query_params.get('error') %}
     <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded mb-4">
-        <strong>Error:</strong> {{ request.query_params.get('error') }}
+        <strong>错误：</strong> {{ request.query_params.get('error') }}
     </div>
     {% endif %}
 
     {% if error %}
     <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded mb-4">
-        <strong>Error:</strong> {{ error }}
+        <strong>错误：</strong> {{ error }}
     </div>
     {% endif %}
 
     <!-- Create New Schedule Form -->
     <div class="card mb-6">
         <div class="card-body">
-            <h2 class="text-xl font-bold text-text-primary mb-4">Create Scheduled Scrub</h2>
+            <h2 class="text-xl font-bold text-text-primary mb-4">创建计划的数据清洗</h2>
             <form method="post" action="/utils/scrub-scheduling/create" class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-text-secondary text-sm font-semibold mb-2">ZFS Pool</label>
+                        <label class="block text-text-secondary text-sm font-semibold mb-2">ZFS 存储池</label>
                         <select name="pool" required class="w-full bg-bg-elevated-2 text-text-primary rounded px-3 py-2 border border-border-subtle focus:border-primary-500 focus:outline-none">
-                            <option value="">Select a pool...</option>
+                            <option value="">选择存储池...</option>
                             {% for pool in pools %}
                             <option value="{{ pool }}">{{ pool }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div>
-                        <label class="block text-text-secondary text-sm font-semibold mb-2">Schedule (Cron Format)</label>
+                        <label class="block text-text-secondary text-sm font-semibold mb-2">计划（Cron 格式）</label>
                         <input type="text" name="schedule" required placeholder="0 2 * * 0" 
                                class="w-full bg-bg-elevated-2 text-text-primary rounded px-3 py-2 border border-border-subtle focus:border-primary-500 focus:outline-none">
-                        <p class="text-text-tertiary text-xs mt-1">Example: "0 2 * * 0" = Weekly on Sunday at 2am</p>
+                        <p class="text-text-tertiary text-xs mt-1">示例："0 2 * * 0" = 每周日凌晨 2 点</p>
                     </div>
                 </div>
                 <div class="flex items-center">
                     <input type="checkbox" name="enabled" id="enabled" value="true" checked class="mr-2">
-                    <label for="enabled" class="text-text-secondary text-sm">Enabled</label>
+                    <label for="enabled" class="text-text-secondary text-sm">已启用</label>
                 </div>
                 <button type="submit" class="btn-primary">
                     <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
-                    Create Schedule
+                    创建计划
                 </button>
             </form>
         </div>
@@ -79,17 +79,17 @@
     <div class="card">
         <div class="card-body p-0">
             <div class="p-6 border-b border-border-subtle">
-                <h2 class="text-xl font-bold text-text-primary">Active Schedules</h2>
+                <h2 class="text-xl font-bold text-text-primary">活动计划</h2>
             </div>
             <div class="overflow-x-auto">
                 <table class="min-w-full">
                     <thead class="bg-bg-elevated-2 text-text-secondary">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Pool</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Schedule</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Created</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">存储池</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">计划</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">状态</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">创建时间</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">操作</th>
                         </tr>
                     </thead>
                     <tbody class="bg-bg-elevated divide-y divide-border-subtle">
@@ -100,11 +100,11 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 {% if schedule.enabled %}
                                 <span class="badge-success text-xs">
-                                    Enabled
+                                    已启用
                                 </span>
                                 {% else %}
                                 <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-bg-elevated-2 text-text-tertiary">
-                                    Disabled
+                                    已禁用
                                 </span>
                                 {% endif %}
                             </td>
@@ -114,14 +114,14 @@
                                     <form method="post" action="/utils/scrub-scheduling/{{ schedule.id }}/toggle" class="inline">
                                         <button type="submit" 
                                                 class="text-warning-400 hover:text-warning-300" 
-                                                title="Toggle Enabled/Disabled">
+                                                title="切换启用/禁用">
                                             {% if schedule.enabled %}⏸️{% else %}▶️{% endif %}
                                         </button>
                                     </form>
                                     <form method="post" action="/utils/scrub-scheduling/{{ schedule.id }}/delete" class="inline" id="form-delete-scrub-{{ schedule.id }}">
                                         <button type="button" 
                                                 class="text-danger-400 hover:text-danger-300" 
-                                                title="Delete Schedule"
+                                                title="删除计划"
                                                 onclick="showConfirm('modal-delete-scrub-{{ schedule.id }}')">
                                             🗑️
                                         </button>
@@ -138,7 +138,7 @@
 
     <!-- Schedule Count -->
     <div class="mt-4 text-text-tertiary text-sm">
-        <p>Total Schedules: {{ scheduled_scrubs|length }}</p>
+        <p>计划总数：{{ scheduled_scrubs|length }}</p>
     </div>
     {% else %}
     <!-- No Schedules Found -->
@@ -149,8 +149,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
             </div>
-            <h3 class="text-lg font-medium text-text-primary mb-2">No Scheduled Scrubs</h3>
-            <p class="text-text-secondary">Create a schedule above to automatically scrub your ZFS pools.</p>
+            <h3 class="text-lg font-medium text-text-primary mb-2">暂无计划的数据清洗</h3>
+            <p class="text-text-secondary">在上方创建计划，即可自动对 ZFS 存储池执行数据清洗。</p>
         </div>
     </div>
     {% endif %}
@@ -159,21 +159,21 @@
     <div class="mt-6 bg-info-900/30 border-2 border-info-500/50 text-info-400 px-4 py-3 rounded">
         <strong><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg> Cron Schedule Format:</strong>
+                    </svg> Cron 计划格式：</strong>
         <div class="mt-2 text-sm">
-            <p class="mb-2">Format: <code class="bg-info-950 px-2 py-1 rounded">minute hour day month weekday</code></p>
+            <p class="mb-2">格式：<code class="bg-info-950 px-2 py-1 rounded">minute hour day month weekday</code>（分 时 日 月 星期）</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-3">
                 <div>
-                    <code class="bg-info-950 px-2 py-1 rounded">0 2 * * 0</code> - Weekly on Sunday at 2:00 AM
+                    <code class="bg-info-950 px-2 py-1 rounded">0 2 * * 0</code> - 每周日凌晨 2:00
                 </div>
                 <div>
-                    <code class="bg-info-950 px-2 py-1 rounded">0 3 1 * *</code> - Monthly on 1st at 3:00 AM
+                    <code class="bg-info-950 px-2 py-1 rounded">0 3 1 * *</code> - 每月 1 日凌晨 3:00
                 </div>
                 <div>
-                    <code class="bg-info-950 px-2 py-1 rounded">0 2 * * *</code> - Daily at 2:00 AM
+                    <code class="bg-info-950 px-2 py-1 rounded">0 2 * * *</code> - 每天凌晨 2:00
                 </div>
                 <div>
-                    <code class="bg-info-950 px-2 py-1 rounded">0 4 1,15 * *</code> - 1st and 15th of month at 4:00 AM
+                    <code class="bg-info-950 px-2 py-1 rounded">0 4 1,15 * *</code> - 每月 1 日和 15 日凌晨 4:00
                 </div>
             </div>
         </div>
@@ -183,12 +183,9 @@
     <div class="mt-4 bg-warning-900/30 border-2 border-warning-500/50 text-warning-400 px-4 py-3 rounded">
         <strong><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                    </svg> Note:</strong>
+                    </svg> 注意：</strong>
         <p class="mt-1 text-sm">
-            This interface provides basic scheduling functionality. For production use, consider configuring cron jobs 
-            directly or using system scheduling. Scheduled scrubs created here are stored in memory and will be lost on 
-            application restart unless persisted to a database. Regular scrubbing helps maintain ZFS pool integrity and 
-            detect data corruption early.
+            此界面提供基础的计划任务功能。生产环境建议直接配置 cron 任务或使用系统调度。在此处创建的计划数据清洗保存在内存中，除非持久化到数据库，否则应用重启后将丢失。定期进行数据清洗有助于保持 ZFS 存储池的完整性，并及早发现数据损坏。
         </p>
     </div>
 </div>
@@ -197,9 +194,9 @@
 {% if scheduled_scrubs and scheduled_scrubs|length > 0 %}
     {% for schedule in scheduled_scrubs %}
     {% set modal_id = 'modal-delete-scrub-' + schedule.id|string %}
-    {% set modal_title = 'Delete Schedule' %}
-    {% set modal_message = 'Delete this scheduled scrub?' %}
-    {% set confirm_text = 'Delete' %}
+    {% set modal_title = '删除计划' %}
+    {% set modal_message = '确定要删除此计划的数据清洗吗？' %}
+    {% set confirm_text = '删除' %}
     {% set confirm_class = 'danger' %}
     {% set action_url = '/utils/scrub-scheduling/' + schedule.id|string + '/delete' %}
     {% set method = 'post' %}

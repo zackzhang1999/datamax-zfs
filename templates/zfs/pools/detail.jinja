@@ -7,7 +7,7 @@
 <div class="space-y-6">
     <!-- Breadcrumb -->
     <nav class="flex items-center text-sm text-text-secondary">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
@@ -20,15 +20,15 @@
             <h1 class="text-3xl font-bold text-text-primary">{{ pool.name }}</h1>
             {% set state = parsed.state %}
             {% if state == 'ONLINE' %}
-            <span class="px-3 py-1 rounded-full text-sm font-semibold bg-success-900/50 text-success-400 border border-success-900">ONLINE</span>
+            <span class="px-3 py-1 rounded-full text-sm font-semibold bg-success-900/50 text-success-400 border border-success-900">在线</span>
             {% elif state == 'DEGRADED' %}
-            <span class="px-3 py-1 rounded-full text-sm font-semibold bg-warning-900/50 text-warning-400 border border-warning-900">DEGRADED</span>
+            <span class="px-3 py-1 rounded-full text-sm font-semibold bg-warning-900/50 text-warning-400 border border-warning-900">降级</span>
             {% elif state == 'FAULTED' %}
-            <span class="px-3 py-1 rounded-full text-sm font-semibold bg-danger-900/50 text-danger-400 border border-danger-900">FAULTED</span>
+            <span class="px-3 py-1 rounded-full text-sm font-semibold bg-danger-900/50 text-danger-400 border border-danger-900">故障</span>
             {% elif state == 'SUSPENDED' %}
-            <span class="px-3 py-1 rounded-full text-sm font-semibold bg-danger-900/50 text-danger-400 border border-danger-900">SUSPENDED</span>
+            <span class="px-3 py-1 rounded-full text-sm font-semibold bg-danger-900/50 text-danger-400 border border-danger-900">已暂停</span>
             {% elif state == 'UNAVAIL' %}
-            <span class="px-3 py-1 rounded-full text-sm font-semibold bg-danger-900/50 text-danger-400 border border-danger-900">UNAVAILABLE</span>
+            <span class="px-3 py-1 rounded-full text-sm font-semibold bg-danger-900/50 text-danger-400 border border-danger-900">不可用</span>
             {% else %}
             <span class="px-3 py-1 rounded-full text-sm font-semibold bg-bg-elevated-2 text-text-secondary border border-border-subtle">{{ state }}</span>
             {% endif %}
@@ -38,20 +38,20 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                 </svg>
-                Manage VDevs
+                管理 VDev
             </a>
             <a href="/zfs/pools/{{ pool.name }}/properties" class="btn-primary inline-flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
-                Properties
+                属性
             </a>
             <a href="/zfs/pools/{{ pool.name }}/history" class="btn-secondary inline-flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                History
+                历史记录
             </a>
         </div>
     </div>
@@ -83,21 +83,21 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-danger-400 text-center mb-3">Export Failed</h3>
+                    <h3 class="text-xl font-semibold text-danger-400 text-center mb-3">导出失败</h3>
                     <p class="text-text-secondary text-center mb-2">
-                        The pool <strong class="font-mono text-text-primary">{{ pool.name }}</strong>
-                        could not be exported because it is still in use.
+                        存储池 <strong class="font-mono text-text-primary">{{ pool.name }}</strong>
+                        仍在使用中，无法导出。
                     </p>
                     <div class="bg-danger-900/20 border border-danger-900 rounded-lg p-3 mb-5">
                         <p class="text-sm text-danger-300 font-mono break-words text-center">{{ request.query_params.get('error') }}</p>
                     </div>
                     <p class="text-sm text-text-secondary text-center mb-5">
-                        You can investigate the system to find the open files and shells
-                        that are holding the pool busy, then try to export it again.
+                        您可以排查系统，找出占用该存储池的打开文件和 shell，
+                        然后重试导出。
                     </p>
                     <div class="flex flex-col sm:flex-row gap-3">
                         <a href="/zfs/pools/{{ pool.name }}" class="btn-secondary flex-1 text-center">
-                            Accept and Return to Pool
+                            接受并返回存储池
                         </a>
                         <button type="button"
                                 class="btn-danger flex-1 inline-flex items-center justify-center gap-2"
@@ -105,7 +105,7 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
-                            Investigate
+                            排查
                         </button>
                     </div>
                 </div>
@@ -131,7 +131,7 @@
                             <svg class="w-5 h-5 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
-                            Export Blocked: What Is Using {{ pool.name }}?
+                            导出受阻：是什么在占用 {{ pool.name }}？
                         </h3>
                         <button type="button" class="text-text-tertiary hover:text-text-primary" onclick="closeInvestigateModal()">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,18 +142,18 @@
                     <div id="investigate-modal-body" class="max-h-[70vh] overflow-y-auto">
                         <div class="flex flex-col items-center justify-center py-12 gap-4">
                             <div class="w-12 h-12 rounded-full border-4 border-danger-900 border-t-danger-500 animate-spin"></div>
-                            <span class="text-text-secondary">Scanning the system for open files and locks...</span>
+                            <span class="text-text-secondary">正在扫描系统中打开的文件和锁...</span>
                         </div>
                     </div>
                     <div class="flex justify-end gap-3 pt-4 mt-4 border-t border-border-subtle">
-                        <button type="button" class="btn-secondary" onclick="closeInvestigateModal()">Close</button>
+                        <button type="button" class="btn-secondary" onclick="closeInvestigateModal()">关闭</button>
                         <button type="button" class="btn-secondary flex items-center gap-2" onclick="refreshInvestigateModal()">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                             </svg>
-                            Refresh
+                            刷新
                         </button>
-                        <a href="/zfs/pools/{{ pool.name }}/export/confirm" class="btn-danger">Try Export Again</a>
+                        <a href="/zfs/pools/{{ pool.name }}/export/confirm" class="btn-danger">重试导出</a>
                     </div>
                 </div>
             </div>
@@ -166,13 +166,13 @@
         if (!body) { return; }
         body.innerHTML = '<div class="flex flex-col items-center justify-center py-12 gap-4">'
             + '<div class="w-12 h-12 rounded-full border-4 border-danger-900 border-t-danger-500 animate-spin"></div>'
-            + '<span class="text-text-secondary">Scanning the system for open files and locks...</span></div>';
+            + '<span class="text-text-secondary">正在扫描系统中打开的文件和锁...</span></div>';
         fetch('/zfs/pools/{{ pool.name }}/export/investigate')
             .then(function(response) { return response.text(); })
             .then(function(html) { body.innerHTML = html; })
             .catch(function(err) {
                 body.innerHTML = '<div class="alert-danger" role="alert">'
-                    + '<p class="text-sm text-danger-300">Could not run the investigation: '
+                    + '<p class="text-sm text-danger-300">无法执行排查：'
                     + err + '</p></div>';
             });
     };
@@ -198,7 +198,7 @@
     {% set cap_val = (zfs_cap if zfs_cap else props.get('capacity', {}).get('value', '0%'))|replace('%', '')|int %}
     <div class="card">
         <div class="flex items-center justify-between mb-2">
-            <span class="text-text-secondary text-sm font-medium">Pool Capacity</span>
+            <span class="text-text-secondary text-sm font-medium">存储池容量</span>
             <span class="text-text-primary font-semibold">{{ zfs_cap if zfs_cap else props.get('capacity', {}).get('value', '-') }}</span>
         </div>
         <div class="w-full bg-bg-elevated-2 rounded-full h-3 overflow-hidden">
@@ -206,8 +206,8 @@
                  style="width: {{ cap_val }}%"></div>
         </div>
         <div class="flex justify-between mt-2 text-xs text-text-tertiary">
-            <span>{{ zfs_used if zfs_used else props.get('allocated', {}).get('value', '-') }} used</span>
-            <span>{{ zfs_avail if zfs_avail else props.get('free', {}).get('value', '-') }} available of {{ zfs_total if zfs_total else props.get('size', {}).get('value', '-') }}</span>
+            <span>{{ zfs_used if zfs_used else props.get('allocated', {}).get('value', '-') }} 已用</span>
+            <span>{{ zfs_avail if zfs_avail else props.get('free', {}).get('value', '-') }} 可用，共 {{ zfs_total if zfs_total else props.get('size', {}).get('value', '-') }}</span>
         </div>
     </div>
 
@@ -218,20 +218,20 @@
                 <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                 </svg>
-                Dataset Space Usage
+                数据集空间使用情况
             </h2>
             <div class="flex flex-wrap items-center gap-3 text-sm">
                 <div id="space-viz-breadcrumb" class="text-text-secondary"></div>
                 <label class="inline-flex items-center gap-2 text-text-secondary cursor-pointer select-none">
                     <input type="checkbox" id="space-viz-show-snapshots" checked
                            class="form-checkbox h-4 w-4 rounded border-border-subtle bg-bg-elevated-2 text-primary-500 focus:ring-primary-500">
-                    <span>Show snapshot bands</span>
+                    <span>显示快照占用条带</span>
                 </label>
                 <label class="inline-flex items-center gap-2 text-text-secondary cursor-pointer select-none"
-                       title="Shrink the free-space block so dataset segments fill more of the row.">
+                       title="压缩空闲空间块，使数据集段填充更多行宽。">
                     <input type="checkbox" id="space-viz-collapse-free"
                            class="form-checkbox h-4 w-4 rounded border-border-subtle bg-bg-elevated-2 text-primary-500 focus:ring-primary-500">
-                    <span>Collapse free space</span>
+                    <span>折叠空闲空间</span>
                 </label>
                 <button type="button" id="space-viz-back"
                         class="btn-secondary text-sm inline-flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -239,22 +239,22 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                     </svg>
-                    Back
+                    返回
                 </button>
                 <a href="/zfs/datasets?focus={{ pool.name }}"
                    class="btn-primary text-sm inline-flex items-center gap-1"
-                   title="Open the datasets page with this pool expanded">
+                   title="打开数据集页面并展开此存储池">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
                     </svg>
-                    View Datasets
+                    查看数据集
                 </a>
             </div>
         </div>
         <div id="space-viz-container"
              class="relative w-full bg-bg-base border border-border-subtle rounded-lg overflow-hidden">
             <div id="space-viz-loading" class="flex items-center justify-center text-text-tertiary text-sm py-12">
-                Loading dataset usage...
+                正在加载数据集使用情况...
             </div>
             <svg id="space-viz-svg" class="block w-full" style="display:none;" preserveAspectRatio="none"></svg>
         </div>
@@ -263,8 +263,8 @@
              style="position: fixed; max-width: 320px;">
         </div>
         <p class="text-xs text-text-tertiary mt-3">
-            Each row is one level of dataset depth. Segment width is proportional to space used relative to the parent.
-            Click a segment to drill in. The visualization shows up to four levels.
+            每行代表数据集的一个层级。段宽度与相对于父级已用空间成正比。
+            点击某段可深入查看。可视化最多显示四个层级。
         </p>
     </div>
 
@@ -273,32 +273,32 @@
     {% set compress_ratio = ds_props.get('compressratio', {}).get('value', '-') %}
     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
         <div class="card text-center">
-            <div class="text-text-tertiary text-xs uppercase mb-1">Used</div>
+            <div class="text-text-tertiary text-xs uppercase mb-1">已用</div>
             <div class="text-text-primary text-xl font-bold">{{ zfs_used if zfs_used else props.get('allocated', {}).get('value', '-') }}</div>
         </div>
         <div class="card text-center">
-            <div class="text-text-tertiary text-xs uppercase mb-1">Available</div>
+            <div class="text-text-tertiary text-xs uppercase mb-1">可用</div>
             <div class="text-text-primary text-xl font-bold">{{ zfs_avail if zfs_avail else props.get('free', {}).get('value', '-') }}</div>
         </div>
         <div class="card text-center">
-            <div class="text-text-tertiary text-xs uppercase mb-1">Total</div>
+            <div class="text-text-tertiary text-xs uppercase mb-1">总计</div>
             <div class="text-text-primary text-xl font-bold">{{ zfs_total if zfs_total else props.get('size', {}).get('value', '-') }}</div>
         </div>
         <div class="card text-center">
-            <div class="text-text-tertiary text-xs uppercase mb-1">Fragmentation</div>
+            <div class="text-text-tertiary text-xs uppercase mb-1">碎片率</div>
             <div class="text-text-primary text-xl font-bold">{{ props.get('fragmentation', {}).get('value', '-') }}</div>
         </div>
         <div class="card text-center">
-            <div class="text-text-tertiary text-xs uppercase mb-1">Compression</div>
-            <div class="text-text-primary text-xl font-bold">{% if compress_val != 'off' %}{{ compress_ratio }}{% else %}Off{% endif %}</div>
+            <div class="text-text-tertiary text-xs uppercase mb-1">压缩</div>
+            <div class="text-text-primary text-xl font-bold">{% if compress_val != 'off' %}{{ compress_ratio }}{% else %}关闭{% endif %}</div>
         </div>
         <div class="card text-center">
-            <div class="text-text-tertiary text-xs uppercase mb-1">Dedup Ratio</div>
+            <div class="text-text-tertiary text-xs uppercase mb-1">去重比</div>
             <div class="text-text-primary text-xl font-bold">{{ props.get('dedupratio', {}).get('value', '-') }}</div>
         </div>
         <div class="card text-center">
-            <div class="text-text-tertiary text-xs uppercase mb-1">Reservation</div>
-            <div class="text-text-primary text-xl font-bold">{{ reservation_value if reservation_value != 'none' and reservation_value != '0' else 'None' }}</div>
+            <div class="text-text-tertiary text-xs uppercase mb-1">预留空间</div>
+            <div class="text-text-primary text-xl font-bold">{{ reservation_value if reservation_value != 'none' and reservation_value != '0' else '无' }}</div>
         </div>
     </div>
 
@@ -310,29 +310,29 @@
                 <svg class="w-5 h-5 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                 </svg>
-                Diagnostics
+                诊断
             </h2>
             <div class="space-y-3">
                 {% if parsed.scan_info %}
                 <div class="flex items-start gap-2">
-                    <span class="text-text-tertiary text-sm w-16 flex-shrink-0 pt-0.5">Scan:</span>
+                    <span class="text-text-tertiary text-sm w-16 flex-shrink-0 pt-0.5">扫描：</span>
                     <span class="text-text-primary text-sm">{{ parsed.scan_info }}</span>
                 </div>
                 {% endif %}
                 {% if parsed.status_message %}
                 <div class="flex items-start gap-2">
-                    <span class="text-text-tertiary text-sm w-16 flex-shrink-0 pt-0.5">Status:</span>
+                    <span class="text-text-tertiary text-sm w-16 flex-shrink-0 pt-0.5">状态：</span>
                     <span class="text-warning-400 text-sm">{{ parsed.status_message }}</span>
                 </div>
                 {% endif %}
                 {% if parsed.action_message %}
                 <div class="flex items-start gap-2">
-                    <span class="text-text-tertiary text-sm w-16 flex-shrink-0 pt-0.5">Action:</span>
+                    <span class="text-text-tertiary text-sm w-16 flex-shrink-0 pt-0.5">操作：</span>
                     <span class="text-info-400 text-sm">{{ parsed.action_message }}</span>
                 </div>
                 {% endif %}
                 <div class="flex items-start gap-2">
-                    <span class="text-text-tertiary text-sm w-16 flex-shrink-0 pt-0.5">Errors:</span>
+                    <span class="text-text-tertiary text-sm w-16 flex-shrink-0 pt-0.5">错误：</span>
                     {% if parsed.errors_line and 'No known' in parsed.errors_line %}
                     <span class="text-success-400 text-sm">{{ parsed.errors_line }}</span>
                     {% elif parsed.errors_line %}
@@ -350,42 +350,42 @@
                 <svg class="w-5 h-5 text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                 </svg>
-                I/O Error Totals
+                I/O 错误总计
             </h2>
             <div class="grid grid-cols-3 gap-4">
                 {% set has_read = parsed.total_read_errors > 0 %}
                 {% set has_write = parsed.total_write_errors > 0 %}
                 {% set has_cksum = parsed.total_cksum_errors > 0 %}
                 <div class="card-nested text-center {% if has_read %}bg-danger-900/20 border-danger-900{% endif %}">
-                    <div class="text-text-tertiary text-xs uppercase mb-1">Read</div>
+                    <div class="text-text-tertiary text-xs uppercase mb-1">读取</div>
                     <div class="text-2xl font-bold {% if has_read %}text-danger-400{% else %}text-success-400{% endif %}">{{ parsed.total_read_errors }}</div>
                 </div>
                 <div class="card-nested text-center {% if has_write %}bg-danger-900/20 border-danger-900{% endif %}">
-                    <div class="text-text-tertiary text-xs uppercase mb-1">Write</div>
+                    <div class="text-text-tertiary text-xs uppercase mb-1">写入</div>
                     <div class="text-2xl font-bold {% if has_write %}text-danger-400{% else %}text-success-400{% endif %}">{{ parsed.total_write_errors }}</div>
                 </div>
                 <div class="card-nested text-center {% if has_cksum %}bg-danger-900/20 border-danger-900{% endif %}">
-                    <div class="text-text-tertiary text-xs uppercase mb-1">Checksum</div>
+                    <div class="text-text-tertiary text-xs uppercase mb-1">校验和</div>
                     <div class="text-2xl font-bold {% if has_cksum %}text-danger-400{% else %}text-success-400{% endif %}">{{ parsed.total_cksum_errors }}</div>
                 </div>
             </div>
             <div class="mt-4">
-                <h3 class="text-sm font-medium text-text-secondary mb-2">Pool Settings</h3>
+                <h3 class="text-sm font-medium text-text-secondary mb-2">存储池设置</h3>
                 <div class="grid grid-cols-2 gap-x-6 gap-y-1 text-sm">
                     <div class="flex justify-between border-b border-border-subtle py-1">
-                        <span class="text-text-tertiary">Failmode:</span>
+                        <span class="text-text-tertiary">故障模式：</span>
                         <span class="text-text-primary font-mono">{{ props.get('failmode', {}).get('value', '-') }}</span>
                     </div>
                     <div class="flex justify-between border-b border-border-subtle py-1">
-                        <span class="text-text-tertiary">Autoreplace:</span>
+                        <span class="text-text-tertiary">自动替换：</span>
                         <span class="text-text-primary font-mono">{{ props.get('autoreplace', {}).get('value', '-') }}</span>
                     </div>
                     <div class="flex justify-between border-b border-border-subtle py-1">
-                        <span class="text-text-tertiary">Autoexpand:</span>
+                        <span class="text-text-tertiary">自动扩容：</span>
                         <span class="text-text-primary font-mono">{{ props.get('autoexpand', {}).get('value', '-') }}</span>
                     </div>
                     <div class="flex justify-between border-b border-border-subtle py-1">
-                        <span class="text-text-tertiary">Delegation:</span>
+                        <span class="text-text-tertiary">委派：</span>
                         <span class="text-text-primary font-mono">{{ props.get('delegation', {}).get('value', '-') }}</span>
                     </div>
                 </div>
@@ -399,17 +399,17 @@
             <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
             </svg>
-            VDev Layout
+            VDev 布局
         </h2>
         <div class="overflow-x-auto">
             <table class="min-w-full text-sm">
                 <thead>
                     <tr class="border-b border-border-subtle">
-                        <th class="text-left py-2 px-3 text-text-secondary font-medium">Name</th>
-                        <th class="text-left py-2 px-3 text-text-secondary font-medium">State</th>
-                        <th class="text-right py-2 px-3 text-text-secondary font-medium">Read</th>
-                        <th class="text-right py-2 px-3 text-text-secondary font-medium">Write</th>
-                        <th class="text-right py-2 px-3 text-text-secondary font-medium">Cksum</th>
+                        <th class="text-left py-2 px-3 text-text-secondary font-medium">名称</th>
+                        <th class="text-left py-2 px-3 text-text-secondary font-medium">状态</th>
+                        <th class="text-right py-2 px-3 text-text-secondary font-medium">读取</th>
+                        <th class="text-right py-2 px-3 text-text-secondary font-medium">写入</th>
+                        <th class="text-right py-2 px-3 text-text-secondary font-medium">校验和</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -434,9 +434,9 @@
                         </td>
                         <td class="py-2 px-3">
                             {% if vdev.state == 'ONLINE' %}
-                            <span class="text-success-400 font-medium">ONLINE</span>
+                            <span class="text-success-400 font-medium">在线</span>
                             {% elif vdev.state == 'DEGRADED' %}
-                            <span class="text-warning-400 font-semibold">DEGRADED</span>
+                            <span class="text-warning-400 font-semibold">降级</span>
                             {% elif vdev.state == 'FAULTED' or vdev.state == 'UNAVAIL' or vdev.state == 'REMOVED' %}
                             <span class="text-danger-400 font-semibold">{{ vdev.state }}</span>
                             {% else %}
@@ -462,7 +462,7 @@
                 <svg class="w-5 h-5 text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                 </svg>
-                Actions
+                操作
             </h2>
             <div class="grid grid-cols-2 gap-3">
                 <!-- Scrub Start -->
@@ -473,7 +473,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
-                        Start Scrub
+                        开始数据清洗
                     </button>
                 </form>
 
@@ -485,7 +485,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        Stop Scrub
+                        停止数据清洗
                     </button>
                 </form>
 
@@ -499,7 +499,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
                         </svg>
-                        Checkpoint
+                        创建检查点
                     </button>
                 </form>
                 {% endif %}
@@ -511,7 +511,16 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                     </svg>
-                    Export Pool
+                    导出存储池
+                </a>
+
+                <!-- Destroy Pool -->
+                <a href="/zfs/pools/{{ pool.name }}/destroy/confirm"
+                   class="btn-danger col-span-2 w-full inline-flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                    销毁存储池
                 </a>
             </div>
             <div class="card-nested mt-4">
@@ -519,7 +528,7 @@
                     <svg class="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <span><strong class="text-text-secondary">Note:</strong> Pool destruction must be performed via command line for safety.</span>
+                    <span><strong class="text-text-secondary">注意：</strong>“销毁存储池”为不可逆操作，将永久删除该存储池中的全部数据。如需完整保留数据，请先执行“导出存储池”或通过数据复制功能创建备份。</span>
                 </p>
             </div>
         </div>
@@ -530,40 +539,40 @@
                 <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                 </svg>
-                Pool Reservation
+                存储池预留空间
             </h2>
             {% if reservation_value and reservation_value != 'none' and reservation_value != '0' %}
             <div class="card-nested bg-purple-900/20 border-purple-900 mb-4">
                 <div class="flex items-center justify-between">
                     <div>
-                        <div class="text-text-tertiary text-xs uppercase">Current Reservation</div>
+                        <div class="text-text-tertiary text-xs uppercase">当前预留空间</div>
                         <div class="text-purple-400 text-xl font-bold mt-1">{{ reservation_value }}</div>
                     </div>
                     <form method="post" action="/zfs/pools/{{ pool.name }}/reservation">
                         <input type="hidden" name="reservation_size" value="none">
-                        <button type="submit" class="btn-secondary text-sm">Remove</button>
+                        <button type="submit" class="btn-secondary text-sm">移除</button>
                     </form>
                 </div>
             </div>
             {% endif %}
             <form method="post" action="/zfs/pools/{{ pool.name }}/reservation" class="flex flex-col sm:flex-row gap-3 items-end">
                 <div class="flex-1 w-full">
-                    <label for="reservation_size" class="form-label">Set Reservation</label>
+                    <label for="reservation_size" class="form-label">设置预留空间</label>
                     <input type="text"
                            id="reservation_size"
                            name="reservation_size"
                            required
-                           placeholder="e.g., 100G, 1T, none"
+                           placeholder="例如 100G、1T 或 none"
                            class="form-input w-full">
                 </div>
                 <button type="submit" class="btn-primary inline-flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Apply
+                    应用
                 </button>
             </form>
-            <p class="text-xs text-text-tertiary mt-3">Reserves a minimum amount of space for this pool's root dataset. Use size suffixes: K, M, G, T. Set to "none" to remove.</p>
+            <p class="text-xs text-text-tertiary mt-3">为此存储池的根数据集预留最小空间。可使用大小后缀：K、M、G、T。设为 "none" 可移除。</p>
         </div>
     </div>
 
@@ -577,18 +586,18 @@
                 </svg>
             </div>
             <div>
-                <h2 class="text-lg font-semibold text-text-primary">Active Checkpoint</h2>
-                <p class="text-text-secondary text-sm">A checkpoint is currently active for this pool</p>
+                <h2 class="text-lg font-semibold text-text-primary">活动检查点</h2>
+                <p class="text-text-secondary text-sm">此存储池当前存在活动检查点</p>
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div class="card-nested">
-                <div class="text-text-tertiary text-xs uppercase mb-1">Created</div>
-                <div class="text-text-primary font-mono text-sm">{{ checkpoint_info.creation_time or 'Unknown' }}</div>
+                <div class="text-text-tertiary text-xs uppercase mb-1">创建时间</div>
+                <div class="text-text-primary font-mono text-sm">{{ checkpoint_info.creation_time or '未知' }}</div>
             </div>
             {% if checkpoint_info.space_used %}
             <div class="card-nested">
-                <div class="text-text-tertiary text-xs uppercase mb-1">Space Consumed</div>
+                <div class="text-text-tertiary text-xs uppercase mb-1">占用空间</div>
                 <div class="text-text-primary font-mono text-sm">{{ checkpoint_info.space_used }}</div>
             </div>
             {% endif %}
@@ -599,8 +608,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                 </svg>
                 <div>
-                    <strong class="text-warning-400 block mb-2">Rollback to Checkpoint</strong>
-                    <p class="text-text-secondary text-sm mb-3">To roll back to the checkpoint state, export and re-import with the rewind flag. <strong class="text-danger-400">This is destructive.</strong></p>
+                    <strong class="text-warning-400 block mb-2">回滚到检查点</strong>
+                    <p class="text-text-secondary text-sm mb-3">要回滚到检查点状态，请导出存储池并使用 rewind 标志重新导入。<strong class="text-danger-400">此操作具有破坏性。</strong></p>
                     <pre class="bg-bg-elevated-2 text-text-primary p-3 rounded-lg text-sm font-mono border border-border-subtle overflow-x-auto">zpool export {{ pool.name }}
 zpool import --rewind-to-checkpoint {{ pool.name }}</pre>
                 </div>
@@ -613,7 +622,7 @@ zpool import --rewind-to-checkpoint {{ pool.name }}</pre>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                 </svg>
-                Discard Checkpoint
+                丢弃检查点
             </button>
         </form>
     </div>
@@ -625,28 +634,28 @@ zpool import --rewind-to-checkpoint {{ pool.name }}</pre>
             <svg class="w-5 h-5 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
             </svg>
-            Pool Mountpoint
+            存储池挂载点
         </h2>
         <div class="card-nested mb-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <div class="text-text-tertiary text-xs uppercase">Current Mountpoint</div>
+                    <div class="text-text-tertiary text-xs uppercase">当前挂载点</div>
                     <div class="text-text-primary text-lg font-mono mt-1 break-all">{{ mountpoint_value if mountpoint_value else '-' }}</div>
                 </div>
                 <div>
-                    <div class="text-text-tertiary text-xs uppercase">Source</div>
+                    <div class="text-text-tertiary text-xs uppercase">来源</div>
                     <div class="text-text-primary text-lg font-mono mt-1">{{ mountpoint_source if mountpoint_source else '-' }}</div>
                 </div>
             </div>
         </div>
         <form method="post" action="/zfs/pools/{{ pool.name }}/mountpoint" id="form-set-mountpoint" class="flex flex-col sm:flex-row gap-3 items-end">
             <div class="flex-1 w-full">
-                <label for="pool_mountpoint" class="form-label">New Mountpoint</label>
+                <label for="pool_mountpoint" class="form-label">新挂载点</label>
                 <input type="text"
                        id="pool_mountpoint"
                        name="mountpoint"
                        required
-                       placeholder="e.g., /mnt/{{ pool.name }} or /{{ pool.name }}"
+                       placeholder="例如 /mnt/{{ pool.name }} 或 /{{ pool.name }}"
                        value="{{ mountpoint_value }}"
                        class="form-input w-full font-mono">
             </div>
@@ -656,7 +665,7 @@ zpool import --rewind-to-checkpoint {{ pool.name }}</pre>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
-                Apply
+                应用
             </button>
         </form>
         <div class="card-nested bg-warning-900/20 border-warning-900 mt-4">
@@ -665,21 +674,21 @@ zpool import --rewind-to-checkpoint {{ pool.name }}</pre>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                 </svg>
                 <span>
-                    <strong class="text-warning-400">Warning:</strong>
-                    Changing the pool mountpoint moves the pool root dataset to a new path. All child datasets
-                    that inherit their mountpoint will be remounted under the new path
-                    (for example, <span class="font-mono">{{ pool.name }}/data</span> mounted at
+                    <strong class="text-warning-400">警告：</strong>
+                    更改存储池挂载点会将存储池根数据集移动到新路径。所有继承挂载点的子数据集
+                    都将被重新挂载到新路径下
+                    （例如，挂载在
                     <span class="font-mono">{{ mountpoint_value if mountpoint_value else '/' ~ pool.name }}/data</span>
-                    will move accordingly). Child datasets with an explicit mountpoint of their own will keep
-                    their current mountpoint. This may break shares, services, scripts, or other workloads that
-                    depend on the existing paths.
+                    的 <span class="font-mono">{{ pool.name }}/data</span>
+                    也会相应移动）。拥有自己显式挂载点的子数据集将保持
+                    其当前挂载点不变。这可能会破坏依赖现有路径的共享、服务、脚本或其他工作负载。
                 </span>
             </p>
         </div>
         <p class="text-xs text-text-tertiary mt-3">
-            Use an absolute path (must start with <span class="font-mono">/</span>), or the special values
-            <span class="font-mono">none</span> (do not mount) or <span class="font-mono">legacy</span>
-            (managed via <span class="font-mono">/etc/fstab</span> or <span class="font-mono">mount</span>).
+            请使用绝对路径（必须以 <span class="font-mono">/</span> 开头），或使用特殊值
+            <span class="font-mono">none</span>（不挂载）或 <span class="font-mono">legacy</span>
+            （通过 <span class="font-mono">/etc/fstab</span> 或 <span class="font-mono">mount</span> 管理）。
         </p>
     </div>
 
@@ -689,7 +698,7 @@ zpool import --rewind-to-checkpoint {{ pool.name }}</pre>
             <svg class="w-5 h-5 text-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
             </svg>
-            Raw zpool status
+            zpool status 原始输出
         </h2>
         <pre class="bg-bg-base text-text-primary p-4 rounded-lg overflow-x-auto text-sm font-mono border border-border-subtle">{{ pool.status_output }}</pre>
     </div>
@@ -700,56 +709,56 @@ zpool import --rewind-to-checkpoint {{ pool.name }}</pre>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
-            Back to Pools
+            返回存储池列表
         </a>
     </div>
 </div>
 
 <!-- Confirmation Modals -->
 {% set id = 'confirm-scrub-start' %}
-{% set title = 'Start Pool Scrub' %}
-{% set message = 'Start scrub on ' ~ pool.name ~ '? This will scan all data to verify integrity.' %}
-{% set confirm_text = 'Start Scrub' %}
+{% set title = '开始对存储池进行数据清洗' %}
+{% set message = '对存储池 ' ~ pool.name ~ ' 开始数据清洗？此操作将扫描所有数据以验证完整性。' %}
+{% set confirm_text = '开始数据清洗' %}
 {% set confirm_class = 'info' %}
 {% set confirm_action = 'document.getElementById("form-scrub-start").submit()' %}
 {% include 'partials/confirm.jinja' %}
 
 {% set id = 'confirm-scrub-stop' %}
-{% set title = 'Stop Pool Scrub' %}
-{% set message = 'Stop the currently running scrub on ' ~ pool.name ~ '?' %}
-{% set confirm_text = 'Stop Scrub' %}
+{% set title = '停止存储池数据清洗' %}
+{% set message = '停止存储池 ' ~ pool.name ~ ' 上正在运行的数据清洗？' %}
+{% set confirm_text = '停止数据清洗' %}
 {% set confirm_class = 'warning' %}
 {% set confirm_action = 'document.getElementById("form-scrub-stop").submit()' %}
 {% include 'partials/confirm.jinja' %}
 
 {% set id = 'confirm-set-mountpoint' %}
-{% set title = 'Change Pool Mountpoint' %}
-{% set message = 'Change the mountpoint of pool <strong>' ~ pool.name ~ '</strong>?<br><br>' ~
-    'All child datasets that <em>inherit</em> their mountpoint will be remounted under the new path. ' ~
-    'For example, <span class="font-mono">' ~ pool.name ~ '/data</span> currently mounted at ' ~
+{% set title = '更改存储池挂载点' %}
+{% set message = '要更改存储池 <strong>' ~ pool.name ~ '</strong> 的挂载点吗？<br><br>' ~
+    '所有<em>继承</em>挂载点的子数据集都将被重新挂载到新路径下。' ~
+    '例如，当前挂载在 ' ~
     '<span class="font-mono">' ~ (mountpoint_value if mountpoint_value else ('/' ~ pool.name)) ~ '/data</span> ' ~
-    'will move to the new path.<br><br>' ~
-    '<strong class="text-warning-400">Warning:</strong> This may break shares (NFS, SMB), services, ' ~
-    'cron jobs, scripts, or other workloads that depend on the existing mountpoints. ' ~
-    'Child datasets with their own explicitly-set mountpoint will retain their current mountpoint.' %}
-{% set confirm_text = 'Apply Mountpoint' %}
+    '的 <span class="font-mono">' ~ pool.name ~ '/data</span> 将移动到新路径。<br><br>' ~
+    '<strong class="text-warning-400">警告：</strong>这可能会破坏依赖现有挂载点的共享（NFS、SMB）、服务、' ~
+    '计划任务、脚本或其他工作负载。' ~
+    '拥有自己显式设置挂载点的子数据集将保留其当前挂载点。' %}
+{% set confirm_text = '应用挂载点' %}
 {% set confirm_class = 'warning' %}
 {% set confirm_action = 'document.getElementById("form-set-mountpoint").submit()' %}
 {% include 'partials/confirm.jinja' %}
 
 {% if checkpoint_supported %}
 {% set id = 'confirm-checkpoint-create' %}
-{% set title = 'Create Pool Checkpoint' %}
-{% set message = 'Create a checkpoint for pool <strong>' ~ pool.name ~ '</strong>?<br><br>A checkpoint captures the entire pool state. Only one checkpoint can exist at a time.' %}
-{% set confirm_text = 'Create Checkpoint' %}
+{% set title = '创建存储池检查点' %}
+{% set message = '要为存储池 <strong>' ~ pool.name ~ '</strong> 创建检查点吗？<br><br>检查点会捕获存储池的完整状态。同一时间只能存在一个检查点。' %}
+{% set confirm_text = '创建检查点' %}
 {% set confirm_class = 'warning' %}
 {% set confirm_action = 'document.getElementById("form-checkpoint-create").submit()' %}
 {% include 'partials/confirm.jinja' %}
 
 {% set id = 'confirm-checkpoint-discard' %}
-{% set title = 'Discard Pool Checkpoint' %}
-{% set message = 'Discard the checkpoint for pool <strong>' ~ pool.name ~ '</strong>?<br><br><strong class="text-danger-400">Warning:</strong> This cannot be undone.' %}
-{% set confirm_text = 'Discard Checkpoint' %}
+{% set title = '丢弃存储池检查点' %}
+{% set message = '要丢弃存储池 <strong>' ~ pool.name ~ '</strong> 的检查点吗？<br><br><strong class="text-danger-400">警告：</strong>此操作无法撤销。' %}
+{% set confirm_text = '丢弃检查点' %}
 {% set confirm_class = 'danger' %}
 {% set confirm_action = 'document.getElementById("form-checkpoint-discard").submit()' %}
 {% include 'partials/confirm.jinja' %}
@@ -928,7 +937,7 @@ window.showConfirm = function(dialogId) {
             var label = idx === 0 ? name : shortName(name);
             return '<button type="button" class="hover:text-text-primary underline-offset-2 hover:underline" data-stack-index="' + idx + '">' + label + '</button>';
         });
-        breadcrumb.innerHTML = "Viewing: " + parts.join(' <span class="text-text-tertiary">/</span> ');
+        breadcrumb.innerHTML = "正在查看：" + parts.join(' <span class="text-text-tertiary">/</span> ');
         var buttons = breadcrumb.querySelectorAll("button[data-stack-index]");
         buttons.forEach(function(btn) {
             btn.addEventListener("click", function() {
@@ -943,16 +952,16 @@ window.showConfirm = function(dialogId) {
         var lines = [];
         lines.push('<div class="font-semibold text-text-primary mb-1">' + node.name + "</div>");
         lines.push('<div class="grid grid-cols-2 gap-x-3 gap-y-0.5">');
-        lines.push('<span class="text-text-tertiary">Used:</span><span>' + formatBytes(node.used) + "</span>");
-        lines.push('<span class="text-text-tertiary">Referenced:</span><span>' + formatBytes(node.referenced) + "</span>");
+        lines.push('<span class="text-text-tertiary">已用：</span><span>' + formatBytes(node.used) + "</span>");
+        lines.push('<span class="text-text-tertiary">引用量：</span><span>' + formatBytes(node.referenced) + "</span>");
         if (node.available > 0) {
-            lines.push('<span class="text-text-tertiary">Available:</span><span>' + formatBytes(node.available) + "</span>");
+            lines.push('<span class="text-text-tertiary">可用：</span><span>' + formatBytes(node.available) + "</span>");
         }
-        lines.push('<span class="text-text-tertiary">By dataset:</span><span>' + formatBytes(node.used_by_dataset) + "</span>");
-        lines.push('<span class="text-text-tertiary">By snapshots:</span><span>' + formatBytes(node.used_by_snapshots) + "</span>");
-        lines.push('<span class="text-text-tertiary">By children:</span><span>' + formatBytes(node.used_by_children) + "</span>");
-        lines.push('<span class="text-text-tertiary">Compress:</span><span>' + (node.compressratio || "-") + "</span>");
-        lines.push('<span class="text-text-tertiary">Snapshots:</span><span>' + (node.snapshot_count || 0) + "</span>");
+        lines.push('<span class="text-text-tertiary">数据集本身：</span><span>' + formatBytes(node.used_by_dataset) + "</span>");
+        lines.push('<span class="text-text-tertiary">快照：</span><span>' + formatBytes(node.used_by_snapshots) + "</span>");
+        lines.push('<span class="text-text-tertiary">子数据集：</span><span>' + formatBytes(node.used_by_children) + "</span>");
+        lines.push('<span class="text-text-tertiary">压缩率：</span><span>' + (node.compressratio || "-") + "</span>");
+        lines.push('<span class="text-text-tertiary">快照数：</span><span>' + (node.snapshot_count || 0) + "</span>");
         lines.push("</div>");
         tooltip.innerHTML = lines.join("");
         tooltip.classList.remove("hidden");
@@ -1044,7 +1053,7 @@ window.showConfirm = function(dialogId) {
         }
 
         var label = isFreeSpace
-            ? "free " + formatBytes(node.used)
+            ? "空闲 " + formatBytes(node.used)
             : shortName(node.name);
         if (width > 50) {
             var textColor = isFreeSpace ? "#cbd5e1" : "#ffffff";
@@ -1187,8 +1196,8 @@ window.showConfirm = function(dialogId) {
             .then(function(resp) { return resp.json(); })
             .then(function(data) {
                 if (!data || !data.success) {
-                    loadingEl.textContent = "Failed to load dataset usage" +
-                        (data && data.error ? ": " + data.error : "");
+                    loadingEl.textContent = "加载数据集使用情况失败" +
+                        (data && data.error ? "：" + data.error : "");
                     return;
                 }
                 rootTree = data.tree;
@@ -1196,7 +1205,7 @@ window.showConfirm = function(dialogId) {
                 draw();
             })
             .catch(function(err) {
-                loadingEl.textContent = "Failed to load dataset usage: " + err;
+                loadingEl.textContent = "加载数据集使用情况失败：" + err;
             });
     }
 

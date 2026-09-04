@@ -306,7 +306,7 @@ class FileStorageService:
     def mark_execution_failed(
         self,
         execution_id: int,
-        error_message: str = "Manually marked as failed by user"
+        error_message: str = "由用户手动标记为失败"
     ) -> bool:
         """Mark a specific running execution as failed.
 

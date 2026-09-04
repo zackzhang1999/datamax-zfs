@@ -5,20 +5,20 @@
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h1 class="text-3xl font-bold text-text-primary">ZFS Pools Management</h1>
+            <h1 class="text-3xl font-bold text-text-primary">ZFS 存储池管理</h1>
         </div>
         <div class="flex gap-2">
             <a href="/zfs/pools/import/list" class="btn-info inline-flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
                 </svg>
-                Import Pool
+                导入存储池
             </a>
             <a href="/zfs/pools/create/form" class="btn-success inline-flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                 </svg>
-                Create Pool
+                创建存储池
             </a>
         </div>
     </div>
@@ -43,15 +43,15 @@
             <table class="min-w-full">
                 <thead class="bg-bg-elevated-2">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Pool Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Used</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Available</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Total</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Fragmentation</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Capacity</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Dedup</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Health</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Actions</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">存储池名称</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">已用</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">可用</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">总计</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">碎片率</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">容量</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">去重</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">健康状况</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">操作</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-border-subtle">
@@ -90,11 +90,11 @@
                                        download
                                        hx-boost="false"
                                        class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-danger-500/20 text-danger-400 border border-danger-500/30 hover:bg-danger-500/30 transition-colors whitespace-nowrap"
-                                       title="Download diagnostic zip for troubleshooting">
+                                       title="下载用于故障排查的诊断 zip 文件">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
-                                        Diagnostics
+                                        诊断信息
                                     </a>
                                 {% endif %}
                             </div>
@@ -103,14 +103,14 @@
                             <div class="flex items-center gap-2">
                                 <a href="/zfs/pools/{{ pool.name }}" 
                                    class="inline-flex text-primary-400 hover:text-primary-300 transition-colors" 
-                                   title="View Details">
+                                   title="查看详细信息">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                                     </svg>
                                 </a>
                                 <a href="/zfs/pools/{{ pool.name }}/properties" 
                                    class="inline-flex text-success-400 hover:text-success-300 transition-colors" 
-                                   title="Properties">
+                                   title="属性">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -118,7 +118,7 @@
                                 </a>
                                 <a href="/zfs/pools/{{ pool.name }}/history" 
                                    class="inline-flex text-purple-400 hover:text-purple-300 transition-colors" 
-                                   title="History">
+                                   title="历史记录">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
@@ -126,7 +126,7 @@
                                 <form method="post" action="/zfs/pools/{{ pool.name }}/scrub" id="form-scrub-{{ loop.index }}" style="display: inline;">
                                     <button type="button"
                                             class="inline-flex text-warning-400 hover:text-warning-300 transition-colors p-0 border-0 bg-transparent" 
-                                            title="Start Scrub"
+                                            title="开始数据清洗"
                                             onclick="showConfirm('confirm-scrub-{{ loop.index }}')">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -135,7 +135,7 @@
                                 </form>
                                 <a href="/zfs/pools/{{ pool.name }}/export/confirm" 
                                    class="inline-flex text-danger-400 hover:text-danger-300 transition-colors" 
-                                   title="Export Pool">
+                                   title="导出存储池">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                                     </svg>
@@ -151,7 +151,7 @@
 
     <!-- Pool Count Summary -->
     <div class="text-text-secondary text-sm">
-        <p>Total Pools: <span class="font-semibold text-text-primary">{{ pools|length }}</span></p>
+        <p>存储池总数：<span class="font-semibold text-text-primary">{{ pools|length }}</span></p>
     </div>
     {% else %}
     <!-- No Pools Found -->
@@ -161,20 +161,20 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
             </svg>
         </div>
-        <h3 class="text-xl font-semibold text-text-primary mb-2">No ZFS Pools Found</h3>
-        <p class="text-text-secondary mb-6">Create a new pool or import an existing one to get started.</p>
+        <h3 class="text-xl font-semibold text-text-primary mb-2">未找到 ZFS 存储池</h3>
+        <p class="text-text-secondary mb-6">创建新存储池或导入现有存储池以开始使用。</p>
         <div class="flex gap-3 justify-center">
             <a href="/zfs/pools/import/list" class="btn-info inline-flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
                 </svg>
-                Import Pool
+                导入存储池
             </a>
             <a href="/zfs/pools/create/form" class="btn-success inline-flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                 </svg>
-                Create Pool
+                创建存储池
             </a>
         </div>
     </div>
@@ -184,9 +184,9 @@
     {% if pools %}
         {% for pool in pools %}
         {% set id = 'confirm-scrub-' ~ loop.index %}
-        {% set title = 'Start Pool Scrub' %}
-        {% set message = 'Start scrub on pool ' ~ pool.name ~ '? This will verify data integrity and may take a while.' %}
-        {% set confirm_text = 'Start Scrub' %}
+        {% set title = '开始对存储池进行数据清洗' %}
+        {% set message = '对存储池 ' ~ pool.name ~ ' 开始数据清洗？此操作将验证数据完整性，可能需要较长时间。' %}
+        {% set confirm_text = '开始数据清洗' %}
         {% set confirm_class = 'warning' %}
         {% set confirm_action = 'document.getElementById("form-scrub-' ~ loop.index ~ '").submit()' %}
         {% include 'partials/confirm.jinja' %}
@@ -227,38 +227,38 @@
 
     <!-- Legend -->
     <div class="card-nested">
-        <h3 class="text-sm font-semibold text-text-primary mb-3">Quick Actions Guide</h3>
+        <h3 class="text-sm font-semibold text-text-primary mb-3">快捷操作指南</h3>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 text-sm">
             <div class="flex items-center gap-2 text-text-secondary">
                 <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                 </svg>
-                <span>View Details</span>
+                <span>查看详细信息</span>
             </div>
             <div class="flex items-center gap-2 text-text-secondary">
                 <svg class="w-4 h-4 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
-                <span>Properties</span>
+                <span>属性</span>
             </div>
             <div class="flex items-center gap-2 text-text-secondary">
                 <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <span>History</span>
+                <span>历史记录</span>
             </div>
             <div class="flex items-center gap-2 text-text-secondary">
                 <svg class="w-4 h-4 text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
-                <span>Scrub</span>
+                <span>数据清洗</span>
             </div>
             <div class="flex items-center gap-2 text-text-secondary">
                 <svg class="w-4 h-4 text-danger-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                 </svg>
-                <span>Export</span>
+                <span>导出</span>
             </div>
         </div>
         <div class="mt-4 pt-4 border-t border-border-subtle">
@@ -266,7 +266,7 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                Pool destruction must be performed manually via command line for safety.
+                销毁存储池是不可逆的危险操作。如确需删除整个存储池，请进入存储池详情页，在“操作”区域点击“销毁存储池”，并按照确认页的提示操作。
             </p>
         </div>
     </div>

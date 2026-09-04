@@ -4,22 +4,22 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils/smart" class="hover:text-blue-400">SMART Monitoring</a> 
+        <a href="/utils/smart" class="hover:text-blue-400">SMART 监控</a> 
         <span class="mx-2">/</span> 
         <span class="text-text-primary">{{ disk_path }}</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">SMART Data: {{ disk_path }}</h1>
+        <h1 class="text-3xl font-bold text-text-primary">SMART 数据：{{ disk_path }}</h1>
         <div class="space-x-2">
             <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/download" class="bg-green-600 hover:bg-green-700 text-text-primary px-4 py-2 rounded inline-block" hx-boost="false">
                 <svg class="w-5 h-5 inline text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
-                    </svg> Download Report
+                    </svg> 下载报告
             </a>
             <a href="/utils/smart" class="btn-secondary hover:bg-bg-elevated-2 text-text-primary px-4 py-2 rounded inline-block">
-                ← Back to List
+                ← 返回列表
             </a>
         </div>
     </div>
@@ -33,7 +33,7 @@
     
     {% if request.query_params.get('error') %}
     <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded mb-4">
-        <strong>Error:</strong> {{ request.query_params.get('error') }}
+        <strong>错误：</strong> {{ request.query_params.get('error') }}
     </div>
     {% endif %}
 
@@ -43,37 +43,37 @@
             <div class="text-3xl mb-2"><svg class="w-5 h-5 inline text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                     </svg></div>
-            <div class="text-text-primary font-semibold">Attributes</div>
+            <div class="text-text-primary font-semibold">属性</div>
         </a>
         <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/health" class="bg-bg-elevated hover:bg-bg-elevated-2 p-4 rounded-lg text-center transition-colors">
             <div class="text-3xl mb-2"><svg class="w-5 h-5 inline text-danger-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                     </svg></div>
-            <div class="text-text-primary font-semibold">Health</div>
+            <div class="text-text-primary font-semibold">健康</div>
         </a>
         <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/tests" class="bg-bg-elevated hover:bg-bg-elevated-2 p-4 rounded-lg text-center transition-colors">
             <div class="text-3xl mb-2"><svg class="w-5 h-5 inline text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
                     </svg></div>
-            <div class="text-text-primary font-semibold">Tests</div>
+            <div class="text-text-primary font-semibold">测试</div>
         </a>
         <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/temperature" class="bg-bg-elevated hover:bg-bg-elevated-2 p-4 rounded-lg text-center transition-colors">
             <div class="text-3xl mb-2"><svg class="w-5 h-5 inline text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                     </svg></div>
-            <div class="text-text-primary font-semibold">Temperature</div>
+            <div class="text-text-primary font-semibold">温度</div>
         </a>
         <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/errors" class="bg-bg-elevated hover:bg-bg-elevated-2 p-4 rounded-lg text-center transition-colors">
             <div class="text-3xl mb-2"><svg class="w-5 h-5 inline text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                     </svg></div>
-            <div class="text-text-primary font-semibold">Error Log</div>
+            <div class="text-text-primary font-semibold">错误日志</div>
         </a>
         <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/download" class="bg-bg-elevated hover:bg-bg-elevated-2 p-4 rounded-lg text-center transition-colors" hx-boost="false">
             <div class="text-3xl mb-2"><svg class="w-5 h-5 inline text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
                     </svg></div>
-            <div class="text-text-primary font-semibold">Download</div>
+            <div class="text-text-primary font-semibold">下载</div>
         </a>
     </div>
 
@@ -81,7 +81,7 @@
     {% if smart_data.health %}
     <div class="mb-6">
         <div class="bg-bg-elevated rounded-lg p-6">
-            <h2 class="text-xl font-bold text-text-primary mb-4">Overall Health Status</h2>
+            <h2 class="text-xl font-bold text-text-primary mb-4">整体健康状态</h2>
             <div class="flex items-center">
                 <span class="text-5xl mr-4">
                     {% if smart_data.health == 'PASSED' %}<svg class="w-5 h-5 inline text-danger-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -105,53 +105,53 @@
     {% if smart_data.info %}
     <div class="mb-6">
         <div class="bg-bg-elevated rounded-lg p-6">
-            <h2 class="text-xl font-bold text-text-primary mb-4">Device Information</h2>
+            <h2 class="text-xl font-bold text-text-primary mb-4">设备信息</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {% if smart_data.info.model %}
                 <div>
-                    <div class="text-text-tertiary text-sm">Model</div>
+                    <div class="text-text-tertiary text-sm">型号</div>
                     <div class="text-text-primary font-mono">{{ smart_data.info.model }}</div>
                 </div>
                 {% endif %}
                 {% if smart_data.info.serial %}
                 <div>
-                    <div class="text-text-tertiary text-sm">Serial Number</div>
+                    <div class="text-text-tertiary text-sm">序列号</div>
                     <div class="text-text-primary font-mono">{{ smart_data.info.serial }}</div>
                 </div>
                 {% endif %}
                 {% if smart_data.info.capacity %}
                 <div>
-                    <div class="text-text-tertiary text-sm">Capacity</div>
+                    <div class="text-text-tertiary text-sm">容量</div>
                     <div class="text-text-primary">{{ smart_data.info.capacity }}</div>
                 </div>
                 {% endif %}
                 {% if smart_data.info.firmware %}
                 <div>
-                    <div class="text-text-tertiary text-sm">Firmware Version</div>
+                    <div class="text-text-tertiary text-sm">固件版本</div>
                     <div class="text-text-primary font-mono">{{ smart_data.info.firmware }}</div>
                 </div>
                 {% endif %}
                 <div>
-                    <div class="text-text-tertiary text-sm">SMART Available</div>
+                    <div class="text-text-tertiary text-sm">SMART 可用</div>
                     <div class="text-text-primary">
                         {% if smart_data.info.smart_available %}
                         <span class="text-green-400"><svg class="w-5 h-5 inline text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    </svg> Yes</span>
+                    </svg> 是</span>
                         {% else %}
-                        <span class="text-red-400">✗ No</span>
+                        <span class="text-red-400">✗ 否</span>
                         {% endif %}
                     </div>
                 </div>
                 <div>
-                    <div class="text-text-tertiary text-sm">SMART Enabled</div>
+                    <div class="text-text-tertiary text-sm">SMART 已启用</div>
                     <div class="text-text-primary">
                         {% if smart_data.info.smart_enabled %}
                         <span class="text-green-400"><svg class="w-5 h-5 inline text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    </svg> Yes</span>
+                    </svg> 是</span>
                         {% else %}
-                        <span class="text-yellow-400">✗ No</span>
+                        <span class="text-yellow-400">✗ 否</span>
                         {% endif %}
                     </div>
                 </div>
@@ -165,13 +165,13 @@
     <div class="mb-6">
         <div class="bg-bg-elevated rounded-lg p-6">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold text-text-primary">SMART Attributes</h2>
+                <h2 class="text-xl font-bold text-text-primary">SMART 属性</h2>
                 <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/attributes" class="text-blue-400 hover:text-blue-300">
-                    View All Attributes →
+                    查看全部属性 →
                 </a>
             </div>
             <div class="text-text-tertiary text-sm">
-                Found {{ smart_data.attributes|length }} SMART attributes
+                共找到 {{ smart_data.attributes|length }} 个 SMART 属性
             </div>
         </div>
     </div>
@@ -182,9 +182,9 @@
     <div class="mb-6">
         <div class="bg-bg-elevated rounded-lg p-6">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold text-text-primary">Recent Self-Tests</h2>
+                <h2 class="text-xl font-bold text-text-primary">最近的自检</h2>
                 <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/tests" class="text-blue-400 hover:text-blue-300">
-                    View All Tests →
+                    查看全部测试 →
                 </a>
             </div>
             {% if smart_data.test_log|length > 0 %}
@@ -192,10 +192,10 @@
                 <table class="min-w-full text-sm">
                     <thead class="text-text-tertiary border-b border-gray-700">
                         <tr>
-                            <th class="text-left py-2">Test Type</th>
-                            <th class="text-left py-2">Status</th>
-                            <th class="text-left py-2">Remaining</th>
-                            <th class="text-left py-2">Lifetime Hours</th>
+                            <th class="text-left py-2">测试类型</th>
+                            <th class="text-left py-2">状态</th>
+                            <th class="text-left py-2">剩余</th>
+                            <th class="text-left py-2">通电时长（小时）</th>
                         </tr>
                     </thead>
                     <tbody class="text-text-secondary">
@@ -215,7 +215,7 @@
                 </table>
             </div>
             {% else %}
-            <div class="text-text-tertiary text-sm">No self-test log entries found</div>
+            <div class="text-text-tertiary text-sm">未找到自检日志条目</div>
             {% endif %}
         </div>
     </div>
@@ -225,22 +225,22 @@
     <div class="mb-6">
         <div class="bg-bg-elevated rounded-lg p-6">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold text-text-primary">Error Log</h2>
+                <h2 class="text-xl font-bold text-text-primary">错误日志</h2>
                 <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/errors" class="text-blue-400 hover:text-blue-300">
-                    View Full Log →
+                    查看完整日志 →
                 </a>
             </div>
             {% if smart_data.error_log and smart_data.error_log|length > 0 %}
             <div class="text-red-400">
                 <svg class="w-5 h-5 inline text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                    </svg> {{ smart_data.error_log|length }} error(s) logged
+                    </svg> 已记录 {{ smart_data.error_log|length }} 条错误
             </div>
             {% else %}
             <div class="text-green-400">
                 <svg class="w-5 h-5 inline text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    </svg> No errors logged
+                    </svg> 未记录错误
             </div>
             {% endif %}
         </div>
@@ -248,14 +248,14 @@
 
     <!-- Actions -->
     <div class="bg-bg-elevated rounded-lg p-6">
-        <h2 class="text-xl font-bold text-text-primary mb-4">Actions</h2>
+        <h2 class="text-xl font-bold text-text-primary mb-4">操作</h2>
         <div class="flex flex-wrap gap-2">
             {% if smart_data.info.smart_enabled %}
             <form method="post" action="/utils/smart/disk/{{ disk_path.lstrip('/') }}/disable" class="inline" id="form-disable-smart">
                 <button type="button" 
                         class="bg-orange-600 hover:bg-orange-700 text-text-primary px-4 py-2 rounded"
                         onclick="showConfirm('modal-disable-smart')">
-                    Disable SMART
+                    禁用 SMART
                 </button>
             </form>
             {% else %}
@@ -263,12 +263,12 @@
                 <button type="button" 
                         class="bg-green-600 hover:bg-green-700 text-text-primary px-4 py-2 rounded"
                         onclick="showConfirm('modal-enable-smart')">
-                    Enable SMART
+                    启用 SMART
                 </button>
             </form>
             {% endif %}
             <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/tests" class="bg-blue-600 hover:bg-blue-700 text-text-primary px-4 py-2 rounded inline-block">
-                Run Self-Test
+                运行自检
             </a>
         </div>
     </div>
@@ -276,18 +276,18 @@
 
 <!-- Confirmation Modals -->
 {% set modal_id = 'modal-disable-smart' %}
-{% set modal_title = 'Disable SMART' %}
-{% set modal_message = 'Disable SMART monitoring on ' + disk_path + '?' %}
-{% set confirm_text = 'Disable' %}
+{% set modal_title = '禁用 SMART' %}
+{% set modal_message = '要在 ' + disk_path + ' 上禁用 SMART 监控吗？' %}
+{% set confirm_text = '禁用' %}
 {% set confirm_class = 'warning' %}
 {% set action_url = '/smart/disk/' + disk_path.lstrip('/') + '/disable' %}
 {% set method = 'post' %}
 {% include 'partials/confirm.jinja' %}
 
 {% set modal_id = 'modal-enable-smart' %}
-{% set modal_title = 'Enable SMART' %}
-{% set modal_message = 'Enable SMART monitoring on ' + disk_path + '?' %}
-{% set confirm_text = 'Enable' %}
+{% set modal_title = '启用 SMART' %}
+{% set modal_message = '要在 ' + disk_path + ' 上启用 SMART 监控吗？' %}
+{% set confirm_text = '启用' %}
 {% set confirm_class = 'primary' %}
 {% set action_url = '/smart/disk/' + disk_path.lstrip('/') + '/enable' %}
 {% set method = 'post' %}

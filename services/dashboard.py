@@ -118,10 +118,10 @@ def _get_uptime() -> dict[str, Any]:
 
     parts = []
     if days > 0:
-        parts.append(f"{days}d")
+        parts.append(f"{days} 天")
     if hours > 0:
-        parts.append(f"{hours}h")
-    parts.append(f"{minutes}m")
+        parts.append(f"{hours} 小时")
+    parts.append(f"{minutes} 分钟")
 
     return {
         'formatted': ' '.join(parts),
@@ -609,6 +609,66 @@ def get_arc_stats_summary() -> dict[str, Any]:
         else:
             summary['cold_miss_pct'] = 0
             summary['ghost_miss_pct'] = 0
+
+        # --- SSD Cache (L2ARC) ---
+        l2_hits = int(stats.get('l2_hits') or 0)
+        l2_misses = int(stats.get('l2_misses') or 0)
+        l2_total = l2_hits + l2_misses
+        def _first_nonzero(*names: str) -> int:
+            for name in names:
+                try:
+                    value = int(stats.get(name) or 0)
+                except (TypeError, ValueError):
+                    continue
+                if value > 0:
+                    return value
+            return 0
+
+        # Some kernels keep l2_size at 0 while the persistent L2ARC rebuild
+        # counters reflect the real cache footprint.
+        l2_size = _first_nonzero('l2_size', 'l2_rebuild_size')
+        l2_asize = _first_nonzero('l2_asize', 'l2_rebuild_asize')
+        l2_hdr_size = _first_nonzero('l2_hdr_size')
+        l2_feeds = int(stats.get('l2_feeds') or 0)
+
+        summary['l2_hits'] = l2_hits
+        summary['l2_hits_human'] = humanize.intcomma(l2_hits)
+        summary['l2_misses'] = l2_misses
+        summary['l2_misses_human'] = humanize.intcomma(l2_misses)
+        summary['l2_total_human'] = humanize.intcomma(l2_total)
+        summary['l2_feeds'] = l2_feeds
+        summary['l2_feeds_human'] = humanize.intcomma(l2_feeds)
+
+        if l2_total > 0:
+            summary['l2_hit_rate'] = round((l2_hits / l2_total) * 100, 2)
+            summary['l2_miss_rate'] = round((l2_misses / l2_total) * 100, 2)
+        else:
+            summary['l2_hit_rate'] = 0
+            summary['l2_miss_rate'] = 0
+
+        summary['l2arc_active'] = (
+            l2_size + l2_asize + l2_hits + l2_misses + l2_feeds > 0
+        )
+        summary['l2_size'] = l2_size
+        summary['l2_asize'] = l2_asize
+        summary['l2_size_human'] = humanize.naturalsize(
+            l2_size, binary=True,
+        )
+        summary['l2_asize_human'] = humanize.naturalsize(
+            l2_asize, binary=True,
+        )
+        summary['l2_hdr_size_human'] = humanize.naturalsize(
+            l2_hdr_size, binary=True,
+        )
+        summary['l2_read_bytes_human'] = humanize.naturalsize(
+            int(stats.get('l2_read_bytes') or 0), binary=True,
+        )
+        summary['l2_write_bytes_human'] = humanize.naturalsize(
+            int(stats.get('l2_write_bytes') or 0), binary=True,
+        )
+        summary['l2_writes_sent_human'] = humanize.intcomma(
+            int(stats.get('l2_writes_sent') or 0),
+        )
 
         return summary
     except Exception as exc:

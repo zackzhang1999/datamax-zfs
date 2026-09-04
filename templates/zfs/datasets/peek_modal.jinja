@@ -36,14 +36,14 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
             </svg>
             <h3 class="text-lg font-semibold text-text-primary truncate">
-              Peek: <span class="font-mono text-base">{{ peek.dataset }}</span>
+              预览：<span class="font-mono text-base">{{ peek.dataset }}</span>
             </h3>
           </div>
           <button
             type="button"
             class="text-text-secondary hover:text-text-primary focus:outline-none rounded-lg p-1.5 transition-colors flex-shrink-0"
             x-on:click="open = false; document.getElementById('peek-modal-container').innerHTML = ''"
-            aria-label="Close"
+            aria-label="关闭"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -79,7 +79,7 @@
             <button
               type="button"
               class="ml-2 text-text-secondary hover:text-text-primary transition-colors inline-flex items-center gap-1"
-              title="Up one level"
+              title="上一级"
               {% if peek.breadcrumbs | length > 1 %}
               hx-get="/zfs/datasets/{{ peek.dataset }}/peek?subpath={{ peek.breadcrumbs[-2].subpath | urlencode }}"
               {% else %}
@@ -107,7 +107,7 @@
         </div>
         {% elif peek.entries | length == 0 %}
         <div class="text-text-tertiary text-sm text-center py-8">
-          This directory is empty
+          此目录为空
         </div>
         {% else %}
         <div class="overflow-y-auto max-h-[60vh] pr-1">
@@ -134,7 +134,7 @@
               {% else %}
               <div
                 class="flex items-center gap-2 px-2 py-1.5 rounded-lg min-w-0 {% if entry.is_hidden %}opacity-60{% endif %}"
-                title="{{ entry.name }}{% if entry.size is not none %} ({{ entry.size }} bytes){% endif %}"
+                title="{{ entry.name }}{% if entry.size is not none %}（{{ entry.size }} 字节）{% endif %}"
               >
                 <svg class="w-5 h-5 text-text-tertiary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
@@ -147,7 +147,7 @@
         </div>
         {% if peek.truncated %}
         <div class="text-xs text-warning-400 mt-2">
-          Showing the first {{ peek.entries | length }} entries. This directory contains more items.
+          仅显示前 {{ peek.entries | length }} 个条目。此目录还包含更多项目。
         </div>
         {% endif %}
         {% endif %}
@@ -162,7 +162,7 @@
             class="btn-secondary text-sm"
             x-on:click="open = false; document.getElementById('peek-modal-container').innerHTML = ''"
           >
-            Close
+            关闭
           </button>
         </div>
 

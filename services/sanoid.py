@@ -76,7 +76,7 @@ class SanoidService:
         try:
             validation_parser.read_string(content)
         except configparser.Error as e:
-            raise Exception(f"Generated configuration failed validation: {str(e)}")
+            raise Exception(f"生成的配置未通过校验：{str(e)}")
         
         config_file = str(self.config_path)
         
@@ -108,8 +108,8 @@ class SanoidService:
             save_file(config_file, content, use_sudo=True)
         else:
             raise Exception(
-                f"Cannot write {config_file}: permission denied and no "
-                "privileged write path is available on this platform"
+                f"无法写入 {config_file}：权限被拒绝，且此平台没有可用的"
+                "提权写入途径"
             )
     
     def _find_sanoid_path(self) -> Optional[str]:
@@ -169,7 +169,7 @@ class SanoidService:
             return result
             
         except Exception as e:
-            raise Exception(f"Failed to read sanoid configuration: {str(e)}")
+            raise Exception(f"读取 sanoid 配置失败：{str(e)}")
     
     def get_templates(self) -> Dict[str, Dict[str, str]]:
         """
@@ -182,7 +182,7 @@ class SanoidService:
             config = self.get_config()
             return config.get('templates', {})
         except Exception as e:
-            raise Exception(f"Failed to get templates: {str(e)}")
+            raise Exception(f"获取模板失败：{str(e)}")
     
     def get_datasets(self) -> Dict[str, Dict[str, str]]:
         """
@@ -195,7 +195,7 @@ class SanoidService:
             config = self.get_config()
             return config.get('datasets', {})
         except Exception as e:
-            raise Exception(f"Failed to get datasets: {str(e)}")
+            raise Exception(f"获取数据集失败：{str(e)}")
     
     def add_dataset(self, dataset_name: str, template: str, 
                    recursive: str = 'no', **kwargs) -> None:
@@ -226,7 +226,7 @@ class SanoidService:
             self._write_config(config)
                 
         except Exception as e:
-            raise Exception(f"Failed to add dataset: {str(e)}")
+            raise Exception(f"添加数据集失败：{str(e)}")
     
     def update_dataset(self, dataset_name: str, settings: Dict[str, str]) -> None:
         """
@@ -241,7 +241,7 @@ class SanoidService:
             config.read(self.config_path)
             
             if not config.has_section(dataset_name):
-                raise Exception(f"Dataset {dataset_name} not found in configuration")
+                raise Exception(f"配置中未找到数据集 {dataset_name}")
             
             for key, value in settings.items():
                 config.set(dataset_name, key, str(value))
@@ -249,7 +249,7 @@ class SanoidService:
             self._write_config(config)
                 
         except Exception as e:
-            raise Exception(f"Failed to update dataset: {str(e)}")
+            raise Exception(f"更新数据集失败：{str(e)}")
     
     def remove_dataset(self, dataset_name: str) -> None:
         """
@@ -263,14 +263,14 @@ class SanoidService:
             config.read(self.config_path)
             
             if not config.has_section(dataset_name):
-                raise Exception(f"Dataset {dataset_name} not found in configuration")
+                raise Exception(f"配置中未找到数据集 {dataset_name}")
             
             config.remove_section(dataset_name)
             
             self._write_config(config)
                 
         except Exception as e:
-            raise Exception(f"Failed to remove dataset: {str(e)}")
+            raise Exception(f"移除数据集失败：{str(e)}")
     
     def create_template(self, template_name: str, settings: Dict[str, Any]) -> None:
         """
@@ -287,7 +287,7 @@ class SanoidService:
             section_name = f"template_{template_name}"
             
             if config.has_section(section_name):
-                raise Exception(f"Template {template_name} already exists")
+                raise Exception(f"模板 {template_name} 已存在")
             
             config.add_section(section_name)
             
@@ -297,7 +297,7 @@ class SanoidService:
             self._write_config(config)
                 
         except Exception as e:
-            raise Exception(f"Failed to create template: {str(e)}")
+            raise Exception(f"创建模板失败：{str(e)}")
     
     def update_template(self, template_name: str, settings: Dict[str, Any]) -> None:
         """
@@ -315,7 +315,7 @@ class SanoidService:
             section_name = template_name if template_name.startswith('template_') else f"template_{template_name}"
             
             if not config.has_section(section_name):
-                raise Exception(f"Template {template_name} not found")
+                raise Exception(f"未找到模板 {template_name}")
             
             for key, value in settings.items():
                 config.set(section_name, key, str(value))
@@ -323,7 +323,7 @@ class SanoidService:
             self._write_config(config)
                 
         except Exception as e:
-            raise Exception(f"Failed to update template: {str(e)}")
+            raise Exception(f"更新模板失败：{str(e)}")
     
     def delete_template(self, template_name: str) -> None:
         """
@@ -339,14 +339,14 @@ class SanoidService:
             section_name = template_name if template_name.startswith('template_') else f"template_s{template_name}"
             
             if not config.has_section(section_name):
-                raise Exception(f"Template {template_name} not found")
+                raise Exception(f"未找到模板 {template_name}")
             
             config.remove_section(section_name)
             
             self._write_config(config)
                 
         except Exception as e:
-            raise Exception(f"Failed to delete template: {str(e)}")
+            raise Exception(f"删除模板失败：{str(e)}")
     
     def run_sanoid(self, take_snapshots: bool = True, prune_snapshots: bool = False,
                    verbose: bool = False, debug: bool = False) -> Dict[str, Any]:
@@ -371,7 +371,7 @@ class SanoidService:
                 self.sanoid_path = self._find_sanoid_path()
             
             if not self.sanoid_path:
-                raise Exception("sanoid binary not found. Install sanoid and restart WebZFS.")
+                raise Exception("未找到 sanoid 程序。请安装 sanoid 并重启 WebZFS。")
             
             # Use the discovered full path instead of bare 'sanoid'
             cmd = [self.sanoid_path]
@@ -399,7 +399,7 @@ class SanoidService:
             }
             
         except Exception as e:
-            raise Exception(f"Failed to run sanoid: {str(e)}")
+            raise Exception(f"运行 sanoid 失败：{str(e)}")
     
     def check_sanoid_status(self) -> Dict[str, Any]:
         """
@@ -435,9 +435,9 @@ class SanoidService:
                     text=True,
                     timeout=5
                 )
-                version = version_result.stdout.strip() if version_result.returncode == 0 else 'unknown'
+                version = version_result.stdout.strip() if version_result.returncode == 0 else '未知'
             except Exception:
-                version = 'unknown'
+                version = '未知'
             
             return {
                 'installed': True,
@@ -448,7 +448,7 @@ class SanoidService:
             }
             
         except Exception as e:
-            raise Exception(f"Failed to check sanoid status: {str(e)}")
+            raise Exception(f"检查 sanoid 状态失败：{str(e)}")
     
     def validate_config(self) -> Dict[str, Any]:
         """
@@ -470,10 +470,10 @@ class SanoidService:
             template_sections = [s for s in config.sections() if s.startswith('template_')]
             
             if not dataset_sections:
-                warnings.append("No datasets configured")
+                warnings.append("未配置任何数据集")
             
             if not template_sections:
-                warnings.append("No templates defined")
+                warnings.append("未定义任何模板")
             
             # Check that datasets reference valid templates
             for dataset in dataset_sections:
@@ -483,7 +483,7 @@ class SanoidService:
                         template = template.strip()
                         template_section = f"template_{template}" if not template.startswith('template_') else template
                         if template_section not in config.sections():
-                            errors.append(f"Dataset '{dataset}' references non-existent template '{template}'")
+                            errors.append(f"数据集 '{dataset}' 引用了不存在的模板 '{template}'")
             
             return {
                 'valid': len(errors) == 0,
@@ -496,7 +496,7 @@ class SanoidService:
         except Exception as e:
             return {
                 'valid': False,
-                'errors': [f"Failed to parse configuration: {str(e)}"],
+                'errors': [f"解析配置失败：{str(e)}"],
                 'warnings': [],
                 'dataset_count': 0,
                 'template_count': 0

@@ -13,14 +13,13 @@ class Tab:
 
 # Hardcoded navigation tabs - all tabs are now always visible
 NAV_TABS = [
-    Tab(id="dashboard", label="Dashboard", url="/"),
-    Tab(id="zfs_pools", label="Pools", url="/zfs/pools/"),
-    Tab(id="zfs_datasets", label="Datasets", url="/zfs/datasets/"),
-    Tab(id="zfs_snapshots", label="Snapshots", url="/zfs/snapshots/"),
-    Tab(id="zfs_replication", label="Replication", url="/zfs/replication/"),
-    Tab(id="zfs_observability", label="Observability", url="/zfs/observability/"),
-    Tab(id="utils", label="Utilities", url="/utils/"),
-    Tab(id="fleet", label="Fleet View", url="/fleet/"),
+    Tab(id="dashboard", label="仪表盘", url="/"),
+    Tab(id="zfs_pools", label="存储池", url="/zfs/pools/"),
+    Tab(id="zfs_datasets", label="数据集", url="/zfs/datasets/"),
+    Tab(id="zfs_snapshots", label="快照", url="/zfs/snapshots/"),
+    Tab(id="zfs_replication", label="数据复制", url="/zfs/replication/"),
+    Tab(id="zfs_observability", label="运行观测", url="/zfs/observability/"),
+    Tab(id="utils", label="实用工具", url="/utils/"),
 ]
 
 templates = Jinja2Templates(BASE_DIR / "templates")

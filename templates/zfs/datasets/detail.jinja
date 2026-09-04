@@ -4,22 +4,22 @@
 <div class="space-y-6">
     <!-- Breadcrumb Navigation -->
     <nav class="flex items-center text-sm text-text-secondary">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
-        <a href="/zfs/datasets" class="hover:text-text-primary transition-colors">Datasets</a>
+        <a href="/zfs/datasets" class="hover:text-text-primary transition-colors">数据集</a>
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
-        <span class="text-text-primary font-medium">{{ dataset.name if dataset else 'Dataset' }}</span>
+        <span class="text-text-primary font-medium">{{ dataset.name if dataset else '数据集' }}</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h1 class="text-3xl font-bold text-text-primary">Dataset: {{ dataset.name if dataset else 'Error' }}</h1>
-            <p class="text-text-secondary mt-1">View and manage dataset configuration</p>
+            <h1 class="text-3xl font-bold text-text-primary">数据集：{{ dataset.name if dataset else '错误' }}</h1>
+            <p class="text-text-secondary mt-1">查看和管理数据集配置</p>
         </div>
         {% if dataset %}
         <div class="flex flex-wrap gap-2">
@@ -28,13 +28,13 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
-                Manage Properties
+                管理属性
             </a>
             <a href="/zfs/datasets/{{ dataset.name }}/rename/form" class="btn-primary inline-flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                 </svg>
-                Rename
+                重命名
             </a>
         </div>
         {% endif %}
@@ -56,7 +56,7 @@
                 </svg>
             </div>
             <div class="flex-1 ml-3">
-                <h3 class="text-sm font-semibold text-danger-400">Error</h3>
+                <h3 class="text-sm font-semibold text-danger-400">错误</h3>
                 <div class="mt-1 text-sm text-danger-300">
                     {{ request.query_params.get('error') }}
                 </div>
@@ -65,7 +65,7 @@
                 <button type="button"
                         class="inline-flex text-danger-400 hover:text-danger-300 focus:outline-none rounded-lg p-1.5 transition-colors"
                         onclick="this.closest('.alert-danger').remove()"
-                        aria-label="Dismiss">
+                        aria-label="关闭">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
                     </svg>
@@ -84,7 +84,7 @@
                 </svg>
             </div>
             <div class="flex-1 ml-3">
-                <h3 class="text-sm font-semibold text-danger-400">Error</h3>
+                <h3 class="text-sm font-semibold text-danger-400">错误</h3>
                 <div class="mt-1 text-sm text-danger-300">
                     {{ error }}
                 </div>
@@ -104,9 +104,9 @@
                 </svg>
             </div>
             <div class="flex-1">
-                <div class="text-purple-400 font-semibold text-sm">Cloned Dataset</div>
+                <div class="text-purple-400 font-semibold text-sm">克隆数据集</div>
                 <div class="text-text-secondary text-sm mt-0.5">
-                    This dataset is a clone of snapshot
+                    此数据集是以下快照的克隆
                     <a href="/zfs/snapshots/{{ dataset.properties.origin.value }}/detail" class="text-purple-400 hover:text-purple-300 transition-colors font-mono">{{ dataset.properties.origin.value }}</a>
                 </div>
             </div>
@@ -117,7 +117,7 @@
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
                         </svg>
-                        Promote
+                        提升
                     </button>
                 </form>
             </div>
@@ -130,14 +130,14 @@
         <!-- Basic Information -->
         <div class="card">
             <div class="card-body">
-                <h2 class="text-xl font-semibold text-text-primary mb-4 pb-3 border-b border-border-subtle">Basic Information</h2>
+                <h2 class="text-xl font-semibold text-text-primary mb-4 pb-3 border-b border-border-subtle">基本信息</h2>
                 <dl class="space-y-3">
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Dataset Name:</dt>
+                        <dt class="text-text-secondary">数据集名称：</dt>
                         <dd class="text-text-primary font-semibold font-mono text-sm">{{ dataset.name }}</dd>
                     </div>
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Type:</dt>
+                        <dt class="text-text-secondary">类型：</dt>
                         <dd>
                             {% if dataset.properties.type.value == 'filesystem' %}
                                 <span class="badge-info">{{ dataset.properties.type.value }}</span>
@@ -149,12 +149,12 @@
                         </dd>
                     </div>
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Creation:</dt>
+                        <dt class="text-text-secondary">创建时间：</dt>
                         <dd class="text-text-primary">{{ dataset.properties.creation.value }}</dd>
                     </div>
                     {% if 'encryption' in dataset.properties %}
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Encryption:</dt>
+                        <dt class="text-text-secondary">加密：</dt>
                         <dd>
                             {% if dataset.properties.encryption.value not in ['off', '-'] %}
                                 <span class="inline-flex items-center gap-1 text-success-400">
@@ -168,7 +168,7 @@
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
                                     </svg>
-                                    Not encrypted
+                                    未加密
                                 </span>
                             {% endif %}
                         </dd>
@@ -176,7 +176,7 @@
                     {% endif %}
                     {% if 'origin' in dataset.properties and dataset.properties.origin.value not in ['-', ''] %}
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Clone Origin:</dt>
+                        <dt class="text-text-secondary">克隆来源：</dt>
                         <dd>
                             <span class="inline-flex items-center gap-1 text-purple-400">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -191,25 +191,25 @@
                     {% endif %}
                     {% if dataset.properties.type.value == 'filesystem' %}
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Mountpoint:</dt>
+                        <dt class="text-text-secondary">挂载点：</dt>
                         <dd class="text-text-primary font-mono text-sm">{{ dataset.properties.mountpoint.value }}</dd>
                     </div>
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Mounted:</dt>
+                        <dt class="text-text-secondary">已挂载：</dt>
                         <dd>
                             {% if dataset.properties.mounted.value == 'yes' %}
                             <span class="inline-flex items-center gap-1 text-success-400">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
-                                Yes
+                                是
                             </span>
                             {% else %}
                             <span class="inline-flex items-center gap-1 text-text-tertiary">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                 </svg>
-                                No
+                                否
                             </span>
                             {% endif %}
                         </dd>
@@ -222,32 +222,32 @@
         <!-- Storage Information -->
         <div class="card">
             <div class="card-body">
-                <h2 class="text-xl font-semibold text-text-primary mb-4 pb-3 border-b border-border-subtle">Storage Information</h2>
+                <h2 class="text-xl font-semibold text-text-primary mb-4 pb-3 border-b border-border-subtle">存储信息</h2>
                 {% if space_usage and space_usage|length > 0 %}
                 {% set usage = space_usage[0] %}
                 <dl class="space-y-3">
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Used:</dt>
+                        <dt class="text-text-secondary">已用：</dt>
                         <dd class="text-text-primary font-semibold">{{ usage.used }}</dd>
                     </div>
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Available:</dt>
+                        <dt class="text-text-secondary">可用：</dt>
                         <dd class="text-text-primary font-semibold">{{ usage.avail }}</dd>
                     </div>
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Referenced:</dt>
+                        <dt class="text-text-secondary">引用量：</dt>
                         <dd class="text-text-primary">{{ usage.refer }}</dd>
                     </div>
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Used by Snapshots:</dt>
+                        <dt class="text-text-secondary">快照占用：</dt>
                         <dd class="text-text-primary">{{ usage.usedsnap }}</dd>
                     </div>
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Used by Dataset:</dt>
+                        <dt class="text-text-secondary">数据集占用：</dt>
                         <dd class="text-text-primary">{{ usage.usedds }}</dd>
                     </div>
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Used by Children:</dt>
+                        <dt class="text-text-secondary">子数据集占用：</dt>
                         <dd class="text-text-primary">{{ usage.usedchild }}</dd>
                     </div>
                 </dl>
@@ -260,31 +260,31 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div class="card">
             <div class="card-body">
-                <h2 class="text-xl font-semibold text-text-primary mb-4 pb-3 border-b border-border-subtle">Compression & Performance</h2>
+                <h2 class="text-xl font-semibold text-text-primary mb-4 pb-3 border-b border-border-subtle">压缩与性能</h2>
                 <dl class="space-y-3">
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Compression:</dt>
+                        <dt class="text-text-secondary">压缩：</dt>
                         <dd class="text-text-primary">{{ dataset.properties.compression.value }}</dd>
                     </div>
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Compression Ratio:</dt>
+                        <dt class="text-text-secondary">压缩率：</dt>
                         <dd class="text-text-primary font-semibold">{{ dataset.properties.compressratio.value }}</dd>
                     </div>
                     {% if 'recordsize' in dataset.properties %}
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Record Size:</dt>
+                        <dt class="text-text-secondary">记录大小：</dt>
                         <dd class="text-text-primary">{{ dataset.properties.recordsize.value }}</dd>
                     </div>
                     {% endif %}
                     {% if 'atime' in dataset.properties %}
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">ATime:</dt>
+                        <dt class="text-text-secondary">访问时间 (atime)：</dt>
                         <dd class="text-text-primary">{{ dataset.properties.atime.value }}</dd>
                     </div>
                     {% endif %}
                     {% if 'sync' in dataset.properties %}
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Sync:</dt>
+                        <dt class="text-text-secondary">Sync：</dt>
                         <dd class="text-text-primary">{{ dataset.properties.sync.value }}</dd>
                     </div>
                     {% endif %}
@@ -294,43 +294,43 @@
 
         <div class="card">
             <div class="card-body">
-                <h2 class="text-xl font-semibold text-text-primary mb-4 pb-3 border-b border-border-subtle">Data Protection</h2>
+                <h2 class="text-xl font-semibold text-text-primary mb-4 pb-3 border-b border-border-subtle">数据保护</h2>
                 <dl class="space-y-3">
                     {% if 'checksum' in dataset.properties %}
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Checksum:</dt>
+                        <dt class="text-text-secondary">校验和：</dt>
                         <dd class="text-text-primary">{{ dataset.properties.checksum.value }}</dd>
                     </div>
                     {% endif %}
                     {% if 'copies' in dataset.properties %}
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Copies:</dt>
+                        <dt class="text-text-secondary">副本数：</dt>
                         <dd class="text-text-primary">{{ dataset.properties.copies.value }}</dd>
                     </div>
                     {% endif %}
                     {% if 'dedup' in dataset.properties %}
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Deduplication:</dt>
+                        <dt class="text-text-secondary">去重：</dt>
                         <dd class="text-text-primary">{{ dataset.properties.dedup.value }}</dd>
                     </div>
                     {% endif %}
                     {% if 'readonly' in dataset.properties %}
                     <div class="flex justify-between items-center">
-                        <dt class="text-text-secondary">Read-Only:</dt>
+                        <dt class="text-text-secondary">只读：</dt>
                         <dd>
                             {% if dataset.properties.readonly.value == 'on' %}
                             <span class="inline-flex items-center gap-1 text-warning-400">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                                 </svg>
-                                Yes
+                                是
                             </span>
                             {% else %}
                             <span class="inline-flex items-center gap-1 text-success-400">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
                                 </svg>
-                                No
+                                否
                             </span>
                             {% endif %}
                         </dd>
@@ -346,29 +346,29 @@
         <!-- Current Values Display -->
         <div class="card">
             <div class="card-body">
-                <h2 class="text-xl font-semibold text-text-primary mb-4 pb-3 border-b border-border-subtle">Quotas & Reservations</h2>
+                <h2 class="text-xl font-semibold text-text-primary mb-4 pb-3 border-b border-border-subtle">配额与预留空间</h2>
                 <div class="space-y-3">
                     {% if 'quota' in dataset.properties %}
                     <div class="flex justify-between items-center">
-                        <span class="text-text-secondary">Quota:</span>
+                        <span class="text-text-secondary">配额：</span>
                         <span class="text-text-primary font-mono">{{ dataset.properties.quota.value }}</span>
                     </div>
                     {% endif %}
                     {% if 'reservation' in dataset.properties %}
                     <div class="flex justify-between items-center">
-                        <span class="text-text-secondary">Reservation:</span>
+                        <span class="text-text-secondary">预留空间：</span>
                         <span class="text-text-primary font-mono">{{ dataset.properties.reservation.value }}</span>
                     </div>
                     {% endif %}
                     {% if 'refquota' in dataset.properties %}
                     <div class="flex justify-between items-center">
-                        <span class="text-text-secondary">Ref Quota:</span>
+                        <span class="text-text-secondary">引用配额：</span>
                         <span class="text-text-primary font-mono">{{ dataset.properties.refquota.value }}</span>
                     </div>
                     {% endif %}
                     {% if 'refreservation' in dataset.properties %}
                     <div class="flex justify-between items-center">
-                        <span class="text-text-secondary">Ref Reservation:</span>
+                        <span class="text-text-secondary">引用预留空间：</span>
                         <span class="text-text-primary font-mono">{{ dataset.properties.refreservation.value }}</span>
                     </div>
                     {% endif %}
@@ -383,19 +383,19 @@
                     <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                     </svg>
-                    Set Quota
+                    设置配额
                 </h2>
                 {% set current_quota = dataset.properties.quota.value if 'quota' in dataset.properties else 'none' %}
                 {% if current_quota and current_quota not in ['none', '0', '-'] %}
                 <div class="card-nested bg-purple-900/20 border-purple-900 mb-4">
                     <div class="flex items-center justify-between">
                         <div>
-                            <div class="text-text-tertiary text-xs uppercase">Current Quota</div>
+                            <div class="text-text-tertiary text-xs uppercase">当前配额</div>
                             <div class="text-purple-400 text-xl font-bold mt-1">{{ current_quota }}</div>
                         </div>
                         <form method="post" action="/zfs/datasets/{{ dataset.name }}/quota">
                             <input type="hidden" name="quota_size" value="none">
-                            <button type="submit" class="btn-secondary text-sm">Remove</button>
+                            <button type="submit" class="btn-secondary text-sm">移除</button>
                         </form>
                     </div>
                 </div>
@@ -408,12 +408,12 @@
                       class="flex flex-col gap-3">
                     <div class="flex flex-col sm:flex-row gap-3 items-end">
                         <div class="flex-1 w-full">
-                            <label for="quota_size" class="form-label">Set Quota</label>
+                            <label for="quota_size" class="form-label">设置配额</label>
                             <input type="text"
                                    id="quota_size"
                                    name="quota_size"
                                    required
-                                   placeholder="e.g., 200G, 1T, none"
+                                   placeholder="例如 200G、1T、none"
                                    class="form-input w-full"
                                    oninput="validateQuota()">
                         </div>
@@ -421,14 +421,14 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Apply
+                            应用
                         </button>
                     </div>
                     <div id="quota-validation" class="text-xs hidden"></div>
                     {% if space_usage and space_usage|length > 0 %}
-                    <p class="text-xs text-text-tertiary">Valid range: <span class="text-text-secondary font-mono">{{ space_usage[0].used }}</span> (used) to <span class="text-text-secondary font-mono">{{ space_usage[0].used }} + {{ space_usage[0].avail }}</span> (total available). Set to "none" to remove.</p>
+                    <p class="text-xs text-text-tertiary">有效范围：<span class="text-text-secondary font-mono">{{ space_usage[0].used }}</span>（已用）至 <span class="text-text-secondary font-mono">{{ space_usage[0].used }} + {{ space_usage[0].avail }}</span>（总可用）。设为 "none" 可移除配额。</p>
                     {% else %}
-                    <p class="text-xs text-text-tertiary">Use size suffixes: K, M, G, T. Set to "none" to remove.</p>
+                    <p class="text-xs text-text-tertiary">使用大小后缀：K、M、G、T。设为 "none" 可移除配额。</p>
                     {% endif %}
                 </form>
             </div>
@@ -438,20 +438,20 @@
     <!-- Action Buttons -->
     <div class="card">
         <div class="card-body">
-            <h2 class="text-xl font-semibold text-text-primary mb-4 pb-3 border-b border-border-subtle">Actions</h2>
+            <h2 class="text-xl font-semibold text-text-primary mb-4 pb-3 border-b border-border-subtle">操作</h2>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 <a href="/zfs/snapshots/create/form?dataset={{ dataset.name }}" class="btn-info rounded-lg inline-flex items-center justify-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
-                    Snapshot
+                    快照
                 </a>
                 <a href="/zfs/datasets/create/form?parent={{ dataset.name }}" class="btn-primary rounded-lg inline-flex items-center justify-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
-                    Create Child
+                    创建子数据集
                 </a>
                 {% if dataset.properties.type.value == 'filesystem' and dataset.properties.mountpoint.value not in ['-', 'none'] %}
                 <form method="post" action="/zfs/datasets/{{ dataset.name }}/mount" class="w-full">
@@ -459,7 +459,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"></path>
                         </svg>
-                        Mount
+                        挂载
                     </button>
                 </form>
                 <form method="post" action="/zfs/datasets/{{ dataset.name }}/unmount" id="form-unmount" class="w-full">
@@ -468,14 +468,14 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
-                        Unmount
+                        卸载
                     </button>
                 </form>
                 <button type="button" class="btn-info w-full inline-flex items-center justify-center gap-2 htmx-loading"
                         hx-get="/zfs/datasets/{{ dataset.name }}/peek"
                         hx-target="#peek-modal-container"
                         hx-swap="innerHTML"
-                        title="Peek at the files in this dataset">
+                        title="预览此数据集中的文件">
                     <span class="htmx-indicator">
                         <div class="loading-spinner loading-spinner-sm"></div>
                     </span>
@@ -483,7 +483,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                     </svg>
-                    Peek
+                    预览
                 </button>
                 {% endif %}
                 <a href="/zfs/datasets/{{ dataset.name }}/properties" class="btn-success rounded-lg inline-flex items-center justify-center gap-2">
@@ -491,13 +491,13 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
-                    Properties
+                    属性
                 </a>
                 <a href="/zfs/datasets/{{ dataset.name }}/rename/form" class="bg-orange-600 hover:bg-orange-700 text-white font-medium py-2 px-4 rounded-lg transition-colors inline-flex items-center justify-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                     </svg>
-                    Rename
+                    重命名
                 </a>
                 <form method="post" action="/zfs/datasets/{{ dataset.name }}/promote" id="form-promote" class="w-full">
                     <button type="button" class="btn-secondary w-full inline-flex items-center justify-center gap-2"
@@ -505,49 +505,60 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
                         </svg>
-                        Promote
+                        提升
                     </button>
                 </form>
                 {% if 'encryption' in dataset.properties and dataset.properties.encryption.value not in ['off', '-'] %}
                 <form method="post" action="/zfs/datasets/{{ dataset.name }}/load-key">
                     <button type="submit" class="btn-info w-full inline-flex items-center justify-center gap-2"
-                            title="Load encryption key">
+                            title="加载加密密钥">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
                         </svg>
-                        Load Key
+                        加载密钥
                     </button>
                 </form>
                 <form method="post" action="/zfs/datasets/{{ dataset.name }}/unload-key" id="form-unload-key" class="w-full">
                     <button type="button" class="btn-secondary w-full inline-flex items-center justify-center gap-2"
                             onclick="showConfirm('confirm-unload-key')"
-                            title="Unload encryption key">
+                            title="卸载加密密钥">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                         </svg>
-                        Unload Key
+                        卸载密钥
                     </button>
                 </form>
                 <form method="post" action="/zfs/datasets/{{ dataset.name }}/change-key" id="form-change-key" class="w-full">
                     <button type="button" class="btn-warning w-full inline-flex items-center justify-center gap-2"
                             onclick="showConfirm('confirm-change-key')"
-                            title="Change encryption key">
+                            title="更改加密密钥">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
                         </svg>
-                        Change Key
+                        更改密钥
                     </button>
                 </form>
                 <form method="post" action="/zfs/datasets/{{ dataset.name }}/change-key/inherit" id="form-inherit-key" class="w-full">
                     <button type="button" class="btn-info w-full inline-flex items-center justify-center gap-2"
                             onclick="showConfirm('confirm-inherit-key')"
-                            title="Inherit encryption key from parent">
+                            title="从父数据集继承加密密钥">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
                         </svg>
-                        Inherit Key
+                        继承密钥
                     </button>
                 </form>
+                {% endif %}
+
+                {% if '/' in dataset.name %}
+                <!-- Destroy Dataset -->
+                <a href="/zfs/datasets/{{ dataset.name }}/destroy/confirm"
+                   class="btn-danger col-span-2 sm:col-span-3 lg:col-span-4 w-full inline-flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                    销毁数据集
+                </a>
                 {% endif %}
             </div>
             <div class="card-nested mt-4">
@@ -556,9 +567,9 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                     <span>
-                        <strong>Note:</strong> Promote action is only applicable for cloned datasets. Mount/unmount actions are only available for filesystems. Dataset destruction must be performed manually via command line for safety.
+                        <strong>注意：</strong>提升操作仅适用于克隆数据集。挂载/卸载操作仅适用于文件系统。“销毁数据集”为不可逆操作，会永久删除所选数据集及其中的数据。
                         {% if 'encryption' in dataset.properties and dataset.properties.encryption.value not in ['off', '-'] %}
-                        Encryption key management is available for encrypted datasets.
+                        加密数据集可使用加密密钥管理功能。
                         {% endif %}
                     </span>
                 </p>
@@ -577,7 +588,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
-            Back to Datasets
+            返回数据集列表
         </a>
     </div>
 </div>
@@ -585,42 +596,42 @@
 {% if dataset %}
 <!-- Confirmation Modals -->
 {% set id = 'confirm-unmount' %}
-{% set title = 'Unmount Dataset' %}
-{% set message = 'Unmount dataset ' ~ dataset.name ~ '? This will make the filesystem inaccessible until remounted.' %}
-{% set confirm_text = 'Unmount' %}
+{% set title = '卸载数据集' %}
+{% set message = '确定要卸载数据集 ' ~ dataset.name ~ ' 吗？在重新挂载之前，该文件系统将无法访问。' %}
+{% set confirm_text = '卸载' %}
 {% set confirm_class = 'warning' %}
 {% set confirm_action = 'document.getElementById("form-unmount").submit()' %}
 {% include 'partials/confirm.jinja' %}
 
 {% set id = 'confirm-promote' %}
-{% set title = 'Promote Dataset' %}
-{% set message = 'Promote ' ~ dataset.name ~ '? This operation swaps the clone and origin, making this dataset independent. Only valid for cloned datasets.' %}
-{% set confirm_text = 'Promote' %}
+{% set title = '提升数据集' %}
+{% set message = '确定要提升 ' ~ dataset.name ~ ' 吗？此操作会交换克隆与原始快照的角色，使该数据集变为独立数据集。仅对克隆数据集有效。' %}
+{% set confirm_text = '提升' %}
 {% set confirm_class = 'warning' %}
 {% set confirm_action = 'document.getElementById("form-promote").submit()' %}
 {% include 'partials/confirm.jinja' %}
 
 {% if 'encryption' in dataset.properties and dataset.properties.encryption.value not in ['off', '-'] %}
 {% set id = 'confirm-unload-key' %}
-{% set title = 'Unload Encryption Key' %}
-{% set message = 'Unload encryption key for ' ~ dataset.name ~ '? The dataset will remain encrypted but unmountable until the key is loaded again.' %}
-{% set confirm_text = 'Unload Key' %}
+{% set title = '卸载加密密钥' %}
+{% set message = '确定要卸载 ' ~ dataset.name ~ ' 的加密密钥吗？数据集将保持加密状态，但在重新加载密钥之前无法挂载。' %}
+{% set confirm_text = '卸载密钥' %}
 {% set confirm_class = 'warning' %}
 {% set confirm_action = 'document.getElementById("form-unload-key").submit()' %}
 {% include 'partials/confirm.jinja' %}
 
 {% set id = 'confirm-change-key' %}
-{% set title = 'Change Encryption Key' %}
-{% set message = 'Change encryption key for ' ~ dataset.name ~ '? You will be prompted for the new key. Make sure to backup the key securely.' %}
-{% set confirm_text = 'Change Key' %}
+{% set title = '更改加密密钥' %}
+{% set message = '确定要更改 ' ~ dataset.name ~ ' 的加密密钥吗？系统将提示你输入新密钥。请务必妥善备份密钥。' %}
+{% set confirm_text = '更改密钥' %}
 {% set confirm_class = 'warning' %}
 {% set confirm_action = 'document.getElementById("form-change-key").submit()' %}
 {% include 'partials/confirm.jinja' %}
 
 {% set id = 'confirm-inherit-key' %}
-{% set title = 'Inherit Encryption Key' %}
-{% set message = 'Make ' ~ dataset.name ~ ' inherit encryption key from parent? This will change the encryption key source to the parent dataset.' %}
-{% set confirm_text = 'Inherit Key' %}
+{% set title = '继承加密密钥' %}
+{% set message = '确定要让 ' ~ dataset.name ~ ' 从父数据集继承加密密钥吗？这将把加密密钥来源更改为父数据集。' %}
+{% set confirm_text = '继承密钥' %}
 {% set confirm_class = 'primary' %}
 {% set confirm_action = 'document.getElementById("form-inherit-key").submit()' %}
 {% include 'partials/confirm.jinja' %}
@@ -675,7 +686,7 @@ function validateQuota() {
     var inputBytes = parseSizeToBytes(value);
 
     if (inputBytes === -1) {
-        msgDiv.textContent = 'Invalid format. Use a number with suffix: K, M, G, T (e.g., 200G, 1T)';
+        msgDiv.textContent = '格式无效。请使用带后缀的数字：K、M、G、T（例如 200G、1T）';
         msgDiv.className = 'text-xs text-warning-400';
         submitBtn.disabled = true;
         submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
@@ -683,7 +694,7 @@ function validateQuota() {
     }
 
     if (usedBytes > 0 && inputBytes < usedBytes) {
-        msgDiv.textContent = 'Too small: must be at least ' + usedStr + ' (current used space)';
+        msgDiv.textContent = '太小：不能小于 ' + usedStr + '（当前已用空间）';
         msgDiv.className = 'text-xs text-danger-400';
         submitBtn.disabled = true;
         submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
@@ -691,14 +702,14 @@ function validateQuota() {
     }
 
     if (maxBytes > 0 && inputBytes > maxBytes) {
-        msgDiv.textContent = 'Too large: maximum is ' + formatBytes(maxBytes) + ' (used + available)';
+        msgDiv.textContent = '太大：最大为 ' + formatBytes(maxBytes) + '（已用 + 可用）';
         msgDiv.className = 'text-xs text-danger-400';
         submitBtn.disabled = true;
         submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
         return;
     }
 
-    msgDiv.textContent = 'Valid: ' + formatBytes(inputBytes);
+    msgDiv.textContent = '有效：' + formatBytes(inputBytes);
     msgDiv.className = 'text-xs text-success-400';
     submitBtn.disabled = false;
     submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');

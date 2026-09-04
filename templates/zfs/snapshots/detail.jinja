@@ -4,11 +4,11 @@
 <div class="max-w-7xl mx-auto space-y-6">
     <!-- Breadcrumb Navigation -->
     <nav class="flex items-center text-sm text-text-secondary">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
-        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">Snapshots</a>
+        <a href="/zfs/snapshots" class="hover:text-text-primary transition-colors">快照</a>
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
@@ -18,21 +18,21 @@
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start gap-4">
         <div>
-            <h1 class="text-3xl font-bold text-text-primary">Snapshot: {{ snap_name }}</h1>
-            <p class="text-text-secondary mt-1">View snapshot details and manage holds</p>
+            <h1 class="text-3xl font-bold text-text-primary">快照：{{ snap_name }}</h1>
+            <p class="text-text-secondary mt-1">查看快照详细信息并管理保留标记</p>
         </div>
         <div class="flex flex-wrap gap-2">
             <a href="/zfs/snapshots/{{ snapshot_path }}/clone/form" class="btn-success inline-flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                 </svg>
-                Clone
+                克隆
             </a>
             <a href="/zfs/snapshots/{{ snapshot_path }}/rename/form" class="btn-primary inline-flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                 </svg>
-                Rename
+                重命名
             </a>
         </div>
     </div>
@@ -66,7 +66,7 @@
                         <svg class="w-5 h-5 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        Basic Information
+                        基本信息
                     </h2>
                 </div>
                 <div class="p-6 space-y-4">
@@ -82,7 +82,7 @@
                         <svg class="w-5 h-5 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
-                        Space Usage
+                        空间占用
                     </h2>
                 </div>
                 <div class="p-6 space-y-4">
@@ -100,12 +100,12 @@
                     <svg class="w-5 h-5 text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                     </svg>
-                    Snapshot Holds
+                    快照保留标记（Holds）
                 </h2>
             </div>
             <div class="p-6 flex items-center gap-3">
                 <div class="loading-spinner loading-spinner-sm"></div>
-                <span class="text-text-tertiary text-sm">Loading snapshot data...</span>
+                <span class="text-text-tertiary text-sm">正在加载快照数据……</span>
             </div>
         </div>
 
@@ -116,7 +116,7 @@
                     <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
                     </svg>
-                    All Properties
+                    全部属性
                 </h2>
             </div>
             <div class="p-6 space-y-3">
@@ -135,7 +135,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>
-            Back to Snapshots
+            返回快照列表
         </a>
     </div>
 </div>

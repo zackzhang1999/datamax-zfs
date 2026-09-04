@@ -15,48 +15,48 @@
                 </div>
             </div>
             {% if disk.overall_status == 'healthy' %}
-            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-success-900/50 text-success-400 border border-success-500/30">Healthy</span>
+            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-success-900/50 text-success-400 border border-success-500/30">健康</span>
             {% elif disk.overall_status == 'warning' %}
-            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-warning-900/50 text-warning-400 border border-warning-500/30">Warning</span>
+            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-warning-900/50 text-warning-400 border border-warning-500/30">警告</span>
             {% else %}
-            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-danger-900/50 text-danger-400 border border-danger-500/30">Critical</span>
+            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-danger-900/50 text-danger-400 border border-danger-500/30">严重</span>
             {% endif %}
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <!-- Power-On Hours -->
             <div class="bg-bg-base rounded-lg p-3">
-                <div class="text-xs text-text-tertiary uppercase tracking-wider mb-1">Power-On Hours</div>
+                <div class="text-xs text-text-tertiary uppercase tracking-wider mb-1">通电时间</div>
                 {% if disk.power_on_hours is not none %}
-                    <div class="text-text-primary font-mono font-semibold">{{ "{:,}".format(disk.power_on_hours) }} hrs</div>
-                    <div class="text-xs text-text-tertiary">~{{ "%.1f" | format(disk.power_on_hours / 8760) }} years</div>
+                    <div class="text-text-primary font-mono font-semibold">{{ "{:,}".format(disk.power_on_hours) }} 小时</div>
+                    <div class="text-xs text-text-tertiary">约 {{ "%.1f" | format(disk.power_on_hours / 8760) }} 年</div>
                     {% if disk.power_on_hours_source and disk.power_on_hours_source != 'attribute' %}
                     <div class="text-xs text-info-400 mt-0.5">({{ disk.power_on_hours_source }})</div>
                     {% endif %}
                 {% else %}
-                    <div class="text-warning-400 font-mono font-semibold">????? Hours</div>
+                    <div class="text-warning-400 font-mono font-semibold">????? 小时</div>
                 {% endif %}
             </div>
 
             <!-- SMART Test Hours -->
             <div class="bg-bg-base rounded-lg p-3">
-                <div class="text-xs text-text-tertiary uppercase tracking-wider mb-1">Last SMART Test</div>
+                <div class="text-xs text-text-tertiary uppercase tracking-wider mb-1">上次 SMART 测试</div>
                 {% if disk.smart_test_hours is not none %}
-                    <div class="text-text-primary font-mono font-semibold">&gt;{{ "{:,}".format(disk.smart_test_hours) }} hrs</div>
-                    <div class="text-xs text-text-tertiary">@ last SMART test</div>
+                    <div class="text-text-primary font-mono font-semibold">&gt;{{ "{:,}".format(disk.smart_test_hours) }} 小时</div>
+                    <div class="text-xs text-text-tertiary">于上次 SMART 测试时</div>
                 {% else %}
-                    <div class="text-warning-400 font-mono font-semibold">????? Hours</div>
-                    <div class="text-xs text-text-tertiary">No self-tests found</div>
+                    <div class="text-warning-400 font-mono font-semibold">????? 小时</div>
+                    <div class="text-xs text-text-tertiary">未找到自检测试</div>
                 {% endif %}
             </div>
 
             <!-- Temperature -->
             <div class="bg-bg-base rounded-lg p-3">
-                <div class="text-xs text-text-tertiary uppercase tracking-wider mb-1">Temperature</div>
+                <div class="text-xs text-text-tertiary uppercase tracking-wider mb-1">温度</div>
                 {% if disk.temperature_info and disk.temperature_info.current is not none %}
                     <div class="text-text-primary font-mono font-semibold">{{ disk.temperature_info.current }} C</div>
                     {% if disk.over_temperature %}
-                    <div class="text-xs text-danger-400">Over-temp detected</div>
+                    <div class="text-xs text-danger-400">检测到过热</div>
                     {% endif %}
                 {% else %}
                     <div class="text-text-tertiary">N/A</div>
@@ -65,7 +65,7 @@
 
             <!-- Reallocated Sectors -->
             <div class="bg-bg-base rounded-lg p-3">
-                <div class="text-xs text-text-tertiary uppercase tracking-wider mb-1">Reallocated Sectors</div>
+                <div class="text-xs text-text-tertiary uppercase tracking-wider mb-1">重映射扇区</div>
                 {% if disk.reallocated_sectors is not none %}
                     {% if disk.reallocated_sectors > 0 %}
                     <div class="text-warning-400 font-mono font-semibold">{{ disk.reallocated_sectors }}</div>

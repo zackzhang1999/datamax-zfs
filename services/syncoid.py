@@ -176,9 +176,9 @@ class SyncoidService:
                     text=True,
                     timeout=5
                 )
-                version = version_result.stdout.strip() if version_result.returncode == 0 else 'unknown'
+                version = version_result.stdout.strip() if version_result.returncode == 0 else '未知'
             except Exception:
-                version = 'unknown'
+                version = '未知'
             
             return {
                 'installed': True,
@@ -189,7 +189,7 @@ class SyncoidService:
             }
             
         except Exception as e:
-            raise Exception(f"Failed to check syncoid status: {str(e)}")
+            raise Exception(f"检查 syncoid 状态失败：{str(e)}")
     
     def execute_replication(
         self,
@@ -271,7 +271,7 @@ class SyncoidService:
             if not self.syncoid_path:
                 return {
                     'success': False,
-                    'error': 'syncoid binary not found. Install sanoid/syncoid and restart WebZFS.'
+                    'error': '未找到 syncoid 程序。请安装 sanoid/syncoid 并重启 WebZFS。'
                 }
             
             # Build the syncoid command using the discovered full path
@@ -330,8 +330,8 @@ class SyncoidService:
                     return {
                         'success': False,
                         'error': (
-                            f"Invalid send option(s): {''.join(invalid)}. "
-                            f"Allowed options: "
+                            f"无效的发送选项：{''.join(invalid)}。"
+                            f"允许的选项："
                             f"{''.join(sorted(self.ALLOWED_SEND_OPTIONS))}"
                         )
                     }
@@ -615,7 +615,7 @@ class SyncoidService:
             snapshots = [line.strip() for line in list_result.stdout.split('\n') if line.strip()]
             
             if not snapshots:
-                return {'error': 'No snapshots found for source'}
+                return {'error': '源数据集没有快照'}
             
             latest_snapshot = snapshots[-1]
             

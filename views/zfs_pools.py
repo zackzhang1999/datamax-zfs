@@ -184,7 +184,7 @@ async def pools_index(request: Request):
             name="zfs/pools/index.jinja",
             context={
                 "pools": pools,
-                "page_title": "ZFS Pools"
+                "page_title": "ZFS 存储池"
             }
         )
     except Exception as e:
@@ -194,7 +194,7 @@ async def pools_index(request: Request):
             context={
                 "pools": [],
                 "error": str(e),
-                "page_title": "ZFS Pools"
+                "page_title": "ZFS 存储池"
             }
         )
 
@@ -401,7 +401,7 @@ async def download_pool_history(pool_name: str):
             output_lines.append("")
             output_lines.append(f"Total entries: {len(history)}")
         else:
-            output_lines.append("No history entries found")
+            output_lines.append("未找到历史记录")
         
         output_lines.append("")
         output_lines.append("=" * 80)
@@ -417,7 +417,7 @@ async def download_pool_history(pool_name: str):
     except Exception as e:
         from fastapi.responses import PlainTextResponse
         return PlainTextResponse(
-            content=f"Error generating history file: {str(e)}",
+            content=f"生成历史记录文件时出错：{str(e)}",
             status_code=500
         )
 
@@ -429,7 +429,7 @@ async def scrub_pool(request: Request, pool_name: str, current_user: str = Depen
         pool_service.scrub_pool(pool_name)
         audit_logger.log_pool_scrub(user=current_user, pool_name=pool_name, action="start")
         return RedirectResponse(
-            url=f"/zfs/pools/{pool_name}?message=Scrub started successfully",
+            url=f"/zfs/pools/{pool_name}?message=数据清洗已成功启动",
             status_code=303
         )
     except Exception as e:
@@ -447,7 +447,7 @@ async def stop_scrub(request: Request, pool_name: str, current_user: str = Depen
         pool_service.stop_scrub(pool_name)
         audit_logger.log_pool_scrub(user=current_user, pool_name=pool_name, action="stop")
         return RedirectResponse(
-            url=f"/zfs/pools/{pool_name}?message=Scrub stopped successfully",
+            url=f"/zfs/pools/{pool_name}?message=数据清洗已成功停止",
             status_code=303
         )
     except Exception as e:
@@ -479,7 +479,7 @@ async def create_pool_form(request: Request):
                 "hdds": hdds,
                 "ssds": ssds,
                 "supports_ashift": supports_ashift,
-                "page_title": "Create ZFS Pool"
+                "page_title": "创建 ZFS 存储池"
             }
         )
     except Exception as e:
@@ -491,8 +491,8 @@ async def create_pool_form(request: Request):
                 "hdds": [],
                 "ssds": [],
                 "supports_ashift": supports_ashift,
-                "error": f"Error loading disks: {str(e)}",
-                "page_title": "Create ZFS Pool"
+                "error": f"加载磁盘时出错：{str(e)}",
+                "page_title": "创建 ZFS 存储池"
             }
         )
 
@@ -602,7 +602,7 @@ async def create_pool(
         audit_logger.log_pool_create(user=current_user, pool_name=pool_name, vdevs=vdevs)
         
         return RedirectResponse(
-            url=f"/zfs/pools?message=Pool {pool_name} created successfully",
+            url=f"/zfs/pools?message=存储池 {pool_name} 创建成功",
             status_code=303
         )
     except Exception as e:
@@ -619,7 +619,7 @@ async def create_pool(
                 "devices": devices,
                 "ashift": ashift,
                 "supports_ashift": not is_netbsd(),
-                "page_title": "Create ZFS Pool"
+                "page_title": "创建 ZFS 存储池"
             }
         )
 
@@ -649,7 +649,7 @@ async def export_pool(
         pool_service.export_pool(pool_name, force=force)
         audit_logger.log_pool_export(user=current_user, pool_name=pool_name, force=force)
         return RedirectResponse(
-            url="/zfs/pools?message=Pool exported successfully",
+            url="/zfs/pools?message=存储池导出成功",
             status_code=303
         )
     except Exception as e:
@@ -657,6 +657,67 @@ async def export_pool(
         return RedirectResponse(
             url=f"/zfs/pools/{pool_name}?error={str(e)}",
             status_code=303
+        )
+
+
+@router.get("/{pool_name}/destroy/confirm", response_class=HTMLResponse)
+async def destroy_pool_confirm(request: Request, pool_name: str):
+    """Display the pool destruction confirmation page."""
+    pool_service.validate_pool_name(pool_name)
+    return templates.TemplateResponse(
+        request,
+        name="zfs/pools/destroy_confirm.jinja",
+        context={
+            "pool_name": pool_name,
+            "page_title": f"销毁存储池：{pool_name}",
+        }
+    )
+
+
+@router.post("/{pool_name}/destroy", response_class=HTMLResponse)
+async def destroy_pool(
+    request: Request,
+    pool_name: str,
+    confirm: Annotated[str, Form()],
+    force: Annotated[bool, Form()] = False,
+    current_user: str = Depends(get_current_user)
+):
+    """Destroy (delete) a ZFS pool after typed-name confirmation."""
+    if confirm.strip() != pool_name:
+        return templates.TemplateResponse(
+            request,
+            name="zfs/pools/destroy_confirm.jinja",
+            context={
+                "pool_name": pool_name,
+                "page_title": f"销毁存储池：{pool_name}",
+                "error": "存储池名称确认不匹配。请输入完全一致的存储池名称以确认销毁。",
+            },
+            status_code=400,
+        )
+
+    try:
+        pool_service.destroy_pool(pool_name, force=force)
+        audit_logger.log_pool_destroy(
+            user=current_user, pool_name=pool_name, force=force
+        )
+        return RedirectResponse(
+            url="/zfs/pools?message=存储池已销毁",
+            status_code=303
+        )
+    except Exception as e:
+        audit_logger.log_pool_destroy(
+            user=current_user, pool_name=pool_name, force=force,
+            success=False, error=str(e)
+        )
+        return templates.TemplateResponse(
+            request,
+            name="zfs/pools/destroy_confirm.jinja",
+            context={
+                "pool_name": pool_name,
+                "page_title": f"销毁存储池：{pool_name}",
+                "error": str(e),
+            },
+            status_code=400,
         )
 
 
@@ -702,7 +763,7 @@ async def import_pools_list(request: Request):
             name="zfs/pools/import.jinja",
             context={
                 "importable_pools": importable_pools,
-                "page_title": "Import ZFS Pools"
+                "page_title": "导入 ZFS 存储池"
             }
         )
     except Exception as e:
@@ -712,7 +773,7 @@ async def import_pools_list(request: Request):
             context={
                 "importable_pools": [],
                 "error": str(e),
-                "page_title": "Import ZFS Pools"
+                "page_title": "导入 ZFS 存储池"
             }
         )
 
@@ -729,7 +790,7 @@ async def import_pool(
         pool_service.import_pool(pool_name, force=force)
         audit_logger.log_pool_import(user=current_user, pool_name=pool_name, force=force)
         return RedirectResponse(
-            url=f"/zfs/pools?message=Pool {pool_name} imported successfully",
+            url=f"/zfs/pools?message=存储池 {pool_name} 导入成功",
             status_code=303
         )
     except Exception as e:
@@ -801,7 +862,7 @@ async def set_pool_property(
             property_name=property_name, property_value=property_value
         )
         return RedirectResponse(
-            url=f"/zfs/pools/{pool_name}/properties?message=Property updated successfully",
+            url=f"/zfs/pools/{pool_name}/properties?message=属性更新成功",
             status_code=303
         )
     except Exception as e:
@@ -850,7 +911,7 @@ async def download_pool_properties(pool_name: str):
             output_lines.append("")
             output_lines.append(f"Total properties: {len(properties)}")
         else:
-            output_lines.append("No properties available")
+            output_lines.append("没有可用的属性")
         
         output_lines.append("")
         output_lines.append("=" * 80)
@@ -866,7 +927,7 @@ async def download_pool_properties(pool_name: str):
     except Exception as e:
         from fastapi.responses import PlainTextResponse
         return PlainTextResponse(
-            content=f"Error generating properties file: {str(e)}",
+            content=f"生成属性文件时出错：{str(e)}",
             status_code=500
         )
 
@@ -882,7 +943,7 @@ async def create_checkpoint(
         pool_service.create_checkpoint(pool_name)
         audit_logger.log_pool_checkpoint_create(user=current_user, pool_name=pool_name)
         return RedirectResponse(
-            url=f"/zfs/pools/{pool_name}?message=Checkpoint created successfully",
+            url=f"/zfs/pools/{pool_name}?message=检查点创建成功",
             status_code=303
         )
     except Exception as e:
@@ -906,7 +967,7 @@ async def discard_checkpoint(
         pool_service.discard_checkpoint(pool_name)
         audit_logger.log_pool_checkpoint_discard(user=current_user, pool_name=pool_name)
         return RedirectResponse(
-            url=f"/zfs/pools/{pool_name}?message=Checkpoint discarded successfully",
+            url=f"/zfs/pools/{pool_name}?message=检查点已成功丢弃",
             status_code=303
         )
     except Exception as e:
@@ -945,7 +1006,7 @@ async def download_pool_diagnostics(pool_name: str):
     except Exception as e:
         from fastapi.responses import PlainTextResponse
         return PlainTextResponse(
-            content=f"Error collecting diagnostics: {str(e)}",
+            content=f"收集诊断信息时出错：{str(e)}",
             status_code=500
         )
 
@@ -1127,7 +1188,7 @@ async def add_vdev(
         vdevs = []
         device_list = [d.strip() for d in devices.split(',') if d.strip()]
         if not device_list:
-            raise ValueError("No devices specified")
+            raise ValueError("未指定任何设备")
 
         # Spare size validation: spares must be >= smallest data device
         if vdev_type == "spare":
@@ -1146,9 +1207,9 @@ async def add_vdev(
                         dev_size = disk_service.get_device_size_bytes(dev_path)
                     if dev_size is not None and dev_size < min_data_size:
                         raise ValueError(
-                            f"Spare device {dev} ({_format_bytes_human(dev_size)}) is smaller than "
-                            f"the smallest data device ({_format_bytes_human(min_data_size)}). "
-                            f"Spares must be the same size or larger than existing data devices."
+                            f"热备设备 {dev}（{_format_bytes_human(dev_size)}）小于 "
+                            f"最小的数据设备（{_format_bytes_human(min_data_size)}）。"
+                            f"热备盘必须与现有数据设备等大或更大。"
                         )
 
         # Always add the vdev type keyword first
@@ -1159,7 +1220,7 @@ async def add_vdev(
         # dedup vdevs are individual disks (ZFS manages allocation)
         if vdev_layout == "mirror" and vdev_type in ("log", "special"):
             if len(device_list) < 2:
-                raise ValueError("Mirror layout requires at least 2 devices")
+                raise ValueError("镜像布局至少需要 2 个设备")
             vdevs.append("mirror")
 
         vdevs.extend(device_list)
@@ -1170,7 +1231,7 @@ async def add_vdev(
             vdevs=','.join(vdevs)
         )
         return RedirectResponse(
-            url=f"/zfs/pools/{pool_name}/vdevs?message=VDev added successfully",
+            url=f"/zfs/pools/{pool_name}/vdevs?message=VDEV 添加成功",
             status_code=303
         )
     except Exception as e:
@@ -1217,9 +1278,9 @@ async def attach_device(
                 and existing_size > 0 and new_size > 0
                 and new_size < existing_size):
             raise ValueError(
-                f"New device {new_clean} ({_format_bytes_human(new_size)}) is smaller than the "
-                f"existing device {existing_clean} ({_format_bytes_human(existing_size)}). "
-                f"The attached disk must be the same size or larger."
+                f"新设备 {new_clean}（{_format_bytes_human(new_size)}）小于 "
+                f"现有设备 {existing_clean}（{_format_bytes_human(existing_size)}）。"
+                f"被附加的磁盘必须等大或更大。"
             )
 
         pool_service.attach_device(
@@ -1233,7 +1294,7 @@ async def attach_device(
             new_device=new_device.strip()
         )
         return RedirectResponse(
-            url=f"/zfs/pools/{pool_name}/vdevs?message=Device attached successfully. Resilvering will begin.",
+            url=f"/zfs/pools/{pool_name}/vdevs?message=设备附加成功，将开始数据修复（resilver）。",
             status_code=303
         )
     except Exception as e:
@@ -1264,7 +1325,7 @@ async def detach_device(
             device=device.strip()
         )
         return RedirectResponse(
-            url=f"/zfs/pools/{pool_name}/vdevs?message=Device detached successfully",
+            url=f"/zfs/pools/{pool_name}/vdevs?message=设备分离成功",
             status_code=303
         )
     except Exception as e:
@@ -1304,9 +1365,9 @@ async def replace_device(
             if (len(only_vdev.get('devices', [])) == 1
                     and only_type in ('', 'single', 'stripe')):
                 raise ValueError(
-                    "Replace is not available for single-disk pools because the "
-                    "pool has no redundancy. Attach a mirror device first or "
-                    "create a new pool with redundancy."
+                    "单磁盘存储池无法更换设备，因为该 "
+                    "存储池没有冗余。请先附加镜像设备，或 "
+                    "创建带冗余的新存储池。"
                 )
 
         # Size validation: new device must be the same size or larger than the
@@ -1327,9 +1388,9 @@ async def replace_device(
                 and old_size > 0 and new_size > 0
                 and new_size < old_size):
             raise ValueError(
-                f"Replacement device {new_clean} ({_format_bytes_human(new_size)}) is smaller "
-                f"than the device being replaced {old_clean} ({_format_bytes_human(old_size)}). "
-                f"The replacement disk must be the same size or larger."
+                f"更换设备 {new_clean}（{_format_bytes_human(new_size)}）小于 "
+                f"被更换的设备 {old_clean}（{_format_bytes_human(old_size)}）。"
+                f"更换磁盘必须等大或更大。"
             )
 
         pool_service.replace_device(
@@ -1343,7 +1404,7 @@ async def replace_device(
             new_device=new_device.strip()
         )
         return RedirectResponse(
-            url=f"/zfs/pools/{pool_name}/vdevs?message=Device replacement started. Monitor resilvering progress on this page.",
+            url=f"/zfs/pools/{pool_name}/vdevs?message=设备更换已启动。请在本页关注数据修复（resilver）进度。",
             status_code=303
         )
     except Exception as e:
@@ -1374,7 +1435,7 @@ async def remove_vdev(
             device=device.strip()
         )
         return RedirectResponse(
-            url=f"/zfs/pools/{pool_name}/vdevs?message=VDev removal initiated",
+            url=f"/zfs/pools/{pool_name}/vdevs?message=VDEV 移除已启动",
             status_code=303
         )
     except Exception as e:
@@ -1405,7 +1466,7 @@ async def online_device(
             device=device.strip(), expand=expand
         )
         return RedirectResponse(
-            url=f"/zfs/pools/{pool_name}/vdevs?message=Device brought online successfully",
+            url=f"/zfs/pools/{pool_name}/vdevs?message=设备已成功上线",
             status_code=303
         )
     except Exception as e:
@@ -1437,9 +1498,9 @@ async def offline_device(
             user=current_user, pool_name=pool_name,
             device=device.strip(), temporary=temporary
         )
-        msg = "Device taken offline"
+        msg = "设备已下线"
         if temporary:
-            msg += " (temporary, will auto-online on reboot)"
+            msg += "（临时，重启后将自动上线）"
         return RedirectResponse(
             url=f"/zfs/pools/{pool_name}/vdevs?message={msg}",
             status_code=303
@@ -1473,7 +1534,7 @@ async def set_pool_reservation(
             pool=pool_name,
             value=value
         )
-        msg = f"Reservation set to {value}" if value != 'none' else "Reservation removed"
+        msg = f"预留空间已设置为 {value}" if value != 'none' else "预留空间已移除"
         return RedirectResponse(
             url=f"/zfs/pools/{pool_name}?message={msg}",
             status_code=303
@@ -1503,14 +1564,14 @@ async def set_pool_mountpoint(
     try:
         value = mountpoint.strip()
         if not value:
-            raise ValueError("Mountpoint cannot be empty")
+            raise ValueError("挂载点不能为空")
 
         # Allow special values 'none' and 'legacy'; otherwise the value must
         # look like an absolute path.
         if value not in ("none", "legacy") and not value.startswith("/"):
             raise ValueError(
-                "Mountpoint must be an absolute path (start with /), "
-                "or one of the special values 'none' or 'legacy'"
+                "挂载点必须是绝对路径（以 / 开头），"
+                "或特殊值 'none' 或 'legacy' 之一"
             )
 
         dataset_service.set_property(pool_name, "mountpoint", value)
@@ -1521,9 +1582,9 @@ async def set_pool_mountpoint(
             value=value,
         )
         return RedirectResponse(
-            url=f"/zfs/pools/{pool_name}?message=Mountpoint set to {value}. "
-                f"Child datasets that inherit the mountpoint property have been "
-                f"remounted under the new path.",
+            url=f"/zfs/pools/{pool_name}?message=挂载点已设置为 {value}。"
+                f"继承挂载点属性的子数据集已 "
+                f"在新路径下重新挂载。",
             status_code=303,
         )
     except Exception as e:

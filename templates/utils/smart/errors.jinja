@@ -4,18 +4,18 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils/smart" class="hover:text-blue-400">SMART Monitoring</a> 
+        <a href="/utils/smart" class="hover:text-blue-400">SMART 监控</a> 
         <span class="mx-2">/</span> 
         <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}" class="hover:text-blue-400">{{ disk_path }}</a>
         <span class="mx-2">/</span> 
-        <span class="text-text-primary">Error Log</span>
+        <span class="text-text-primary">错误日志</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">SMART Error Log: {{ disk_path }}</h1>
+        <h1 class="text-3xl font-bold text-text-primary">SMART 错误日志：{{ disk_path }}</h1>
         <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}" class="btn-secondary hover:bg-bg-elevated-2 text-text-primary px-4 py-2 rounded inline-block">
-            ← Back to Disk
+            ← 返回磁盘
         </a>
     </div>
 
@@ -24,9 +24,9 @@
     <div class="bg-bg-elevated rounded-lg overflow-hidden shadow-lg">
         <div class="p-6 border-b border-gray-700">
             <div class="flex justify-between items-center">
-                <h2 class="text-xl font-bold text-text-primary">Errors Found</h2>
+                <h2 class="text-xl font-bold text-text-primary">发现的错误</h2>
                 <span class="px-3 py-1 bg-red-900 text-red-300 rounded-full text-sm font-semibold">
-                    {{ errors|length }} Error(s)
+                    {{ errors|length }} 条错误
                 </span>
             </div>
         </div>
@@ -53,11 +53,11 @@
     <div class="mt-6 bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded">
         <strong><svg class="w-5 h-5 inline text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                    </svg> Warning:</strong>
+                    </svg> 警告：</strong>
         <p class="mt-2 text-sm">
-            SMART errors indicate potential or actual disk problems. Errors should be investigated immediately. 
-            If multiple errors are present or errors are increasing over time, the disk may be failing and should 
-            be replaced as soon as possible. Back up your data immediately.
+            SMART 错误表示磁盘存在潜在或实际的问题，应立即排查。
+            如果出现多条错误，或错误数量随时间增加，磁盘可能正在损坏，应尽快
+            更换。请立即备份数据。
         </p>
     </div>
     {% else %}
@@ -68,9 +68,9 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                     </svg></span>
         </div>
-        <h2 class="text-2xl font-bold text-green-400 mb-2">No Errors Logged</h2>
+        <h2 class="text-2xl font-bold text-green-400 mb-2">未记录错误</h2>
         <p class="text-text-tertiary">
-            The SMART error log is empty. This is a good sign that the disk has not experienced any recordable errors.
+            SMART 错误日志为空。这是磁盘未出现任何可记录错误的好迹象。
         </p>
     </div>
 
@@ -78,25 +78,25 @@
     <div class="mt-6 bg-success-900/30 border-2 border-success-500/50 text-success-400 px-4 py-3 rounded">
         <strong><svg class="w-5 h-5 inline text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    </svg> Clean Log:</strong>
+                    </svg> 日志干净：</strong>
         <p class="mt-2 text-sm">
-            No SMART errors have been logged for this disk. Continue monitoring regularly to maintain drive health.
+            此磁盘未记录任何 SMART 错误。请继续定期监控，以保持磁盘健康。
         </p>
     </div>
     {% endif %}
 
     <!-- Quick Actions -->
     <div class="mt-6 bg-bg-elevated rounded-lg p-6">
-        <h2 class="text-xl font-bold text-text-primary mb-4">Related Information</h2>
+        <h2 class="text-xl font-bold text-text-primary mb-4">相关信息</h2>
         <div class="flex flex-wrap gap-2">
             <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/health" class="btn-primary px-4 py-2 inline-block">
-                Check Health Status
+                检查健康状态
             </a>
             <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/attributes" class="bg-blue-600 hover:bg-blue-700 text-text-primary px-4 py-2 rounded inline-block">
-                View SMART Attributes
+                查看 SMART 属性
             </a>
             <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/tests" class="bg-green-600 hover:bg-green-700 text-text-primary px-4 py-2 rounded inline-block">
-                Run Diagnostic Test
+                运行诊断测试
             </a>
         </div>
     </div>
@@ -105,11 +105,11 @@
     <div class="mt-6 bg-info-900/30 border-2 border-info-500/50 text-info-400 px-4 py-3 rounded">
         <strong><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg> About SMART Error Logs:</strong>
+                    </svg> 关于 SMART 错误日志：</strong>
         <p class="mt-2 text-sm">
-            The SMART error log records read errors, seek errors, and other disk operation failures. Not all errors 
-            indicate imminent disk failure, but they should be monitored. Some errors may be transient, but repeated 
-            errors or an increasing error count is a serious warning sign.
+            SMART 错误日志记录读取错误、寻道错误以及其他磁盘操作失败。并非所有错误
+            都意味着磁盘即将故障，但仍应持续监控。有些错误可能是偶发的，但反复出现
+            的错误或不断增长的错误计数是严重的警告信号。
         </p>
     </div>
 </div>

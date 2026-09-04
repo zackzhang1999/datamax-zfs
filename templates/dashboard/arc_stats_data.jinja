@@ -6,21 +6,21 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {# ARC Size #}
         <div class="bg-bg-elevated-2 border border-border-subtle rounded-lg p-4">
-            <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">ARC Size</div>
+            <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">ARC 大小</div>
             <div class="text-3xl font-bold text-text-primary mb-1">{{ arc_stats.arc_size_human|default('--') }}</div>
-            <div class="text-sm text-text-secondary mb-3">of {{ arc_stats.arc_max_human|default('--') }} max</div>
+            <div class="text-sm text-text-secondary mb-3">上限 {{ arc_stats.arc_max_human|default('--') }}</div>
             {% set size_pct = arc_stats.arc_size_pct|default(0) %}
             <div class="w-full bg-bg-elevated-3 rounded-full h-2.5 mb-1">
                 <div class="h-2.5 rounded-full bg-primary-500 transition-all duration-300" style="width: {{ size_pct }}%"></div>
             </div>
-            <div class="text-xs text-text-tertiary">{{ size_pct }}% utilized</div>
+            <div class="text-xs text-text-tertiary">{{ size_pct }}% 已利用</div>
         </div>
 
         {# Hit Rate #}
         <div class="bg-bg-elevated-2 border border-border-subtle rounded-lg p-4">
-            <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">Hit Rate</div>
+            <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">命中率</div>
             <div class="text-3xl font-bold text-success-400 mb-1">{{ arc_stats.hit_rate|default('--') }}%</div>
-            <div class="text-sm text-text-secondary mb-3">cache efficiency</div>
+            <div class="text-sm text-text-secondary mb-3">缓存效率</div>
             {% set hit_pct = arc_stats.hit_rate|default(0) %}
             <div class="w-full bg-bg-elevated-3 rounded-full h-2.5">
                 <div class="h-2.5 rounded-full bg-success-500 transition-all duration-300" style="width: {{ hit_pct }}%"></div>
@@ -29,16 +29,16 @@
 
         {# Cache Hits #}
         <div class="bg-bg-elevated-2 border border-border-subtle rounded-lg p-4">
-            <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">Cache Hits</div>
+            <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">缓存命中</div>
             <div class="text-3xl font-bold text-success-400 mb-1">{{ arc_stats.hits_human|default('--') }}</div>
-            <div class="text-sm text-text-secondary">successful reads</div>
+            <div class="text-sm text-text-secondary">成功读取次数</div>
         </div>
 
         {# Cache Misses #}
         <div class="bg-bg-elevated-2 border border-border-subtle rounded-lg p-4">
-            <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">Cache Misses</div>
+            <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">缓存未命中</div>
             <div class="text-3xl font-bold text-danger-400 mb-1">{{ arc_stats.misses_human|default('--') }}</div>
-            <div class="text-sm text-text-secondary">disk reads required</div>
+            <div class="text-sm text-text-secondary">需要从磁盘读取</div>
         </div>
     </div>
 
@@ -46,12 +46,12 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {# Cache Distribution (MRU vs MFU) #}
         <div class="bg-bg-elevated-2 border border-border-subtle rounded-lg p-5">
-            <h4 class="text-base font-semibold text-text-primary mb-4">Cache Distribution (MRU vs MFU)</h4>
+            <h4 class="text-base font-semibold text-text-primary mb-4">缓存分布（MRU 与 MFU）</h4>
 
             {# MRU bar #}
             <div class="mb-4">
                 <div class="flex justify-between items-center mb-1.5">
-                    <span class="text-sm text-text-secondary">MRU (Most Recently Used)</span>
+                    <span class="text-sm text-text-secondary">MRU（最近使用）</span>
                     <span class="text-sm text-text-primary font-medium">{{ arc_stats.mru_hits_human|default('0') }} ({{ arc_stats.mru_pct|default(0) }}%)</span>
                 </div>
                 <div class="w-full bg-bg-elevated-3 rounded-full h-6 relative">
@@ -69,7 +69,7 @@
             {# MFU bar #}
             <div>
                 <div class="flex justify-between items-center mb-1.5">
-                    <span class="text-sm text-text-secondary">MFU (Most Frequently Used)</span>
+                    <span class="text-sm text-text-secondary">MFU（最常使用）</span>
                     <span class="text-sm text-text-primary font-medium">{{ arc_stats.mfu_hits_human|default('0') }} ({{ arc_stats.mfu_pct|default(0) }}%)</span>
                 </div>
                 <div class="w-full bg-bg-elevated-3 rounded-full h-6 relative">
@@ -87,12 +87,12 @@
 
         {# Access Type Breakdown (Demand vs Prefetch) #}
         <div class="bg-bg-elevated-2 border border-border-subtle rounded-lg p-5">
-            <h4 class="text-base font-semibold text-text-primary mb-4">Access Type Breakdown</h4>
+            <h4 class="text-base font-semibold text-text-primary mb-4">访问类型分布</h4>
 
             {# Demand bar #}
             <div class="mb-4">
                 <div class="flex justify-between items-center mb-1.5">
-                    <span class="text-sm text-text-secondary">Demand (On-Request)</span>
+                    <span class="text-sm text-text-secondary">Demand（按需请求）</span>
                     <span class="text-sm text-text-primary font-medium">{{ arc_stats.demand_total_human|default('0') }} ({{ arc_stats.demand_pct|default(0) }}%)</span>
                 </div>
                 <div class="w-full bg-bg-elevated-3 rounded-full h-6 relative">
@@ -110,7 +110,7 @@
             {# Prefetch bar #}
             <div>
                 <div class="flex justify-between items-center mb-1.5">
-                    <span class="text-sm text-text-secondary">Prefetch (Predictive)</span>
+                    <span class="text-sm text-text-secondary">Prefetch（预取）</span>
                     <span class="text-sm text-text-primary font-medium">{{ arc_stats.prefetch_total_human|default('0') }} ({{ arc_stats.prefetch_pct|default(0) }}%)</span>
                 </div>
                 <div class="w-full bg-bg-elevated-3 rounded-full h-6 relative">
@@ -135,21 +135,21 @@
                 <svg class="w-4 h-4 text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                 </svg>
-                Miss &amp; Ghost Rates
+                未命中率与 Ghost 命中率
             </h4>
             <div class="grid grid-cols-2 gap-4">
                 <div class="bg-bg-elevated-3 border border-border-subtle rounded-lg p-4">
-                    <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">Miss Rate</div>
+                    <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">未命中率</div>
                     <div class="text-3xl font-bold text-danger-400 mb-1">{{ arc_stats.miss_rate_pct|default(0) }}%</div>
-                    <div class="text-sm text-text-secondary">{{ arc_stats.misses_human|default('0') }} misses</div>
+                    <div class="text-sm text-text-secondary">{{ arc_stats.misses_human|default('0') }} 次未命中</div>
                 </div>
                 <div class="bg-bg-elevated-3 border border-border-subtle rounded-lg p-4">
-                    <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">Ghost Hits / Misses</div>
+                    <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">Ghost 命中 / 未命中</div>
                     <div class="text-3xl font-bold text-warning-400 mb-1">{{ arc_stats.ghost_rate_pct|default(0) }}%</div>
-                    <div class="text-sm text-text-secondary">{{ arc_stats.ghost_total_human|default('0') }} near-misses</div>
+                    <div class="text-sm text-text-secondary">{{ arc_stats.ghost_total_human|default('0') }} 次险些命中</div>
                 </div>
             </div>
-            <p class="text-xs text-text-tertiary mt-4" style="margin-bottom: 0;">Ghost hits indicate the ARC evicted data that was needed shortly after.</p>
+            <p class="text-xs text-text-tertiary mt-4" style="margin-bottom: 0;">Ghost 命中表示 ARC 淘汰的数据在不久后又被需要。</p>
         </div>
 
         {# Miss Breakdown #}
@@ -158,46 +158,89 @@
                 <svg class="w-4 h-4 text-danger-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                 </svg>
-                Miss Breakdown
+                未命中构成
             </h4>
             {% if arc_stats.misses|default(0) > 0 %}
             <div class="space-y-4">
                 {# Cold misses #}
                 <div>
                     <div class="flex justify-between text-sm mb-1.5">
-                        <span class="font-medium text-text-primary">Cold misses</span>
+                        <span class="font-medium text-text-primary">冷未命中</span>
                         <span class="text-text-secondary">{{ arc_stats.cold_miss_pct|default(0) }}%</span>
                     </div>
                     <div class="bg-bg-elevated-3 rounded-full h-2.5 mb-1">
                         <div class="bg-danger-500 h-2.5 rounded-full transition-all duration-300" style="width: {{ [arc_stats.cold_miss_pct|default(0), 1]|max }}%"></div>
                     </div>
-                    <p class="text-xs text-text-tertiary">{{ arc_stats.cold_misses_human|default('0') }} - data never cached or evicted long ago</p>
+                    <p class="text-xs text-text-tertiary">{{ arc_stats.cold_misses_human|default('0') }} - 数据从未缓存或早已被逐出</p>
                 </div>
 
                 {# Ghost hits #}
                 <div>
                     <div class="flex justify-between text-sm mb-1.5">
-                        <span class="font-medium text-text-primary">Ghost hits (near-misses)</span>
+                        <span class="font-medium text-text-primary">Ghost 命中（险些命中）</span>
                         <span class="text-text-secondary">{{ arc_stats.ghost_miss_pct|default(0) }}%</span>
                     </div>
                     <div class="bg-bg-elevated-3 rounded-full h-2.5 mb-1">
                         <div class="bg-warning-500 h-2.5 rounded-full transition-all duration-300" style="width: {{ [arc_stats.ghost_miss_pct|default(0), 1]|max }}%"></div>
                     </div>
-                    <p class="text-xs text-text-tertiary">{{ arc_stats.ghost_total_human|default('0') }} - had it, evicted too soon</p>
+                    <p class="text-xs text-text-tertiary">{{ arc_stats.ghost_total_human|default('0') }} - 曾缓存但过早逐出</p>
                 </div>
             </div>
             {% else %}
-            <p class="text-text-tertiary text-sm text-center py-4">No miss data available</p>
+            <p class="text-text-tertiary text-sm text-center py-4">暂无未命中数据</p>
             {% endif %}
         </div>
     </div>
+
+    {# Row 4: SSD Cache (L2ARC) #}
+    {% if arc_stats.l2arc_active|default(false) %}
+    <div class="bg-bg-elevated-2 border border-border-subtle rounded-lg p-5">
+        <div class="flex items-center justify-between gap-3 flex-wrap mb-4">
+            <h4 class="text-base font-semibold text-text-primary flex items-center gap-2">
+                <svg class="w-5 h-5 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                SSD 缓存（L2ARC）
+            </h4>
+            <a href="/zfs/observability/arc-summary" class="text-xs text-info-400 hover:text-info-300">查看详情</a>
+        </div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-bg-elevated-3 border border-border-subtle rounded-lg p-4">
+                <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">SSD 缓存命中率</div>
+                <div class="text-2xl font-bold {% if arc_stats.l2_hit_rate|default(0) >= 80 %}text-success-400{% elif arc_stats.l2_hit_rate|default(0) >= 60 %}text-warning-400{% else %}text-danger-400{% endif %}">
+                    {{ arc_stats.l2_hit_rate|default(0) }}%
+                </div>
+                <div class="text-xs text-text-tertiary mt-1">由 SSD 提供的读取比例</div>
+            </div>
+            <div class="bg-bg-elevated-3 border border-border-subtle rounded-lg p-4">
+                <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">命中</div>
+                <div class="text-2xl font-bold text-success-400">{{ arc_stats.l2_hits_human|default('0') }}</div>
+                <div class="text-xs text-text-tertiary mt-1">次命中</div>
+            </div>
+            <div class="bg-bg-elevated-3 border border-border-subtle rounded-lg p-4">
+                <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">未命中</div>
+                <div class="text-2xl font-bold text-danger-400">{{ arc_stats.l2_misses_human|default('0') }}</div>
+                <div class="text-xs text-text-tertiary mt-1">次未命中</div>
+            </div>
+            <div class="bg-bg-elevated-3 border border-border-subtle rounded-lg p-4">
+                <div class="text-xs text-text-tertiary uppercase tracking-wide mb-2">缓存大小</div>
+                <div class="text-2xl font-bold text-text-primary">{{ arc_stats.l2_size_human|default('0 B') }}</div>
+                <div class="text-xs text-text-tertiary mt-1">实际存储 {{ arc_stats.l2_asize_human|default('0 B') }}</div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="bg-bg-elevated-2 border border-border-subtle rounded-lg p-4 text-center">
+        <p class="text-text-tertiary text-sm">暂无 SSD 缓存（L2ARC）统计数据。可在存储池“管理 VDev”中添加 L2ARC 缓存设备；刚添加的设备需要一段时间产生统计。</p>
+    </div>
+    {% endif %}
 </div>
 {% elif arc_stats and arc_stats.get('error') %}
 <div class="bg-bg-elevated-2 rounded-lg p-4 text-center">
-    <p class="text-text-tertiary text-sm">Unable to read ARC statistics: {{ arc_stats.error }}</p>
+    <p class="text-text-tertiary text-sm">无法读取 ARC 统计信息：{{ arc_stats.error }}</p>
 </div>
 {% else %}
 <div class="bg-bg-elevated-2 rounded-lg p-4 text-center">
-    <p class="text-text-tertiary text-sm">ARC statistics not available</p>
+    <p class="text-text-tertiary text-sm">ARC 统计信息不可用</p>
 </div>
 {% endif %}

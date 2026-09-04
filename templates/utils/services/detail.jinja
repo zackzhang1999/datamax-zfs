@@ -4,9 +4,9 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils" class="hover:text-primary-400">Utilities</a>
+        <a href="/utils" class="hover:text-primary-400">实用工具</a>
         <span class="mx-2">/</span>
-        <a href="/utils/services" class="hover:text-primary-400">System Services</a>
+        <a href="/utils/services" class="hover:text-primary-400">系统服务</a>
         <span class="mx-2">/</span>
         <span class="text-text-primary">{{ service_name }}</span>
     </nav>
@@ -21,7 +21,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                 </svg>
-                Refresh
+                刷新
             </a>
             <a href="/utils/services"
                class="bg-bg-elevated hover:bg-bg-elevated-2 text-text-secondary px-4 py-2 rounded inline-flex items-center gap-2 border border-border-subtle">
@@ -29,7 +29,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
-                Back to Services
+                返回服务列表
             </a>
         </div>
     </div>
@@ -37,13 +37,13 @@
     <!-- Service Status Output -->
     <div class="bg-bg-elevated rounded-lg overflow-hidden shadow-lg">
         <div class="bg-bg-elevated-2 px-6 py-3 border-b border-border-subtle">
-            <h2 class="text-lg font-semibold text-text-primary">Service Status</h2>
+            <h2 class="text-lg font-semibold text-text-primary">服务状态</h2>
         </div>
         <div class="p-6">
             {% if detail and detail.output %}
             <pre class="bg-bg-base rounded-lg p-4 text-sm text-text-secondary font-mono whitespace-pre-wrap overflow-x-auto border border-border-subtle">{{ detail.output }}</pre>
             {% else %}
-            <p class="text-text-tertiary">No status output available for this service.</p>
+            <p class="text-text-tertiary">此服务没有可用的状态输出。</p>
             {% endif %}
         </div>
     </div>

@@ -81,7 +81,7 @@ class SMARTMonitoringService:
         if not self.smartctl_path:
             self.smartctl_path = self._find_smartctl_path()
         if not self.smartctl_path:
-            raise Exception("smartctl not found. Install smartmontools package.")
+            raise Exception("未找到 smartctl。请安装 smartmontools 软件包。")
         return self.smartctl_path
     
     def _ensure_data_directory(self) -> None:
@@ -159,7 +159,7 @@ class SMARTMonitoringService:
             return disks
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to list disks: {e.stderr}")
+            raise Exception(f"列出磁盘失败：{e.stderr}")
     
     def get_smart_data(self, disk: str) -> Dict[str, Any]:
         """
@@ -191,7 +191,7 @@ class SMARTMonitoringService:
             }
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get SMART data: {e.stderr}")
+            raise Exception(f"获取 SMART 数据失败：{e.stderr}")
     
     def get_smart_health(self, disk: str) -> Dict[str, str]:
         """
@@ -225,7 +225,7 @@ class SMARTMonitoringService:
             }
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get health status: {e.stderr}")
+            raise Exception(f"获取健康状态失败：{e.stderr}")
     
     def get_smart_attributes(self, disk: str) -> List[Dict[str, Any]]:
         """
@@ -247,7 +247,7 @@ class SMARTMonitoringService:
             return self._parse_smart_attributes(result.stdout)
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get SMART attributes: {e.stderr}")
+            raise Exception(f"获取 SMART 属性失败：{e.stderr}")
     
     def get_disk_info(self, disk: str) -> Dict[str, Any]:
         """
@@ -269,7 +269,7 @@ class SMARTMonitoringService:
             return self._parse_device_info(result.stdout)
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get disk info: {e.stderr}")
+            raise Exception(f"获取磁盘信息失败：{e.stderr}")
     
     def start_short_test(self, disk: str) -> Dict[str, str]:
         """
@@ -296,7 +296,7 @@ class SMARTMonitoringService:
             }
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to start short test: {e.stderr}")
+            raise Exception(f"启动短自检失败：{e.stderr}")
     
     def start_long_test(self, disk: str) -> Dict[str, str]:
         """
@@ -323,7 +323,7 @@ class SMARTMonitoringService:
             }
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to start long test: {e.stderr}")
+            raise Exception(f"启动长自检失败：{e.stderr}")
     
     def get_test_status(self, disk: str) -> Dict[str, Any]:
         """
@@ -365,7 +365,7 @@ class SMARTMonitoringService:
             }
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get test status: {e.stderr}")
+            raise Exception(f"获取测试状态失败：{e.stderr}")
     
     def abort_test(self, disk: str) -> None:
         """
@@ -378,7 +378,7 @@ class SMARTMonitoringService:
             smartctl = self._get_smartctl_cmd()
             run_privileged_command([smartctl, '-X', disk])
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to abort test: {e.stderr}")
+            raise Exception(f"中止测试失败：{e.stderr}")
     
     def get_error_log(self, disk: str) -> List[Dict[str, Any]]:
         """
@@ -400,7 +400,7 @@ class SMARTMonitoringService:
             return self._parse_error_log(result.stdout)
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get error log: {e.stderr}")
+            raise Exception(f"获取错误日志失败：{e.stderr}")
     
     def get_temperature(self, disk: str) -> Dict[str, Any]:
         """
@@ -435,7 +435,7 @@ class SMARTMonitoringService:
             }
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get temperature: {e.stderr}")
+            raise Exception(f"获取温度失败：{e.stderr}")
     
     def enable_smart(self, disk: str) -> None:
         """Enable SMART on a disk"""
@@ -443,7 +443,7 @@ class SMARTMonitoringService:
             smartctl = self._get_smartctl_cmd()
             run_privileged_command([smartctl, '-s', 'on', disk])
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to enable SMART: {e.stderr}")
+            raise Exception(f"启用 SMART 失败：{e.stderr}")
     
     def disable_smart(self, disk: str) -> None:
         """Disable SMART on a disk"""
@@ -451,7 +451,7 @@ class SMARTMonitoringService:
             smartctl = self._get_smartctl_cmd()
             run_privileged_command([smartctl, '-s', 'off', disk])
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to disable SMART: {e.stderr}")
+            raise Exception(f"禁用 SMART 失败：{e.stderr}")
     
     # Smartd Integration
     
@@ -462,9 +462,9 @@ class SMARTMonitoringService:
             if config_path.exists():
                 with open(config_path, 'r') as f:
                     return f.read()
-            return "# smartd.conf not found"
+            return "# 未找到 smartd.conf"
         except Exception as e:
-            raise Exception(f"Failed to read smartd.conf: {str(e)}")
+            raise Exception(f"读取 smartd.conf 失败：{str(e)}")
     
     def update_smartd_config(self, config: str) -> None:
         """Update smartd.conf configuration"""
@@ -474,7 +474,7 @@ class SMARTMonitoringService:
             with open(config_path, 'w') as f:
                 f.write(config)
         except Exception as e:
-            raise Exception(f"Failed to update smartd.conf: {str(e)}")
+            raise Exception(f"更新 smartd.conf 失败：{str(e)}")
     
     def get_smartd_status(self) -> Dict[str, Any]:
         """Get smartd daemon status"""
@@ -492,7 +492,7 @@ class SMARTMonitoringService:
                     'status_output': result.stdout
                 }
             except Exception as e:
-                return {'error': f'Unable to check smartd status: {str(e)}'}
+                return {'error': f'无法检查 smartd 状态：{str(e)}'}
         
         # Linux tries systemctl first (default)
         try:
@@ -524,7 +524,7 @@ class SMARTMonitoringService:
                     'status_output': result.stdout
                 }
             except:
-                return {'error': 'Unable to check smartd status'}
+                return {'error': '无法检查 smartd 状态'}
     
     def restart_smartd(self) -> None:
         """Restart smartd daemon"""
@@ -538,7 +538,7 @@ class SMARTMonitoringService:
                     check=True
                 )
             except subprocess.CalledProcessError as e:
-                raise Exception(f"Failed to restart smartd: {e.stderr}")
+                raise Exception(f"重启 smartd 失败：{e.stderr}")
         else:
             # Linux tries systemctl first (default)
             try:
@@ -557,7 +557,7 @@ class SMARTMonitoringService:
                     check=True
                 )
             except subprocess.CalledProcessError as e:
-                raise Exception(f"Failed to restart smartd: {e.stderr}")
+                raise Exception(f"重启 smartd 失败：{e.stderr}")
     
     # Scheduled Tests
     
@@ -629,7 +629,7 @@ class SMARTMonitoringService:
         data = self._read_json(self.scheduled_tests_file)
         
         if schedule_id not in data:
-            raise KeyError(f"Schedule {schedule_id} not found")
+            raise KeyError(f"未找到计划 {schedule_id}")
         
         data[schedule_id].update(updates)
         data[schedule_id]['updated_at'] = datetime.now().isoformat()
@@ -640,7 +640,7 @@ class SMARTMonitoringService:
         data = self._read_json(self.scheduled_tests_file)
         
         if schedule_id not in data:
-            raise KeyError(f"Schedule {schedule_id} not found")
+            raise KeyError(f"未找到计划 {schedule_id}")
         
         del data[schedule_id]
         self._write_json(self.scheduled_tests_file, data)

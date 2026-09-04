@@ -4,22 +4,22 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils/smart" class="hover:text-blue-400">SMART Monitoring</a> 
+        <a href="/utils/smart" class="hover:text-blue-400">SMART 监控</a> 
         <span class="mx-2">/</span> 
         <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}" class="hover:text-blue-400">{{ disk_path }}</a>
         <span class="mx-2">/</span> 
-        <span class="text-text-primary">Self-Tests</span>
+        <span class="text-text-primary">自检</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">SMART Self-Tests: {{ disk_path }}</h1>
+        <h1 class="text-3xl font-bold text-text-primary">SMART 自检：{{ disk_path }}</h1>
         <div class="space-x-2">
             <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/tests" class="bg-blue-600 hover:bg-blue-700 text-text-primary px-4 py-2 rounded inline-block">
-                🔄 Refresh
+                🔄 刷新
             </a>
             <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}" class="btn-secondary hover:bg-bg-elevated-2 text-text-primary px-4 py-2 rounded inline-block">
-                ← Back to Disk
+                ← 返回磁盘
             </a>
         </div>
     </div>
@@ -33,7 +33,7 @@
     
     {% if request.query_params.get('error') %}
     <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded mb-4">
-        <strong>Error:</strong> {{ request.query_params.get('error') }}
+        <strong>错误：</strong> {{ request.query_params.get('error') }}
     </div>
     {% endif %}
 
@@ -42,7 +42,7 @@
     <div class="bg-yellow-900 border border-yellow-700 rounded-lg p-6 mb-6">
         <h2 class="text-xl font-bold text-yellow-300 mb-4"><svg class="w-5 h-5 inline text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
-                    </svg> Test In Progress</h2>
+                    </svg> 测试进行中</h2>
         <div class="text-yellow-200">
             <p class="mb-2">{{ test_status.running_test.info }}</p>
             <div class="mt-4">
@@ -58,7 +58,7 @@
                     <button type="button" 
                             class="bg-red-600 hover:bg-red-700 text-text-primary px-4 py-2 rounded"
                             onclick="showConfirm('modal-abort-test')">
-                        Abort Test
+                        中止测试
                     </button>
                 </form>
             </div>
@@ -68,36 +68,36 @@
 
     <!-- Start New Test -->
     <div class="bg-bg-elevated rounded-lg p-6 mb-6">
-        <h2 class="text-xl font-bold text-text-primary mb-4">Start New Test</h2>
+        <h2 class="text-xl font-bold text-text-primary mb-4">开始新测试</h2>
         <div class="flex flex-wrap gap-4">
             <div class="flex-1 min-w-[300px]">
                 <div class="bg-bg-elevated-2 p-4 rounded">
-                    <h3 class="text-lg font-semibold text-text-primary mb-2">Short Test</h3>
+                    <h3 class="text-lg font-semibold text-text-primary mb-2">短测试</h3>
                     <p class="text-text-secondary text-sm mb-4">
-                        Quick test (typically 1-2 minutes) that checks electrical and mechanical performance 
-                        and reads a portion of the disk surface.
+                        快速测试（通常 1-2 分钟），检查电气和机械性能，
+                        并读取磁盘表面的一部分。
                     </p>
                     <form method="post" action="/utils/smart/disk/{{ disk_path.lstrip('/') }}/test/short" id="form-short-test">
                         <button type="button" 
                                 class="bg-blue-600 hover:bg-blue-700 text-text-primary px-6 py-2 rounded w-full"
                                 onclick="showConfirm('modal-short-test')">
-                            Start Short Test
+                            开始短测试
                         </button>
                     </form>
                 </div>
             </div>
             <div class="flex-1 min-w-[300px]">
                 <div class="bg-bg-elevated-2 p-4 rounded">
-                    <h3 class="text-lg font-semibold text-text-primary mb-2">Long Test</h3>
+                    <h3 class="text-lg font-semibold text-text-primary mb-2">长测试</h3>
                     <p class="text-text-secondary text-sm mb-4">
-                        Comprehensive test (can take several hours) that reads the entire disk surface 
-                        and performs additional diagnostic tests.
+                        全面测试（可能需要数小时），读取整个磁盘表面
+                        并执行额外的诊断测试。
                     </p>
                     <form method="post" action="/utils/smart/disk/{{ disk_path.lstrip('/') }}/test/long" id="form-long-test">
                         <button type="button" 
                                 class="bg-green-600 hover:bg-green-700 text-text-primary px-6 py-2 rounded w-full"
                                 onclick="showConfirm('modal-long-test')">
-                            Start Long Test
+                            开始长测试
                         </button>
                     </form>
                 </div>
@@ -108,7 +108,7 @@
     <!-- Test History -->
     <div class="bg-bg-elevated rounded-lg overflow-hidden shadow-lg">
         <div class="p-6 border-b border-gray-700">
-            <h2 class="text-xl font-bold text-text-primary">Test History</h2>
+            <h2 class="text-xl font-bold text-text-primary">测试历史记录</h2>
         </div>
         
         {% if test_status.test_history and test_status.test_history|length > 0 %}
@@ -117,11 +117,11 @@
                 <thead class="bg-bg-elevated-2 text-text-secondary">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">#</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Test Type</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Remaining</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Lifetime Hours</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">LBA of Error</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">测试类型</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">状态</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">剩余</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">通电时长（小时）</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">出错 LBA</th>
                     </tr>
                 </thead>
                 <tbody class="bg-bg-elevated divide-y divide-border-subtle">
@@ -158,7 +158,7 @@
         </div>
         {% else %}
         <div class="p-8 text-center text-text-tertiary">
-            <p>No test history available. Run a test to see results here.</p>
+            <p>暂无测试历史记录。运行一次测试后，结果会显示在这里。</p>
         </div>
         {% endif %}
     </div>
@@ -167,40 +167,40 @@
     <div class="mt-6 bg-info-900/30 border-2 border-info-500/50 text-info-400 px-4 py-3 rounded">
         <strong><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg> About SMART Self-Tests:</strong>
+                    </svg> 关于 SMART 自检：</strong>
         <ul class="mt-2 text-sm list-disc list-inside space-y-1">
-            <li><strong>Short Test:</strong> Quick diagnostic that tests basic drive functionality</li>
-            <li><strong>Long Test:</strong> Comprehensive test that reads the entire disk surface</li>
-            <li>Tests run in the background and can be interrupted by disk activity</li>
-            <li>Regular testing helps detect problems before they cause data loss</li>
-            <li>Long tests should be run periodically (monthly recommended)</li>
+            <li><strong>短测试：</strong>快速诊断，测试磁盘的基本功能</li>
+            <li><strong>长测试：</strong>全面测试，读取整个磁盘表面</li>
+            <li>测试在后台运行，可能因磁盘活动而中断</li>
+            <li>定期测试有助于在造成数据丢失之前发现问题</li>
+            <li>应定期运行长测试（建议每月一次）</li>
         </ul>
     </div>
 </div>
 
 <!-- Confirmation Modals -->
 {% set modal_id = 'modal-abort-test' %}
-{% set modal_title = 'Abort Test' %}
-{% set modal_message = 'Abort running test on ' + disk_path + '?' %}
-{% set confirm_text = 'Abort' %}
+{% set modal_title = '中止测试' %}
+{% set modal_message = '要中止 ' + disk_path + ' 上正在运行的测试吗？' %}
+{% set confirm_text = '中止' %}
 {% set confirm_class = 'danger' %}
 {% set action_url = '/smart/disk/' + disk_path.lstrip('/') + '/test/abort' %}
 {% set method = 'post' %}
 {% include 'partials/confirm.jinja' %}
 
 {% set modal_id = 'modal-short-test' %}
-{% set modal_title = 'Start Short Test' %}
-{% set modal_message = 'Start short test on ' + disk_path + '?' %}
-{% set confirm_text = 'Start' %}
+{% set modal_title = '开始短测试' %}
+{% set modal_message = '要在 ' + disk_path + ' 上开始短测试吗？' %}
+{% set confirm_text = '开始' %}
 {% set confirm_class = 'primary' %}
 {% set action_url = '/smart/disk/' + disk_path.lstrip('/') + '/test/short' %}
 {% set method = 'post' %}
 {% include 'partials/confirm.jinja' %}
 
 {% set modal_id = 'modal-long-test' %}
-{% set modal_title = 'Start Long Test' %}
-{% set modal_message = 'Start long test on ' + disk_path + '? This may take several hours.' %}
-{% set confirm_text = 'Start' %}
+{% set modal_title = '开始长测试' %}
+{% set modal_message = '要在 ' + disk_path + ' 上开始长测试吗？这可能需要数小时。' %}
+{% set confirm_text = '开始' %}
 {% set confirm_class = 'primary' %}
 {% set action_url = '/smart/disk/' + disk_path.lstrip('/') + '/test/long' %}
 {% set method = 'post' %}

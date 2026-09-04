@@ -30,7 +30,7 @@ async def health_index(request: Request):
         request,
         name="utils/health/index.jinja",
         context={
-            "page_title": "Health Analysis",
+            "page_title": "健康状况分析",
             "disk_count": disk_count,
         },
     )
@@ -52,7 +52,7 @@ async def health_content_partial(request: Request):
         return HTMLResponse(
             content=f"""
             <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded" role="alert">
-                <strong>Error:</strong> {e}
+                <strong>错误：</strong> {e}
             </div>
             """,
             status_code=200,
@@ -100,7 +100,7 @@ async def health_report_detail(request: Request, report_id: str):
     report = health_service.get_report(report_id)
     if not report:
         return RedirectResponse(
-            url="/utils/health?error=Report not found",
+            url="/utils/health?error=未找到报告",
             status_code=303,
         )
 
@@ -117,7 +117,7 @@ async def health_report_detail(request: Request, report_id: str):
         name="utils/health/report.jinja",
         context={
             "report": report,
-            "page_title": f"Health Report - {display_date}",
+            "page_title": f"健康报告 - {display_date}",
         },
     )
 
@@ -128,7 +128,7 @@ async def health_report_content_partial(request: Request, report_id: str):
     report = health_service.get_report(report_id)
     if not report:
         return HTMLResponse(
-            content='<div class="text-danger-400">Report not found.</div>',
+            content='<div class="text-danger-400">未找到报告。</div>',
             status_code=200,
         )
 
@@ -146,10 +146,10 @@ async def delete_health_report(request: Request, report_id: str):
     """Delete a health analysis report."""
     if health_service.delete_report(report_id):
         return RedirectResponse(
-            url="/utils/health?message=Report deleted successfully",
+            url="/utils/health?message=报告删除成功",
             status_code=303,
         )
     return RedirectResponse(
-        url="/utils/health?error=Report not found",
+        url="/utils/health?error=未找到报告",
         status_code=303,
     )

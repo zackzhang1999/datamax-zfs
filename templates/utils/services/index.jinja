@@ -4,21 +4,21 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils" class="hover:text-primary-400">Utilities</a>
+        <a href="/utils" class="hover:text-primary-400">实用工具</a>
         <span class="mx-2">/</span>
-        <span class="text-text-primary">System Services</span>
+        <span class="text-text-primary">系统服务</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">System Services</h1>
+        <h1 class="text-3xl font-bold text-text-primary">系统服务</h1>
         <a href="/utils/services"
            class="btn-primary px-4 py-2 inline-flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
             </svg>
-            Refresh
+            刷新
         </a>
     </div>
 
@@ -31,7 +31,7 @@
 
     {% if request.query_params.get('error') %}
     <div class="bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded mb-4">
-        <strong>Error:</strong> {{ request.query_params.get('error') }}
+        <strong>错误：</strong> {{ request.query_params.get('error') }}
     </div>
     {% endif %}
 
@@ -45,8 +45,8 @@
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            <p class="text-text-secondary text-lg">Loading services...</p>
-            <p class="text-text-tertiary text-sm mt-1">Enumerating system services, this may take a moment.</p>
+            <p class="text-text-secondary text-lg">正在加载服务...</p>
+            <p class="text-text-tertiary text-sm mt-1">正在枚举系统服务，可能需要一些时间。</p>
         </div>
     </div>
 
@@ -57,10 +57,10 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            Read-Only View:
+            只读视图：
         </strong>
         <span class="text-sm">
-            This page provides a read-only overview of system services. Service management (start, stop, restart, enable, disable) should be performed from the command line.
+            此页面仅提供系统服务的只读概览。服务管理（启动、停止、重启、启用、禁用）请通过命令行执行。
         </span>
     </div>
 </div>

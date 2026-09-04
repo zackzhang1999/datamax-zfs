@@ -42,13 +42,12 @@ class ZFSSnapshotService:
             ValueError: If the dataset name is invalid
         """
         if not dataset_name:
-            raise ValueError("Dataset name cannot be empty")
+            raise ValueError("数据集名称不能为空")
         
         if not cls.ZFS_DATASET_NAME_PATTERN.match(dataset_name):
             raise ValueError(
-                f"Invalid dataset name '{dataset_name}'. Dataset names must start with an alphanumeric "
-                "character and contain only alphanumeric characters, underscores, hyphens, "
-                "periods, colons, or forward slashes."
+                f"无效的数据集名称 '{dataset_name}'。数据集名称必须以字母或数字开头，"
+                "且只能包含字母、数字、下划线、连字符、句点、冒号或正斜杠。"
             )
     
     @classmethod
@@ -67,13 +66,12 @@ class ZFSSnapshotService:
             ValueError: If the snapshot name is invalid
         """
         if not snapshot_name:
-            raise ValueError("Snapshot name cannot be empty")
+            raise ValueError("快照名称不能为空")
         
         if not cls.ZFS_SNAPSHOT_NAME_PATTERN.match(snapshot_name):
             raise ValueError(
-                f"Invalid snapshot name '{snapshot_name}'. Snapshot names must start with an alphanumeric "
-                "character and contain only alphanumeric characters, underscores, hyphens, "
-                "periods, or colons."
+                f"无效的快照名称 '{snapshot_name}'。快照名称必须以字母或数字开头，"
+                "且只能包含字母、数字、下划线、连字符、句点或冒号。"
             )
     
     @classmethod
@@ -89,7 +87,7 @@ class ZFSSnapshotService:
         """
         if '@' not in full_name:
             raise ValueError(
-                f"Invalid snapshot name format '{full_name}'. Expected format: dataset@snapshot"
+                f"无效的快照名称格式 '{full_name}'。正确格式：dataset@snapshot"
             )
         
         dataset_part, snapshot_part = full_name.rsplit('@', 1)
@@ -145,7 +143,7 @@ class ZFSSnapshotService:
             return snapshots
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to list snapshots: {e.stderr}")
+            raise Exception(f"列出快照失败：{e.stderr}")
     
     def get_snapshot(self, snapshot_name: str) -> Dict[str, Any]:
         """
@@ -183,7 +181,7 @@ class ZFSSnapshotService:
             }
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get snapshot: {e.stderr}")
+            raise Exception(f"获取快照失败：{e.stderr}")
     
     def create_snapshot(self, dataset_name: str, snapshot_name: str,
                        recursive: bool = False,
@@ -222,7 +220,7 @@ class ZFSSnapshotService:
             return full_name
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to create snapshot: {e.stderr}")
+            raise Exception(f"创建快照失败：{e.stderr}")
     
     def destroy_snapshot(self, snapshot_name: str, defer: bool = False) -> None:
         """
@@ -246,7 +244,7 @@ class ZFSSnapshotService:
             run_zfs_command(cmd)
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to destroy snapshot: {e.stderr}")
+            raise Exception(f"销毁快照失败：{e.stderr}")
     
     def destroy_snapshots_bulk(self, snapshots: List[str], 
                               defer: bool = False) -> Dict[str, Any]:
@@ -300,7 +298,7 @@ class ZFSSnapshotService:
             run_zfs_command(cmd)
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to rollback snapshot: {e.stderr}")
+            raise Exception(f"回滚快照失败：{e.stderr}")
     
     def clone_snapshot(self, snapshot_name: str, target_dataset: str,
                       properties: Optional[Dict[str, str]] = None) -> None:
@@ -327,7 +325,7 @@ class ZFSSnapshotService:
             run_zfs_command(cmd)
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to clone snapshot: {e.stderr}")
+            raise Exception(f"克隆快照失败：{e.stderr}")
     
     def diff_snapshots(self, snapshot1: str, snapshot2: Optional[str] = None) -> str:
         """
@@ -356,7 +354,7 @@ class ZFSSnapshotService:
             return result.stdout
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to diff snapshots: {e.stderr}")
+            raise Exception(f"对比快照差异失败：{e.stderr}")
     
     def hold_snapshot(self, snapshot_name: str, tag: str) -> None:
         """
@@ -371,7 +369,7 @@ class ZFSSnapshotService:
             run_zfs_command(['zfs', 'hold', tag, snapshot_name])
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to hold snapshot: {e.stderr}")
+            raise Exception(f"为快照设置保留标记失败：{e.stderr}")
     
     def release_snapshot(self, snapshot_name: str, tag: str) -> None:
         """
@@ -386,7 +384,7 @@ class ZFSSnapshotService:
             run_zfs_command(['zfs', 'release', tag, snapshot_name])
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to release snapshot: {e.stderr}")
+            raise Exception(f"释放快照保留标记失败：{e.stderr}")
     
     def get_holds(self, snapshot_name: str) -> Dict[str, Any]:
         """
@@ -420,7 +418,7 @@ class ZFSSnapshotService:
             # If no holds exist, the command might fail, return empty dict
             if 'no such hold' in e.stderr.lower() or not e.stderr:
                 return {}
-            raise Exception(f"Failed to get holds: {e.stderr}")
+            raise Exception(f"获取快照保留标记失败：{e.stderr}")
     
     def send_snapshot(self, snapshot_name: str, 
                      base_snapshot: Optional[str] = None,
@@ -470,7 +468,7 @@ class ZFSSnapshotService:
                 return result.stdout
                 
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to send snapshot: {e.stderr}")
+            raise Exception(f"发送快照失败：{e.stderr}")
     
     def receive_snapshot(self, target_dataset: str, 
                         snapshot_data: Optional[bytes] = None,
@@ -515,10 +513,10 @@ class ZFSSnapshotService:
                     check=True
                 )
             else:
-                raise Exception("Either snapshot_data or input_file must be provided")
+                raise Exception("必须提供 snapshot_data 或 input_file")
                 
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to receive snapshot: {e.stderr}")
+            raise Exception(f"接收快照失败：{e.stderr}")
     
     def rename_snapshot(self, old_name: str, new_name: str,
                        recursive: bool = False) -> None:
@@ -546,7 +544,7 @@ class ZFSSnapshotService:
             run_zfs_command(cmd)
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to rename snapshot: {e.stderr}")
+            raise Exception(f"重命名快照失败：{e.stderr}")
     
     # ========================
     # Bookmark Operations
@@ -599,7 +597,7 @@ class ZFSSnapshotService:
             # If no bookmarks exist, some ZFS versions return an error
             if 'no datasets available' in (e.stderr or '').lower():
                 return []
-            raise Exception(f"Failed to list bookmarks: {e.stderr}")
+            raise Exception(f"列出书签失败：{e.stderr}")
 
     def create_bookmark(self, snapshot_name: str,
                         bookmark_name: Optional[str] = None) -> str:
@@ -628,7 +626,7 @@ class ZFSSnapshotService:
             run_zfs_command(['zfs', 'bookmark', snapshot_name, full_bookmark])
             return full_bookmark
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to create bookmark: {e.stderr}")
+            raise Exception(f"创建书签失败：{e.stderr}")
 
     def destroy_bookmark(self, bookmark_name: str) -> None:
         """
@@ -639,8 +637,8 @@ class ZFSSnapshotService:
         """
         if '#' not in bookmark_name:
             raise ValueError(
-                f"Invalid bookmark name format '{bookmark_name}'. "
-                "Expected format: dataset#bookmark"
+                f"无效的书签名称格式“{bookmark_name}”。"
+                "预期格式：dataset#bookmark"
             )
         dataset_part, bmark_part = bookmark_name.rsplit('#', 1)
         self.validate_dataset_name(dataset_part)
@@ -649,7 +647,7 @@ class ZFSSnapshotService:
         try:
             run_zfs_command(['zfs', 'destroy', bookmark_name])
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to destroy bookmark: {e.stderr}")
+            raise Exception(f"销毁书签失败：{e.stderr}")
 
     def get_snapshot_space(self, snapshot_name: str) -> Dict[str, str]:
         """
@@ -678,4 +676,4 @@ class ZFSSnapshotService:
             return {}
             
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get snapshot space: {e.stderr}")
+            raise Exception(f"获取快照空间信息失败：{e.stderr}")

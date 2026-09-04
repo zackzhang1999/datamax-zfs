@@ -51,7 +51,7 @@ def _schedules_by_pool() -> dict:
                 entry['next_run_preview'] = ''
             by_pool.setdefault(pool_name, []).append(entry)
     except Exception as read_error:
-        logger.warning(f"Could not read scrub schedules: {read_error}")
+        logger.warning(f"无法读取数据清洗计划：{read_error}")
     return by_pool
 
 
@@ -67,7 +67,7 @@ def scrub_overview(request: Request):
     return templates.TemplateResponse(
         request,
         name="utils/scrub/index.jinja",
-        context={"page_title": "Scrub Status"},
+        context={"page_title": "数据清洗状态"},
     )
 
 
@@ -99,7 +99,7 @@ def start_scrub_now(request: Request, pool_name: str,
             user=current_user, pool_name=pool_name, action="start"
         )
         return RedirectResponse(
-            url=f"/utils/scrub?message=Scrub started on {pool_name}",
+            url=f"/utils/scrub?message=数据清洗已在 {pool_name} 上启动",
             status_code=303,
         )
     except Exception as scrub_error:

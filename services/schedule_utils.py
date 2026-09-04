@@ -15,14 +15,14 @@ from croniter import croniter
 
 # Preset label -> cron expression
 SCHEDULE_PRESETS: List[Dict[str, str]] = [
-    {"label": "Every hour", "expression": "0 * * * *"},
-    {"label": "Every 4 hours", "expression": "0 */4 * * *"},
-    {"label": "Every 6 hours", "expression": "0 */6 * * *"},
-    {"label": "Every 12 hours", "expression": "0 */12 * * *"},
-    {"label": "Daily at 2:00 AM", "expression": "0 2 * * *"},
-    {"label": "Daily at midnight", "expression": "0 0 * * *"},
-    {"label": "Weekly (Sunday 2:00 AM)", "expression": "0 2 * * 0"},
-    {"label": "Monthly (1st at 2:00 AM)", "expression": "0 2 1 * *"},
+    {"label": "每小时", "expression": "0 * * * *"},
+    {"label": "每 4 小时", "expression": "0 */4 * * *"},
+    {"label": "每 6 小时", "expression": "0 */6 * * *"},
+    {"label": "每 12 小时", "expression": "0 */12 * * *"},
+    {"label": "每天凌晨 2:00", "expression": "0 2 * * *"},
+    {"label": "每天午夜", "expression": "0 0 * * *"},
+    {"label": "每周（周日凌晨 2:00）", "expression": "0 2 * * 0"},
+    {"label": "每月（1 日凌晨 2:00）", "expression": "0 2 1 * *"},
 ]
 
 # Cron day-of-week number to systemd day name.
@@ -41,14 +41,14 @@ def validate_cron_expression(expression: str) -> Tuple[bool, Optional[str]]:
         Tuple of (is_valid, error_message). error_message is None when valid.
     """
     if not expression or not expression.strip():
-        return False, "Schedule is required"
+        return False, "计划表达式为必填项"
 
     fields = expression.split()
     if len(fields) != 5:
-        return False, "Schedule must be a 5-field cron expression (minute hour day month weekday)"
+        return False, "计划必须是 5 字段 cron 表达式（分 时 日 月 周）"
 
     if not croniter.is_valid(expression):
-        return False, f"Invalid cron expression: {expression}"
+        return False, f"无效的 cron 表达式：{expression}"
 
     # systemd OnCalendar combines day-of-month and day-of-week with AND,
     # while cron combines them with OR. Reject expressions that restrict
@@ -56,8 +56,8 @@ def validate_cron_expression(expression: str) -> Tuple[bool, Optional[str]]:
     day_of_month, day_of_week = fields[2], fields[4]
     if day_of_month != "*" and day_of_week != "*":
         return False, (
-            "Restricting both day-of-month and day-of-week in the same "
-            "schedule is not supported. Use one or the other."
+            "不支持在同一计划中同时限制“日”和“星期”字段，"
+            "请只使用其中一个。"
         )
 
     return True, None

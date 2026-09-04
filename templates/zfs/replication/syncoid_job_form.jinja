@@ -3,15 +3,15 @@
 {% block content %}
 <div class="container-page max-w-5xl">
     <!-- Breadcrumb -->
-    <nav class="text-sm mb-6" aria-label="Breadcrumb">
+    <nav class="text-sm mb-6" aria-label="面包屑">
         <ol class="flex items-center space-x-2">
-            <li><a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">Home</a></li>
+            <li><a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">首页</a></li>
             <li class="text-text-tertiary">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
-            <li><a href="/zfs/replication" class="text-primary-400 hover:text-primary-300 transition-colors">Replication</a></li>
+            <li><a href="/zfs/replication" class="text-primary-400 hover:text-primary-300 transition-colors">数据复制</a></li>
             <li class="text-text-tertiary">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -23,14 +23,14 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
-            <li class="text-text-primary font-medium">{% if job and job.id %}Edit Job{% else %}Create Job{% endif %}</li>
+            <li class="text-text-primary font-medium">{% if job and job.id %}编辑任务{% else %}创建任务{% endif %}</li>
         </ol>
     </nav>
 
     <!-- Page Header -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-text-primary mb-2">{% if job and job.id %}Edit Scheduled Syncoid Job{% else %}Create Scheduled Syncoid Job{% endif %}</h1>
-        <p class="text-text-secondary">Scheduled jobs run automatically via the operating system scheduler and use SSH Manager connections for remote replication</p>
+        <h1 class="text-3xl font-bold text-text-primary mb-2">{% if job and job.id %}编辑 Syncoid 计划任务{% else %}创建 Syncoid 计划任务{% endif %}</h1>
+        <p class="text-text-secondary">计划任务通过操作系统计划程序自动运行，远程复制使用 SSH 管理器中的连接</p>
     </div>
 
     {% if error %}
@@ -38,7 +38,7 @@
             <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <span><strong>Error:</strong> {{ error }}</span>
+            <span><strong>错误：</strong> {{ error }}</span>
         </div>
     {% endif %}
 
@@ -53,20 +53,20 @@
                 <div class="mb-6">
                     <h3 class="font-semibold text-lg mb-4 text-text-primary flex items-center">
                         <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary-500 text-white text-sm font-bold mr-2">1</span>
-                        Job Details
+                        任务详情
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="form-label" for="name">Job Name <span class="text-danger-400">*</span></label>
+                            <label class="form-label" for="name">任务名称 <span class="text-danger-400">*</span></label>
                             <input type="text" name="name" id="name" required class="form-input"
-                                   value="{{ job.name if job else '' }}" placeholder="e.g., Nightly tank backup">
+                                   value="{{ job.name if job else '' }}" placeholder="例如：每晚 tank 备份">
                         </div>
                         <div>
-                            <label class="form-label" for="replication_type">Direction</label>
+                            <label class="form-label" for="replication_type">方向</label>
                             <select name="replication_type" id="replication_type" class="form-select">
-                                <option value="local" {% if job and job.replication_type == 'local' %}selected{% endif %}>Local (this system only)</option>
-                                <option value="push" {% if job and job.replication_type == 'push' %}selected{% endif %}>Push (local source to remote target)</option>
-                                <option value="pull" {% if job and job.replication_type == 'pull' %}selected{% endif %}>Pull (remote source to local target)</option>
+                                <option value="local" {% if job and job.replication_type == 'local' %}selected{% endif %}>本地（仅此系统）</option>
+                                <option value="push" {% if job and job.replication_type == 'push' %}selected{% endif %}>推送（本地源到远程目标）</option>
+                                <option value="pull" {% if job and job.replication_type == 'pull' %}selected{% endif %}>拉取（远程源到本地目标）</option>
                             </select>
                         </div>
                     </div>
@@ -76,12 +76,12 @@
                 <div class="mb-6">
                     <h3 class="font-semibold text-lg mb-4 text-text-primary flex items-center">
                         <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-success-500 text-white text-sm font-bold mr-2">2</span>
-                        Datasets
+                        数据集
                     </h3>
                     <div id="connection-field" class="mb-4 {% if not job or job.replication_type == 'local' or not job.replication_type %}hidden{% endif %}">
-                        <label class="form-label" for="ssh_connection_id">SSH Connection <span class="text-danger-400">*</span></label>
+                        <label class="form-label" for="ssh_connection_id">SSH 连接 <span class="text-danger-400">*</span></label>
                         <select name="ssh_connection_id" id="ssh_connection_id" class="form-select">
-                            <option value="">-- Select Connection --</option>
+                            <option value="">-- 选择连接 --</option>
                             {% for conn in ssh_connections %}
                             <option value="{{ conn.id }}" {% if job and job.ssh_connection_id == conn.id %}selected{% endif %}>
                                 {{ conn.name }} ({{ conn.username }}@{{ conn.host }}{% if conn.port != 22 %}:{{ conn.port }}{% endif %})
@@ -89,30 +89,30 @@
                             {% endfor %}
                         </select>
                         <p class="text-text-tertiary text-xs mt-1">
-                            The connection's key, host, and port are resolved at each run.
-                            Manage connections in <a href="/utils/ssh" class="text-primary-400 hover:text-primary-300">Utilities &gt; SSH Manager</a>.
+                            连接的密钥、主机和端口在每次运行时解析。
+                            在<a href="/utils/ssh" class="text-primary-400 hover:text-primary-300">实用工具 &gt; SSH 管理器</a>中管理连接。
                         </p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="form-label" for="source_dataset">Source Dataset <span class="text-danger-400">*</span></label>
+                            <label class="form-label" for="source_dataset">源数据集 <span class="text-danger-400">*</span></label>
                             <select name="source_dataset" id="source_dataset" required class="form-select"
                                     data-current="{{ job.source_dataset if job else '' }}">
-                                <option value="">-- Select source dataset --</option>
+                                <option value="">-- 选择源数据集 --</option>
                             </select>
-                            <p class="text-text-tertiary text-xs mt-1" id="source-hint">Local datasets are listed automatically; for pull jobs, select an SSH connection to load the remote datasets</p>
+                            <p class="text-text-tertiary text-xs mt-1" id="source-hint">本地数据集会自动列出；对于拉取任务，请选择 SSH 连接以加载远程数据集</p>
                         </div>
                         <div>
-                            <label class="form-label" for="target_dataset">Target Parent Dataset <span class="text-danger-400">*</span></label>
+                            <label class="form-label" for="target_dataset">目标父数据集 <span class="text-danger-400">*</span></label>
                             <select name="target_dataset" id="target_dataset" required class="form-select"
                                     data-current="{{ job.target_dataset if job else '' }}">
-                                <option value="">-- Select target parent dataset --</option>
+                                <option value="">-- 选择目标父数据集 --</option>
                             </select>
-                            <p class="text-text-tertiary text-xs mt-1" id="target-hint">Syncoid replicates into the exact dataset named here, so a child name is appended to the selected parent (it is created on first replication). Selecting a parent alone would replicate on top of it and fail.</p>
-                            <label class="form-label mt-2" for="target_new_child">Child Dataset Name <span class="text-danger-400">*</span></label>
+                            <p class="text-text-tertiary text-xs mt-1" id="target-hint">Syncoid 会复制到此处的完整数据集名称，因此需要在所选父数据集后追加子数据集名称（首次复制时自动创建）。只选择父数据集会在其之上直接复制并导致失败。</p>
+                            <label class="form-label mt-2" for="target_new_child">子数据集名称 <span class="text-danger-400">*</span></label>
                             <input type="text" name="target_new_child" id="target_new_child" class="form-input"
-                                   placeholder="e.g. acestep (auto-filled from source)">
-                            <p class="text-text-tertiary text-xs mt-1">Full target: <code id="target-full-preview" class="text-info-400">-- select parent and child --</code></p>
+                                   placeholder="例如 acestep（从源数据集自动填充）">
+                            <p class="text-text-tertiary text-xs mt-1">完整目标：<code id="target-full-preview" class="text-info-400">-- 请选择父数据集和子数据集 --</code></p>
                         </div>
                     </div>
                 </div>
@@ -121,30 +121,30 @@
                 <div class="mb-6">
                     <h3 class="font-semibold text-lg mb-4 text-text-primary flex items-center">
                         <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-info-500 text-white text-sm font-bold mr-2">3</span>
-                        Schedule
+                        计划
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="form-label" for="schedule_preset">Preset</label>
+                            <label class="form-label" for="schedule_preset">预设</label>
                             <select id="schedule_preset" class="form-select">
-                                <option value="">Custom</option>
+                                <option value="">自定义</option>
                                 {% for preset in schedule_presets %}
                                 <option value="{{ preset.expression }}" {% if job and job.schedule == preset.expression %}selected{% endif %}>{{ preset.label }}</option>
                                 {% endfor %}
                             </select>
                         </div>
                         <div>
-                            <label class="form-label" for="schedule">Cron Expression <span class="text-danger-400">*</span></label>
+                            <label class="form-label" for="schedule">Cron 表达式 <span class="text-danger-400">*</span></label>
                             <input type="text" name="schedule" id="schedule" required class="form-input"
                                    value="{{ job.schedule if job else '0 2 * * *' }}" placeholder="0 2 * * *">
-                            <p id="schedule-status" class="text-text-tertiary text-xs mt-1">minute hour day month weekday (local time)</p>
+                            <p id="schedule-status" class="text-text-tertiary text-xs mt-1">分 时 日 月 星期（本地时间）</p>
                         </div>
                     </div>
                     <div id="next-runs" class="hidden mt-3 bg-bg-elevated-3 border border-border-default rounded-lg px-4 py-3 text-sm text-text-secondary"></div>
                     <label class="flex items-center mt-4">
                         <input type="checkbox" name="enabled" value="true" class="form-checkbox"
                                {% if not job or job.enabled %}checked{% endif %}>
-                        <span class="ml-3 text-text-secondary">Enabled (job runs on schedule)</span>
+                        <span class="ml-3 text-text-secondary">启用（任务按计划运行）</span>
                     </label>
                 </div>
 
@@ -152,13 +152,13 @@
                 <div class="mb-6">
                     <h3 class="font-semibold text-lg mb-4 text-text-primary flex items-center">
                         <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-warning-500 text-white text-sm font-bold mr-2">4</span>
-                        Syncoid Options
+                        Syncoid 选项
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div>
-                            <label class="form-label" for="compress">Compression</label>
+                            <label class="form-label" for="compress">压缩</label>
                             <select name="compress" id="compress" class="form-select">
-                                <option value="" {% if not job or not job.compress %}selected{% endif %}>Default</option>
+                                <option value="" {% if not job or not job.compress %}selected{% endif %}>默认</option>
                                 <option value="lz4" {% if job and job.compress == 'lz4' %}selected{% endif %}>lz4</option>
                                 <option value="zstd" {% if job and job.compress == 'zstd' %}selected{% endif %}>zstd</option>
                                 <option value="gzip" {% if job and job.compress == 'gzip' %}selected{% endif %}>gzip</option>
@@ -167,60 +167,60 @@
                             </select>
                         </div>
                         <div>
-                            <label class="form-label" for="source_bwlimit">Source Bandwidth Limit</label>
+                            <label class="form-label" for="source_bwlimit">源带宽限制</label>
                             <input type="text" name="source_bwlimit" id="source_bwlimit" class="form-input"
-                                   value="{{ job.source_bwlimit if job and job.source_bwlimit else '' }}" placeholder="e.g., 10M, 1G">
+                                   value="{{ job.source_bwlimit if job and job.source_bwlimit else '' }}" placeholder="例如 10M、1G">
                         </div>
                         <div>
-                            <label class="form-label" for="target_bwlimit">Target Bandwidth Limit</label>
+                            <label class="form-label" for="target_bwlimit">目标带宽限制</label>
                             <input type="text" name="target_bwlimit" id="target_bwlimit" class="form-input"
-                                   value="{{ job.target_bwlimit if job and job.target_bwlimit else '' }}" placeholder="e.g., 10M, 1G">
+                                   value="{{ job.target_bwlimit if job and job.target_bwlimit else '' }}" placeholder="例如 10M、1G">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <label class="flex items-center">
                             <input type="checkbox" name="recursive" value="true" class="form-checkbox" {% if job and job.recursive %}checked{% endif %}>
-                            <span class="ml-3 text-text-secondary">Recursive (replicate child datasets)</span>
+                            <span class="ml-3 text-text-secondary">递归（复制子数据集）</span>
                         </label>
                         <label class="flex items-center">
                             <input type="checkbox" name="no_sync_snap" value="true" class="form-checkbox" {% if job and job.no_sync_snap %}checked{% endif %}>
-                            <span class="ml-3 text-text-secondary">Don't create sync snapshots</span>
+                            <span class="ml-3 text-text-secondary">不创建同步快照</span>
                         </label>
                         <label class="flex items-center">
                             <input type="checkbox" name="skip_parent" value="true" class="form-checkbox" {% if job and job.skip_parent %}checked{% endif %}>
-                            <span class="ml-3 text-text-secondary">Skip parent dataset</span>
+                            <span class="ml-3 text-text-secondary">跳过父数据集</span>
                         </label>
                         <label class="flex items-center">
                             <input type="checkbox" name="create_bookmark" value="true" class="form-checkbox" {% if job and job.create_bookmark %}checked{% endif %}>
-                            <span class="ml-3 text-text-secondary">Create bookmarks</span>
+                            <span class="ml-3 text-text-secondary">创建书签</span>
                         </label>
                         <label class="flex items-center">
                             <input type="checkbox" name="force_delete" value="true" class="form-checkbox" {% if job and job.force_delete %}checked{% endif %}>
-                            <span class="ml-3 text-text-secondary">Force delete conflicts</span>
+                            <span class="ml-3 text-text-secondary">强制删除冲突</span>
                         </label>
                         <label class="flex items-center">
                             <input type="checkbox" name="large_blocks" value="true" class="form-checkbox" {% if job and job.large_blocks %}checked{% endif %}>
-                            <span class="ml-3 text-text-secondary">Large blocks (zfs send -L, for recordsize larger than 128 KiB)</span>
+                            <span class="ml-3 text-text-secondary">大块（zfs send -L，用于 recordsize 大于 128 KiB 的数据集）</span>
                         </label>
                     </div>
                     <p id="large-blocks-hint" class="hidden mt-2 text-xs text-info-400">
-                        Large blocks was enabled automatically because the source dataset uses a recordsize larger than 128 KiB.
+                        由于源数据集的 recordsize 大于 128 KiB，已自动启用大块选项。
                     </p>
 
                     <div class="mt-5 pt-4 border-t border-border-subtle">
                         <label class="flex items-center" for="additional_flags_enabled">
                             <input type="checkbox" id="additional_flags_enabled" class="form-checkbox"
                                    {% if job and job.additional_flags %}checked{% endif %}>
-                            <span class="ml-3 text-text-secondary font-medium">Add advanced Syncoid flags</span>
+                            <span class="ml-3 text-text-secondary font-medium">添加高级 Syncoid 标志</span>
                         </label>
                         <div id="additional-flags-field" class="mt-3 {% if not job or not job.additional_flags %}hidden{% endif %}">
-                            <label class="form-label" for="additional_flags">Additional Flags</label>
+                            <label class="form-label" for="additional_flags">附加标志</label>
                             <input type="text" name="additional_flags" id="additional_flags" class="form-input font-mono"
                                    value="{{ job.additional_flags if job and job.additional_flags else '' }}"
-                                   placeholder="e.g., --no-clone-handling --identifier nightly"
+                                   placeholder="例如 --no-clone-handling --identifier nightly"
                                    {% if not job or not job.additional_flags %}disabled{% else %}required{% endif %}>
                             <p class="text-text-tertiary text-xs mt-1">
-                                Enter the additional arguments exactly as they should appear before the source and target datasets in the Syncoid command.
+                                输入的附加参数将按原样出现在 Syncoid 命令中源数据集和目标数据集之前。
                             </p>
                         </div>
                     </div>
@@ -232,19 +232,19 @@
                         <svg class="w-4 h-4 mr-2 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
-                        Command Preview
+                        命令预览
                     </label>
                     <div id="command-preview" class="bg-bg-elevated-2 rounded-lg p-4 font-mono text-sm text-info-400 border border-border-default overflow-x-auto whitespace-pre-wrap">
-                        <span class="text-text-tertiary">Select a source dataset and target to preview the command.</span>
+                        <span class="text-text-tertiary">请选择源数据集和目标以预览命令。</span>
                     </div>
-                    <p class="text-text-tertiary text-xs mt-1">This is the syncoid command the scheduler will run. SSH key and host options are added automatically from the selected connection at each run.</p>
+                    <p class="text-text-tertiary text-xs mt-1">这是计划程序将运行的 syncoid 命令。SSH 密钥和主机选项会在每次运行时从所选连接自动添加。</p>
                 </div>
 
                 <!-- Confirmation Checkbox -->
                 <div class="mb-6">
                     <label class="flex items-center">
                         <input type="checkbox" id="confirm-command" class="form-checkbox">
-                        <span class="ml-3 text-text-secondary font-medium">I have reviewed the replication command above and want to proceed</span>
+                        <span class="ml-3 text-text-secondary font-medium">我已检查上述复制命令并希望继续</span>
                     </label>
                 </div>
 
@@ -254,13 +254,13 @@
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
-                        {% if job and job.id %}Save Changes{% else %}Create Job{% endif %}
+                        {% if job and job.id %}保存更改{% else %}创建任务{% endif %}
                     </button>
                     <a href="/zfs/replication/syncoid" class="btn-secondary">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                         </svg>
-                        Cancel
+                        取消
                     </a>
                 </div>
             </form>
@@ -270,18 +270,18 @@
     <div id="additional-flags-warning" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="additional-flags-warning-title">
         <div class="card w-full max-w-lg border-warning-700 shadow-2xl">
             <div class="px-6 py-4 border-b border-border-subtle">
-                <h2 id="additional-flags-warning-title" class="text-xl font-semibold text-warning-400">Advanced Syncoid Flags Warning</h2>
+                <h2 id="additional-flags-warning-title" class="text-xl font-semibold text-warning-400">高级 Syncoid 标志警告</h2>
             </div>
             <div class="card-body space-y-4">
                 <p class="text-text-secondary">
-                    Manually adding flags may create a malformed or unsafe Syncoid command. An incorrect command could cause replication failure, corrupted data, or permanent data loss.
+                    手动添加标志可能会生成格式错误或不安全的 Syncoid 命令。错误的命令可能导致数据复制失败、数据损坏或永久性数据丢失。
                 </p>
                 <p class="text-text-secondary font-medium">
-                    WebZFS will add your text to the generated command without validating the individual flags. You are responsible for verifying that the complete command is correct in the Command Preview card before confirming and saving this job.
+                    DataMax-zfs 会将你输入的文本原样加入生成的命令，而不会校验各个标志。你有责任在确认并保存此任务之前，在“命令预览”卡片中核对完整命令是否正确。
                 </p>
                 <div class="flex justify-end gap-3 pt-2">
-                    <button type="button" id="cancel-additional-flags" class="btn-secondary">Cancel</button>
-                    <button type="button" id="confirm-additional-flags" class="btn-warning">I Understand and Accept Responsibility</button>
+                    <button type="button" id="cancel-additional-flags" class="btn-secondary">取消</button>
+                    <button type="button" id="confirm-additional-flags" class="btn-warning">我已了解并愿意承担责任</button>
                 </div>
             </div>
         </div>
@@ -289,13 +289,13 @@
 
     <!-- How scheduling works -->
     <div class="card-nested bg-info-900/20 border-info-700">
-        <h3 class="font-semibold mb-3 text-text-primary">How scheduled jobs run</h3>
+        <h3 class="font-semibold mb-3 text-text-primary">计划任务如何运行</h3>
         <ul class="space-y-2 text-sm text-text-secondary">
-            <li>On Linux, each enabled job is registered as a systemd timer (webzfs-syncoid-job-ID.timer) that runs even when the browser is closed.</li>
-            <li>On FreeBSD and NetBSD, jobs are registered in the root crontab inside a WebZFS-managed block.</li>
-            <li>Remote jobs use the selected SSH Manager connection; the key and host details are resolved fresh at each run, so key rotation does not require editing jobs.</li>
-            <li>If a run is still in progress when the next occurrence fires, the new occurrence is skipped and recorded as skipped.</li>
-            <li>Results appear on the Replication History page.</li>
+            <li>在 Linux 上，每个已启用的任务都会注册为一个 systemd 定时器（webzfs-syncoid-job-ID.timer），即使浏览器已关闭也会运行。</li>
+            <li>在 FreeBSD 和 NetBSD 上，任务会注册在 root crontab 中由 DataMax-zfs 管理的区块内。</li>
+            <li>远程任务使用所选的 SSH 管理器连接；密钥和主机详情在每次运行时动态解析，因此轮换密钥无需编辑任务。</li>
+            <li>如果下一次运行触发时上一次仍在进行，新的本次运行将被跳过并记录为已跳过。</li>
+            <li>运行结果会显示在“数据复制历史记录”页面。</li>
         </ul>
     </div>
 </div>
@@ -341,7 +341,7 @@
         if (previous && !matched) {
             const keep = document.createElement('option');
             keep.value = previous;
-            keep.textContent = previous + ' (saved value)';
+            keep.textContent = previous + '（已保存的值）';
             keep.selected = true;
             select.appendChild(keep);
         }
@@ -410,9 +410,9 @@
         if (base && child) {
             preview.textContent = base + '/' + child;
         } else if (base) {
-            preview.textContent = base + ' (no child; replicates directly into this dataset)';
+            preview.textContent = base + '（无子数据集；将直接复制到此数据集中）';
         } else {
-            preview.textContent = '-- select parent and child --';
+            preview.textContent = '-- 请选择父数据集和子数据集 --';
         }
     }
 
@@ -437,20 +437,20 @@
     async function refreshDatasetDropdowns() {
         const direction = typeSelect.value;
         if (direction === 'pull') {
-            fillSelect(targetSelect, localDatasets, '-- Select target parent dataset --');
+            fillSelect(targetSelect, localDatasets, '-- 请选择目标父数据集 --');
             splitSavedTarget(localDatasets);
             const remote = await loadRemoteDatasets();
             fillSelect(sourceSelect, remote,
-                remote.length ? '-- Select source dataset --' : '-- Select SSH connection to load remote datasets --');
+                remote.length ? '-- 请选择源数据集 --' : '-- 请选择 SSH 连接以加载远程数据集 --');
         } else if (direction === 'push') {
-            fillSelect(sourceSelect, localDatasets, '-- Select source dataset --');
+            fillSelect(sourceSelect, localDatasets, '-- 请选择源数据集 --');
             const remote = await loadRemoteDatasets();
             fillSelect(targetSelect, remote,
-                remote.length ? '-- Select target parent dataset --' : '-- Select SSH connection to load remote datasets --');
+                remote.length ? '-- 请选择目标父数据集 --' : '-- 请选择 SSH 连接以加载远程数据集 --');
             splitSavedTarget(remote);
         } else {
-            fillSelect(sourceSelect, localDatasets, '-- Select source dataset --');
-            fillSelect(targetSelect, localDatasets, '-- Select target parent dataset --');
+            fillSelect(sourceSelect, localDatasets, '-- 请选择源数据集 --');
+            fillSelect(targetSelect, localDatasets, '-- 请选择目标父数据集 --');
             splitSavedTarget(localDatasets);
         }
         autoFillChildFromSource();
@@ -490,18 +490,18 @@
             });
             const data = await response.json();
             if (data.valid) {
-                scheduleStatus.textContent = 'Valid schedule';
+                scheduleStatus.textContent = '计划有效';
                 scheduleStatus.className = 'text-success-400 text-xs mt-1';
                 nextRunsBox.classList.remove('hidden');
-                nextRunsBox.innerHTML = '<strong class="text-text-primary">Next runs:</strong> '
+                nextRunsBox.innerHTML = '<strong class="text-text-primary">下次运行：</strong> '
                     + data.next_runs.join(', ');
             } else {
-                scheduleStatus.textContent = data.error || 'Invalid schedule';
+                scheduleStatus.textContent = data.error || '计划无效';
                 scheduleStatus.className = 'text-danger-400 text-xs mt-1';
                 nextRunsBox.classList.add('hidden');
             }
         } catch (err) {
-            scheduleStatus.textContent = 'Could not validate schedule';
+            scheduleStatus.textContent = '无法验证计划';
             scheduleStatus.className = 'text-warning-400 text-xs mt-1';
         }
     }
@@ -609,7 +609,7 @@
         const direction = typeSelect.value;
 
         if (!source || !target) {
-            commandPreview.innerHTML = '<span class="text-text-tertiary">Select a source dataset and target to preview the command.</span>';
+            commandPreview.innerHTML = '<span class="text-text-tertiary">请选择源数据集和目标以预览命令。</span>';
             resetConfirmation();
             return;
         }
@@ -640,10 +640,10 @@
         let sshNote = '';
         if (direction === 'push') {
             targetStr = hostPrefix + target;
-            sshNote = '\n# --sshkey and --sshoption flags are added from the SSH connection at run time';
+            sshNote = '\n# --sshkey 和 --sshoption 标志将在运行时根据 SSH 连接自动添加';
         } else if (direction === 'pull') {
             sourceStr = hostPrefix + source;
-            sshNote = '\n# --sshkey and --sshoption flags are added from the SSH connection at run time';
+            sshNote = '\n# --sshkey 和 --sshoption 标志将在运行时根据 SSH 连接自动添加';
         }
 
         parts.push(sourceStr);

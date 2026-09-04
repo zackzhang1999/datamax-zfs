@@ -8,19 +8,19 @@
     <nav class="text-sm mb-6" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-2">
             <li class="flex items-center">
-                <a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">Home</a>
+                <a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">首页</a>
                 <svg class="w-4 h-4 mx-2 text-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li class="flex items-center">
-                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300 transition-colors">Observability</a>
+                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300 transition-colors">运行观测</a>
                 <svg class="w-4 h-4 mx-2 text-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li>
-                <span class="text-text-primary font-medium">Kernel Debug Log</span>
+                <span class="text-text-primary font-medium">内核调试日志</span>
             </li>
         </ol>
     </nav>
@@ -28,8 +28,8 @@
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
-            <h1 class="text-3xl font-bold text-text-primary mb-2">ZFS Kernel Debug Log</h1>
-            <p class="text-text-secondary">View kernel-level ZFS debug messages</p>
+            <h1 class="text-3xl font-bold text-text-primary mb-2">ZFS 内核调试日志</h1>
+            <p class="text-text-secondary">查看内核级 ZFS 调试消息</p>
         </div>
         <a href="/zfs/observability/kernel-log/download?lines={{ lines }}{% if filter %}&filter={{ filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}"
            class="btn-success flex items-center gap-2"
@@ -37,7 +37,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
             </svg>
-            Download
+            下载
         </a>
     </div>
 
@@ -48,7 +48,7 @@
             <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <div><strong class="font-semibold">Error:</strong> {{ error }}</div>
+            <div><strong class="font-semibold">错误：</strong> {{ error }}</div>
         </div>
     </div>
     {% endif %}
@@ -60,13 +60,13 @@
                 <svg class="w-5 h-5 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
                 </svg>
-                Filter Options
+                筛选选项
             </h2>
         </div>
         <div class="p-6">
             <form method="get" action="/zfs/observability/kernel-log" class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                    <label for="lines" class="form-label">Number of Lines</label>
+                    <label for="lines" class="form-label">行数</label>
                     <select id="lines" name="lines" class="form-select">
                         <option value="100" {% if lines == 100 %}selected{% endif %}>100</option>
                         <option value="500" {% if lines == 500 %}selected{% endif %}>500</option>
@@ -77,25 +77,25 @@
                     </select>
                 </div>
                 <div>
-                    <label for="filter" class="form-label">Filter Pattern (regex)</label>
+                    <label for="filter" class="form-label">筛选模式（正则表达式）</label>
                     <input type="text" id="filter" name="filter" value="{{ filter or '' }}"
-                           placeholder="e.g. error|warn"
+                           placeholder="例如 error|warn"
                            class="form-input">
-                    <p class="text-xs text-text-tertiary mt-1">Regex applied at read time</p>
+                    <p class="text-xs text-text-tertiary mt-1">读取时应用正则表达式</p>
                 </div>
                 <div>
-                    <label for="search" class="form-label">Search</label>
+                    <label for="search" class="form-label">搜索</label>
                     <input type="text" id="search" name="search" value="{{ search or '' }}"
-                           placeholder="case-insensitive substring"
+                           placeholder="不区分大小写的子串"
                            class="form-input">
-                    <p class="text-xs text-text-tertiary mt-1">Plain-text search applied to results</p>
+                    <p class="text-xs text-text-tertiary mt-1">对结果应用纯文本搜索</p>
                 </div>
                 <div class="md:col-span-3">
                     <button type="submit" class="btn-primary">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
                         </svg>
-                        Apply Filters
+                        应用筛选
                     </button>
                 </div>
             </form>
@@ -109,8 +109,8 @@
                 <svg class="w-5 h-5 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
-                Debug Messages
-                <span class="text-sm font-normal text-text-secondary ml-2">({{ log_lines|length }} lines)</span>
+                调试消息
+                <span class="text-sm font-normal text-text-secondary ml-2">（{{ log_lines|length }} 行）</span>
             </h2>
         </div>
         
@@ -125,8 +125,8 @@
                 <svg class="w-16 h-16 mx-auto text-text-tertiary mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
-                <p class="text-text-secondary text-lg mb-2">No log entries found</p>
-                <p class="text-text-tertiary text-sm">Try adjusting your filter or check if debug logging is enabled</p>
+                <p class="text-text-secondary text-lg mb-2">未找到日志条目</p>
+                <p class="text-text-tertiary text-sm">请尝试调整筛选条件，或检查是否已启用调试日志</p>
             </div>
             {% endif %}
         </div>
@@ -139,8 +139,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <div class="text-sm text-info-400">
-                <p class="mb-2"><strong>Source:</strong> <code class="bg-gray-900 px-2 py-0.5 rounded">{{ debug_source }}</code></p>
-                <p><strong>Note:</strong> Kernel debug messages are only available if ZFS debug logging is enabled. These low-level messages are useful for troubleshooting kernel-level ZFS issues.</p>
+                <p class="mb-2"><strong>来源：</strong> <code class="bg-gray-900 px-2 py-0.5 rounded">{{ debug_source }}</code></p>
+                <p><strong>注意：</strong>内核调试消息仅在启用 ZFS 调试日志时可用。这些底层消息有助于排查内核级 ZFS 问题。</p>
             </div>
         </div>
     </div>

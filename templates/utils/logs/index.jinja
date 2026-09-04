@@ -13,9 +13,9 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>
                 </a>
-                <h1 class="text-3xl font-bold text-text-primary">Audit Logs</h1>
+                <h1 class="text-3xl font-bold text-text-primary">审计日志</h1>
             </div>
-            <p class="text-text-secondary mt-1 ml-9">View and download WebZFS audit logs</p>
+            <p class="text-text-secondary mt-1 ml-9">查看和下载 DataMax-zfs 审计日志</p>
         </div>
     </div>
 
@@ -26,7 +26,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             <div>
-                <h3 class="text-danger-400 font-semibold">Error</h3>
+                <h3 class="text-danger-400 font-semibold">错误</h3>
                 <p class="text-text-secondary">{{ error }}</p>
             </div>
         </div>
@@ -39,7 +39,7 @@
             <svg class="w-5 h-5 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
             </svg>
-            <span class="text-text-secondary">Log Directory:</span>
+            <span class="text-text-secondary">日志目录：</span>
             <code class="text-info-400 bg-surface-800 px-2 py-1 rounded text-sm">{{ log_dir }}</code>
         </div>
     </div>
@@ -58,26 +58,26 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-xl font-semibold text-text-primary">Authentication</h2>
+                        <h2 class="text-xl font-semibold text-text-primary">身份认证</h2>
                         <p class="text-sm text-text-secondary">auth.log</p>
                     </div>
                 </div>
                 
                 <p class="text-text-secondary text-sm mb-4">
-                    Login attempts, logout events, and rate limiting records.
+                    登录尝试、退出登录事件和速率限制记录。
                 </p>
                 
                 <div class="space-y-2 text-sm">
                     <div class="flex justify-between">
-                        <span class="text-text-secondary">Size:</span>
+                        <span class="text-text-secondary">大小：</span>
                         <span class="text-text-primary">{{ auth_info.get('info', {}).get('size_human', 'N/A') }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-text-secondary">Entries:</span>
+                        <span class="text-text-secondary">条目数：</span>
                         <span class="text-text-primary">{{ auth_info.get('info', {}).get('line_count', 0) }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-text-secondary">Last Modified:</span>
+                        <span class="text-text-secondary">最后修改：</span>
                         <span class="text-text-primary">{{ auth_info.get('info', {}).get('modified', 'N/A') or 'N/A' }}</span>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                         </svg>
-                        View
+                        查看
                     </a>
                     <a href="/utils/logs/download/auth" class="btn btn-outline" hx-boost="false">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,26 +110,26 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-xl font-semibold text-text-primary">ZFS Operations</h2>
+                        <h2 class="text-xl font-semibold text-text-primary">ZFS 操作</h2>
                         <p class="text-sm text-text-secondary">zfs_operations.log</p>
                     </div>
                 </div>
                 
                 <p class="text-text-secondary text-sm mb-4">
-                    Pool, dataset, and snapshot operations with user attribution.
+                    存储池、数据集和快照操作记录，并标注操作用户。
                 </p>
                 
                 <div class="space-y-2 text-sm">
                     <div class="flex justify-between">
-                        <span class="text-text-secondary">Size:</span>
+                        <span class="text-text-secondary">大小：</span>
                         <span class="text-text-primary">{{ zfs_info.get('info', {}).get('size_human', 'N/A') }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-text-secondary">Entries:</span>
+                        <span class="text-text-secondary">条目数：</span>
                         <span class="text-text-primary">{{ zfs_info.get('info', {}).get('line_count', 0) }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-text-secondary">Last Modified:</span>
+                        <span class="text-text-secondary">最后修改：</span>
                         <span class="text-text-primary">{{ zfs_info.get('info', {}).get('modified', 'N/A') or 'N/A' }}</span>
                     </div>
                 </div>
@@ -140,7 +140,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                         </svg>
-                        View
+                        查看
                     </a>
                     <a href="/utils/logs/download/zfs_operations" class="btn btn-outline" hx-boost="false">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,26 +162,26 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-xl font-semibold text-text-primary">File Access</h2>
+                        <h2 class="text-xl font-semibold text-text-primary">文件访问</h2>
                         <p class="text-sm text-text-secondary">file_access.log</p>
                     </div>
                 </div>
                 
                 <p class="text-text-secondary text-sm mb-4">
-                    File read/write operations and directory listings.
+                    文件读写操作和目录列表记录。
                 </p>
                 
                 <div class="space-y-2 text-sm">
                     <div class="flex justify-between">
-                        <span class="text-text-secondary">Size:</span>
+                        <span class="text-text-secondary">大小：</span>
                         <span class="text-text-primary">{{ file_info.get('info', {}).get('size_human', 'N/A') }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-text-secondary">Entries:</span>
+                        <span class="text-text-secondary">条目数：</span>
                         <span class="text-text-primary">{{ file_info.get('info', {}).get('line_count', 0) }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-text-secondary">Last Modified:</span>
+                        <span class="text-text-secondary">最后修改：</span>
                         <span class="text-text-primary">{{ file_info.get('info', {}).get('modified', 'N/A') or 'N/A' }}</span>
                     </div>
                 </div>
@@ -192,7 +192,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                         </svg>
-                        View
+                        查看
                     </a>
                     <a href="/utils/logs/download/file_access" class="btn btn-outline" hx-boost="false">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -212,11 +212,11 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             <div>
-                <h3 class="text-lg font-semibold text-info-400 mb-2">About Audit Logs</h3>
+                <h3 class="text-lg font-semibold text-info-400 mb-2">关于审计日志</h3>
                 <p class="text-text-secondary">
-                    Audit logs are automatically maintained by WebZFS to track security-relevant events. 
-                    Log files rotate automatically when they reach 10MB, with up to 5 backup files retained.
-                    All timestamps are in server local time.
+                    DataMax-zfs 会自动维护审计日志，用于跟踪安全相关事件。 
+                    日志文件达到 10MB 时会自动轮转，最多保留 5 个备份文件。
+                    所有时间戳均为服务器本地时间。
                 </p>
             </div>
         </div>

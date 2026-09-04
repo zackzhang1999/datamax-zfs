@@ -2,14 +2,14 @@
 
 {% set active_page = 'utils' %}
 
-{% block title %}Confirm Restore{% endblock %}
+{% block title %}确认恢复{% endblock %}
 
 {% set category_labels = {
-    'config': ('WebZFS configuration files', 'Themes, session timeout, SSH connection metadata, fleet servers, scrub schedules, SMART schedules, syncoid jobs, replication history.'),
-    'ssh-key': ('SSH key pairs', 'Private and public ED25519 key files used by Fleet Monitoring and Replication.'),
-    'sanoid': ('Sanoid configuration', 'sanoid.conf controlling automated snapshot policies.'),
-    'cron': ('System cron entries', 'WebZFS-managed files in /etc/cron.d.'),
-    'env': ('Application secret', 'WebZFS .env file (SECRET_KEY and bind configuration).')
+    'config': ('DataMax-zfs 配置文件', '主题、会话超时、SSH 连接元数据、数据清洗计划、SMART 计划、Syncoid 任务、数据复制历史记录。'),
+    'ssh-key': ('SSH 密钥对', '数据复制使用的 ED25519 私钥与公钥文件。'),
+    'sanoid': ('Sanoid 配置', '控制自动快照策略的 sanoid.conf。'),
+    'cron': ('系统 cron 条目', '/etc/cron.d 中由 DataMax-zfs 管理的文件。'),
+    'env': ('应用密钥', 'DataMax-zfs 的 .env 文件（SECRET_KEY 和绑定配置）。')
 } %}
 
 {% set category_field = {
@@ -23,46 +23,46 @@
 {% block content %}
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils" class="hover:text-primary-400">Utilities</a>
+        <a href="/utils" class="hover:text-primary-400">实用工具</a>
         <span class="mx-2">/</span>
-        <a href="/utils/settings" class="hover:text-primary-400">WebZFS Settings</a>
+        <a href="/utils/settings" class="hover:text-primary-400">DataMax-zfs 设置</a>
         <span class="mx-2">/</span>
-        <span class="text-text-primary">Confirm Restore</span>
+        <span class="text-text-primary">确认恢复</span>
     </nav>
 
     <div class="space-y-6">
         <div>
-            <h1 class="text-3xl font-bold text-text-primary">Confirm Restore</h1>
-            <p class="text-text-secondary mt-1">Review the archive contents before any files are written</p>
+            <h1 class="text-3xl font-bold text-text-primary">确认恢复</h1>
+            <p class="text-text-secondary mt-1">在写入任何文件之前，请检查归档内容</p>
         </div>
 
         <!-- Archive Metadata -->
         <div class="card animate-fade-in">
             <div class="card-body">
-                <h2 class="text-xl font-semibold text-text-primary mb-4">Archive Metadata</h2>
+                <h2 class="text-xl font-semibold text-text-primary mb-4">归档元数据</h2>
                 <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
                     <div>
-                        <dt class="text-text-tertiary">Created</dt>
+                        <dt class="text-text-tertiary">创建时间</dt>
                         <dd class="text-text-primary">{{ header.created }}</dd>
                     </div>
                     <div>
-                        <dt class="text-text-tertiary">Original Hostname</dt>
+                        <dt class="text-text-tertiary">原始主机名</dt>
                         <dd class="text-text-primary">{{ header.hostname }}</dd>
                     </div>
                     <div>
-                        <dt class="text-text-tertiary">Original Platform</dt>
+                        <dt class="text-text-tertiary">原始平台</dt>
                         <dd class="text-text-primary">{{ header.platform }}</dd>
                     </div>
                     <div>
-                        <dt class="text-text-tertiary">WebZFS Version</dt>
+                        <dt class="text-text-tertiary">DataMax-zfs 版本</dt>
                         <dd class="text-text-primary">{{ header.app_version }}</dd>
                     </div>
                     <div>
-                        <dt class="text-text-tertiary">Cipher</dt>
+                        <dt class="text-text-tertiary">加密算法</dt>
                         <dd class="text-text-primary">{{ header.cipher }}</dd>
                     </div>
                     <div>
-                        <dt class="text-text-tertiary">Format Version</dt>
+                        <dt class="text-text-tertiary">格式版本</dt>
                         <dd class="text-text-primary">{{ header.v }}</dd>
                     </div>
                 </dl>
@@ -73,8 +73,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                     </svg>
                     <div class="text-sm">
-                        <p class="font-medium">Cross-host restore detected.</p>
-                        <p>This archive was created on <strong>{{ header.hostname }}</strong> but the current host is <strong>{{ current_hostname }}</strong>. Restoring SSH keys means this host will inherit the previous host's identity for fleet/replication peers. That is usually what you want when migrating to a new system, but be sure before proceeding.</p>
+                        <p class="font-medium">检测到跨主机恢复。</p>
+                        <p>此归档创建于 <strong>{{ header.hostname }}</strong>，而当前主机为 <strong>{{ current_hostname }}</strong>。恢复 SSH 密钥意味着本主机将继承原主机在数据复制对端中的身份。迁移到新系统时这通常正是所需行为，但继续之前请务必确认。</p>
                     </div>
                 </div>
                 {% endif %}
@@ -85,8 +85,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                     </svg>
                     <div class="text-sm">
-                        <p class="font-medium">Cross-platform restore detected.</p>
-                        <p>Archive platform: <strong>{{ header.platform }}</strong>, current platform: <strong>{{ current_platform }}</strong>. System config paths (sanoid.conf, cron.d) may differ between Linux and BSD; review the file list below before continuing.</p>
+                        <p class="font-medium">检测到跨平台恢复。</p>
+                        <p>归档平台：<strong>{{ header.platform }}</strong>，当前平台：<strong>{{ current_platform }}</strong>。系统配置路径（sanoid.conf、cron.d）在 Linux 与 BSD 之间可能不同；继续之前请检查下方的文件列表。</p>
                     </div>
                 </div>
                 {% endif %}
@@ -99,9 +99,9 @@
 
             <div class="card animate-fade-in">
                 <div class="card-body space-y-4">
-                    <h2 class="text-xl font-semibold text-text-primary">Files to Restore</h2>
+                    <h2 class="text-xl font-semibold text-text-primary">待恢复的文件</h2>
                     <p class="text-sm text-text-secondary">
-                        Untick any category you want to skip. Existing files at each target path will be renamed to <code>&lt;file&gt;.pre-restore-&lt;timestamp&gt;</code>; nothing is deleted.
+                        取消勾选想要跳过的类别。每个目标路径上的现有文件将被重命名为 <code>&lt;文件&gt;.pre-restore-&lt;时间戳&gt;</code>；不会删除任何内容。
                     </p>
 
                     {% for category, entries in files_by_category.items() %}
@@ -121,7 +121,7 @@
                             <div class="flex-1">
                                 <div class="flex items-baseline justify-between gap-3">
                                     <span class="text-text-primary font-medium">{{ label_pair[0] }}</span>
-                                    <span class="text-xs text-text-tertiary">{{ entries|length }} file{{ 's' if entries|length != 1 else '' }}</span>
+                                    <span class="text-xs text-text-tertiary">{{ entries|length }} 个文件</span>
                                 </div>
                                 {% if label_pair[1] %}
                                 <p class="text-sm text-text-secondary mt-1">{{ label_pair[1] }}</p>
@@ -130,7 +130,7 @@
                                     {% for entry in entries %}
                                     <li class="flex items-baseline justify-between gap-3">
                                         <span class="truncate">{{ entry.source or entry.arcname }}</span>
-                                        <span class="flex-shrink-0">{{ entry.size }} bytes</span>
+                                        <span class="flex-shrink-0">{{ entry.size }} 字节</span>
                                     </li>
                                     {% endfor %}
                                 </ul>
@@ -138,7 +138,7 @@
                         </label>
                     </div>
                     {% else %}
-                    <div class="alert alert-warning">The archive does not contain any restorable files.</div>
+                    <div class="alert alert-warning">归档中不包含任何可恢复的文件。</div>
                     {% endfor %}
                 </div>
             </div>
@@ -146,12 +146,12 @@
             <!-- Confirm and Restore -->
             <div class="card animate-fade-in">
                 <div class="card-body space-y-4">
-                    <h2 class="text-xl font-semibold text-text-primary">Confirm Restore</h2>
+                    <h2 class="text-xl font-semibold text-text-primary">确认恢复</h2>
                     <p class="text-sm text-text-secondary">
-                        Re-enter the archive passphrase to confirm. Decryption is repeated server-side for safety; we never keep your passphrase between requests.
+                        请重新输入归档口令以确认。为安全起见，解密会在服务端重复进行；我们不会在请求之间保留你的口令。
                     </p>
                     <div class="max-w-md">
-                        <label for="confirm-passphrase" class="form-label">Passphrase</label>
+                        <label for="confirm-passphrase" class="form-label">口令</label>
                         <input
                             type="password"
                             id="confirm-passphrase"
@@ -167,10 +167,10 @@
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Restore Selected Files
+                            恢复所选文件
                         </button>
                         <a href="/utils/settings" class="btn bg-bg-elevated-2 text-text-secondary border border-border-default hover:bg-bg-elevated-3 hover:text-text-primary">
-                            Cancel
+                            取消
                         </a>
                     </div>
                 </div>

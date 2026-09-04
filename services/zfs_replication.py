@@ -118,7 +118,7 @@ class ZFSReplicationService:
                 snapshots = self._get_snapshots(source)
                 
                 if not snapshots:
-                    raise Exception(f"No snapshots found for {source}")
+                    raise Exception(f"未找到 {source} 的快照")
                 
                 latest_snapshot = snapshots[-1]
             
@@ -190,13 +190,11 @@ class ZFSReplicationService:
                 )
                 if not base_snapshot:
                     raise Exception(
-                        "Incremental replication requested but no common "
-                        "snapshot was found between the source and target "
-                        "datasets. Both systems must share at least one "
-                        "snapshot for incremental send to work. Either "
-                        "perform a full (non-incremental) send first, or "
-                        "verify that the target dataset has a snapshot "
-                        "matching one on the source."
+                        "请求了增量数据复制，但源数据集和目标数据集之间"
+                        "没有找到共同的快照。两个系统必须至少共享一个"
+                        "快照才能进行增量发送。请先执行一次完整（非增量）"
+                        "发送，或确认目标数据集存在与源数据集匹配的"
+                        "快照。"
                     )
                 
                 # Rebuild the send command now that we have the base snapshot
@@ -252,8 +250,8 @@ class ZFSReplicationService:
                     execution_id=execution_id,
                     notification_type='success',
                     recipient=', '.join(notification_result.get('recipients', [])),
-                    subject=f"ZFS Replication Succeeded: {job_name or f'{source} → {target}'}",
-                    body='Success notification sent',
+                    subject=f"ZFS 数据复制成功：{job_name or f'{source} → {target}'}",
+                    body='成功通知已发送',
                     status='sent'
                 )
             
@@ -302,7 +300,7 @@ class ZFSReplicationService:
                     execution_id=execution_id,
                     notification_type='failure',
                     recipient=', '.join(notification_result.get('recipients', [])),
-                    subject=f"ZFS Replication Failed: {job_name or f'{source} → {target}'}",
+                    subject=f"ZFS 数据复制失败：{job_name or f'{source} → {target}'}",
                     body=error_message,
                     status='sent'
                 )
@@ -311,10 +309,10 @@ class ZFSReplicationService:
                     execution_id=execution_id,
                     notification_type='failure',
                     recipient='N/A',
-                    subject=f"ZFS Replication Failed: {job_name or f'{source} → {target}'}",
+                    subject=f"ZFS 数据复制失败：{job_name or f'{source} → {target}'}",
                     body=error_message,
                     status='failed',
-                    error_message=notification_result.get('error', 'Unknown error')
+                    error_message=notification_result.get('error', '未知错误')
                 )
             
             return {
@@ -401,19 +399,19 @@ class ZFSReplicationService:
             
             return {
                 'status': 'success',
-                'message': 'Connection successful',
+                'message': '连接成功',
                 'output': result.stdout.strip()
             }
             
         except subprocess.TimeoutExpired:
             return {
                 'status': 'failure',
-                'message': 'Connection timed out'
+                'message': '连接超时'
             }
         except subprocess.CalledProcessError as e:
             return {
                 'status': 'failure',
-                'message': f'Connection failed: {e.stderr}'
+                'message': f'连接失败：{e.stderr}'
             }
     
     def estimate_transfer_size(
@@ -437,7 +435,7 @@ class ZFSReplicationService:
             # Get latest snapshot
             snapshots = self._get_snapshots(source)
             if not snapshots:
-                raise Exception(f"No snapshots found for {source}")
+                raise Exception(f"未找到 {source} 的快照")
             
             latest = snapshots[-1]
             
@@ -820,7 +818,7 @@ class ZFSReplicationService:
                             ),
                             estimated_time_remaining=eta,
                             status_message=(
-                                f"Transferred "
+                                f"已传输 "
                                 f"{self._format_bytes(bytes_transferred)}"
                             )
                         )
@@ -901,17 +899,17 @@ class ZFSReplicationService:
             # Build an error message that includes both sides of the pipe
             error_parts = []
             if send_process.returncode != 0 and send_error_text:
-                error_parts.append(f"Send failed: {send_error_text}")
+                error_parts.append(f"发送失败：{send_error_text}")
             if receive_process.returncode != 0 and receive_error_text:
-                error_parts.append(f"Receive failed: {receive_error_text}")
+                error_parts.append(f"接收失败：{receive_error_text}")
             
             # If send failed but we only got the generic receive error, lead
             # with the send error because it is the actual root cause
             if not error_parts:
                 if send_process.returncode != 0:
-                    error_parts.append(f"Send process exited with code {send_process.returncode}")
+                    error_parts.append(f"发送进程退出，状态码 {send_process.returncode}")
                 if receive_process.returncode != 0:
-                    error_parts.append(f"Receive process exited with code {receive_process.returncode}")
+                    error_parts.append(f"接收进程退出，状态码 {receive_process.returncode}")
             
             raise Exception(' | '.join(error_parts))
         
@@ -947,7 +945,7 @@ class ZFSReplicationService:
         ssh_key = options.get('ssh_key')
         
         if not remote_host:
-            raise Exception("remote_host required for remote replication")
+            raise Exception("远程数据复制需要指定 remote_host")
         
         # Build send command with sudo if needed (Linux)
         full_send_cmd = build_zfs_command(send_cmd)
@@ -1000,15 +998,15 @@ class ZFSReplicationService:
         if ssh_process.returncode != 0 or send_process.returncode != 0:
             error_parts = []
             if send_process.returncode != 0 and send_error_text:
-                error_parts.append(f"Send failed: {send_error_text}")
+                error_parts.append(f"发送失败：{send_error_text}")
             if ssh_process.returncode != 0 and ssh_error_text:
-                error_parts.append(f"Remote receive failed: {ssh_error_text}")
+                error_parts.append(f"远程接收失败：{ssh_error_text}")
             
             if not error_parts:
                 if send_process.returncode != 0:
-                    error_parts.append(f"Send process exited with code {send_process.returncode}")
+                    error_parts.append(f"发送进程退出，状态码 {send_process.returncode}")
                 if ssh_process.returncode != 0:
-                    error_parts.append(f"SSH/receive process exited with code {ssh_process.returncode}")
+                    error_parts.append(f"SSH/接收进程退出，状态码 {ssh_process.returncode}")
             
             raise Exception(' | '.join(error_parts))
         

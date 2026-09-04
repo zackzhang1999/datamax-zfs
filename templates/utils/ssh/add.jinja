@@ -6,18 +6,18 @@
 <div class="container mx-auto px-4 py-6">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils" class="hover:text-primary-400">Utilities</a> 
+        <a href="/utils" class="hover:text-primary-400">实用工具</a> 
         <span class="mx-2">/</span> 
-        <a href="/utils/ssh" class="hover:text-primary-400">SSH Connection Manager</a>
+        <a href="/utils/ssh" class="hover:text-primary-400">SSH 连接管理</a>
         <span class="mx-2">/</span>
-        <span class="text-text-primary">Add Connection</span>
+        <span class="text-text-primary">添加连接</span>
     </nav>
 
     <!-- Page Header -->
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-text-primary">Add SSH Connection</h1>
+        <h1 class="text-2xl font-bold text-text-primary">添加 SSH 连接</h1>
         <p class="text-text-secondary mt-1">
-            Create a new SSH connection with automatic key-based authentication setup
+            创建新的 SSH 连接并自动完成密钥认证设置
         </p>
     </div>
 
@@ -28,13 +28,13 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
             </svg>
             <div class="text-sm">
-                <p class="font-medium text-warning-400 mb-2">How it works:</p>
+                <p class="font-medium text-warning-400 mb-2">工作原理：</p>
                 <ol class="list-decimal list-inside space-y-1 text-text-secondary">
-                    <li>Enter connection details including password (used once only)</li>
-                    <li>System generates a unique SSH key pair for this connection</li>
-                    <li>Public key is automatically copied to the remote server</li>
-                    <li>Password is discarded and never stored</li>
-                    <li>All future connections use the generated SSH key</li>
+                    <li>输入连接信息和密码（仅使用一次）</li>
+                    <li>系统为此连接生成唯一的 SSH 密钥对</li>
+                    <li>公钥自动复制到远程服务器</li>
+                    <li>密码随即被丢弃，绝不保存</li>
+                    <li>之后的所有连接均使用生成的 SSH 密钥</li>
                 </ol>
             </div>
         </div>
@@ -60,7 +60,7 @@
             <!-- Connection Name -->
             <div>
                 <label for="name" class="form-label">
-                    Connection Name <span class="text-danger-400">*</span>
+                    连接名称 <span class="text-danger-400">*</span>
                 </label>
                 <input 
                     type="text" 
@@ -68,17 +68,17 @@
                     id="name" 
                     required 
                     class="form-input" 
-                    placeholder="Production Server 1"
+                    placeholder="生产服务器 1"
                 >
                 <p class="mt-1 text-sm text-text-tertiary">
-                    A friendly name to identify this connection
+                    用于标识此连接的易记名称
                 </p>
             </div>
 
             <!-- Host -->
             <div>
                 <label for="host" class="form-label">
-                    Host (IP or Hostname) <span class="text-danger-400">*</span>
+                    主机（IP 或主机名） <span class="text-danger-400">*</span>
                 </label>
                 <input 
                     type="text" 
@@ -89,14 +89,14 @@
                     placeholder="192.168.1.100 or server.example.com"
                 >
                 <p class="mt-1 text-sm text-text-tertiary">
-                    IP address or fully qualified domain name
+                    IP 地址或完全限定域名
                 </p>
             </div>
 
             <!-- Port -->
             <div>
                 <label for="port" class="form-label">
-                    SSH Port
+                    SSH 端口
                 </label>
                 <input 
                     type="number" 
@@ -106,14 +106,14 @@
                     class="form-input"
                 >
                 <p class="mt-1 text-sm text-text-tertiary">
-                    Default SSH port is 22
+                    默认 SSH 端口为 22
                 </p>
             </div>
 
             <!-- Username -->
             <div>
                 <label for="username" class="form-label">
-                    Username <span class="text-danger-400">*</span>
+                    用户名 <span class="text-danger-400">*</span>
                 </label>
                 <input 
                     type="text" 
@@ -124,14 +124,14 @@
                     placeholder="root or zfsadmin"
                 >
                 <p class="mt-1 text-sm text-text-tertiary">
-                    User account on the remote server
+                    远程服务器上的用户账号
                 </p>
             </div>
 
             <!-- Password (One-time use) -->
             <div>
                 <label for="password" class="form-label">
-                    Password <span class="text-danger-400">*</span>
+                    密码 <span class="text-danger-400">*</span>
                 </label>
                 <input 
                     type="password" 
@@ -142,32 +142,32 @@
                     autocomplete="new-password"
                 >
                 <p class="mt-1 text-sm text-text-tertiary">
-                    <strong class="text-warning-400">One-time use:</strong> Used only to install the SSH key, then discarded
+                    <strong class="text-warning-400">仅使用一次：</strong>仅用于安装 SSH 密钥，随后即被丢弃
                 </p>
             </div>
 
             <!-- Notes (Optional) -->
             <div>
                 <label for="notes" class="form-label">
-                    Notes (Optional)
+                    备注（可选）
                 </label>
                 <textarea 
                     name="notes" 
                     id="notes" 
                     rows="3" 
                     class="form-input"
-                    placeholder="e.g., Production backup server, requires VPN"
+                    placeholder="例如：生产备份服务器，需要 VPN"
                 ></textarea>
                 <p class="mt-1 text-sm text-text-tertiary">
-                    Additional notes about this connection
+                    关于此连接的其他备注
                 </p>
             </div>
         </div>
 
         <!-- Form Footer -->
         <div class="card-footer flex justify-end gap-3">
-            <a href="/utils/ssh" class="btn-secondary">Cancel</a>
-            <button type="submit" class="btn-primary">Create Connection</button>
+            <a href="/utils/ssh" class="btn-secondary">取消</a>
+            <button type="submit" class="btn-primary">创建连接</button>
         </div>
     </form>
 </div>

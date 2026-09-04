@@ -6,18 +6,18 @@
 <div class="container mx-auto px-4 py-6">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils" class="hover:text-primary-400">Utilities</a> 
+        <a href="/utils" class="hover:text-primary-400">实用工具</a> 
         <span class="mx-2">/</span> 
-        <a href="/utils/ssh" class="hover:text-primary-400">SSH Connection Manager</a>
+        <a href="/utils/ssh" class="hover:text-primary-400">SSH 连接管理</a>
         <span class="mx-2">/</span>
-        <span class="text-text-primary">Edit Connection</span>
+        <span class="text-text-primary">编辑连接</span>
     </nav>
 
     <!-- Page Header -->
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-text-primary">Edit SSH Connection</h1>
+        <h1 class="text-2xl font-bold text-text-primary">编辑 SSH 连接</h1>
         <p class="text-text-secondary mt-1">
-            Update connection details (SSH keys cannot be changed - recreate connection if needed)
+            更新连接信息（SSH 密钥无法更改——如需更换请重新创建连接）
         </p>
     </div>
 
@@ -27,7 +27,7 @@
             <!-- Connection Name -->
             <div>
                 <label for="name" class="form-label">
-                    Connection Name <span class="text-danger-400">*</span>
+                    连接名称 <span class="text-danger-400">*</span>
                 </label>
                 <input 
                     type="text" 
@@ -42,7 +42,7 @@
             <!-- Host -->
             <div>
                 <label for="host" class="form-label">
-                    Host (IP or Hostname) <span class="text-danger-400">*</span>
+                    主机（IP 或主机名） <span class="text-danger-400">*</span>
                 </label>
                 <input 
                     type="text" 
@@ -57,7 +57,7 @@
             <!-- Port -->
             <div>
                 <label for="port" class="form-label">
-                    SSH Port
+                    SSH 端口
                 </label>
                 <input 
                     type="number" 
@@ -71,7 +71,7 @@
             <!-- Username -->
             <div>
                 <label for="username" class="form-label">
-                    Username <span class="text-danger-400">*</span>
+                    用户名 <span class="text-danger-400">*</span>
                 </label>
                 <input 
                     type="text" 
@@ -86,7 +86,7 @@
             <!-- Notes -->
             <div>
                 <label for="notes" class="form-label">
-                    Notes (Optional)
+                    备注（可选）
                 </label>
                 <textarea 
                     name="notes" 
@@ -103,9 +103,9 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
                     <div class="text-sm">
-                        <p class="font-medium text-text-primary mb-2">SSH Key Information</p>
-                        <p class="text-text-secondary mb-2">Fingerprint: <span class="font-mono text-xs">{{ connection.fingerprint }}</span></p>
-                        <p class="text-text-secondary text-xs">To change SSH keys, delete this connection and create a new one.</p>
+                        <p class="font-medium text-text-primary mb-2">SSH 密钥信息</p>
+                        <p class="text-text-secondary mb-2">指纹：<span class="font-mono text-xs">{{ connection.fingerprint }}</span></p>
+                        <p class="text-text-secondary text-xs">如需更换 SSH 密钥，请删除此连接并重新创建。</p>
                     </div>
                 </div>
             </div>
@@ -113,8 +113,8 @@
 
         <!-- Form Footer -->
         <div class="card-footer flex justify-end gap-3">
-            <a href="/utils/ssh" class="btn-secondary">Cancel</a>
-            <button type="submit" class="btn-primary">Update Connection</button>
+            <a href="/utils/ssh" class="btn-secondary">取消</a>
+            <button type="submit" class="btn-primary">更新连接</button>
         </div>
     </form>
 </div>

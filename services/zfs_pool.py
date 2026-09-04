@@ -44,13 +44,12 @@ class ZFSPoolService:
             ValueError: If the pool name is invalid
         """
         if not pool_name:
-            raise ValueError("Pool name cannot be empty")
+            raise ValueError("存储池名称不能为空")
         
         if not cls.ZFS_POOL_NAME_PATTERN.match(pool_name):
             raise ValueError(
-                f"Invalid pool name '{pool_name}'. Pool names must start with an alphanumeric "
-                "character and contain only alphanumeric characters, underscores, hyphens, "
-                "periods, or colons."
+                f"无效的存储池名称 '{pool_name}'。存储池名称必须以字母或数字开头，"
+                "且只能包含字母、数字、下划线、连字符、句点或冒号。"
             )
     
     @staticmethod
@@ -212,9 +211,9 @@ class ZFSPoolService:
             return pools
         
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool list command timed out after {timeout} seconds. The system may be unresponsive or pools unavailable.")
+            raise Exception(f"zpool list 命令在 {timeout} 秒后超时。系统可能无响应或存储池不可用。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to list pools: {e.stderr}")
+            raise Exception(f"列出存储池失败：{e.stderr}")
     
     def pool_exists(self, pool_name: str) -> bool:
         """
@@ -240,7 +239,7 @@ class ZFSPoolService:
         except subprocess.CalledProcessError:
             return False
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool list command timed out after {timeout} seconds. The system may be unresponsive or pools unavailable.")
+            raise Exception(f"zpool list 命令在 {timeout} 秒后超时。系统可能无响应或存储池不可用。")
 
     def get_pool_status(self, pool_name: str) -> Dict[str, Any]:
         """
@@ -288,9 +287,9 @@ class ZFSPoolService:
             }
         
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool status command timed out after {timeout} seconds. The system may be unresponsive or pool unavailable.")
+            raise Exception(f"zpool status 命令在 {timeout} 秒后超时。系统可能无响应或存储池不可用。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get pool status: {e.stderr}")
+            raise Exception(f"获取存储池状态失败：{e.stderr}")
     
     def get_pool_iostat(self, pool_name: Optional[str] = None, verbose: bool = False) -> Dict[str, Any]:
         """
@@ -321,9 +320,9 @@ class ZFSPoolService:
             }
         
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool iostat command timed out after {timeout} seconds. The system may be unresponsive.")
+            raise Exception(f"zpool iostat 命令在 {timeout} 秒后超时。系统可能无响应。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get pool iostat: {e.stderr}")
+            raise Exception(f"获取存储池 iostat 失败：{e.stderr}")
     
     def scrub_pool(self, pool_name: str) -> None:
         """
@@ -337,9 +336,9 @@ class ZFSPoolService:
         try:
             run_zfs_command(['zpool', 'scrub', pool_name], timeout=timeout)
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool scrub command timed out after {timeout} seconds. The system may be unresponsive.")
+            raise Exception(f"zpool scrub 命令在 {timeout} 秒后超时。系统可能无响应。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to start scrub: {e.stderr}")
+            raise Exception(f"启动数据清洗失败：{e.stderr}")
     
     def stop_scrub(self, pool_name: str) -> None:
         """
@@ -353,9 +352,9 @@ class ZFSPoolService:
         try:
             run_zfs_command(['zpool', 'scrub', '-s', pool_name], timeout=timeout)
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool stop scrub command timed out after {timeout} seconds. The system may be unresponsive.")
+            raise Exception(f"zpool 停止数据清洗命令在 {timeout} 秒后超时。系统可能无响应。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to stop scrub: {e.stderr}")
+            raise Exception(f"停止数据清洗失败：{e.stderr}")
     
     def export_pool(self, pool_name: str, force: bool = False) -> None:
         """
@@ -375,9 +374,9 @@ class ZFSPoolService:
             
             run_zfs_command(cmd, timeout=timeout)
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool export command timed out after {timeout} seconds. Pool may be busy or system unresponsive.")
+            raise Exception(f"zpool export 命令在 {timeout} 秒后超时。存储池可能正忙或系统无响应。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to export pool: {e.stderr}")
+            raise Exception(f"导出存储池失败：{e.stderr}")
     
     def import_pool(self, pool_name: str, force: bool = False, 
                    altroot: Optional[str] = None) -> None:
@@ -401,9 +400,9 @@ class ZFSPoolService:
             
             run_zfs_command(cmd, timeout=timeout)
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool import command timed out after {timeout} seconds. This may occur with many devices or slow disk scanning.")
+            raise Exception(f"zpool import 命令在 {timeout} 秒后超时。设备较多或磁盘扫描缓慢时可能出现此情况。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to import pool: {e.stderr}")
+            raise Exception(f"导入存储池失败：{e.stderr}")
     
     def get_pool_history(self, pool_name: str, internal: bool = False, 
                         limit: Optional[int] = None) -> List[Dict[str, Any]]:
@@ -440,9 +439,9 @@ class ZFSPoolService:
             return history
         
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool history command timed out after {timeout} seconds. History may be very large.")
+            raise Exception(f"zpool history 命令在 {timeout} 秒后超时。历史记录可能非常大。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get pool history: {e.stderr}")
+            raise Exception(f"获取存储池历史记录失败：{e.stderr}")
     
     def create_pool(self, pool_name: str, vdevs: List[str], 
                    properties: Optional[Dict[str, str]] = None,
@@ -476,9 +475,9 @@ class ZFSPoolService:
             
             run_zfs_command(cmd, timeout=timeout)
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool create command timed out after {timeout} seconds. Pool creation can take time with many devices.")
+            raise Exception(f"zpool create 命令在 {timeout} 秒后超时。设备较多时创建存储池可能需要一些时间。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to create pool: {e.stderr}")
+            raise Exception(f"创建存储池失败：{e.stderr}")
     
     def destroy_pool(self, pool_name: str, force: bool = False) -> None:
         """
@@ -500,9 +499,9 @@ class ZFSPoolService:
             
             run_zfs_command(cmd, timeout=timeout)
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool destroy command timed out after {timeout} seconds. Pool destruction can take time with cleanup operations.")
+            raise Exception(f"zpool destroy 命令在 {timeout} 秒后超时。销毁存储池时的清理操作可能需要一些时间。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to destroy pool: {e.stderr}")
+            raise Exception(f"销毁存储池失败：{e.stderr}")
     
     def set_pool_property(self, pool_name: str, property_name: str, 
                          property_value: str) -> None:
@@ -522,9 +521,9 @@ class ZFSPoolService:
                 timeout=timeout
             )
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool set property command timed out after {timeout} seconds. The system may be unresponsive.")
+            raise Exception(f"zpool set 属性命令在 {timeout} 秒后超时。系统可能无响应。")
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to set pool property: {e.stderr}")
+            raise Exception(f"设置存储池属性失败：{e.stderr}")
     
     def get_importable_pools(self) -> List[Dict[str, Any]]:
         """
@@ -562,9 +561,9 @@ class ZFSPoolService:
             return pools
         
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool import scan timed out after {timeout} seconds. Scanning for importable pools can be slow with many devices.")
+            raise Exception(f"zpool import 扫描在 {timeout} 秒后超时。设备较多时扫描可导入的存储池可能较慢。")
         except Exception as e:
-            raise Exception(f"Failed to list importable pools: {str(e)}")
+            raise Exception(f"列出可导入的存储池失败：{str(e)}")
     
     def checkpoint_supported(self) -> bool:
         """
@@ -643,12 +642,12 @@ class ZFSPoolService:
             return {'exists': False}
             
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool checkpoint query timed out after {timeout} seconds.")
+            raise Exception(f"zpool checkpoint 查询在 {timeout} 秒后超时。")
         except subprocess.CalledProcessError as e:
             # If the property doesn't exist, checkpoint feature may not be available
             if 'invalid property' in str(e.stderr).lower():
                 return None
-            raise Exception(f"Failed to get checkpoint info: {e.stderr}")
+            raise Exception(f"获取检查点信息失败：{e.stderr}")
     
     def create_checkpoint(self, pool_name: str) -> None:
         """
@@ -664,7 +663,7 @@ class ZFSPoolService:
             Exception: If checkpoint creation fails or is not supported
         """
         if not self.checkpoint_supported():
-            raise Exception("Pool checkpoints are not supported on NetBSD.")
+            raise Exception("NetBSD 不支持存储池检查点。")
         
         self.validate_pool_name(pool_name)
         timeout = self.timeouts.get('default', 60)
@@ -675,12 +674,12 @@ class ZFSPoolService:
                 timeout=timeout
             )
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool checkpoint creation timed out after {timeout} seconds.")
+            raise Exception(f"创建检查点在 {timeout} 秒后超时。")
         except subprocess.CalledProcessError as e:
             error_msg = str(e.stderr) if e.stderr else str(e)
             if 'already has a checkpoint' in error_msg.lower():
-                raise Exception(f"Pool '{pool_name}' already has a checkpoint. Remove the existing checkpoint first.")
-            raise Exception(f"Failed to create checkpoint: {error_msg}")
+                raise Exception(f"存储池 '{pool_name}' 已存在检查点。请先移除现有检查点。")
+            raise Exception(f"创建检查点失败：{error_msg}")
     
     def add_vdev(self, pool_name: str, vdevs: List[str],
                  force: bool = False) -> None:
@@ -708,10 +707,10 @@ class ZFSPoolService:
             run_zfs_command(cmd, timeout=timeout)
         except subprocess.TimeoutExpired:
             raise Exception(
-                f"ZPool add vdev command timed out after {timeout} seconds."
+                f"zpool add vdev 命令在 {timeout} 秒后超时。"
             )
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to add vdev: {e.stderr}")
+            raise Exception(f"添加 vdev 失败：{e.stderr}")
     
     def attach_device(self, pool_name: str, existing_device: str,
                       new_device: str, force: bool = False) -> None:
@@ -739,10 +738,10 @@ class ZFSPoolService:
             run_zfs_command(cmd, timeout=timeout)
         except subprocess.TimeoutExpired:
             raise Exception(
-                f"ZPool attach command timed out after {timeout} seconds."
+                f"zpool attach 命令在 {timeout} 秒后超时。"
             )
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to attach device: {e.stderr}")
+            raise Exception(f"附加设备失败：{e.stderr}")
     
     def detach_device(self, pool_name: str, device: str) -> None:
         """
@@ -766,10 +765,10 @@ class ZFSPoolService:
             run_zfs_command(cmd, timeout=timeout)
         except subprocess.TimeoutExpired:
             raise Exception(
-                f"ZPool detach command timed out after {timeout} seconds."
+                f"zpool detach 命令在 {timeout} 秒后超时。"
             )
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to detach device: {e.stderr}")
+            raise Exception(f"分离设备失败：{e.stderr}")
     
     def replace_device(self, pool_name: str, old_device: str,
                        new_device: str, force: bool = False) -> None:
@@ -800,10 +799,10 @@ class ZFSPoolService:
             run_zfs_command(cmd, timeout=timeout)
         except subprocess.TimeoutExpired:
             raise Exception(
-                f"ZPool replace command timed out after {timeout} seconds."
+                f"zpool replace 命令在 {timeout} 秒后超时。"
             )
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to replace device: {e.stderr}")
+            raise Exception(f"替换设备失败：{e.stderr}")
     
     def remove_vdev(self, pool_name: str, device: str) -> None:
         """
@@ -827,10 +826,10 @@ class ZFSPoolService:
             run_zfs_command(cmd, timeout=timeout)
         except subprocess.TimeoutExpired:
             raise Exception(
-                f"ZPool remove command timed out after {timeout} seconds."
+                f"zpool remove 命令在 {timeout} 秒后超时。"
             )
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to remove vdev: {e.stderr}")
+            raise Exception(f"移除 vdev 失败：{e.stderr}")
     
     def online_device(self, pool_name: str, device: str,
                       expand: bool = False) -> None:
@@ -857,10 +856,10 @@ class ZFSPoolService:
             run_zfs_command(cmd, timeout=timeout)
         except subprocess.TimeoutExpired:
             raise Exception(
-                f"ZPool online command timed out after {timeout} seconds."
+                f"zpool online 命令在 {timeout} 秒后超时。"
             )
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to online device: {e.stderr}")
+            raise Exception(f"上线设备失败：{e.stderr}")
     
     def offline_device(self, pool_name: str, device: str,
                        temporary: bool = False) -> None:
@@ -888,10 +887,10 @@ class ZFSPoolService:
             run_zfs_command(cmd, timeout=timeout)
         except subprocess.TimeoutExpired:
             raise Exception(
-                f"ZPool offline command timed out after {timeout} seconds."
+                f"zpool offline 命令在 {timeout} 秒后超时。"
             )
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to offline device: {e.stderr}")
+            raise Exception(f"离线设备失败：{e.stderr}")
     
     def get_pool_topology(self, pool_name: str) -> Dict[str, Any]:
         """
@@ -929,10 +928,10 @@ class ZFSPoolService:
             )
         except subprocess.TimeoutExpired:
             raise Exception(
-                f"ZPool status command timed out after {timeout} seconds."
+                f"zpool status 命令在 {timeout} 秒后超时。"
             )
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Failed to get pool topology: {e.stderr}")
+            raise Exception(f"获取存储池拓扑失败：{e.stderr}")
         
         topology = {
             'data_vdevs': [],
@@ -1077,7 +1076,7 @@ class ZFSPoolService:
             Exception: If checkpoint removal fails or is not supported
         """
         if not self.checkpoint_supported():
-            raise Exception("Pool checkpoints are not supported on NetBSD.")
+            raise Exception("NetBSD 不支持存储池检查点。")
         
         self.validate_pool_name(pool_name)
         timeout = self.timeouts.get('default', 60)
@@ -1088,9 +1087,9 @@ class ZFSPoolService:
                 timeout=timeout
             )
         except subprocess.TimeoutExpired:
-            raise Exception(f"ZPool checkpoint discard timed out after {timeout} seconds.")
+            raise Exception(f"丢弃检查点在 {timeout} 秒后超时。")
         except subprocess.CalledProcessError as e:
             error_msg = str(e.stderr) if e.stderr else str(e)
             if 'does not have a checkpoint' in error_msg.lower():
-                raise Exception(f"Pool '{pool_name}' does not have a checkpoint to discard.")
-            raise Exception(f"Failed to discard checkpoint: {error_msg}")
+                raise Exception(f"存储池 '{pool_name}' 没有可丢弃的检查点。")
+            raise Exception(f"丢弃检查点失败：{error_msg}")

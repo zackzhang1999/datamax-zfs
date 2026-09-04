@@ -29,7 +29,7 @@ async def ssh_index(request: Request):
             request,
             name="partials/error.jinja",
             context={
-                "message": f"Failed to load connections: {str(e)}"
+                "message": f"加载连接失败：{str(e)}"
             }
         )
 
@@ -72,7 +72,7 @@ async def ssh_add_submit(
             request,
             name="utils/ssh/add.jinja",
             context={
-                "error": f"Failed to create connection: {str(e)}"
+                "error": f"创建连接失败：{str(e)}"
             },
             status_code=400
         )
@@ -88,7 +88,7 @@ async def ssh_delete(
     try:
         connection = ssh_service.get_connection(connection_id)
         if not connection:
-            raise HTTPException(status_code=404, detail="Connection not found")
+            raise HTTPException(status_code=404, detail="未找到连接")
         
         remove_remote = remove_from_remote.lower() == "true"
         ssh_service.delete_connection(connection_id, remove_from_remote=remove_remote)
@@ -113,7 +113,7 @@ async def ssh_delete_form(
     try:
         connection = ssh_service.get_connection(connection_id)
         if not connection:
-            raise HTTPException(status_code=404, detail="Connection not found")
+            raise HTTPException(status_code=404, detail="未找到连接")
         
         remove_remote = remove_from_remote.lower() == "true"
         ssh_service.delete_connection(connection_id, remove_from_remote=remove_remote)
@@ -155,6 +155,6 @@ async def ssh_test(request: Request, connection_id: str):
             request,
             name="partials/error.jinja",
             context={
-                "message": f"Connection test failed: {str(e)}"
+                "message": f"连接测试失败：{str(e)}"
             }
         )

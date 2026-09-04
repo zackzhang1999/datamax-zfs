@@ -46,7 +46,7 @@
     <div class="space-y-6">
         <!-- Page Header -->
         <div class="flex items-center justify-between">
-            <h1 class="text-3xl font-bold text-text-primary">System Dashboard</h1>
+            <h1 class="text-3xl font-bold text-text-primary">系统仪表盘</h1>
         </div>
 
         <!-- ================================================================
@@ -63,7 +63,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
                         </div>
-                        <h2 class="text-lg font-semibold text-text-primary">System Information</h2>
+                        <h2 class="text-lg font-semibold text-text-primary">系统信息</h2>
                     </div>
 
                     <!-- Async load: system info -->
@@ -75,7 +75,7 @@
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            <span class="ml-2 text-sm text-text-tertiary">Loading system info...</span>
+                            <span class="ml-2 text-sm text-text-tertiary">正在加载系统信息……</span>
                         </div>
                     </div>
                 </div>
@@ -90,14 +90,14 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
                             </svg>
                         </div>
-                        <h2 class="text-lg font-semibold text-text-primary">Memory Usage</h2>
+                        <h2 class="text-lg font-semibold text-text-primary">内存使用情况</h2>
                         <button type="button"
                                 class="ml-auto p-1.5 rounded-lg hover:bg-bg-elevated-3 text-text-secondary hover:text-text-primary transition-colors"
                                 hx-get="/memory-refresh"
                                 hx-target="#memory-content"
                                 hx-swap="innerHTML"
                                 hx-indicator="#memory-spinner"
-                                title="Refresh memory information">
+                                title="刷新内存信息">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                             </svg>
@@ -117,7 +117,7 @@
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            <span class="ml-2 text-sm text-text-tertiary">Loading memory info...</span>
+                            <span class="ml-2 text-sm text-text-tertiary">正在加载内存信息……</span>
                         </div>
                     </div>
                 </div>
@@ -132,14 +132,14 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                             </svg>
                         </div>
-                        <h2 class="text-lg font-semibold text-text-primary">System Load</h2>
+                        <h2 class="text-lg font-semibold text-text-primary">系统负载</h2>
                         <button type="button"
                                 class="ml-auto p-1.5 rounded-lg hover:bg-bg-elevated-3 text-text-secondary hover:text-text-primary transition-colors"
                                 hx-get="/system-load-refresh"
                                 hx-target="#system-load-content"
                                 hx-swap="innerHTML"
                                 hx-indicator="#system-load-spinner"
-                                title="Refresh system load">
+                                title="刷新系统负载">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                             </svg>
@@ -159,7 +159,7 @@
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            <span class="ml-2 text-sm text-text-tertiary">Loading system load...</span>
+                            <span class="ml-2 text-sm text-text-tertiary">正在加载系统负载……</span>
                         </div>
                     </div>
                 </div>
@@ -177,14 +177,14 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
                         </svg>
                     </div>
-                    <h2 class="text-lg font-semibold text-text-primary">ZFS Pools</h2>
+                    <h2 class="text-lg font-semibold text-text-primary">ZFS 存储池</h2>
                     <button type="button"
                             class="ml-auto p-1.5 rounded-lg hover:bg-bg-elevated-3 text-text-secondary hover:text-text-primary transition-colors"
                             hx-get="/zfs-pools-refresh"
                             hx-target="#zfs-pools-content"
                             hx-swap="innerHTML"
                             hx-indicator="#zfs-pools-spinner"
-                            title="Refresh pool information">
+                            title="刷新存储池信息">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                         </svg>
@@ -204,7 +204,7 @@
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        <span class="ml-2 text-sm text-text-tertiary">Loading pool information...</span>
+                        <span class="ml-2 text-sm text-text-tertiary">正在加载存储池信息……</span>
                     </div>
                 </div>
             </div>
@@ -221,15 +221,15 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                         </svg>
                     </div>
-                    <h2 class="text-lg font-semibold text-text-primary">ARC Statistics</h2>
-                    <a href="/zfs/observability/arc-summary" class="text-xs text-primary-400 hover:text-primary-300 transition-colors">Full ARC Stats</a>
+                    <h2 class="text-lg font-semibold text-text-primary">ARC 统计</h2>
+                    <a href="/zfs/observability/arc-summary" class="text-xs text-primary-400 hover:text-primary-300 transition-colors">完整 ARC 统计</a>
                     <button type="button"
                             class="ml-auto p-1.5 rounded-lg hover:bg-bg-elevated-3 text-text-secondary hover:text-text-primary transition-colors"
                             hx-get="/arc-stats-refresh"
                             hx-target="#arc-stats-content"
                             hx-swap="innerHTML"
                             hx-indicator="#arc-stats-spinner"
-                            title="Refresh ARC statistics">
+                            title="刷新 ARC 统计">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                         </svg>
@@ -249,7 +249,7 @@
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        <span class="ml-2 text-sm text-text-tertiary">Loading ARC statistics...</span>
+                        <span class="ml-2 text-sm text-text-tertiary">正在加载 ARC 统计……</span>
                     </div>
                 </div>
             </div>
@@ -266,14 +266,14 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
                     </div>
-                    <h2 class="text-lg font-semibold text-text-primary">Scrub Status</h2>
+                    <h2 class="text-lg font-semibold text-text-primary">数据清洗状态</h2>
                     <button type="button"
                             class="ml-auto p-1.5 rounded-lg hover:bg-bg-elevated-3 text-text-secondary hover:text-text-primary transition-colors"
                             hx-get="/scrub-status-refresh"
                             hx-target="#scrub-status-content"
                             hx-swap="innerHTML"
                             hx-indicator="#scrub-spinner"
-                            title="Refresh scrub status">
+                            title="刷新数据清洗状态">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                         </svg>
@@ -293,7 +293,7 @@
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        <span class="ml-2 text-sm text-text-tertiary">Loading scrub status...</span>
+                        <span class="ml-2 text-sm text-text-tertiary">正在加载数据清洗状态……</span>
                     </div>
                 </div>
             </div>

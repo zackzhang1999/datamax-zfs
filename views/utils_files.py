@@ -22,11 +22,11 @@ def list_files(request: Request, directory: Annotated[str, Form()], current_user
     try:
         directory_path = Path(os.path.expanduser(directory))
         if not directory_path.exists() or not directory_path.is_dir():
-            audit_logger.log_directory_list(user=current_user, directory_path=directory, success=False, error="Directory does not exist or is not a directory")
+            audit_logger.log_directory_list(user=current_user, directory_path=directory, success=False, error="目录不存在或不是一个目录")
             return templates.TemplateResponse(
                 request,
                 name="partials/error.jinja",
-                context={"error": f"Directory {directory} does not exist or is not a directory"},
+                context={"error": f"目录 {directory} 不存在或不是一个目录"},
             )
         
         files = []

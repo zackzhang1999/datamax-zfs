@@ -8,19 +8,19 @@
     <nav class="text-sm mb-6" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-2">
             <li class="flex items-center">
-                <a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">Home</a>
+                <a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">首页</a>
                 <svg class="w-4 h-4 mx-2 text-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li class="flex items-center">
-                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300 transition-colors">Observability</a>
+                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300 transition-colors">运行观测</a>
                 <svg class="w-4 h-4 mx-2 text-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li>
-                <span class="text-text-primary font-medium">System Log</span>
+                <span class="text-text-primary font-medium">系统日志</span>
             </li>
         </ol>
     </nav>
@@ -29,7 +29,7 @@
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
             <h1 class="text-3xl font-bold text-text-primary mb-2">{{ page_title }}</h1>
-            <p class="text-text-secondary">{% if filtered %}ZFS-filtered system log messages{% else %}Full system log{% endif %}</p>
+            <p class="text-text-secondary">{% if filtered %}经 ZFS 筛选的系统日志消息{% else %}完整系统日志{% endif %}</p>
         </div>
         <div class="flex flex-wrap gap-2">
             <a href="/zfs/observability/syslog/download?lines={{ lines }}{% if severity %}&severity={{ severity }}{% endif %}{% if search %}&search={{ search }}{% endif %}"
@@ -38,17 +38,17 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                 </svg>
-                Download
+                下载
             </a>
             {% if filtered %}
             <a href="/zfs/observability/syslog-full?lines={{ lines }}{% if severity %}&severity={{ severity }}{% endif %}{% if search %}&search={{ search }}{% endif %}"
                class="btn-secondary">
-                View Full Log
+                查看完整日志
             </a>
             {% else %}
             <a href="/zfs/observability/syslog?lines={{ lines }}{% if severity %}&severity={{ severity }}{% endif %}{% if search %}&search={{ search }}{% endif %}"
                class="btn-primary">
-                View ZFS Filter
+                查看 ZFS 筛选
             </a>
             {% endif %}
         </div>
@@ -61,7 +61,7 @@
             <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <div><strong class="font-semibold">Error:</strong> {{ error }}</div>
+            <div><strong class="font-semibold">错误：</strong> {{ error }}</div>
         </div>
     </div>
     {% endif %}
@@ -73,13 +73,13 @@
                 <svg class="w-5 h-5 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
                 </svg>
-                Filter Options
+                筛选选项
             </h2>
         </div>
         <div class="p-6">
             <form method="get" action="{% if filtered %}/zfs/observability/syslog{% else %}/zfs/observability/syslog-full{% endif %}" class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                    <label for="lines" class="form-label">Number of Lines</label>
+                    <label for="lines" class="form-label">行数</label>
                     <select id="lines" name="lines" class="form-select">
                         <option value="100" {% if lines == 100 %}selected{% endif %}>100</option>
                         <option value="500" {% if lines == 500 %}selected{% endif %}>500</option>
@@ -90,27 +90,27 @@
                     </select>
                 </div>
                 <div>
-                    <label for="severity" class="form-label">Severity Filter</label>
+                    <label for="severity" class="form-label">严重程度筛选</label>
                     <select id="severity" name="severity" class="form-select">
-                        <option value="" {% if not severity %}selected{% endif %}>All</option>
-                        <option value="error" {% if severity == 'error' %}selected{% endif %}>Error</option>
-                        <option value="warning" {% if severity == 'warning' %}selected{% endif %}>Warning</option>
-                        <option value="info" {% if severity == 'info' %}selected{% endif %}>Info</option>
+                        <option value="" {% if not severity %}selected{% endif %}>全部</option>
+                        <option value="error" {% if severity == 'error' %}selected{% endif %}>错误</option>
+                        <option value="warning" {% if severity == 'warning' %}selected{% endif %}>警告</option>
+                        <option value="info" {% if severity == 'info' %}selected{% endif %}>信息</option>
                     </select>
                 </div>
                 <div>
-                    <label for="search" class="form-label">Search</label>
+                    <label for="search" class="form-label">搜索</label>
                     <input type="text" id="search" name="search" value="{{ search or '' }}"
-                           placeholder="case-insensitive substring"
+                           placeholder="不区分大小写的子串"
                            class="form-input">
-                    <p class="text-xs text-text-tertiary mt-1">Filter to lines containing this text</p>
+                    <p class="text-xs text-text-tertiary mt-1">筛选包含此文本的行</p>
                 </div>
                 <div class="md:col-span-3">
                     <button type="submit" class="btn-primary">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
                         </svg>
-                        Apply Filters
+                        应用筛选
                     </button>
                 </div>
             </form>
@@ -124,8 +124,8 @@
                 <svg class="w-5 h-5 text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
-                System Log Entries
-                <span class="text-sm font-normal text-text-secondary ml-2">({{ syslog_entries|length }} entries)</span>
+                系统日志条目
+                <span class="text-sm font-normal text-text-secondary ml-2">（{{ syslog_entries|length }} 条）</span>
             </h2>
         </div>
 
@@ -140,8 +140,8 @@
                 <svg class="w-16 h-16 mx-auto text-text-tertiary mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
-                <p class="text-text-secondary text-lg mb-2">No {% if filtered %}ZFS-related {% endif %}syslog entries found</p>
-                <p class="text-text-tertiary text-sm">{% if filtered %}Try viewing the full system log{% else %}Try adjusting your filters{% endif %}</p>
+                <p class="text-text-secondary text-lg mb-2">未找到{% if filtered %} ZFS 相关的{% endif %}系统日志条目</p>
+                <p class="text-text-tertiary text-sm">{% if filtered %}请尝试查看完整系统日志{% else %}请尝试调整筛选条件{% endif %}</p>
             </div>
             {% endif %}
         </div>
@@ -154,8 +154,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <div class="text-sm text-info-400">
-                <p class="mb-2"><strong>Source:</strong> <code class="bg-gray-900 px-2 py-0.5 rounded">journalctl</code> on Linux, <code class="bg-gray-900 px-2 py-0.5 rounded">/var/log/messages</code> on FreeBSD/NetBSD</p>
-                <p><strong>Note:</strong> {% if filtered %}Only messages containing "zfs" or "zpool" keywords are displayed.{% else %}Showing complete system log without ZFS filtering.{% endif %}</p>
+                <p class="mb-2"><strong>来源：</strong> Linux 上使用 <code class="bg-gray-900 px-2 py-0.5 rounded">journalctl</code>，FreeBSD/NetBSD 上使用 <code class="bg-gray-900 px-2 py-0.5 rounded">/var/log/messages</code></p>
+                <p><strong>注意：</strong> {% if filtered %}仅显示包含 "zfs" 或 "zpool" 关键词的消息。{% else %}显示完整系统日志，不做 ZFS 筛选。{% endif %}</p>
             </div>
         </div>
     </div>

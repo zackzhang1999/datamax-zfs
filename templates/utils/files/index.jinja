@@ -2,7 +2,7 @@
 
 {% set active_page = "files" %}
 
-{% block caption %}File Browser{% endblock %}
+{% block caption %}文件浏览器{% endblock %}
 
 {% block inner %}
     <!-- Info Box -->
@@ -12,7 +12,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <div class="text-sm text-text-secondary">
-                <strong class="text-info-400">File Browser:</strong> Navigate the server filesystem and edit files directly from the web interface.
+                <strong class="text-info-400">文件浏览器：</strong>浏览服务器文件系统，并直接在 Web 界面中编辑文件。
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
                     <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
                     </svg>
-                    Directory Path
+                    目录路径
                 </span>
             </label>
             <input
@@ -37,14 +37,14 @@
                 value="/home"
                 required
             >
-            <p class="text-xs text-text-tertiary mt-1">Enter the full path to the directory you want to browse</p>
+            <p class="text-xs text-text-tertiary mt-1">输入要浏览的目录的完整路径</p>
         </div>
         <div class="flex items-center gap-3">
             <button class="btn-primary" type="submit">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                 </svg>
-                Browse Directory
+                浏览目录
             </button>
         </div>
     </form>
@@ -55,7 +55,7 @@
             <svg class="w-5 h-5 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
             </svg>
-            Common Directories
+            常用目录
         </h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
             <button hx-post="/utils/files/list" hx-vals='{"directory": "/home"}' hx-target="body" hx-swap="innerHTML" class="flex items-center gap-3 p-3 rounded-lg bg-bg-elevated-2 hover:bg-bg-elevated-3 border border-border-default transition-colors text-left">
@@ -64,7 +64,7 @@
                 </svg>
                 <div>
                     <div class="text-sm font-medium text-text-primary">/home</div>
-                    <div class="text-xs text-text-tertiary">Home directories</div>
+                    <div class="text-xs text-text-tertiary">用户主目录</div>
                 </div>
             </button>
             <button hx-post="/utils/files/list" hx-vals='{"directory": "/etc"}' hx-target="body" hx-swap="innerHTML" class="flex items-center gap-3 p-3 rounded-lg bg-bg-elevated-2 hover:bg-bg-elevated-3 border border-border-default transition-colors text-left">
@@ -74,7 +74,7 @@
                 </svg>
                 <div>
                     <div class="text-sm font-medium text-text-primary">/etc</div>
-                    <div class="text-xs text-text-tertiary">Configuration files</div>
+                    <div class="text-xs text-text-tertiary">配置文件</div>
                 </div>
             </button>
             <button hx-post="/utils/files/list" hx-vals='{"directory": "/var/log"}' hx-target="body" hx-swap="innerHTML" class="flex items-center gap-3 p-3 rounded-lg bg-bg-elevated-2 hover:bg-bg-elevated-3 border border-border-default transition-colors text-left">
@@ -83,7 +83,7 @@
                 </svg>
                 <div>
                     <div class="text-sm font-medium text-text-primary">/var/log</div>
-                    <div class="text-xs text-text-tertiary">System logs</div>
+                    <div class="text-xs text-text-tertiary">系统日志</div>
                 </div>
             </button>
         </div>

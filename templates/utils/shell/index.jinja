@@ -6,16 +6,16 @@
     <div class="container-page animate-slide-in">
         <!-- Breadcrumb Navigation -->
         <nav class="text-sm mb-6 text-text-tertiary">
-            <a href="/utils" class="hover:text-primary-400">Utilities</a> 
+            <a href="/utils" class="hover:text-primary-400">实用工具</a> 
             <span class="mx-2">/</span> 
-            <span class="text-text-primary">Shell Terminal</span>
+            <span class="text-text-primary">Shell 终端</span>
         </nav>
 
         <!-- Page Header -->
         <div class="mb-6 flex items-start justify-between">
             <div>
-                <h1 class="text-3xl font-bold text-text-primary mb-2">Shell Terminal</h1>
-                <p class="text-text-secondary">Execute shell commands directly from the web interface</p>
+                <h1 class="text-3xl font-bold text-text-primary mb-2">Shell 终端</h1>
+                <p class="text-text-secondary">直接在 Web 界面中执行 Shell 命令</p>
             </div>
             <div class="flex gap-2">
                 <form id="browseFilesForm" method="post" action="/utils/files/list">
@@ -24,14 +24,14 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
                         </svg>
-                        Browse Files
+                        浏览文件
                     </button>
                 </form>
                 <a href="/utils/shell/download-history" class="btn-success flex items-center gap-2" hx-boost="false">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                     </svg>
-                    Download History
+                    下载历史记录
                 </a>
             </div>
         </div>
@@ -44,7 +44,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
                     <div class="text-sm text-text-secondary">
-                        <strong class="text-info-400">Terminal Access:</strong> Commands are executed with server privileges. Exercise caution and avoid destructive operations.
+                        <strong class="text-info-400">终端访问：</strong> 命令以服务器权限执行。请谨慎操作，避免执行破坏性命令。
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
                     </svg>
                     <div class="text-sm">
-                        <strong class="text-primary-400">Current Directory:</strong>
+                        <strong class="text-primary-400">当前目录：</strong>
                         <div id="cwd" class="mt-1">
                             <span class="text-primary-400 font-mono text-sm">{{ cwd }}</span>
                         </div>
@@ -78,7 +78,7 @@
                                 class="w-full ml-2 bg-transparent focus:outline-none caret-success-400 text-text-primary placeholder-text-tertiary" 
                                 name="input_command" 
                                 type="text"
-                                placeholder="Enter command..."
+                                placeholder="输入命令..."
                                 autocomplete="off"
                             >
                             <input 
@@ -103,8 +103,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
                     </svg>
                     <div>
-                        <p class="font-semibold text-text-primary">Open this directory in the Files tab to view or edit files</p>
-                        <p class="text-sm text-text-secondary mt-1">Current directory: <span id="cwd-display-bottom" class="font-mono text-primary-400">{{ cwd }}</span></p>
+                        <p class="font-semibold text-text-primary">在“文件”标签页中打开此目录以查看或编辑文件</p>
+                        <p class="text-sm text-text-secondary mt-1">当前目录：<span id="cwd-display-bottom" class="font-mono text-primary-400">{{ cwd }}</span></p>
                     </div>
                 </div>
                 <form method="post" action="/utils/files/list">
@@ -113,7 +113,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
                         </svg>
-                        Browse Files
+                        浏览文件
                     </button>
                 </form>
             </div>
@@ -125,50 +125,50 @@
                 <svg class="w-5 h-5 text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                 </svg>
-                Terminal Tips
+                终端提示
             </h3>
             <ul class="space-y-2 text-sm text-text-secondary">
                 <li class="flex items-start gap-2">
                     <svg class="w-4 h-4 text-primary-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
-                    Click anywhere to focus the input field
+                    点击任意位置聚焦输入框
                 </li>
                 <li class="flex items-start gap-2">
                     <svg class="w-4 h-4 text-primary-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
-                    Press Enter to execute commands
+                    按 Enter 执行命令
                 </li>
                 <li class="flex items-start gap-2">
                     <svg class="w-4 h-4 text-primary-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
-                    Command history scrolls automatically
+                    命令历史自动滚动
                 </li>
                 <li class="flex items-start gap-2">
                     <svg class="w-4 h-4 text-primary-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
-                    Press <code class="px-1 py-0.5 bg-bg-elevated rounded text-xs">Tab</code> for command and path completion
+                    按 <code class="px-1 py-0.5 bg-bg-elevated rounded text-xs">Tab</code> 补全命令和路径
                 </li>
                 <li class="flex items-start gap-2">
                     <svg class="w-4 h-4 text-primary-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
-                    Press <code class="px-1 py-0.5 bg-bg-elevated rounded text-xs">Tab</code> multiple times to cycle through matches
+                    多次按 <code class="px-1 py-0.5 bg-bg-elevated rounded text-xs">Tab</code> 在匹配项之间循环
                 </li>
                 <li class="flex items-start gap-2">
                     <svg class="w-4 h-4 text-primary-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
-                    Use <code class="px-1 py-0.5 bg-bg-elevated rounded text-xs">cd</code> commands to navigate directories
+                    使用 <code class="px-1 py-0.5 bg-bg-elevated rounded text-xs">cd</code> 命令切换目录
                 </li>
                 <li class="flex items-start gap-2">
                     <svg class="w-4 h-4 text-primary-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
-                    Download full command history with the button above
+                    使用上方按钮下载完整命令历史
                 </li>
             </ul>
         </div>

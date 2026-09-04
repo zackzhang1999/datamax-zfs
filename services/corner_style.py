@@ -21,14 +21,14 @@ logger = logging.getLogger(__name__)
 DEFAULT_CORNER_STYLE = "squared"
 VALID_CORNER_STYLES = ("rounded", "squared", "octagonal")
 CORNER_STYLE_DISPLAY_NAMES = {
-    "rounded": "Rounded",
-    "squared": "Squared",
-    "octagonal": "Octagonal",
+    "rounded": "圆角",
+    "squared": "直角",
+    "octagonal": "八边形",
 }
 CORNER_STYLE_DESCRIPTIONS = {
-    "rounded": "Tailwind default rounded corners.",
-    "squared": "Hard 90 degree corners, flat rectangles.",
-    "octagonal": "Octagonal bevels with 45 degree cut corners.",
+    "rounded": "Tailwind 默认圆角。",
+    "squared": "90 度直角，纯平矩形。",
+    "octagonal": "45 度切角的八边形斜面。",
 }
 
 CONFIG_DIR = Path("/opt/webzfs/.config/webzfs")

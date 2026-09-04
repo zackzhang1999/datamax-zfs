@@ -4,24 +4,24 @@
 <div class="space-y-6">
     <!-- Breadcrumb -->
     <nav class="flex items-center text-sm text-text-secondary">
-        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">Pools</a>
+        <a href="/zfs/pools" class="hover:text-text-primary transition-colors">存储池</a>
         <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
-        <span class="text-text-primary font-medium">Import</span>
+        <span class="text-text-primary font-medium">导入</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h1 class="text-3xl font-bold text-text-primary">Import ZFS Pools</h1>
-            <p class="text-text-secondary mt-1">Discover and import available ZFS pools</p>
+            <h1 class="text-3xl font-bold text-text-primary">导入 ZFS 存储池</h1>
+            <p class="text-text-secondary mt-1">发现并导入可用的 ZFS 存储池</p>
         </div>
         <a href="/zfs/pools" class="btn-secondary inline-flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
-            Back to Pools
+            返回存储池列表
         </a>
     </div>
 
@@ -52,7 +52,7 @@
                 <svg class="w-4 h-4 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                Found <span class="font-semibold text-text-primary">{{ importable_pools|length }}</span> pool(s) available for import
+                发现 <span class="font-semibold text-text-primary">{{ importable_pools|length }}</span> 个可导入的存储池
             </p>
         </div>
         <div class="divide-y divide-border-subtle">
@@ -70,7 +70,7 @@
                             {% endif %}
                             {% if pool.state %}
                             <div class="flex items-center gap-2">
-                                <span class="font-medium text-text-secondary w-20">State:</span>
+                                <span class="font-medium text-text-secondary w-20">状态：</span>
                                 {% if pool.state == 'ONLINE' %}
                                     <span class="badge-success">{{ pool.state }}</span>
                                 {% else %}
@@ -88,7 +88,7 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
                                 </svg>
-                                Import
+                                导入
                             </button>
                         </form>
                         <form method="post" action="/zfs/pools/import/{{ pool.name }}" id="form-force-import-{{ loop.index }}" style="display: inline;">
@@ -99,7 +99,7 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                                 </svg>
-                                Force Import
+                                强制导入
                             </button>
                         </form>
                     </div>
@@ -116,13 +116,13 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
             </svg>
         </div>
-        <h3 class="text-xl font-semibold text-text-primary mb-2">No Pools Available for Import</h3>
-        <p class="text-text-secondary mb-6">There are currently no ZFS pools available to import on this system.</p>
+        <h3 class="text-xl font-semibold text-text-primary mb-2">没有可导入的存储池</h3>
+        <p class="text-text-secondary mb-6">此系统当前没有可导入的 ZFS 存储池。</p>
         <a href="/zfs/pools" class="text-primary-400 hover:text-primary-300 inline-flex items-center gap-2 transition-colors">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
-            Back to Pools
+            返回存储池列表
         </a>
     </div>
     {% endif %}
@@ -131,17 +131,17 @@
     {% if importable_pools %}
         {% for pool in importable_pools %}
         {% set id = 'confirm-import-' ~ loop.index %}
-        {% set title = 'Import Pool' %}
-        {% set message = 'Import pool ' ~ pool.name ~ '? This will mount all its datasets automatically.' %}
-        {% set confirm_text = 'Import Pool' %}
+        {% set title = '导入存储池' %}
+        {% set message = '导入存储池 ' ~ pool.name ~ '？这将自动挂载其所有数据集。' %}
+        {% set confirm_text = '导入存储池' %}
         {% set confirm_class = 'success' %}
         {% set confirm_action = 'submitImportForm("form-import-' ~ loop.index ~ '", "' ~ pool.name ~ '")' %}
         {% include 'partials/confirm.jinja' %}
         
         {% set id = 'confirm-force-import-' ~ loop.index %}
-        {% set title = 'Force Import Pool' %}
-        {% set message = 'Force import pool ' ~ pool.name ~ '? This may be necessary if the pool was not properly exported. Use with caution as this can cause data corruption if the pool is currently in use elsewhere.' %}
-        {% set confirm_text = 'Force Import' %}
+        {% set title = '强制导入存储池' %}
+        {% set message = '强制导入存储池 ' ~ pool.name ~ '？如果该存储池未正常导出，可能需要此操作。请谨慎使用：如果该存储池正在其他地方使用，强制导入可能导致数据损坏。' %}
+        {% set confirm_text = '强制导入' %}
         {% set confirm_class = 'warning' %}
         {% set confirm_action = 'submitImportForm("form-force-import-' ~ loop.index ~ '", "' ~ pool.name ~ '")' %}
         {% include 'partials/confirm.jinja' %}
@@ -209,26 +209,26 @@
             <svg class="w-4 h-4 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            Import Information
+            导入说明
         </h3>
         <ul class="text-sm text-text-secondary space-y-2">
             <li class="flex items-start gap-2">
                 <svg class="w-4 h-4 text-success-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <span><strong class="text-text-primary">Import:</strong> Import a pool that was properly exported</span>
+                <span><strong class="text-text-primary">导入：</strong>导入已正常导出的存储池</span>
             </li>
             <li class="flex items-start gap-2">
                 <svg class="w-4 h-4 text-warning-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                 </svg>
-                <span><strong class="text-text-primary">Force Import:</strong> Import a pool that may not have been properly exported (use with caution)</span>
+                <span><strong class="text-text-primary">强制导入：</strong>导入可能未正常导出的存储池（请谨慎使用）</span>
             </li>
             <li class="flex items-start gap-2">
                 <svg class="w-4 h-4 text-info-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <span>Importing a pool will mount all its datasets automatically</span>
+                <span>导入存储池将自动挂载其所有数据集</span>
             </li>
         </ul>
     </div>
@@ -248,27 +248,23 @@
                     </svg>
                 </div>
                 <h3 class="text-xl font-semibold text-danger-400 text-center mb-3">
-                    {% if force_attempted %}Force Import Failed{% else %}Import Failed{% endif %}
+                    {% if force_attempted %}强制导入失败{% else %}导入失败{% endif %}
                 </h3>
                 <p class="text-text-secondary text-center mb-2">
-                    The pool <strong class="font-mono text-text-primary">{{ failed_pool }}</strong>
-                    could not be imported.
+                    无法导入存储池 <strong class="font-mono text-text-primary">{{ failed_pool }}</strong>。
                 </p>
                 <div class="bg-danger-900/20 border border-danger-900 rounded-lg p-3 mb-5">
                     <p class="text-sm text-danger-300 font-mono break-words text-center whitespace-pre-wrap">{{ import_error }}</p>
                 </div>
                 {% if is_in_use_error and not force_attempted %}
                 <p class="text-sm text-text-secondary text-center mb-3">
-                    ZFS is refusing the import because the pool was last used by
-                    another system and was not cleanly exported. If you are certain
-                    the pool is no longer in use by any other system, you can force
-                    the import.
+                    ZFS 拒绝导入，因为该存储池上次由其他系统使用，且未被正常导出。
+                    如果您确定该存储池已不再被任何其他系统使用，可以强制导入。
                 </p>
                 <div class="bg-warning-900/20 border border-warning-900 rounded-lg p-3 mb-5">
                     <p class="text-sm text-warning-300 text-center">
-                        Warning: Force importing a pool that is still actively in use
-                        by another system can cause severe data corruption. Only
-                        proceed if you are sure no other system is using this pool.
+                        警告：强制导入仍被其他系统活动使用的存储池可能导致严重的数据损坏。
+                        只有在确定没有其他系统正在使用此存储池时才可继续。
                     </p>
                 </div>
                 <form method="post" action="/zfs/pools/import/{{ failed_pool }}" id="form-modal-force-import" style="display: none;">
@@ -276,7 +272,7 @@
                 </form>
                 <div class="flex flex-col sm:flex-row gap-3">
                     <button type="button" class="btn-secondary flex-1" onclick="closeImportErrorModal()">
-                        Cancel
+                        取消
                     </button>
                     <button type="button"
                             class="btn-warning flex-1 inline-flex items-center justify-center gap-2"
@@ -284,13 +280,13 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                         </svg>
-                        Force Import
+                        强制导入
                     </button>
                 </div>
                 {% else %}
                 <div class="flex">
                     <button type="button" class="btn-secondary flex-1" onclick="closeImportErrorModal()">
-                        Close
+                        关闭
                     </button>
                 </div>
                 {% endif %}
@@ -315,10 +311,10 @@ window.closeImportErrorModal = function() {
                 <div class="flex items-center justify-center mb-4">
                     <div class="loading-spinner"></div>
                 </div>
-                <h3 class="text-xl font-semibold text-text-primary mb-2">Importing Pool</h3>
+                <h3 class="text-xl font-semibold text-text-primary mb-2">正在导入存储池</h3>
                 <p class="text-text-secondary">
-                    Importing pool <strong id="import-progress-pool-name" class="font-mono text-text-primary"></strong>.
-                    This may take a moment while all datasets are mounted. Please wait.
+                    正在导入存储池 <strong id="import-progress-pool-name" class="font-mono text-text-primary"></strong>。
+                    挂载所有数据集可能需要一些时间，请稍候。
                 </p>
             </div>
         </div>

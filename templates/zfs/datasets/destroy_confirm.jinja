@@ -1,0 +1,236 @@
+{% extends "layout.jinja" %}
+
+{% set pool_name = dataset_name.split('/')[0] %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-6">
+    <!-- Breadcrumb Navigation -->
+    <nav class="flex items-center text-sm text-text-secondary">
+        <a href="/zfs/datasets" class="hover:text-text-primary transition-colors">数据集</a>
+        <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+        <a href="/zfs/datasets/{{ dataset_name }}" class="hover:text-text-primary transition-colors">{{ dataset_name }}</a>
+        <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+        <span class="text-text-primary font-medium">销毁</span>
+    </nav>
+
+    <!-- Page Header -->
+    <div>
+        <h1 class="text-3xl font-bold text-danger-400 inline-flex items-center gap-3">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+            销毁数据集
+        </h1>
+        <p class="text-danger-300 mt-2 font-semibold">此操作无法撤销，请谨慎操作！</p>
+    </div>
+
+    <!-- Error Message -->
+    {% if error %}
+        {% with message=error %}
+            {% include "partials/error.jinja" %}
+        {% endwith %}
+    {% endif %}
+
+    <!-- Warning Box -->
+    <div class="card-nested bg-danger-900/30 border-danger-600 border-2">
+        <h3 class="text-lg font-bold mb-3 text-danger-300 inline-flex items-center gap-2">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+            破坏性操作警告
+        </h3>
+        <p class="text-danger-200 mb-3">
+            你即将<strong>永久销毁</strong>以下数据集：
+        </p>
+        <div class="bg-danger-950 border border-danger-700 rounded-lg p-4">
+            <p class="text-danger-300 font-mono text-lg break-all">
+                {{ dataset_name }}
+            </p>
+        </div>
+    </div>
+
+    <!-- Consequences -->
+    <div class="card">
+        <div class="p-4 bg-bg-elevated-2 border-b border-border-subtle">
+            <h2 class="text-xl font-semibold text-text-primary inline-flex items-center gap-2">
+                <svg class="w-5 h-5 text-danger-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                此操作的后果
+            </h2>
+        </div>
+        <div class="p-6">
+            <ul class="space-y-3 text-text-secondary">
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-danger-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>数据集及其中的数据将<strong class="text-text-primary">永久删除</strong>，无法恢复</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-danger-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>如果勾选<strong class="text-text-primary">“递归销毁”</strong>，该数据集下的<strong class="text-text-primary">所有子数据集和快照</strong>也将一并永久删除</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-warning-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    <span>依赖该数据集快照的<strong class="text-text-primary">克隆</strong>可能使销毁失败，请先删除相关克隆或快照</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-info-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>正在使用该数据集的进程、共享或挂载可能<strong class="text-text-primary">中断或失去访问</strong></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Confirmation Form -->
+    <div class="card">
+        <div class="p-4 bg-bg-elevated-2 border-b border-border-subtle">
+            <h2 class="text-xl font-semibold text-text-primary inline-flex items-center gap-2">
+                <svg class="w-5 h-5 text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                需要确认
+            </h2>
+        </div>
+        <div class="p-6">
+            <form method="post" action="/zfs/datasets/{{ dataset_name }}/destroy" class="space-y-6" id="form-destroy-dataset" hx-boost="false">
+                <!-- Recursive Option -->
+                <div>
+                    <label class="flex items-start cursor-pointer">
+                        <input
+                            type="checkbox"
+                            name="recursive"
+                            value="true"
+                            class="form-checkbox mt-0.5"
+                        >
+                        <span class="ml-2">
+                            <span class="text-sm text-text-primary font-medium block">递归销毁（-r）</span>
+                            <span class="text-text-tertiary text-xs block mt-0.5">
+                                同时销毁该数据集下的所有子数据集和快照。
+                                仅当确实需要删除整个数据集树时才勾选。
+                            </span>
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Force Option -->
+                <div>
+                    <label class="flex items-start cursor-pointer">
+                        <input
+                            type="checkbox"
+                            name="force"
+                            value="true"
+                            class="form-checkbox mt-0.5"
+                        >
+                        <span class="ml-2">
+                            <span class="text-sm text-text-primary font-medium block">强制销毁（-f）</span>
+                            <span class="text-text-tertiary text-xs block mt-0.5">
+                                数据集仍处于挂载状态或设备繁忙时强制卸载并销毁。
+                                建议先尝试不勾选执行。
+                            </span>
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Type Confirmation -->
+                <div>
+                    <label for="confirm" class="form-label">
+                        输入<strong>完整的数据集名称</strong>以确认：<span class="text-danger-400">*</span>
+                    </label>
+                    <div class="bg-bg-elevated-3 border border-border-default rounded-lg p-3 mb-3">
+                        <code class="text-danger-300 text-sm font-mono break-all">{{ dataset_name }}</code>
+                    </div>
+                    <input
+                        type="text"
+                        id="confirm"
+                        name="confirm"
+                        required
+                        placeholder="在此输入数据集名称……"
+                        class="form-input w-full border-danger-600 focus:border-danger-500 focus:ring-danger-500/20"
+                        autocomplete="off"
+                    >
+                    <p class="text-text-tertiary text-xs mt-1">
+                        你必须准确输入上面的数据集名称才能继续销毁。
+                    </p>
+                </div>
+
+                <!-- Final Warning -->
+                <div class="card-nested bg-warning-900/20 border-warning-700">
+                    <p class="text-sm text-warning-300 inline-flex items-start gap-2">
+                        <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        <span>
+                            <strong>最后警告：</strong>此操作<strong>不可撤销</strong>。
+                            请确认这是正确的数据集，并确保其中没有需要保留的数据。
+                        </span>
+                    </p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button
+                        type="submit"
+                        class="btn-danger inline-flex items-center justify-center gap-2 font-bold"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                        是，销毁数据集
+                    </button>
+                    <a
+                        href="/zfs/datasets/{{ dataset_name }}"
+                        class="btn-secondary inline-flex items-center justify-center gap-2"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                        取消（推荐）
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Safety Tips -->
+    <div class="card-nested">
+        <h3 class="text-sm font-semibold text-text-primary mb-3 inline-flex items-center gap-2">
+            <svg class="w-4 h-4 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+            销毁数据集之前
+        </h3>
+        <ul class="text-xs text-text-secondary space-y-2">
+            <li class="flex items-start gap-2">
+                <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                <span>通过“数据复制”功能（Sanoid/Syncoid 或 zfs send/receive）为需要保留的数据创建最新副本</span>
+            </li>
+            <li class="flex items-start gap-2">
+                <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                <span>先停止依赖该数据集的共享、容器挂载或后台任务</span>
+            </li>
+            <li class="flex items-start gap-2">
+                <svg class="w-3 h-3 text-primary-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                <span>如需保留某个子数据集，请先将其移动到其他位置或单独复制</span>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

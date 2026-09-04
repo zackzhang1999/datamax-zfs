@@ -63,10 +63,10 @@ class EmailNotificationService:
         if not self.is_configured():
             return {
                 'status': 'skipped',
-                'message': 'Email notifications not configured'
+                'message': '未配置电子邮件通知'
             }
         
-        subject = f"ZFS Replication Failed: {job_name}"
+        subject = f"ZFS 数据复制失败：{job_name}"
         
         body = self._format_failure_email(
             job_name=job_name,
@@ -106,16 +106,16 @@ class EmailNotificationService:
         if not os.getenv('SMTP_NOTIFY_ON_SUCCESS', 'false').lower() == 'true':
             return {
                 'status': 'skipped',
-                'message': 'Success notifications not enabled'
+                'message': '未启用成功通知'
             }
         
         if not self.is_configured():
             return {
                 'status': 'skipped',
-                'message': 'Email notifications not configured'
+                'message': '未配置电子邮件通知'
             }
         
-        subject = f"ZFS Replication Succeeded: {job_name}"
+        subject = f"ZFS 数据复制成功：{job_name}"
         
         body = self._format_success_email(
             job_name=job_name,
@@ -138,21 +138,21 @@ class EmailNotificationService:
         if not self.is_configured():
             return {
                 'status': 'failure',
-                'message': 'Email notifications not configured'
+                'message': '未配置电子邮件通知'
             }
         
-        subject = "ZFS Web UI - Email Test"
-        body = """This is a test email from the ZFS Web UI.
+        subject = "ZFS Web UI - 电子邮件测试"
+        body = """这是一封来自 ZFS Web UI 的测试邮件。
 
-If you received this message, your email notification settings are working correctly.
+如果您收到了这封邮件，说明您的电子邮件通知设置工作正常。
 
-Configuration:
-- SMTP Host: {}
-- SMTP Port: {}
-- From Address: {}
-- Recipients: {}
+配置信息：
+- SMTP 主机：{}
+- SMTP 端口：{}
+- 发件地址：{}
+- 收件人：{}
 
-Sent at: {}
+发送时间：{}
 """.format(
             self.smtp_host,
             self.smtp_port,
@@ -173,27 +173,27 @@ Sent at: {}
         duration: Optional[float]
     ) -> str:
         """Format failure notification email body"""
-        duration_str = f"{duration:.2f} seconds" if duration else "Unknown"
+        duration_str = f"{duration:.2f} 秒" if duration else "未知"
         
-        return f"""ZFS Replication Job Failed
+        return f"""ZFS 数据复制任务失败
 
-Job Details:
-- Job Name: {job_name}
-- Source Dataset: {source_dataset}
-- Target Dataset: {target_dataset}
-- Execution ID: {execution_id}
-- Duration: {duration_str}
-- Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+任务详情：
+- 任务名称：{job_name}
+- 源数据集：{source_dataset}
+- 目标数据集：{target_dataset}
+- 执行 ID：{execution_id}
+- 耗时：{duration_str}
+- 时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 
-Error Details:
+错误详情：
 {error_message}
 
-Action Required:
-Please investigate this failure and take appropriate action. You can view 
-detailed logs and progress information in the web interface.
+需要处理：
+请排查此次失败原因并采取相应措施。您可以在 Web 界面中查看
+详细日志和进度信息。
 
 ---
-This is an automated message from the ZFS Web UI.
+这是一封来自 ZFS Web UI 的自动邮件。
 """
     
     def _format_success_email(
@@ -206,22 +206,22 @@ This is an automated message from the ZFS Web UI.
         duration: float
     ) -> str:
         """Format success notification email body"""
-        return f"""ZFS Replication Job Completed Successfully
+        return f"""ZFS 数据复制任务已成功完成
 
-Job Details:
-- Job Name: {job_name}
-- Source Dataset: {source_dataset}
-- Target Dataset: {target_dataset}
-- Execution ID: {execution_id}
-- Bytes Transferred: {self._format_bytes(bytes_transferred)}
-- Duration: {duration:.2f} seconds
-- Average Speed: {self._calculate_speed(bytes_transferred, duration)}
-- Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+任务详情：
+- 任务名称：{job_name}
+- 源数据集：{source_dataset}
+- 目标数据集：{target_dataset}
+- 执行 ID：{execution_id}
+- 传输数据量：{self._format_bytes(bytes_transferred)}
+- 耗时：{duration:.2f} 秒
+- 平均速度：{self._calculate_speed(bytes_transferred, duration)}
+- 时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 
-The replication completed successfully.
+数据复制已成功完成。
 
 ---
-This is an automated message from the ZFS Web UI.
+这是一封来自 ZFS Web UI 的自动邮件。
 """
     
     def _send_email(
@@ -268,14 +268,14 @@ This is an automated message from the ZFS Web UI.
             
             return {
                 'status': 'sent',
-                'message': f'Email sent successfully to {len(self.notification_recipients)} recipient(s)',
+                'message': f'邮件已成功发送给 {len(self.notification_recipients)} 位收件人',
                 'recipients': self.notification_recipients
             }
             
         except Exception as e:
             return {
                 'status': 'failed',
-                'message': f'Failed to send email: {str(e)}',
+                'message': f'发送邮件失败：{str(e)}',
                 'error': str(e)
             }
     

@@ -3,28 +3,28 @@
 {% block content %}
 <div class="container-page max-w-5xl">
     <!-- Breadcrumb -->
-    <nav class="text-sm mb-6" aria-label="Breadcrumb">
+    <nav class="text-sm mb-6" aria-label="面包屑">
         <ol class="flex items-center space-x-2">
-            <li><a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">Home</a></li>
+            <li><a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">首页</a></li>
             <li class="text-text-tertiary">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
-            <li><a href="/zfs/replication" class="text-primary-400 hover:text-primary-300 transition-colors">Replication</a></li>
+            <li><a href="/zfs/replication" class="text-primary-400 hover:text-primary-300 transition-colors">数据复制</a></li>
             <li class="text-text-tertiary">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
-            <li class="text-text-primary font-medium">Create Job</li>
+            <li class="text-text-primary font-medium">创建任务</li>
         </ol>
     </nav>
 
     <!-- Page Header -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-text-primary mb-2">Create Replication Job</h1>
-        <p class="text-text-secondary">Schedule automated replication of ZFS datasets</p>
+        <h1 class="text-3xl font-bold text-text-primary mb-2">创建数据复制任务</h1>
+        <p class="text-text-secondary">计划自动复制 ZFS 数据集</p>
     </div>
 
     <!-- Messages -->
@@ -33,7 +33,7 @@
             <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <span><strong>Error:</strong> {{ error }}</span>
+            <span><strong>错误：</strong> {{ error }}</span>
         </div>
     {% endif %}
 
@@ -44,19 +44,19 @@
                 <!-- Job Name -->
                 <div class="mb-6">
                     <label class="form-label" for="name">
-                        Job Name <span class="text-danger-400">*</span>
+                        任务名称 <span class="text-danger-400">*</span>
                     </label>
-                    <input type="text" name="name" id="name" required class="form-input" placeholder="Daily backup to remote">
+                    <input type="text" name="name" id="name" required class="form-input" placeholder="每日备份到远程">
                 </div>
 
                 <!-- Source and Type -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div>
                         <label class="form-label" for="source_dataset">
-                            Source Dataset <span class="text-danger-400">*</span>
+                            源数据集 <span class="text-danger-400">*</span>
                         </label>
                         <select name="source_dataset" id="source_dataset" required class="form-select">
-                            <option value="">-- Select source dataset --</option>
+                            <option value="">-- 选择源数据集 --</option>
                             {% for dataset in datasets %}
                             <option value="{{ dataset.name }}">{{ dataset.name }}</option>
                             {% endfor %}
@@ -65,11 +65,11 @@
 
                     <div>
                         <label class="form-label" for="replication_type">
-                            Replication Type <span class="text-danger-400">*</span>
+                            复制类型 <span class="text-danger-400">*</span>
                         </label>
                         <select name="replication_type" id="replication_type" required class="form-select">
-                            <option value="local">Local (same system)</option>
-                            <option value="push">Push (local → remote)</option>
+                            <option value="local">本地（同一系统）</option>
+                            <option value="push">推送（本地 → 远程）</option>
                         </select>
                     </div>
                 </div>
@@ -81,24 +81,24 @@
                             <svg class="w-5 h-5 mr-2 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
                             </svg>
-                            Remote Connection
+                            远程连接
                         </h3>
                         
                         <div class="mb-4">
                             <label class="form-label" for="ssh_connection">
-                                SSH Connection <span class="text-danger-400">*</span>
+                                SSH 连接 <span class="text-danger-400">*</span>
                             </label>
                             {% if ssh_connections and ssh_connections|length > 0 %}
                             <select name="ssh_connection_id" id="ssh_connection" class="form-select">
-                                <option value="">-- Select SSH Connection --</option>
+                                <option value="">-- 选择 SSH 连接 --</option>
                                 {% for conn in ssh_connections %}
                                 <option value="{{ conn.id }}">{{ conn.name }} ({{ conn.username }}@{{ conn.host }}:{{ conn.port }})</option>
                                 {% endfor %}
                             </select>
-                            <p class="text-text-tertiary text-xs mt-1">Connections are managed in <a href="/utils/ssh" class="text-primary-400 hover:text-primary-300">Utilities &gt; SSH Manager</a></p>
+                            <p class="text-text-tertiary text-xs mt-1">连接在<a href="/utils/ssh" class="text-primary-400 hover:text-primary-300">实用工具 &gt; SSH 管理器</a>中管理</p>
                             {% else %}
                             <div class="bg-warning-900/30 border border-warning-700 text-warning-400 px-4 py-3 rounded-lg">
-                                <p class="text-sm">No SSH connections configured. Create one in <a href="/utils/ssh" class="underline text-primary-400 hover:text-primary-300">Utilities &gt; SSH Manager</a> first.</p>
+                                <p class="text-sm">尚未配置 SSH 连接。请先在<a href="/utils/ssh" class="underline text-primary-400 hover:text-primary-300">实用工具 &gt; SSH 管理器</a>中创建一个。</p>
                             </div>
                             {% endif %}
                         </div>
@@ -112,7 +112,7 @@
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                 </svg>
-                                Test Connection & Load Datasets
+                                测试连接并加载数据集
                             </button>
                             <span id="connection-status"></span>
                         </div>
@@ -122,19 +122,19 @@
                 <!-- Target Dataset -->
                 <div class="mb-6">
                     <label class="form-label" for="target_dataset">
-                        Target Dataset <span class="text-danger-400">*</span>
+                        目标数据集 <span class="text-danger-400">*</span>
                     </label>
                     <select name="target_dataset" id="target_dataset" required class="form-select">
-                        <option value="">-- Select target dataset --</option>
+                        <option value="">-- 选择目标数据集 --</option>
                     </select>
-                    <p class="text-text-tertiary text-xs mt-1">Select the target dataset for replication</p>
+                    <p class="text-text-tertiary text-xs mt-1">选择用于数据复制的目标数据集</p>
                 </div>
 
                 <!-- Compression and Schedule -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div>
                         <label class="form-label" for="compression">
-                            Compression
+                            压缩
                         </label>
                         <select name="compression" id="compression" class="form-select">
                             {% for method in compression_methods %}
@@ -145,10 +145,10 @@
 
                     <div>
                         <label class="form-label" for="schedule">
-                            Schedule (cron format) <span class="text-danger-400">*</span>
+                            计划（cron 格式） <span class="text-danger-400">*</span>
                         </label>
                         <input type="text" name="schedule" id="schedule" required class="form-input" placeholder="0 2 * * *">
-                        <p class="text-text-tertiary text-xs mt-1">Cron format: minute hour day month weekday</p>
+                        <p class="text-text-tertiary text-xs mt-1">Cron 格式：分 时 日 月 星期</p>
                     </div>
                 </div>
 
@@ -156,11 +156,11 @@
                 <div class="space-y-3 mb-6">
                     <label class="flex items-center">
                         <input type="checkbox" name="recursive" value="true" class="form-checkbox">
-                        <span class="ml-3 text-text-secondary">Recursive (include child datasets)</span>
+                        <span class="ml-3 text-text-secondary">递归（包含子数据集）</span>
                     </label>
                     <label class="flex items-center">
                         <input type="checkbox" name="enabled" value="true" checked class="form-checkbox">
-                        <span class="ml-3 text-text-secondary">Enabled (job will run on schedule)</span>
+                        <span class="ml-3 text-text-secondary">启用（任务将按计划运行）</span>
                     </label>
                 </div>
 
@@ -170,13 +170,13 @@
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                         </svg>
-                        Create Job
+                        创建任务
                     </button>
                     <a href="/zfs/replication" class="btn-secondary">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
-                        Cancel
+                        取消
                     </a>
                 </div>
             </form>
@@ -189,24 +189,24 @@
             <svg class="w-5 h-5 mr-2 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            Cron Schedule Examples
+            Cron 计划示例
         </h3>
         <ul class="space-y-2 text-sm text-text-secondary">
             <li class="flex items-center">
                 <code class="bg-info-900/30 text-info-400 px-2 py-1 rounded mr-2 font-mono text-xs">0 2 * * *</code>
-                <span>Daily at 2:00 AM</span>
+                <span>每天凌晨 2:00</span>
             </li>
             <li class="flex items-center">
                 <code class="bg-info-900/30 text-info-400 px-2 py-1 rounded mr-2 font-mono text-xs">0 */6 * * *</code>
-                <span>Every 6 hours</span>
+                <span>每 6 小时</span>
             </li>
             <li class="flex items-center">
                 <code class="bg-info-900/30 text-info-400 px-2 py-1 rounded mr-2 font-mono text-xs">0 0 * * 0</code>
-                <span>Weekly on Sunday at midnight</span>
+                <span>每周日午夜</span>
             </li>
             <li class="flex items-center">
                 <code class="bg-info-900/30 text-info-400 px-2 py-1 rounded mr-2 font-mono text-xs">0 0 1 * *</code>
-                <span>Monthly on the 1st at midnight</span>
+                <span>每月 1 日午夜</span>
             </li>
         </ul>
     </div>
@@ -217,12 +217,12 @@
             <svg class="w-5 h-5 mr-2 text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
             </svg>
-            SSH Authentication for Scheduled Jobs
+            计划任务的 SSH 认证
         </h3>
         <div class="space-y-3 text-sm text-text-secondary">
-            <p><strong class="text-text-primary">Recommended:</strong> Remote replication uses key-based SSH authentication managed by the
-                <a href="/utils/ssh" class="text-primary-400 hover:text-primary-300">SSH Connection Manager</a>.</p>
-            <p>Create a connection in <a href="/utils/ssh" class="text-primary-400 hover:text-primary-300">Utilities &gt; SSH Manager</a>, verify it is Active, then select it above. The stored key is used automatically for scheduled jobs; no passwords are required or stored.</p>
+            <p><strong class="text-text-primary">推荐：</strong>远程数据复制使用基于密钥的 SSH 认证，由
+                <a href="/utils/ssh" class="text-primary-400 hover:text-primary-300">SSH 连接管理器</a>管理。</p>
+            <p>在<a href="/utils/ssh" class="text-primary-400 hover:text-primary-300">实用工具 &gt; SSH 管理器</a>中创建连接，确认其处于活跃状态后在上方选择。存储的密钥会自动用于计划任务，无需也不会存储密码。</p>
         </div>
     </div>
 </div>
@@ -241,7 +241,7 @@
 replicationTypeSelect.addEventListener('change', function() {
     if (this.value === 'push') {
         remoteOptions.classList.remove('hidden');
-        targetDatasetSelect.innerHTML = '<option value="">-- Test connection first --</option>';
+        targetDatasetSelect.innerHTML = '<option value="">-- 请先测试连接 --</option>';
     } else {
         remoteOptions.classList.add('hidden');
         loadLocalDatasets();
@@ -259,12 +259,12 @@ sourceDatasetSelect.addEventListener('change', function() {
 function loadLocalDatasets() {
     const sourceDataset = sourceDatasetSelect.value;
     if (!sourceDataset) {
-        targetDatasetSelect.innerHTML = '<option value="">-- Select source dataset first --</option>';
+        targetDatasetSelect.innerHTML = '<option value="">-- 请先选择源数据集 --</option>';
         return;
     }
     
     // Clear and populate target dropdown
-    targetDatasetSelect.innerHTML = '<option value="">-- Select target dataset --</option>';
+    targetDatasetSelect.innerHTML = '<option value="">-- 请选择目标数据集 --</option>';
     allDatasets.forEach(dataset => {
         if (dataset.name !== sourceDataset) {
             const option = document.createElement('option');
@@ -281,11 +281,11 @@ testConnectionBtn.addEventListener('click', async function() {
     const sshConnectionId = sshConnectionSelect ? sshConnectionSelect.value : '';
 
     if (!sshConnectionId) {
-        connectionStatus.innerHTML = '<span class="text-danger-400 flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Please select an SSH connection</span>';
+        connectionStatus.innerHTML = '<span class="text-danger-400 flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> 请选择 SSH 连接</span>';
         return;
     }
     
-    connectionStatus.innerHTML = '<span class="text-info-400 flex items-center"><svg class="w-4 h-4 mr-1 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> Testing connection...</span>';
+    connectionStatus.innerHTML = '<span class="text-info-400 flex items-center"><svg class="w-4 h-4 mr-1 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> 正在测试连接...</span>';
     testConnectionBtn.disabled = true;
     
     try {
@@ -300,7 +300,7 @@ testConnectionBtn.addEventListener('click', async function() {
         const data = await response.json();
         
         if (data.success) {
-            connectionStatus.innerHTML = '<span class="text-success-400 flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Connected successfully!</span>';
+            connectionStatus.innerHTML = '<span class="text-success-400 flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> 连接成功！</span>';
             
             // Store connection details in hidden fields for form submission
             if (data.connection) {
@@ -309,7 +309,7 @@ testConnectionBtn.addEventListener('click', async function() {
             }
             
             // Populate target dropdown with remote datasets
-            targetDatasetSelect.innerHTML = '<option value="">-- Select target dataset --</option>';
+            targetDatasetSelect.innerHTML = '<option value="">-- 请选择目标数据集 --</option>';
             data.datasets.forEach(dataset => {
                 const option = document.createElement('option');
                 option.value = dataset;
@@ -318,11 +318,11 @@ testConnectionBtn.addEventListener('click', async function() {
             });
         } else {
             connectionStatus.innerHTML = `<span class="text-danger-400 flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> ${data.error}</span>`;
-            targetDatasetSelect.innerHTML = '<option value="">-- Connection failed --</option>';
+            targetDatasetSelect.innerHTML = '<option value="">-- 连接失败 --</option>';
         }
     } catch (error) {
-        connectionStatus.innerHTML = '<span class="text-danger-400 flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Connection failed</span>';
-        targetDatasetSelect.innerHTML = '<option value="">-- Connection failed --</option>';
+        connectionStatus.innerHTML = '<span class="text-danger-400 flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> 连接失败</span>';
+        targetDatasetSelect.innerHTML = '<option value="">-- 连接失败 --</option>';
     } finally {
         testConnectionBtn.disabled = false;
     }

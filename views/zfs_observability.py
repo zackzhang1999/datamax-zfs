@@ -86,7 +86,7 @@ async def observability_index(request: Request):
                 "scrub_known": scrub_known,
                 "scrub_overdue_count": scrub_overdue_count,
                 "scrub_total_pools": scrub_total_pools,
-                "page_title": "ZFS Observability"
+                "page_title": "ZFS 运行观测"
             }
         )
     except Exception as e:
@@ -104,7 +104,7 @@ async def observability_index(request: Request):
                 "scrub_overdue_count": 0,
                 "scrub_total_pools": 0,
                 "error": str(e),
-                "page_title": "ZFS Observability"
+                "page_title": "ZFS 运行观测"
             }
         )
 
@@ -130,10 +130,10 @@ async def recent_history_partial(request: Request):
         # Render just the table body
         if recent_history:
             html = '<table class="min-w-full divide-y divide-border-subtle"><thead class="bg-bg-elevated-2"><tr>'
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Time</th>'
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Command</th>'
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">User</th>'
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Host</th>'
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">时间</th>'
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">命令</th>'
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">用户</th>'
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">主机</th>'
             html += '</tr></thead><tbody class="bg-bg-elevated divide-y divide-border-subtle">'
             
             for entry in recent_history:
@@ -152,11 +152,11 @@ async def recent_history_partial(request: Request):
                     <svg class="w-16 h-16 mx-auto text-text-tertiary mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
-                    <p class="text-text-secondary">No pool history available</p>
+                    <p class="text-text-secondary">暂无存储池历史记录</p>
                 </div>
             ''')
     except Exception as e:
-        return HTMLResponse(content=f'<p class="text-danger-400 py-4">Error loading history: {str(e)}</p>')
+        return HTMLResponse(content=f'<p class="text-danger-400 py-4">加载历史记录时出错：{str(e)}</p>')
 
 
 @router.get("/recent-events-partial", response_class=HTMLResponse)
@@ -178,10 +178,10 @@ async def recent_events_partial(request: Request):
         # Render just the table body
         if recent_events:
             html = '<table class="min-w-full divide-y divide-border-subtle"><thead class="bg-bg-elevated-2"><tr>'
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Time</th>'
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Class</th>'
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Pool</th>'
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Details</th>'
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">时间</th>'
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">类别</th>'
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">存储池</th>'
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">详细信息</th>'
             html += '</tr></thead><tbody class="bg-bg-elevated divide-y divide-border-subtle">'
             
             for event in recent_events:
@@ -200,11 +200,11 @@ async def recent_events_partial(request: Request):
                     <svg class="w-16 h-16 mx-auto text-text-tertiary mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                     </svg>
-                    <p class="text-text-secondary">No pool events available</p>
+                    <p class="text-text-secondary">暂无存储池事件</p>
                 </div>
             ''')
     except Exception as e:
-        return HTMLResponse(content=f'<p class="text-danger-400 py-4">Error loading events: {str(e)}</p>')
+        return HTMLResponse(content=f'<p class="text-danger-400 py-4">加载事件时出错：{str(e)}</p>')
 
 
 @router.get("/pool-history", response_class=HTMLResponse)
@@ -226,7 +226,7 @@ async def pool_history(
         all_pools = pool_service.list_pools()
         pool_names = [p['name'] for p in all_pools]
     except Exception as e:
-        errors.append(f"Failed to list pools: {str(e)}")
+        errors.append(f"获取存储池列表失败：{str(e)}")
     
     # Determine which pools to show
     # Default: show NO data until user explicitly selects pools and applies filters
@@ -251,7 +251,7 @@ async def pool_history(
                 total_entries += len(pool_history)
             except Exception as e:
                 # Log error but continue with other pools
-                errors.append(f"Failed to get history for '{pool_name}': {str(e)}")
+                errors.append(f"获取“{pool_name}”的历史记录失败：{str(e)}")
                 pool_histories[pool_name] = []
     
     return templates.TemplateResponse(
@@ -265,7 +265,7 @@ async def pool_history(
             "limit": limit,
             "internal": internal,
             "errors": errors if errors else None,
-            "page_title": "Pool History"
+            "page_title": "存储池历史"
         }
     )
 
@@ -288,7 +288,7 @@ async def pool_events(
         all_pools = pool_service.list_pools()
         pool_names = [p['name'] for p in all_pools]
     except Exception as e:
-        errors.append(f"Failed to list pools: {str(e)}")
+        errors.append(f"获取存储池列表失败：{str(e)}")
     
     # Determine which pools to show
     # Default: show NO data until user explicitly selects pools and applies filters
@@ -312,7 +312,7 @@ async def pool_events(
                 total_events += len(events)
             except Exception as e:
                 # Log error but continue with other pools
-                errors.append(f"Failed to get events for '{pool_name}': {str(e)}")
+                errors.append(f"获取“{pool_name}”的事件失败：{str(e)}")
                 pool_events_dict[pool_name] = []
     
     return templates.TemplateResponse(
@@ -325,7 +325,7 @@ async def pool_events(
             "selected_pools": selected_pools,
             "verbose": verbose,
             "errors": errors if errors else None,
-            "page_title": "Pool Events"
+            "page_title": "存储池事件"
         }
     )
 
@@ -390,7 +390,7 @@ async def kernel_debug_log(
                 "filter": filter,
                 "search": search,
                 "debug_source": debug_source,
-                "page_title": "ZFS Kernel Debug Log"
+                "page_title": "ZFS 内核调试日志"
             }
         )
     except Exception as e:
@@ -402,7 +402,7 @@ async def kernel_debug_log(
                 "error": str(e),
                 "search": search,
                 "debug_source": debug_source,
-                "page_title": "ZFS Kernel Debug Log"
+                "page_title": "ZFS 内核调试日志"
             }
         )
 
@@ -441,7 +441,7 @@ async def syslog_zfs(
                 "severity": severity,
                 "search": search,
                 "filtered": True,
-                "page_title": "ZFS System Log"
+                "page_title": "ZFS 系统日志"
             }
         )
     except Exception as e:
@@ -453,7 +453,7 @@ async def syslog_zfs(
                 "error": str(e),
                 "search": search,
                 "filtered": True,
-                "page_title": "ZFS System Log"
+                "page_title": "ZFS 系统日志"
             }
         )
 
@@ -660,7 +660,7 @@ async def syslog_full(
                 "severity": severity,
                 "search": search,
                 "filtered": False,
-                "page_title": "Full System Log"
+                "page_title": "完整系统日志"
             }
         )
     except Exception as e:
@@ -672,7 +672,7 @@ async def syslog_full(
                 "error": str(e),
                 "search": search,
                 "filtered": False,
-                "page_title": "Full System Log"
+                "page_title": "完整系统日志"
             }
         )
 
@@ -695,7 +695,7 @@ async def arc_summary(request: Request):
             context={
                 "arc_stats": arc_stats,
                 "system": system,
-                "page_title": "ARC Summary"
+                "page_title": "ARC 摘要"
             }
         )
     except Exception as e:
@@ -707,7 +707,7 @@ async def arc_summary(request: Request):
                 "arc_stats": {},
                 "system": platform.system(),
                 "error": str(e),
-                "page_title": "ARC Summary"
+                "page_title": "ARC 摘要"
             }
         )
 
@@ -725,7 +725,7 @@ async def module_parameters(request: Request):
             context={
                 "parameters": parameters,
                 "openzfs_man_url": openzfs_man_url,
-                "page_title": "ZFS Module Parameters"
+                "page_title": "ZFS 模块参数"
             }
         )
     except Exception as e:
@@ -736,7 +736,7 @@ async def module_parameters(request: Request):
                 "parameters": {},
                 "openzfs_man_url": None,
                 "error": str(e),
-                "page_title": "ZFS Module Parameters"
+                "page_title": "ZFS 模块参数"
             }
         )
 
@@ -757,7 +757,7 @@ async def download_module_parameters():
         output_lines.append("")
         
         if parameters.get('error'):
-            output_lines.append(f"Error: {parameters['error']}")
+            output_lines.append(f"错误：{parameters['error']}")
         else:
             # Header
             output_lines.append(f"{'Parameter':<50} {'Value':<30}")
@@ -770,7 +770,7 @@ async def download_module_parameters():
                     output_lines.append(f"{key:<50} {value:<30}")
             
             output_lines.append("")
-            output_lines.append(f"Total parameters: {len([k for k in parameters.keys() if k != 'error'])}")
+            output_lines.append(f"参数总数：{len([k for k in parameters.keys() if k != 'error'])}")
         
         output_lines.append("\n" + "=" * 80)
         output_lines.append("End of Report")
@@ -786,7 +786,7 @@ async def download_module_parameters():
         )
     except Exception as e:
         return PlainTextResponse(
-            content=f"Error generating download: {str(e)}",
+            content=f"生成下载内容时出错：{str(e)}",
             status_code=500
         )
 
@@ -816,7 +816,7 @@ async def search_logs(
                 "query": query,
                 "source": source,
                 "limit": limit,
-                "page_title": "Search ZFS Logs"
+                "page_title": "搜索 ZFS 日志"
             }
         )
     except Exception as e:
@@ -827,7 +827,7 @@ async def search_logs(
                 "results": [],
                 "query": query,
                 "error": str(e),
-                "page_title": "Search ZFS Logs"
+                "page_title": "搜索 ZFS 日志"
             }
         )
 
@@ -907,7 +907,7 @@ async def download_pool_history(
         )
     except Exception as e:
         return PlainTextResponse(
-            content=f"Error generating download: {str(e)}",
+            content=f"生成下载内容时出错：{str(e)}",
             status_code=500
         )
 
@@ -986,7 +986,7 @@ async def download_pool_events(
         )
     except Exception as e:
         return PlainTextResponse(
-            content=f"Error generating download: {str(e)}",
+            content=f"生成下载内容时出错：{str(e)}",
             status_code=500
         )
 
@@ -1006,7 +1006,7 @@ async def download_arc_summary():
         output_lines.append("")
         
         if arc_stats.get('error'):
-            output_lines.append(f"Error: {arc_stats['error']}")
+            output_lines.append(f"错误：{arc_stats['error']}")
         else:
             # Key metrics
             output_lines.append("KEY METRICS")
@@ -1048,7 +1048,7 @@ async def download_arc_summary():
         )
     except Exception as e:
         return PlainTextResponse(
-            content=f"Error generating download: {str(e)}",
+            content=f"生成下载内容时出错：{str(e)}",
             status_code=500
         )
 
@@ -1102,7 +1102,7 @@ async def download_kernel_log(
         )
     except Exception as e:
         return PlainTextResponse(
-            content=f"Error generating download: {str(e)}",
+            content=f"生成下载内容时出错：{str(e)}",
             status_code=500
         )
 
@@ -1157,7 +1157,7 @@ async def download_syslog(
         )
     except Exception as e:
         return PlainTextResponse(
-            content=f"Error generating download: {str(e)}",
+            content=f"生成下载内容时出错：{str(e)}",
             status_code=500
         )
 
@@ -1286,7 +1286,7 @@ Each file contains detailed information about various aspects of your ZFS system
                 output_lines.append("")
                 
                 if arc_stats.get('error'):
-                    output_lines.append(f"Error: {arc_stats['error']}")
+                    output_lines.append(f"错误：{arc_stats['error']}")
                 else:
                     output_lines.append("KEY METRICS")
                     output_lines.append("-" * 80)
@@ -1367,7 +1367,7 @@ Each file contains detailed information about various aspects of your ZFS system
                 output_lines.append("")
                 
                 if parameters.get('error'):
-                    output_lines.append(f"Error: {parameters['error']}")
+                    output_lines.append(f"错误：{parameters['error']}")
                 else:
                     for key, value in sorted(parameters.items()):
                         if key != 'error':
@@ -1392,6 +1392,6 @@ Each file contains detailed information about various aspects of your ZFS system
         
     except Exception as e:
         return PlainTextResponse(
-            content=f"Error generating zip file: {str(e)}",
+            content=f"生成 zip 文件时出错：{str(e)}",
             status_code=500
         )

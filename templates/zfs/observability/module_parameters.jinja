@@ -8,19 +8,19 @@
     <nav class="text-sm mb-6" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-2">
             <li class="flex items-center">
-                <a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">Home</a>
+                <a href="/" class="text-primary-400 hover:text-primary-300 transition-colors">首页</a>
                 <svg class="w-4 h-4 mx-2 text-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li class="flex items-center">
-                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300 transition-colors">Observability</a>
+                <a href="/zfs/observability" class="text-primary-400 hover:text-primary-300 transition-colors">运行观测</a>
                 <svg class="w-4 h-4 mx-2 text-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </li>
             <li>
-                <span class="text-text-primary font-medium">Module Parameters</span>
+                <span class="text-text-primary font-medium">模块参数</span>
             </li>
         </ol>
     </nav>
@@ -28,8 +28,8 @@
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
-            <h1 class="text-3xl font-bold text-text-primary mb-2">ZFS Kernel Module Parameters</h1>
-            <p class="text-text-secondary">View current ZFS kernel module configuration parameters</p>
+            <h1 class="text-3xl font-bold text-text-primary mb-2">ZFS 内核模块参数</h1>
+            <p class="text-text-secondary">查看当前 ZFS 内核模块配置参数</p>
         </div>
         <div class="flex gap-2">
             {% if openzfs_man_url %}
@@ -40,7 +40,7 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                 </svg>
-                OpenZFS Man Pages
+                OpenZFS 手册页
             </a>
             {% endif %}
             <a href="/zfs/observability/module-parameters/download" 
@@ -49,7 +49,7 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                 </svg>
-                Download
+                下载
             </a>
         </div>
     </div>
@@ -61,7 +61,7 @@
             <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <div><strong class="font-semibold">Error:</strong> {{ error }}</div>
+            <div><strong class="font-semibold">错误：</strong> {{ error }}</div>
         </div>
     </div>
     {% endif %}
@@ -72,7 +72,7 @@
             <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
             </svg>
-            <div><strong class="font-semibold">Warning:</strong> {{ parameters.error }}</div>
+            <div><strong class="font-semibold">警告：</strong> {{ parameters.error }}</div>
         </div>
     </div>
     {% else %}
@@ -84,8 +84,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
             </svg>
             <div>
-                <h3 class="text-sm font-semibold text-warning-400 mb-2">Caution: Expert Knowledge Required</h3>
-                <p class="text-sm text-warning-400">Changing ZFS module parameters requires expert knowledge. Incorrect values can cause system instability or data corruption. Always consult the ZFS documentation before making changes.</p>
+                <h3 class="text-sm font-semibold text-warning-400 mb-2">注意：需要专业知识</h3>
+                <p class="text-sm text-warning-400">修改 ZFS 模块参数需要专业知识。不正确的取值可能导致系统不稳定或数据损坏。在进行任何修改之前，请务必查阅 ZFS 文档。</p>
             </div>
         </div>
     </div>
@@ -94,13 +94,13 @@
     <div class="card mb-8">
         <div class="p-6">
             <label for="paramSearch" class="form-label">
-                Search Parameters
+                搜索参数
                 <span id="search-count" class="text-text-tertiary text-sm font-normal ml-2"></span>
             </label>
             <div class="relative">
                 <input type="text" 
                     id="paramSearch" 
-                    placeholder="Type to filter parameters..." 
+                    placeholder="输入以筛选参数..." 
                     class="form-input pr-10"
                     hx-trigger="keyup changed delay:300ms"
                     hx-get="/zfs/observability/module-parameters/filter"
@@ -113,7 +113,7 @@
                     </svg>
                 </div>
             </div>
-            <p class="text-xs text-text-tertiary mt-2">Start typing to filter parameters in real-time</p>
+            <p class="text-xs text-text-tertiary mt-2">输入即可实时筛选参数</p>
         </div>
     </div>
 
@@ -125,8 +125,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                 </svg>
-                Current Module Parameters
-                <span class="text-sm font-normal text-text-secondary ml-2">({{ parameters|length }} total)</span>
+                当前模块参数
+                <span class="text-sm font-normal text-text-secondary ml-2">（共 {{ parameters|length }} 个）</span>
             </h2>
         </div>
         
@@ -135,8 +135,8 @@
             <table class="min-w-full divide-y divide-border-subtle" id="parametersTable">
                 <thead class="bg-bg-elevated-2">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Parameter Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Current Value</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">参数名称</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">当前值</th>
                     </tr>
                 </thead>
                 <tbody class="bg-bg-elevated divide-y divide-border-subtle">
@@ -157,8 +157,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
             </svg>
-            <p class="text-text-secondary text-lg mb-2">No module parameters available</p>
-            <p class="text-text-tertiary text-sm">ZFS module parameters could not be read</p>
+            <p class="text-text-secondary text-lg mb-2">没有可用的模块参数</p>
+            <p class="text-text-tertiary text-sm">无法读取 ZFS 模块参数</p>
         </div>
         {% endif %}
     </div>
@@ -169,19 +169,19 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            About Module Parameters
+            关于模块参数
         </h3>
         <div class="text-sm text-info-400 space-y-3">
-            <p><strong>Source:</strong> <code class="bg-gray-900 px-2 py-0.5 rounded">/sys/module/zfs/parameters/</code></p>
-            <p>These parameters control various aspects of ZFS behavior at the kernel level. Common parameters include:</p>
+            <p><strong>来源：</strong> <code class="bg-gray-900 px-2 py-0.5 rounded">/sys/module/zfs/parameters/</code></p>
+            <p>这些参数在内核层面控制 ZFS 行为的各个方面。常见参数包括：</p>
             <ul class="list-disc list-inside ml-4 space-y-1.5">
-                <li><strong>zfs_arc_max:</strong> Maximum ARC size in bytes</li>
-                <li><strong>zfs_arc_min:</strong> Minimum ARC size in bytes</li>
-                <li><strong>zfs_txg_timeout:</strong> Transaction group timeout in seconds</li>
-                <li><strong>zfs_prefetch_disable:</strong> Disable prefetching (0=enabled, 1=disabled)</li>
+                <li><strong>zfs_arc_max:</strong> ARC 最大大小（字节）</li>
+                <li><strong>zfs_arc_min:</strong> ARC 最小大小（字节）</li>
+                <li><strong>zfs_txg_timeout:</strong> 事务组超时时间（秒）</li>
+                <li><strong>zfs_prefetch_disable:</strong> 禁用预取（0=启用，1=禁用）</li>
             </ul>
-            <p class="mt-3"><strong>To modify parameters:</strong> Use <code class="bg-gray-900 px-1.5 py-0.5 rounded">echo value > /sys/module/zfs/parameters/param_name</code> as root.</p>
-            <p><strong>Important:</strong> Changes are runtime-only and will not persist across reboots unless added to module configuration files (e.g., <code class="bg-gray-900 px-1.5 py-0.5 rounded">/etc/modprobe.d/zfs.conf</code>).</p>
+            <p class="mt-3"><strong>修改参数的方法：</strong>以 root 身份执行 <code class="bg-gray-900 px-1.5 py-0.5 rounded">echo value > /sys/module/zfs/parameters/param_name</code>。</p>
+            <p><strong>重要提示：</strong>修改仅在运行时生效，重启后不会保留，除非将其写入模块配置文件（例如 <code class="bg-gray-900 px-1.5 py-0.5 rounded">/etc/modprobe.d/zfs.conf</code>）。</p>
         </div>
     </div>
     {% endif %}

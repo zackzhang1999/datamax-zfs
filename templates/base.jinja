@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="zh-CN" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="WebZFS Interface" />
+    <meta name="description" content="DataMax-zfs 管理界面" />
     <script
       src="https://unpkg.com/htmx.org@1.9.10"
       integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
@@ -32,7 +32,7 @@
       href="{{ url_for('static', path='css/corner_styles.css') }}?v={{ get_corner_styles_css_version() }}"
     />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💾</text></svg>">
-    <title>{% block title %}WebZFS{% endblock %}</title>
+    <title>{% block title %}DataMax-zfs{% endblock %}</title>
   </head>
   <body class="bg-bg-base text-text-primary overscroll-none antialiased corner-{{ get_active_corner_style() }}" hx-boost="true" hx-indicator="#page-loading">
     {# Global page loading indicator #}
@@ -48,15 +48,15 @@
       document.body.addEventListener('htmx:responseError', function(evt) {
         console.error('HTMX Error:', evt.detail);
         // Show a toast notification for server errors
-        const status = evt.detail.xhr ? evt.detail.xhr.status : 'Unknown';
+        const status = evt.detail.xhr ? evt.detail.xhr.status : '未知';
         const message = status >= 500 
-          ? 'Server error occurred. Please try again or refresh the page.' 
-          : 'Request failed with status: ' + status;
+          ? '发生服务器错误。请重试或刷新页面。' 
+          : '请求失败，状态码：' + status;
         
         // Create a simple error notification
         const errorDiv = document.createElement('div');
         errorDiv.className = 'fixed bottom-4 right-4 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-        errorDiv.innerHTML = '<strong>Error:</strong> ' + message;
+        errorDiv.innerHTML = '<strong>错误：</strong> ' + message;
         document.body.appendChild(errorDiv);
         
         // Remove after 5 seconds
@@ -68,7 +68,7 @@
         console.error('HTMX Timeout:', evt.detail);
         const errorDiv = document.createElement('div');
         errorDiv.className = 'fixed bottom-4 right-4 bg-yellow-600 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-        errorDiv.innerHTML = '<strong>Timeout:</strong> Request took too long. Please try again.';
+        errorDiv.innerHTML = '<strong>超时：</strong>请求耗时过长。请重试。';
         document.body.appendChild(errorDiv);
         setTimeout(() => errorDiv.remove(), 5000);
       });

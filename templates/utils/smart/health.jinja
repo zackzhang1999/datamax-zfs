@@ -4,18 +4,18 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm mb-6 text-text-tertiary">
-        <a href="/utils/smart" class="hover:text-blue-400">SMART Monitoring</a> 
+        <a href="/utils/smart" class="hover:text-blue-400">SMART 监控</a> 
         <span class="mx-2">/</span> 
         <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}" class="hover:text-blue-400">{{ disk_path }}</a>
         <span class="mx-2">/</span> 
-        <span class="text-text-primary">Health Status</span>
+        <span class="text-text-primary">健康状态</span>
     </nav>
 
     <!-- Page Header -->
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-text-primary">Health Status: {{ disk_path }}</h1>
+        <h1 class="text-3xl font-bold text-text-primary">健康状态：{{ disk_path }}</h1>
         <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}" class="btn-secondary hover:bg-bg-elevated-2 text-text-primary px-4 py-2 rounded inline-block">
-            ← Back to Disk
+            ← 返回磁盘
         </a>
     </div>
 
@@ -41,45 +41,45 @@
             <div class="text-5xl font-bold mb-2 {% if health.health == 'PASSED' %}text-green-400{% elif health.health == 'FAILED' %}text-red-400{% else %}text-yellow-400{% endif %}">
                 {{ health.health }}
             </div>
-            <div class="text-text-tertiary">Overall SMART Health Assessment</div>
+            <div class="text-text-tertiary">SMART 整体健康评估</div>
         </div>
 
         <div class="text-text-tertiary text-sm">
-            Last checked: {{ health.timestamp }}
+            上次检查：{{ health.timestamp }}
         </div>
 
         {% if health.health == 'PASSED' %}
         <div class="mt-6 bg-success-900/30 border-2 border-success-500/50 text-success-400 px-4 py-3 rounded inline-block">
             <strong><svg class="w-5 h-5 inline text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    </svg> Healthy:</strong> SMART overall-health self-assessment test result indicates the disk is functioning properly.
+                    </svg> 健康：</strong> SMART 整体健康自评结果表明磁盘工作正常。
         </div>
         {% elif health.health == 'FAILED' %}
         <div class="mt-6 bg-danger-900/30 border-2 border-danger-500/50 text-danger-400 px-4 py-3 rounded inline-block">
             <strong><svg class="w-5 h-5 inline text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                    </svg> Failed:</strong> SMART overall-health self-assessment test result indicates the disk may be failing. 
-            Back up your data immediately and replace the drive.
+                    </svg> 失败：</strong> SMART 整体健康自评结果表明磁盘可能即将发生故障。
+            请立即备份数据并更换硬盘。
         </div>
         {% else %}
         <div class="mt-6 bg-yellow-900 border border-yellow-700 text-yellow-200 px-4 py-3 rounded inline-block">
-            <strong>? Unknown:</strong> Unable to determine SMART health status.
+            <strong>? 未知：</strong> 无法确定 SMART 健康状态。
         </div>
         {% endif %}
     </div>
 
     <!-- Quick Actions -->
     <div class="mt-6 bg-bg-elevated rounded-lg p-6">
-        <h2 class="text-xl font-bold text-text-primary mb-4">Quick Actions</h2>
+        <h2 class="text-xl font-bold text-text-primary mb-4">快捷操作</h2>
         <div class="flex flex-wrap gap-2">
             <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/attributes" class="bg-blue-600 hover:bg-blue-700 text-text-primary px-4 py-2 rounded inline-block">
-                View SMART Attributes
+                查看 SMART 属性
             </a>
             <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/tests" class="bg-green-600 hover:bg-green-700 text-text-primary px-4 py-2 rounded inline-block">
-                Run Self-Test
+                运行自检
             </a>
             <a href="/utils/smart/disk/{{ disk_path.lstrip('/') }}/errors" class="bg-red-600 hover:bg-red-700 text-text-primary px-4 py-2 rounded inline-block">
-                View Error Log
+                查看错误日志
             </a>
         </div>
     </div>
@@ -88,11 +88,11 @@
     <div class="mt-6 bg-info-900/30 border-2 border-info-500/50 text-info-400 px-4 py-3 rounded">
         <strong><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg> About Health Status:</strong>
+                    </svg> 关于健康状态：</strong>
         <p class="mt-2 text-sm">
-            The SMART overall-health self-assessment test result is a single indicator that summarizes the health of the disk. 
-            A "PASSED" result means the disk is functioning within acceptable parameters. A "FAILED" result indicates 
-            the disk has exceeded one or more SMART thresholds and is likely to fail soon.
+            SMART 整体健康自评结果是概括磁盘健康状况的单一指标。
+            结果为“PASSED”表示磁盘各项参数处于可接受范围内；结果为“FAILED”表示
+            磁盘的一项或多项 SMART 指标已超过阈值，很可能即将发生故障。
         </p>
     </div>
 </div>

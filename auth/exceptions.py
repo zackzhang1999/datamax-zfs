@@ -8,5 +8,5 @@ class RateLimitExceeded(Exception):
     def __init__(self, retry_after_seconds: int = 60):
         self.retry_after_seconds = retry_after_seconds
         super().__init__(
-            f"Too many login attempts. Please try again in {retry_after_seconds} seconds."
+            f"登录尝试次数过多。请在 {retry_after_seconds} 秒后重试。"
         )
